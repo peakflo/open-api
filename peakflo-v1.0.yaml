@@ -54,9 +54,7 @@ paths:
                   currency: USD
                   status: active
                   parentCompanyId: 23oc2344
-                  accountManagerId: df34lvifmfkfef34r333
-                  creditAmountMax: 10000
-                  creditDaysMax: 20
+                  accountManagerEmail: johndoe@peakflo.co
                   pauseWorkflow: false
                   contact:
                     - externalId: 234wf33
@@ -81,9 +79,7 @@ paths:
                     currency: USD
                     status: active
                     parentCompanyId: 23oc2344
-                    accountManagerId: df34lvifmfkfef34r333
-                    creditAmountMax: 10000
-                    creditDaysMax: 20
+                    accountManagerEmail: johndoe@peakflo.co
                     pauseWorkflow: false
                     contact:
                       - externalId: 234wf33
@@ -105,12 +101,12 @@ paths:
       tags:
         - Customers
       summary: 'Update a customer '
-      description: Update an existing customer
+      description: Update an existing customer. Any field not provided will be left unchanged
       operationId: update-customer
       parameters:
         - name: customerId
           in: path
-          description: The customer externalRefNumber
+          description: The customer external Id
           required: true
           schema:
             type: string
@@ -128,17 +124,8 @@ paths:
                   currency: USD
                   status: active
                   parentCompanyId: 23oc2344
-                  accountManagerId: df34lvifmfkfef34r333
-                  creditAmountMax: 45000
-                  creditDaysMax: 20
+                  accountManagerEmail: johndoe@peakflo.co
                   pauseWorkflow: false
-                  contact:
-                    - externalId: 234wf33
-                      firstName: Peter
-                      lastName: Wong
-                      email: peterwong@mcwin.com
-                      phone: '6591234567'
-                      isMainContact: false
         required: false
       responses:
         '200':
@@ -155,9 +142,7 @@ paths:
                     currency: USD
                     status: active
                     parentCompanyId: 23oc2344
-                    accountManagerId: df34lvifmfkfef34r333
-                    creditAmountMax: 45000
-                    creditDaysMax: 20
+                    accountManagerEmail: johndoe@peakflo.co
                     pauseWorkflow: false
                     contact:
                       - externalId: 234wf33
@@ -189,7 +174,7 @@ paths:
         name: customerId
         in: path
         required: true
-        description: The customer externalRefNumber
+        description: The customer external Id
   '/customers/{customerId}/contacts':
     post:
       summary: Add a contact
@@ -238,7 +223,7 @@ paths:
         name: customerId
         in: path
         required: true
-        description: The customer externalRefNumber
+        description: The customer external Id
   '/customers/{customerId}/contacts/{contactId}':
     parameters:
       - schema:
@@ -252,7 +237,7 @@ paths:
         name: customerId
         in: path
         required: true
-        description: The customer externalRefNumber
+        description: The customer external Id
     put:
       summary: Update a contact
       tags:
@@ -333,12 +318,13 @@ paths:
           description: Not Found
         '409':
           description: Conflict
-      description: Update an invoice
+      description: Update an invoice. Any field not provided will be left unchanged.
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Invoice'
+            examples: {}
         description: The invoice to update
       tags:
         - Invoices
@@ -510,16 +496,14 @@ components:
       x-examples:
         Example:
           companyName: string
-          externalRefNumber: string
+          externalId: string
           currency: USD
           status: active
           parentCompanyId: string
-          accountManagerId: string
+          accountManagerEmail: string
           registrationNumber: string
           taxNumber: string
           notes: string
-          creditAmountMax: 0
-          creditDaysMax: 0
           pauseWorkflow: true
           contact:
             - firstName: string
@@ -547,12 +531,9 @@ components:
             - active
             - archived
           example: active
-        parentCompanyId:
+        accountManagerEmail:
           type: string
-          description: The customers parent companyId
-        accountManagerId:
-          type: string
-          description: The account manager Id for the customer
+          description: The account manager email
         registrationNumber:
           type: string
           description: The company registration number
@@ -562,12 +543,6 @@ components:
         notes:
           type: string
           description: Notes
-        creditAmountMax:
-          type: number
-          description: Maximum amount upto which a credit is allowed
-        creditDaysMax:
-          type: number
-          description: Maximum amount upto which a credit is allowed
         pauseWorkflow:
           type: boolean
           description: Indicate whether workflow is paused for this company or not. If paused then no actions will take place.
@@ -584,11 +559,10 @@ components:
           items:
             $ref: '#/components/schemas/Address'
       required:
-        - companyName
         - externalId
+        - companyName
         - currency
         - status
-        - parentCompanyId
     Contact:
       type: object
       description: The contact model
@@ -746,7 +720,7 @@ components:
           description: The invoice currency. Follow ISO 4217 code
         currencyRate:
           type: number
-          description: The currency rate to convert currency to base currency
+          description: The currency conversion rate to be applied to all the amount fields when converting to base currency
         lineItems:
           type: array
           uniqueItems: true
@@ -881,7 +855,7 @@ components:
           description: The credit note currency. Follow ISO 4217 code
         currencyRate:
           type: number
-          description: The currency rate to use if the credit note currency is different from company default currency
+          description: The currency conversion rate to be applied to all the amount fields when converting to base currency
         lineItems:
           type: array
           items:
@@ -922,7 +896,7 @@ components:
           minLength: 1
           description: The currency of payment
         currencyRate:
-          description: Currency rate to use to conver the amount to based currency of the company
+          description: The currency conversion rate to be applied to all the amount fields when converting to base currency
           type: number
         date:
           type: string
@@ -934,10 +908,6 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/PaymentLine'
-        attachments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Attachment'
         modifiedDate:
           type: string
           minLength: 1
@@ -982,7 +952,7 @@ components:
           example: Invoice Id if this is a invoice type payment
         currencyRate:
           type: number
-          description: 'Calculated as the amount of the payment allocated in the currency of the bill payment divided by the amount of the linked entity in the currency of the entity. When payment currencies and linked entity currencies are always the same, the currencyRate is 1.'
+          description: The currency conversion rate to be applied to all the amount fields when converting to base currency
       required:
         - amount
         - type
