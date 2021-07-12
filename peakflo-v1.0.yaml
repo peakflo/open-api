@@ -65,8 +65,8 @@ paths:
                       isMainContact: false
         required: false
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
           content:
             application/json:
               schema:
@@ -96,20 +96,13 @@ paths:
           content: {}
       x-codegen-request-body-name: Customer
     parameters: []
-  '/customers/{customerId}':
+  '/customers/{customerExternalId}':
     put:
       tags:
         - Customers
       summary: 'Update a customer '
       description: Update an existing customer. Any field not provided will be left unchanged
       operationId: update-customer
-      parameters:
-        - name: customerId
-          in: path
-          description: The customer external Id
-          required: true
-          schema:
-            type: string
       requestBody:
         description: Customer to update
         content:
@@ -171,18 +164,17 @@ paths:
     parameters:
       - schema:
           type: string
-        name: customerId
+        name: customerExternalId
         in: path
         required: true
-        description: The customer external Id
-  '/customers/{customerId}/contacts':
+  '/customers/{customerExternalId}/contacts':
     post:
       summary: Add a contact
       tags:
         - Contacts
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
           content:
             application/json:
               schema:
@@ -220,24 +212,24 @@ paths:
     parameters:
       - schema:
           type: string
-        name: customerId
+        name: customerExternalId
         in: path
         required: true
         description: The customer external Id
-  '/customers/{customerId}/contacts/{contactId}':
+  '/customers/{customerExternalId}/contacts/{contactExternalId}':
     parameters:
       - schema:
           type: string
-        name: contactId
-        in: path
-        required: true
-        description: The Id of the contact to update or delete
-      - schema:
-          type: string
-        name: customerId
+        name: customerExternalId
         in: path
         required: true
         description: The customer external Id
+      - schema:
+          type: string
+        name: contactExternalId
+        in: path
+        required: true
+        description: The contact external Id
     put:
       summary: Update a contact
       tags:
@@ -280,8 +272,8 @@ paths:
       summary: Add an invoice
       operationId: add-invoice
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
         '400':
           description: Bad Request
         '409':
@@ -296,14 +288,14 @@ paths:
       tags:
         - Invoices
     parameters: []
-  '/invoices/{invoiceId}':
+  '/invoices/{invoiceExternalId}':
     parameters:
       - schema:
           type: string
-        name: invoiceId
+        name: invoiceExternalId
         in: path
         required: true
-        description: The invoice Id
+        description: The invoice external Id
     put:
       summary: Update an invoice
       operationId: update-invoice
@@ -339,14 +331,14 @@ paths:
         '404':
           description: Not Found
       description: Delete an invoice
-  '/invoices/{invoiceId}/attachments':
+  '/invoices/{invoiceExternalId}/attachments':
     parameters:
       - schema:
           type: string
-        name: invoiceId
+        name: invoiceExternalId
         in: path
         required: true
-        description: The invoiceId
+        description: The invoice external Id
     put:
       summary: Add an attachment to invoice
       operationId: add-attachment
@@ -368,8 +360,8 @@ paths:
       summary: Add a credit note
       operationId: add-creditnotes
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
           content:
             application/json:
               schema:
@@ -385,14 +377,14 @@ paths:
             schema:
               $ref: '#/components/schemas/CreditNote'
         description: The credit note to add
-  '/creditnotes/{creditNoteId}':
+  '/creditnotes/{creditNoteExternalId}':
     parameters:
       - schema:
           type: string
-        name: creditNoteId
+        name: creditNoteExternalId
         in: path
         required: true
-        description: The credit note Id
+        description: The credit note external Id
     put:
       tags:
         - Credit Notes
@@ -432,8 +424,8 @@ paths:
       summary: Add a payment
       operationId: add-payment
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
           content:
             application/json:
               schema:
@@ -649,8 +641,7 @@ components:
         - description
         - unitAmount
         - quantity
-        - taxAmount
-        - itemRef
+        - totalAmount
     Attachment:
       description: The attachment
       type: object
