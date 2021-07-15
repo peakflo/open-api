@@ -443,14 +443,14 @@ paths:
             schema:
               $ref: '#/components/schemas/Payment'
         description: The payment to add
-  '/payments/{paymentId}':
+  '/payments/{paymentExternalId}':
     parameters:
       - schema:
           type: string
-        name: paymentId
+        name: paymentExternalId
         in: path
         required: true
-        description: The payment Id
+        description: The payment external Id
     put:
       summary: Update a payment
       operationId: update-payment
@@ -538,14 +538,14 @@ components:
         pauseWorkflow:
           type: boolean
           description: Indicate whether workflow is paused for this company or not. If paused then no actions will take place.
-        contact:
+        contacts:
           type: array
           items:
             $ref: '#/components/schemas/Contact'
         statementFile:
           type: string
           description: The statement file
-        Address:
+        addresses:
           type: array
           description: The customers addresses
           items:
@@ -658,12 +658,9 @@ components:
         contentType:
           type: string
           description: Content type of attachment
-        fileSize:
-          type: number
-          description: The size of attachment
         data:
           type: string
-          description: The attachment data
+          description: Data in base 64 format
         fileType:
           $ref: '#/components/schemas/FileType'
       required:
@@ -690,6 +687,9 @@ components:
         externalId:
           type: string
           description: The external Id of the invoice
+        itemName:
+          type: string
+          description: The item name
         customerRef:
           type: string
           description: The customer Ref or Id
@@ -700,15 +700,21 @@ components:
         dueDate:
           type: string
           description: The invoice due date. Follow ISO8601 format
+        totalAmount:
+          type: number
+          description: The total invoice amount
+        currency:
+          type: string
+          description: The invoice currency. Follow ISO 4217 code
+        invoiceNumber:
+          type: string
+          description: The invoice number
         modifiedDate:
           type: string
           description: The invoice modified date. Follow ISO8601 format
         paidOnDate:
           description: The invoice paid date. Follow ISO8601 format
           type: string
-        currency:
-          type: string
-          description: The invoice currency. Follow ISO 4217 code
         currencyRate:
           type: number
           description: The currency conversion rate to be applied to all the amount fields when converting to base currency
@@ -718,9 +724,6 @@ components:
           description: The invoice line items
           items:
             $ref: '#/components/schemas/LineItem'
-        totalAmount:
-          type: number
-          description: The total invoice amount
         totalDiscount:
           type: number
           description: Discount on invoice total amount
@@ -762,11 +765,13 @@ components:
           description: The sub total
       required:
         - externalId
+        - itemName
         - customerRef
         - issueDate
         - dueDate
-        - currency
         - totalAmount
+        - currency
+        - invoiceNumber
     Address:
       description: The customers address
       type: object
@@ -954,3 +959,4 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+  parameters: {}
