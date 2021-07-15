@@ -613,6 +613,9 @@ components:
       description: The line item
       type: object
       properties:
+        itemName:
+          type: string
+          description: The item name
         description:
           type: string
           description: Description about line item
@@ -638,6 +641,7 @@ components:
           type: string
           description: 'Reference to the product, service type, or inventory item, to which the line item is linked.'
       required:
+        - itemName
         - description
         - unitAmount
         - quantity
@@ -687,9 +691,6 @@ components:
         externalId:
           type: string
           description: The external Id of the invoice
-        itemName:
-          type: string
-          description: The item name
         customerRef:
           type: string
           description: The customer Ref or Id
