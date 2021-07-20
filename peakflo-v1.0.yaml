@@ -49,18 +49,17 @@ paths:
             examples:
               Example:
                 value:
-                  companyName: Mc win pte ltd
-                  externalId: 1245a32
+                  companyName: YouWin
+                  externalId: '121989'
                   currency: USD
                   status: active
-                  parentCompanyId: 23oc2344
-                  accountManagerEmail: johndoe@peakflo.co
+                  accountManagerEmail: emily@youwin.com
                   pauseWorkflow: false
-                  contact:
-                    - externalId: 234wf33
+                  contacts:
+                    - externalId: 120989C1
                       firstName: Peter
                       lastName: Wong
-                      email: peterwong@mcwin.com
+                      email: peterwong@youwin.com
                       phone: '6591234567'
                       isMainContact: false
         required: false
@@ -71,23 +70,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Customer'
-              examples:
-                Example:
-                  value:
-                    companyName: Mc win pte ltd
-                    externalId: 1245a32
-                    currency: USD
-                    status: active
-                    parentCompanyId: 23oc2344
-                    accountManagerEmail: johndoe@peakflo.co
-                    pauseWorkflow: false
-                    contact:
-                      - externalId: 234wf33
-                        firstName: Peter
-                        lastName: Wong
-                        email: peterwong@mcwin.com
-                        phone: '6591234567'
-                        isMainContact: false
+              examples: {}
         '400':
           description: Bad request
           content: {}
@@ -112,13 +95,19 @@ paths:
             examples:
               Example:
                 value:
-                  companyName: Mc win pte ltd
-                  externalId: 1245a32
-                  currency: USD
+                  companyName: YouWin
+                  externalId: '121989'
+                  currency: SGD
                   status: active
-                  parentCompanyId: 23oc2344
-                  accountManagerEmail: johndoe@peakflo.co
+                  accountManagerEmail: adrian@youwin.com
                   pauseWorkflow: false
+                  contacts:
+                    - externalId: 120989C1
+                      firstName: Peter
+                      lastName: Wong
+                      email: peterwong@youwin.com
+                      phone: '6591234567'
+                      isMainContact: true
         required: false
       responses:
         '200':
@@ -202,10 +191,10 @@ paths:
             examples:
               Example:
                 value:
-                  externalId: 234wf33
+                  externalId: '178333'
                   firstName: Peter
                   lastName: Wong
-                  email: peterwong@mcwin.com
+                  email: peterwong@youwin.com
                   phone: '6591234567'
                   isMainContact: false
         description: Contact to add
@@ -256,6 +245,21 @@ paths:
           description: Conflict
       operationId: update-contact
       description: Update a contact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contact'
+            examples:
+              example:
+                value:
+                  externalId: 234wf33
+                  firstName: Peter
+                  lastName: bearing
+                  email: pbearing@mcwin.com
+                  phone: '6591234567'
+                  isMainContact: false
+        description: ''
     delete:
       summary: Delete a contact
       tags:
@@ -284,6 +288,31 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Invoice'
+            examples:
+              example:
+                value:
+                  externalId: Inv-a12897888
+                  customerRef: '120989'
+                  issueDate: '2021-04-28T12:30:00'
+                  dueDate: '2021-10-28T12:30:00'
+                  currency: SGD
+                  lineItems:
+                    - description: Procurement for desk support
+                      unitAmount: 20
+                      quantity: 1
+                      discountAmount: 0
+                      subTotal: 0
+                      taxAmount: 0
+                      totalAmount: 0
+                      itemRef: Inv-a12897888-Item1
+                  totalAmount: 20
+                  totalDiscount: 0
+                  totalTaxAmount: 0
+                  amountDue: 20
+                  status: draft
+                  note: string
+                  subTotal: 20
+                  invoiceNumber: INVNUMa128
         description: The invoice to be added
       tags:
         - Invoices
@@ -316,7 +345,31 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Invoice'
-            examples: {}
+            examples:
+              example:
+                value:
+                  externalId: Inv-a12897888
+                  customerRef: '120989'
+                  issueDate: '2021-04-28T12:30:00'
+                  dueDate: '2021-10-28T12:30:00'
+                  currency: SGD
+                  lineItems:
+                    - description: Procurement for desk support
+                      unitAmount: 20
+                      quantity: 1
+                      discountAmount: 0
+                      subTotal: 0
+                      taxAmount: 0
+                      totalAmount: 0
+                      itemRef: Inv-a12897888-Item1
+                  totalAmount: 20
+                  totalDiscount: 0
+                  totalTaxAmount: 0
+                  amountDue: 20
+                  status: draft
+                  note: string
+                  subTotal: 20
+                  invoiceNumber: INVNUMa128
         description: The invoice to update
       tags:
         - Invoices
@@ -353,6 +406,15 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Attachment'
+            examples:
+              example:
+                value:
+                  externalId: string
+                  name: string
+                  contentType: string
+                  data: string
+                  dateCreated: string
+                  fileType: invoice
   /creditnotes:
     post:
       tags:
@@ -376,6 +438,24 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreditNote'
+            examples:
+              example:
+                value:
+                  externalId: cn_189237900328930
+                  creditNoteNumber: crnum_181234
+                  customerRef: '120989'
+                  totalAmount: 300
+                  remainingCredit: 0
+                  status: Draft
+                  issueDate: '2021-04-28T12:30:00'
+                  currency: SGD
+                  lineItems:
+                    - description: Outsourcing services
+                      unitAmount: 300
+                      quantity: 1
+                      totalAmount: 300
+                      itemRef: 'crnum_181234L1 '
+                  note: Ref. to outsourcing services month of march
         description: The credit note to add
   '/creditnotes/{creditNoteExternalId}':
     parameters:
@@ -407,6 +487,24 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreditNote'
+            examples:
+              example:
+                value:
+                  externalId: cn_189237900328930
+                  creditNoteNumber: crnum_181234
+                  customerRef: '120989'
+                  totalAmount: 300
+                  remainingCredit: 0
+                  status: Draft
+                  issueDate: '2021-04-28T12:30:00'
+                  currency: SGD
+                  lineItems:
+                    - description: Outsourcing services
+                      unitAmount: 300
+                      quantity: 1
+                      totalAmount: 300
+                      itemRef: 'crnum_181234L1 '
+                  note: Ref. to outsourcing services month of march
         description: The credit note to update
     delete:
       summary: Delete a credit note
@@ -442,6 +540,22 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Payment'
+            examples:
+              example:
+                value:
+                  externalId: pay_189220000002223
+                  customerRef: '120989'
+                  totalAmount: 400
+                  remainingAmount: 0
+                  currency: SGD
+                  currencyRate: 0
+                  date: '2021-04-28T12:30:00'
+                  paymentLines:
+                    - amount: 400
+                      type: invoice
+                      id: pay_189220000002223L1
+                  modifiedDate: '2021-10-28T12:30:00'
+                  reference: 120989Ref_98389273
         description: The payment to add
   '/payments/{paymentExternalId}':
     parameters:
@@ -469,6 +583,22 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Payment'
+            examples:
+              example:
+                value:
+                  externalId: pay_189220000002223
+                  customerRef: '120989'
+                  totalAmount: 400
+                  remainingAmount: 0
+                  currency: SGD
+                  currencyRate: 0
+                  date: '2021-04-28T12:30:00'
+                  paymentLines:
+                    - amount: 400
+                      type: invoice
+                      id: pay_189220000002223L1
+                  modifiedDate: '2021-10-28T12:30:00'
+                  reference: 120989Ref_98389273
         description: The payment to update
     delete:
       summary: Delete a payment
@@ -762,7 +892,6 @@ components:
           description: The sub total
       required:
         - externalId
-        - itemName
         - customerRef
         - issueDate
         - dueDate
