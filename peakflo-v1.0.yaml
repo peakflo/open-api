@@ -519,7 +519,7 @@ components:
           type: string
           description: The status of the company
           enum:
-            - unknow
+            - unknown
             - active
             - archived
           example: active
@@ -538,6 +538,7 @@ components:
         pauseWorkflow:
           type: boolean
           description: Indicate whether workflow is paused for this company or not. If paused then no actions will take place.
+          default: false
         contacts:
           type: array
           items:
@@ -568,13 +569,13 @@ components:
         lastName:
           type: string
           description: The last name of the contact
-        middleName:
-          type: string
-          description: The middle name of the contact
         email:
           type: string
           description: The email Id of the contact
           example: johndoe@peakflo.co
+        middleName:
+          type: string
+          description: The middle name of the contact
         phone:
           type: string
           description: The phone number of the contact along with country code
@@ -590,11 +591,11 @@ components:
         position:
           type: string
           enum:
-            - Sales
-            - Accounting
-            - Management
-            - Unknown
-          example: Sales
+            - sales
+            - accounting
+            - management
+            - unknown
+          example: sales
           description: The postion of the contact in the company
         description:
           type: string
@@ -613,9 +614,6 @@ components:
       description: The line item
       type: object
       properties:
-        itemName:
-          type: string
-          description: The item name
         description:
           type: string
           description: Description about line item
@@ -625,6 +623,9 @@ components:
         quantity:
           type: number
           description: 'Number of units '
+        totalAmount:
+          type: number
+          description: The total amount
         discountAmount:
           type: number
           description: Discount on total amount
@@ -634,14 +635,10 @@ components:
         taxAmount:
           type: number
           description: The tax amount
-        totalAmount:
-          type: number
-          description: The total amount
         itemRef:
           type: string
           description: 'Reference to the product, service type, or inventory item, to which the line item is linked.'
       required:
-        - itemName
         - description
         - unitAmount
         - quantity
@@ -656,15 +653,15 @@ components:
         name:
           type: string
           description: 'Name of the attachment '
-        dateCreated:
-          type: string
-          description: The date at which the attachment created. Follow ISO 8601 format
         contentType:
           type: string
           description: Content type of attachment
         data:
           type: string
           description: Data in base 64 format
+        dateCreated:
+          type: string
+          description: The date at which the attachment created. Follow ISO 8601 format
         fileType:
           $ref: '#/components/schemas/FileType'
       required:
@@ -676,10 +673,7 @@ components:
       title: FileType
       type: string
       enum:
-        - cabinet
         - invoice
-        - statement
-        - transaction
         - other
       description: The supported file types
       x-examples:
@@ -693,7 +687,7 @@ components:
           description: The external Id of the invoice
         customerRef:
           type: string
-          description: The customer Ref or Id
+          description: The external ref number of a customer
         issueDate:
           type: string
           description: Invoice issue date. Follow ISO8601 format
@@ -701,6 +695,7 @@ components:
         dueDate:
           type: string
           description: The invoice due date. Follow ISO8601 format
+          example: '2021-10-28T12:30:00'
         totalAmount:
           type: number
           description: The total invoice amount
@@ -719,6 +714,7 @@ components:
         currencyRate:
           type: number
           description: The currency conversion rate to be applied to all the amount fields when converting to base currency
+          default: 1
         lineItems:
           type: array
           uniqueItems: true
@@ -737,14 +733,14 @@ components:
         status:
           type: string
           enum:
-            - Draft
-            - Submitted
-            - PartiallyPaid
-            - Void
-            - Paid
-            - Open
-          example: Paid
-          default: Draft
+            - paid
+            - cancelled
+            - legalEscalation
+            - dispute
+            - draft
+            - open
+          example: paid
+          default: open
           description: The invoice status
         note:
           type: string
@@ -777,26 +773,32 @@ components:
       description: The customers address
       type: object
       properties:
-        type:
-          type: string
-          description: The address type
         line1:
           type: string
           description: The address line 1
-        line2:
-          type: string
         city:
           type: string
           description: The city
-        region:
-          type: string
-          description: The region
         country:
           type: string
           description: The country
         postalCode:
           type: string
           description: The postal code
+        type:
+          type: string
+          enum:
+            - billing
+            - delivery
+            - other
+          example: delivery
+          default: billing
+          description: The type of address
+        line2:
+          type: string
+        region:
+          type: string
+          description: The region
       required:
         - line1
         - city
@@ -814,10 +816,19 @@ components:
           description: Human readable form of credit note
         customerRef:
           type: string
-          description: The customer Id
+          description: The external ref number of a customer
         totalAmount:
           type: number
           description: The total amount
+        remainingCredit:
+          type: number
+          description: The remaining credit amount
+        issueDate:
+          type: string
+          description: The issue date. Follow ISO8601 format
+        currency:
+          type: string
+          description: The credit note currency. Follow ISO 4217 code
         totalDiscount:
           type: number
           description: The total discount
@@ -827,32 +838,22 @@ components:
         totalTaxAmount:
           type: number
           description: The total tax amount
-        remainingCredit:
-          type: number
-          description: The remaining credit amount
         status:
           type: string
           enum:
-            - Draft
-            - Submitted
-            - PartiallyPaid
-            - Void
-            - Paid
-          default: Draft
-          example: Paid
+            - draft
+            - active
+            - deleted
+          default: active
+          example: draft
           description: The status of credit note
-        issueDate:
-          type: string
-          description: The issue date. Follow ISO8601 format
         allocatedOnDate:
           type: string
           description: The credit note allocated date. Follow ISO8601 format
-        currency:
-          type: string
-          description: The credit note currency. Follow ISO 4217 code
         currencyRate:
           type: number
           description: The currency conversion rate to be applied to all the amount fields when converting to base currency
+          default: 1
         lineItems:
           type: array
           items:
@@ -874,14 +875,14 @@ components:
       description: ''
       type: object
       properties:
-        id:
+        externalId:
           type: string
           minLength: 1
-          description: The unique paymentId
+          description: The external Id
         customerRef:
           type: string
           minLength: 1
-          description: The customer Id
+          description: The external ref number of a customer
         totalAmount:
           type: number
           description: Total amount
@@ -891,14 +892,19 @@ components:
         currency:
           type: string
           minLength: 1
-          description: The currency of payment
-        currencyRate:
-          description: The currency conversion rate to be applied to all the amount fields when converting to base currency
-          type: number
+          description: The currency of payment. Must be a ISO 4217 code.
         date:
           type: string
           minLength: 1
           description: The payment date.Follow ISO8601 format
+        reference:
+          type: string
+          minLength: 1
+          description: Human readable payment ref number
+        currencyRate:
+          description: The currency conversion rate to be applied to all the amount fields when converting to base currency
+          type: number
+          default: 1
         paymentLines:
           type: array
           uniqueItems: true
@@ -909,21 +915,24 @@ components:
           type: string
           minLength: 1
           description: Date the record was last changed
-        reference:
+        status:
           type: string
-          minLength: 1
+          description: The payment status
+          enum:
+            - deposited
+            - not deposited
+          default: deposited
         note:
           type: string
           minLength: 1
           description: Notes related to this payment
       required:
-        - id
+        - externalId
         - customerRef
         - totalAmount
         - remainingAmount
         - currency
         - date
-        - modifiedDate
         - reference
     PaymentLine:
       description: The payment line
@@ -939,22 +948,18 @@ components:
           type: string
           description: Type of payment
           enum:
-            - Invoice
-            - Refund
-          default: Invoice
-          example: Invoice
+            - invoice
+            - refund
+          default: invoice
+          example: refund
         id:
           type: string
           description: Reference to the item to which the payment is made
           example: Invoice Id if this is a invoice type payment
-        currencyRate:
-          type: number
-          description: The currency conversion rate to be applied to all the amount fields when converting to base currency
       required:
         - amount
         - type
         - id
-        - currencyRate
   securitySchemes:
     bearerAuth:
       type: http
