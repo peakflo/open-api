@@ -611,6 +611,42 @@ paths:
       tags:
         - Payments
       description: Delete a payment
+  /reminders:
+    get:
+      summary: Pull reminder
+      parameters:
+        - name: tenantId
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: customerId
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: workflowId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful reminder pull
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workflowId:
+                    type: string
+                  portalUrl:
+                    type: string
+        '404':
+          description: Not Found
+        '400':
+          description: Bad Request
+    
 components:
   schemas:
     Customer:
@@ -1089,6 +1125,34 @@ components:
         - amount
         - type
         - id
+    Reminder:
+      type: object
+      description: A reminder object containing information about a notification.
+      properties:
+        customer-id:
+          type: string
+          description: The ID of the customer associated with the reminder.
+        message-id:
+          type: string
+          format: uuid
+          description: The unique identifier for the reminder message.
+        payload:
+          type: object
+          description: The payload containing details of the reminder.
+          properties:
+            title:
+              type: string
+              description: The title of the reminder.
+            message:
+              type: string
+              description: The main content of the reminder message.
+            portalLink:
+              type: string
+              description: A link to the Peakflo portal.
+      required:
+        - customer-id
+        - message-id
+        - payload
   securitySchemes:
     bearerAuth:
       type: http
