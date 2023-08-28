@@ -271,25 +271,9 @@ paths:
           description: Not Found
       operationId: delete-contact
       description: Delete a contact
-  '/customers/{customerExternalId}/reminders':
+  '/customers/{customerExternalId}/portalUrl':
     get:
       summary: Pull reminder
-      parameters:
-        - name: tenantId
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: customerId
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: workflowId
-          in: query
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: 'successful reminder pull'
@@ -1146,10 +1130,10 @@ components:
       type: object
       description: A reminder object containing information about a notification.
       properties:
-        customer-id:
+        customerExternalId:
           type: string
           description: The ID of the customer associated with the reminder.
-        message-id:
+        messageId:
           type: string
           format: uuid
           description: The unique identifier for the reminder message.
@@ -1167,8 +1151,8 @@ components:
               type: string
               description: A link to the Peakflo portal.
       required:
-        - customer-id
-        - message-id
+        - customerExternalId
+        - messageId
         - payload
   securitySchemes:
     bearerAuth:

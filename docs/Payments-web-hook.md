@@ -177,7 +177,7 @@ The REMINDER_CREATED event is triggered when a reminder is sent (or pushed) to a
 
 ```json
 {
-  "customerId" : "45645666aff54497ba804e6f1ea09929",
+  "customerExternalId" : "45645666aff54497ba804e6f1ea09929",
   "messageId" : "45645666aff54497ba804e6f1ea09929",
   "payload": {
     "title": "Please check this reminder!",
