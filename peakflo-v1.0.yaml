@@ -271,6 +271,55 @@ paths:
           description: Not Found
       operationId: delete-contact
       description: Delete a contact
+  '/customers/{customerExternalId}/reminders':
+    get:
+      summary: Pull reminder
+      parameters:
+        - name: tenantId
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: customerId
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: workflowId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'successful reminder pull'
+          content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+            examples:
+              Example:
+                value:
+                  companyName: YouWin
+                  externalId: '121989'
+                  currency: SGD
+                  status: active
+                  accountManagerEmail: adrian@youwin.com
+                  pauseWorkflow: false
+                  contacts:
+                    - externalId: 120989C1
+                      firstName: Peter
+                      lastName: Wong
+                      email: peterwong@youwin.com
+                      phone: '6591234567'
+                      isMainContact: true
+                  portalUrl: https://stage-portal.peakflo.co/?token=sampletoken
+        '404':
+          description: Not Found
+        '400':
+          description: Bad Request
+
+  
   /invoices:
     post:
       summary: Add an invoice
@@ -611,41 +660,6 @@ paths:
       tags:
         - Payments
       description: Delete a payment
-  /reminders:
-    get:
-      summary: Pull reminder
-      parameters:
-        - name: tenantId
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: customerId
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: workflowId
-          in: query
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful reminder pull
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  workflowId:
-                    type: string
-                  portalUrl:
-                    type: string
-        '404':
-          description: Not Found
-        '400':
-          description: Bad Request
     
 components:
   schemas:
