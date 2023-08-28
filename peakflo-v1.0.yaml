@@ -273,10 +273,12 @@ paths:
       description: Delete a contact
   '/customers/{customerExternalId}/portalUrl':
     get:
-      summary: Pull reminder
+      summary: Read Customer info
+      tags:
+        - Customers
       responses:
         '200':
-          description: 'successful reminder pull'
+          description: 'Read Customer Info with portal link'
           content:
           application/json:
             schema:
