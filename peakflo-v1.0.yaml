@@ -731,6 +731,9 @@ components:
           description: The customers addresses
           items:
             $ref: '#/components/schemas/Address'
+        portalUrl:
+          type: string
+          description: Peakflo Portal URL 
       required:
         - externalId
         - companyName
