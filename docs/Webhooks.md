@@ -1,4 +1,4 @@
-# Payments webhook
+# Webhooks
 
 Peakflo sends messages to your webhook endpoint URI whenever there is an update to a payment. To receive these you must configure the URL and access token in your peakflo account.
 
