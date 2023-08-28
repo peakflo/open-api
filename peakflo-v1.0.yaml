@@ -280,26 +280,26 @@ paths:
         '200':
           description: 'Read Customer Info with portal link'
           content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Customer'
-            examples:
-              Example:
-                value:
-                  companyName: YouWin
-                  externalId: '121989'
-                  currency: SGD
-                  status: active
-                  accountManagerEmail: adrian@youwin.com
-                  pauseWorkflow: false
-                  contacts:
-                    - externalId: 120989C1
-                      firstName: Peter
-                      lastName: Wong
-                      email: peterwong@youwin.com
-                      phone: '6591234567'
-                      isMainContact: true
-                  portalUrl: https://stage-portal.peakflo.co/?token=sampletoken
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+              examples:
+                Example:
+                  value:
+                    companyName: YouWin
+                    externalId: '121989'
+                    currency: SGD
+                    status: active
+                    accountManagerEmail: adrian@youwin.com
+                    pauseWorkflow: false
+                    contacts:
+                      - externalId: 120989C1
+                        firstName: Peter
+                        lastName: Wong
+                        email: peterwong@youwin.com
+                        phone: '6591234567'
+                        isMainContact: true
+                    portalUrl: https://stage-portal.peakflo.co/?token=sampletoken
         '404':
           description: Not Found
         '400':
