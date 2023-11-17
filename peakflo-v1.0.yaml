@@ -51,12 +51,14 @@ paths:
                 value:
                   companyName: YouWin
                   externalId: '121989'
+                  sourceId: '121989'
                   currency: USD
                   status: active
                   accountManagerEmail: emily@youwin.com
                   pauseWorkflow: false
                   contacts:
                     - externalId: 120989C1
+                      sourceId: 120989C1
                       firstName: Peter
                       lastName: Wong
                       email: peterwong@youwin.com
@@ -655,6 +657,8 @@ components:
         Example:
           companyName: string
           externalId: string
+          sourceId: string
+          externalRefNumber: string
           currency: USD
           status: active
           parentCompanyId: string
@@ -675,6 +679,12 @@ components:
         externalId:
           type: string
           description: The external Id of the company
+        sourceId:
+          type: string
+          description: The external Id mapped to the source Id for data transfer between systems
+        externalRefNumber:
+          type: string
+          description: The external Id mapped to the source Id for data transfer between systems 
         companyName:
           type: string
           description: The company name
