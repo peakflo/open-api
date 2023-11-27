@@ -1497,7 +1497,7 @@ paths:
         name: billExternalId
         in: path
         required: true
-  "/{webhook-url-for-bill}":
+  "/webhook-url-for-bill":
     post:
       tags:
         - Bills
@@ -1843,7 +1843,7 @@ paths:
   "/purchase-order":
     post:
       tags:
-        - Purchase Orders
+        - Vendor Purchase Orders
       summary: Create a purchase order
       description: Create a new purchase order
       operationId: create-purchase-order
@@ -2062,7 +2062,7 @@ paths:
   "/purchase-order/{externalId}":
     get:
       tags:
-        - Purchase Orders
+        - Vendor Purchase Orders
       summary: Get a purchase order by ID
       description: Retrieve details of a specific purchase order
       operationId: get-purchase-order
@@ -2276,7 +2276,7 @@ paths:
           content: {}
     put:
       tags:
-        - Purchase Orders
+        - Vendor Purchase Orders
       summary: Update a purchase order by ID
       description: Update an existing purchase order
       operationId: update-purchase-order
@@ -2493,10 +2493,10 @@ paths:
         '404':
           description: Not Found
           content: {}
-  "/{webhook-url-for-purchase-order}":
+  "/webhook-url-for-purchase-order":
     post:
       tags:
-        - Purchase Orders
+        - Vendor Purchase Orders
       summary: Webhook for purchase order
       description:  Webhook for purchase order update
       operationId: webhook-purchase-order
@@ -2710,7 +2710,7 @@ paths:
   "/receipt-notes":
     post:
       tags:
-        - Receipt Notes
+        - Vendor Credit Notes
       summary: Create a receipt note
       description: Create a new receipt note
       operationId: create-receipt-note
@@ -2895,7 +2895,7 @@ paths:
   "/receipt-notes/{externalId}":
     get:
       tags:
-        - Receipt Notes
+        - Vendor Receipt Notes
       summary: Get a receipt note
       description: Retrieve details of a specific receipt note
       operationId: get-receipt-note
@@ -2937,7 +2937,7 @@ paths:
                     type: array
                     items:
                       type: object
-                      properties: # You can populate this structure from the 'items' field in the bill structure
+                      properties:
                         itemId:
                           type: string
                         name:
@@ -3077,7 +3077,7 @@ paths:
           content: {}
     put:
       tags:
-        - Receipt Notes
+        - Vendor Receipt Notes
       summary: Update a receipt note
       description: Update an existing receipt note
       operationId: update-receipt-note
@@ -3159,10 +3159,10 @@ paths:
         '404':
           description: Not Found
           content: {}
-  "/{webhook-url-for-receipt-note}":
+  "/webhook-url-for-receipt-note":
     post:
       tags:
-        - Receipt Notes
+        - Vendor Receipt Notes
       summary: Receipt note webhook
       description: Webhook for receipt note updae
       operationId: webhook-receipt-note
