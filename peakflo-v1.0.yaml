@@ -38,6 +38,14 @@ tags:
     description: The vendor contacts
   - name: Bills
     description: Vendor bills
+  - name: Bill Payments
+    description: Vendor Bill Payments
+  - name: Vendor Purchase Orders
+    description: Vendor Purchase Orders
+  - name: Vendor Receipt Notes
+    description: Vendor Receipt Notes
+  - name: Vendor Credit Notes
+    description: Vendor Credit Notes
 
 paths:
   /customers:
