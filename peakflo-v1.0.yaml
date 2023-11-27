@@ -1709,7 +1709,7 @@ paths:
           description: Conflict
           content: {}        
   
-  "/bill/payment":
+  "/bill-payment":
     post:
       tags:
         - Bill Payments
@@ -1776,13 +1776,20 @@ paths:
         '409':
           description: Conflict
           content: {}
-  "/bill/payment/{externalId}":
+  "/bill-payment/{externalId}":
     put:
       tags:
         - Bill Payments
       summary: Update a bill payment
       description: Update a bill payment
       operationId: update-bill-payment
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: ID of the purchase order to retrieve
+          schema:
+            type: string
       requestBody:
         description: Bill payment to update
         required: true
