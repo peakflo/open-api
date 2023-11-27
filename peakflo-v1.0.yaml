@@ -32,6 +32,13 @@ tags:
     description: The customers payments
   - name: Credit Notes
     description: The customers credit notes
+  - name: Vendors
+    description: The vendor
+  - name: Vendor Contacts 
+    description: The vendor contacts
+  - name: Bills
+    description: Vendor bills
+
 paths:
   /customers:
     post:
@@ -646,7 +653,2881 @@ paths:
       tags:
         - Payments
       description: Delete a payment
-    
+  
+  /vendors:
+    post:
+      tags:
+        - Vendors
+      summary: Add a vendor
+      description: Add a new vendor
+      operationId: add-vendor
+      requestBody:
+        description: Vendor to add
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyName:
+                  type: string
+                companyId:
+                  type: string
+                defaultCurrency:
+                  type: string
+                addresses:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                          - billing
+                          - delivery
+                          - other
+                      line1:
+                        type: string
+                      line2:
+                        type: string
+                        nullable: true
+                      city:
+                        type: string
+                      region:
+                        type: string
+                        nullable: true
+                      country:
+                        type: string
+                      postalCode:
+                        type: string
+                registrationNumber:
+                  type: string
+                taxNumber:
+                  type: string
+                notes:
+                  type: string
+                bankDetails:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      bankName:
+                        type: string
+                      bankCode:
+                        type: string
+                      bankCountry:
+                        type: string
+                      accountNumber:
+                        type: string
+                      accountHolder:
+                        type: string
+                      currency:
+                        type: string
+                      bankAccountType:
+                        type: string
+                        enum:
+                          - current
+                          - savings
+                      isDefault:
+                        type: boolean
+                entityType:
+                  type: string
+                  enum:
+                    - company
+                    - individual
+                beneficiaryCountry:
+                  type: string
+                vendorFirstName:
+                  type: string
+                vendorLastName:
+                  type: string
+            examples:
+              Example:
+                value:
+                  companyName: YouWin
+                  companyId: '121989'
+                  defaultCurrency: USD
+                  addresses:
+                    - type: billing
+                      line1: Sample Address Line 1
+                      city: Sample City
+                      country: Sample Country
+                      postalCode: '12345'
+                  registrationNumber: ABC123
+                  taxNumber: XYZ456
+                  notes: Sample notes
+                  bankDetails:
+                    - id: '1'
+                      bankName: Sample Bank
+                      bankCode: B123
+                      bankCountry: Bank Country
+                      accountNumber: Account123
+                      accountHolder: Account Holder
+                      currency: USD
+                      bankAccountType: current
+                      isDefault: true
+                  entityType: company
+                  beneficiaryCountry: Beneficiary Country
+                  vendorFirstName: John
+                  vendorLastName: Doe
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+              
+        '400':
+          description: Bad request
+          content: {}
+        '409':
+          description: Conflict
+          content: {}
+      x-codegen-request-body-name: Vendors
+  '/vendors/{vendorExternalId}/contacts':
+    parameters:
+      - schema:
+          type: string
+        name: vendorExternalId
+        in: path
+        required: true
+        description: The vendor external Id
+    post:
+      summary: Create a vendor contact
+      tags:
+        - Vendor Contacts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+              examples:
+                Example:
+                  value:
+                    externalId: 234wf33
+                    firstName: Peter
+                    lastName: Wong
+                    email: peterwong@mcwin.com
+                    phone: '6591234567'
+                    isMainContact: false
+        '404':
+          description: Not Found
+        '409':
+          description: Conflict
+      operationId: create-vendor-contact
+      description: Create a vendor contact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contact'
+            examples:
+              example:
+                value:
+                  externalId: 234wf33
+                  firstName: Peter
+                  lastName: bearing
+                  email: pbearing@mcwin.com
+                  phone: '6591234567'
+                  isMainContact: false
+        description: ''
+  
+  "/bill":
+    post:
+      tags:
+        - Bills
+      summary: Create a bill
+      description: Create a new bill
+      operationId: create-bill
+      requestBody:
+        description: Bill to create
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                billNumber:
+                  type: string
+                status:
+                  type: string
+                  enum:
+                    - paid
+                billExternalId:
+                  type: string
+                paymentId:
+                  type: string
+                vendorId:
+                  type: string
+                vendorName:
+                  type: string
+                date:
+                  type: string
+                dueDate:
+                  type: string
+                scheduledDate:
+                  type: string
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      contentType:
+                        type: string
+                      fileSize:
+                        type: number
+                      base64:
+                        type: string
+                currency:
+                  type: string
+                subTotal:
+                  type: number
+                totalTax:
+                  type: number
+                paymentAmount:
+                  type: number
+                totalAmount:
+                  type: number
+                notes:
+                  type: string
+                billPaymentId:
+                  type: string
+                totalWHT:
+                  type: number
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      itemId:
+                        type: string
+                      name:
+                        type: string
+                      unit:
+                        type: string
+                      description:
+                        type: string
+                      quantity:
+                        type: number
+                      unitPrice:
+                        type: number
+                      accountId:
+                        type: string
+                      wht:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          referenceId:
+                            type: string
+                          code:
+                            type: string
+                          displayName:
+                            type: string
+                          amount:
+                            type: number
+                      taxes:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            externalId:
+                              type: string
+                            name:
+                              type: string
+                            amount:
+                              type: number
+                            priceIncludesTax:
+                              type: boolean
+                            amountType:
+                              type: string
+                              enum:
+                                - fixed
+                                - percentage
+                            perc:
+                              type: number
+                      discounts:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            externalId:
+                              type: string
+                            name:
+                              type: string
+                            amount:
+                              type: number
+                            amountType:
+                              type: string
+                              enum:
+                                - fixed
+                                - percentage
+                      totalTax:
+                        type: number
+                      totalDiscount:
+                        type: number
+                      total:
+                        type: number
+                receiptDate:
+                  type: string
+                paymentMadeDate:
+                  type: string
+            examples:
+              Example:
+                value:
+                  billNumber: "BILL12345"
+                  status: "paid"
+                  billExternalId: "123456789"
+                  paymentId: "PAY789"
+                  vendorId: "VENDOR001"
+                  vendorName: "ABC Vendor"
+                  date: "2023-11-27T12:00:00Z"
+                  dueDate: "2023-12-15T23:59:59Z"
+                  scheduledDate: "2023-12-10T00:00:00Z"
+                  attachments:
+                    - id: "attachment_id_1"
+                      name: "Attachment 1"
+                      contentType: "application/pdf"
+                      fileSize: 1024
+                      base64: "Base64EncodedContent1"
+                  currency: "USD"
+                  subTotal: 500
+                  totalTax: 50
+                  paymentAmount: 450
+                  totalAmount: 550
+                  notes: "This is a test bill"
+                  billPaymentId: "BP789"
+                  totalWHT: 20
+                  items:
+                    - itemId: "ITEM001"
+                      name: "Product A"
+                      unit: "unit"
+                      description: "Description for Product A"
+                      quantity: 2
+                      unitPrice: 150
+                      accountId: "ACC001"
+                      wht:
+                        id: "WHT001"
+                        referenceId: "REF001"
+                        code: "WHT_CODE"
+                        displayName: "Withholding Tax"
+                        amount: 10
+                      taxes:
+                        - externalId: "TAX001"
+                          name: "Sales Tax"
+                          amount: 20
+                          priceIncludesTax: true
+                          amountType: "percentage"
+                          perc: 5
+                      discounts:
+                        - externalId: "Discount101"
+                          name: "New user discount"
+                          amount: 20
+                          amountType: "percentage"
+                      totalTax: 20
+                      totalDiscount: 0
+                      total: 320
+                  receiptDate: "2023-11-28T00:00:00Z"
+                  paymentMadeDate: "2023-12-05T12:30:00Z"
+      responses:
+        '201':
+          description: Created
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+        '409':
+          description: Conflict
+          content: {}        
+  "/bill/{billExternalId}":
+    get:
+      summary: Read a bill
+      tags:
+        - Bills
+      parameters:
+        - schema:
+            type: string
+          name: billExternalId
+          in: path
+          required: true  
+      responses:
+        '200':
+          description: 'Read bill info'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  billNumber:
+                    type: string
+                  status:
+                    type: string
+                    enum:
+                      - paid
+                  billExternalId:
+                    type: string
+                  paymentId:
+                    type: string
+                  vendorId:
+                    type: string
+                  vendorName:
+                    type: string
+                  date:
+                    type: string
+                  dueDate:
+                    type: string
+                  scheduledDate:
+                    type: string
+                  attachments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        contentType:
+                          type: string
+                        fileSize:
+                          type: number
+                        base64:
+                          type: string
+                  currency:
+                    type: string
+                  subTotal:
+                    type: number
+                  totalTax:
+                    type: number
+                  paymentAmount:
+                    type: number
+                  totalAmount:
+                    type: number
+                  notes:
+                    type: string
+                  billPaymentId:
+                    type: string
+                  totalWHT:
+                    type: number
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        itemId:
+                          type: string
+                        name:
+                          type: string
+                        unit:
+                          type: string
+                        description:
+                          type: string
+                        quantity:
+                          type: number
+                        unitPrice:
+                          type: number
+                        accountId:
+                          type: string
+                        wht:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            referenceId:
+                              type: string
+                            code:
+                              type: string
+                            displayName:
+                              type: string
+                            amount:
+                              type: number
+                        taxes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              externalId:
+                                type: string
+                              name:
+                                type: string
+                              amount:
+                                type: number
+                              priceIncludesTax:
+                                type: boolean
+                              amountType:
+                                type: string
+                                enum:
+                                  - fixed
+                                  - percentage
+                              perc:
+                                type: number
+                        discounts:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              externalId:
+                                type: string
+                              name:
+                                type: string
+                              amount:
+                                type: number
+                              amountType:
+                                type: string
+                                enum:
+                                  - fixed
+                                  - percentage
+                        totalTax:
+                          type: number
+                        totalDiscount:
+                          type: number
+                        total:
+                          type: number
+                  receiptDate:
+                    type: string
+                  paymentMadeDate:
+                    type: string
+              examples:
+                Example:
+                  value:
+                    billNumber: "BILL12345"
+                    status: "paid"
+                    billExternalId: "123456789"
+                    paymentId: "PAY789"
+                    vendorId: "VENDOR001"
+                    vendorName: "ABC Vendor"
+                    date: "2023-11-27T12:00:00Z"
+                    dueDate: "2023-12-15T23:59:59Z"
+                    scheduledDate: "2023-12-10T00:00:00Z"
+                    attachments:
+                    - id: "attachment_id_1"
+                      name: "Attachment 1"
+                      contentType: "application/pdf"
+                      fileSize: 1024
+                      base64: "Base64EncodedContent1"
+                    currency: "USD"
+                    subTotal: 500
+                    totalTax: 50
+                    paymentAmount: 450
+                    totalAmount: 550
+                    notes: "This is a test bill"
+                    billPaymentId: "BP789"
+                    totalWHT: 20
+                    items:
+                      - itemId: "ITEM001"
+                        name: "Product A"
+                        unit: "unit"
+                        description: "Description for Product A"
+                        quantity: 2
+                        unitPrice: 150
+                        accountId: "ACC001"
+                        wht:
+                          id: "WHT001"
+                          referenceId: "REF001"
+                          code: "WHT_CODE"
+                          displayName: "Withholding Tax"
+                          amount: 10
+                        taxes:
+                          - externalId: "TAX001"
+                            name: "Sales Tax"
+                            amount: 20
+                            priceIncludesTax: true
+                            amountType: "percentage"
+                            perc: 5
+                        discounts:
+                          - externalId: "Discount101"
+                            name: "New user discount"
+                            amount: 20
+                            amountType: "percentage"
+                        totalTax: 20
+                        totalDiscount: 0
+                        total: 320
+                    receiptDate: "2023-11-28T00:00:00Z"
+                    paymentMadeDate: "2023-12-05T12:30:00Z"
+        
+        '404':
+          description: Not Found
+        '400':
+          description: Bad Request
+    put:
+      tags:
+        - Bills
+      summary: Update a bill
+      description: Update a bill
+      operationId: update-bill
+      parameters:
+        - schema:
+            type: string
+          name: billExternalId
+          in: path
+          required: true
+      requestBody:
+        description: Bill to update
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                billNumber:
+                  type: string
+                status:
+                  type: string
+                  enum:
+                    - paid
+                paymentId:
+                  type: string
+                vendorId:
+                  type: string
+                vendorName:
+                  type: string
+                date:
+                  type: string
+                dueDate:
+                  type: string
+                scheduledDate:
+                  type: string
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      contentType:
+                        type: string
+                      fileSize:
+                        type: number
+                      base64:
+                        type: string
+                currency:
+                  type: string
+                subTotal:
+                  type: number
+                totalTax:
+                  type: number
+                paymentAmount:
+                  type: number
+                totalAmount:
+                  type: number
+                notes:
+                  type: string
+                billPaymentId:
+                  type: string
+                totalWHT:
+                  type: number
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      itemId:
+                        type: string
+                      name:
+                        type: string
+                      unit:
+                        type: string
+                      description:
+                        type: string
+                      quantity:
+                        type: number
+                      unitPrice:
+                        type: number
+                      accountId:
+                        type: string
+                      wht:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          referenceId:
+                            type: string
+                          code:
+                            type: string
+                          displayName:
+                            type: string
+                          amount:
+                            type: number
+                      taxes:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            externalId:
+                              type: string
+                            name:
+                              type: string
+                            amount:
+                              type: number
+                            priceIncludesTax:
+                              type: boolean
+                            amountType:
+                              type: string
+                              enum:
+                                - fixed
+                                - percentage
+                            perc:
+                              type: number
+                      discounts:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            externalId:
+                              type: string
+                            name:
+                              type: string
+                            amount:
+                              type: number
+                            amountType:
+                              type: string
+                              enum:
+                                - fixed
+                                - percentage
+                      totalTax:
+                        type: number
+                      totalDiscount:
+                        type: number
+                      total:
+                        type: number
+                receiptDate:
+                  type: string
+                paymentMadeDate:
+                  type: string
+            examples:
+              Example:
+                value:
+                  billNumber: "BILL12345"
+                  status: "paid"
+                  paymentId: "PAY789"
+                  vendorId: "VENDOR001"
+                  vendorName: "ABC Vendor"
+                  date: "2023-11-27T12:00:00Z"
+                  dueDate: "2023-12-15T23:59:59Z"
+                  scheduledDate: "2023-12-10T00:00:00Z"
+                  attachments:
+                    - id: "attachment_id_1"
+                      name: "Attachment 1"
+                      contentType: "application/pdf"
+                      fileSize: 1024
+                      base64: "Base64EncodedContent1"
+                  currency: "USD"
+                  subTotal: 500
+                  totalTax: 50
+                  paymentAmount: 450
+                  totalAmount: 550
+                  notes: "This is a test bill"
+                  billPaymentId: "BP789"
+                  totalWHT: 20
+                  items:
+                    - itemId: "ITEM001"
+                      name: "Product A"
+                      unit: "unit"
+                      description: "Description for Product A"
+                      quantity: 2
+                      unitPrice: 150
+                      accountId: "ACC001"
+                      wht:
+                        id: "WHT001"
+                        referenceId: "REF001"
+                        code: "WHT_CODE"
+                        displayName: "Withholding Tax"
+                        amount: 10
+                      taxes:
+                        - externalId: "TAX001"
+                          name: "Sales Tax"
+                          amount: 20
+                          priceIncludesTax: true
+                          amountType: "percentage"
+                          perc: 5
+                      discounts:
+                        - externalId: "Discount101"
+                          name: "New user discount"
+                          amount: 20
+                          amountType: "percentage"
+
+                      totalTax: 20
+                      totalDiscount: 0
+                      total: 320
+                  receiptDate: "2023-11-28T00:00:00Z"
+                  paymentMadeDate: "2023-12-05T12:30:00Z"
+      responses:
+        '201':
+          description: Updated
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+        '409':
+          description: Conflict
+          content: {}
+    delete:
+      tags:
+        - Bills
+      summary: Delete a bill
+      operationId: delete-bill
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+      description: Delete a bill
+    parameters:
+      - schema:
+          type: string
+        name: billExternalId
+        in: path
+        required: true
+  "/{webhook-url-for-bill}":
+    post:
+      tags:
+        - Bills
+      summary: Bill webhook
+      description: Webhook for a bill update
+      operationId: webhook-bill
+      requestBody:
+        description: Updated bill
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                billNumber:
+                  type: string
+                status:
+                  type: string
+                  enum:
+                    - paid
+                billExternalId:
+                  type: string
+                paymentId:
+                  type: string
+                vendorId:
+                  type: string
+                vendorName:
+                  type: string
+                date:
+                  type: string
+                dueDate:
+                  type: string
+                scheduledDate:
+                  type: string
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      contentType:
+                        type: string
+                      fileSize:
+                        type: number
+                      base64:
+                        type: string
+                currency:
+                  type: string
+                subTotal:
+                  type: number
+                totalTax:
+                  type: number
+                paymentAmount:
+                  type: number
+                totalAmount:
+                  type: number
+                notes:
+                  type: string
+                billPaymentId:
+                  type: string
+                totalWHT:
+                  type: number
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      itemId:
+                        type: string
+                      name:
+                        type: string
+                      unit:
+                        type: string
+                      description:
+                        type: string
+                      quantity:
+                        type: number
+                      unitPrice:
+                        type: number
+                      accountId:
+                        type: string
+                      wht:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          referenceId:
+                            type: string
+                          code:
+                            type: string
+                          displayName:
+                            type: string
+                          amount:
+                            type: number
+                      taxes:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            externalId:
+                              type: string
+                            name:
+                              type: string
+                            amount:
+                              type: number
+                            priceIncludesTax:
+                              type: boolean
+                            amountType:
+                              type: string
+                              enum:
+                                - fixed
+                                - percentage
+                            perc:
+                              type: number
+                      discounts:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            externalId:
+                              type: string
+                            name:
+                              type: string
+                            amount:
+                              type: number
+                            amountType:
+                              type: string
+                              enum:
+                                - fixed
+                                - percentage
+                      totalTax:
+                        type: number
+                      totalDiscount:
+                        type: number
+                      total:
+                        type: number
+                receiptDate:
+                  type: string
+                paymentMadeDate:
+                  type: string
+            examples:
+              Example:
+                value:
+                  billNumber: "BILL12345"
+                  status: "paid"
+                  billExternalId: "123456789"
+                  paymentId: "PAY789"
+                  vendorId: "VENDOR001"
+                  vendorName: "ABC Vendor"
+                  date: "2023-11-27T12:00:00Z"
+                  dueDate: "2023-12-15T23:59:59Z"
+                  scheduledDate: "2023-12-10T00:00:00Z"
+                  attachments:
+                    - id: "attachment_id_1"
+                      name: "Attachment 1"
+                      contentType: "application/pdf"
+                      fileSize: 1024
+                      base64: "Base64EncodedContent1"
+                  currency: "USD"
+                  subTotal: 500
+                  totalTax: 50
+                  paymentAmount: 450
+                  totalAmount: 550
+                  notes: "This is a test bill"
+                  billPaymentId: "BP789"
+                  totalWHT: 20
+                  items:
+                    - itemId: "ITEM001"
+                      name: "Product A"
+                      unit: "unit"
+                      description: "Description for Product A"
+                      quantity: 2
+                      unitPrice: 150
+                      accountId: "ACC001"
+                      wht:
+                        id: "WHT001"
+                        referenceId: "REF001"
+                        code: "WHT_CODE"
+                        displayName: "Withholding Tax"
+                        amount: 10
+                      taxes:
+                        - externalId: "TAX001"
+                          name: "Sales Tax"
+                          amount: 20
+                          priceIncludesTax: true
+                          amountType: "percentage"
+                          perc: 5
+                      discounts:
+                        - externalId: "Discount101"
+                          name: "New user discount"
+                          amount: 20
+                          amountType: "percentage"
+                      totalTax: 20
+                      totalDiscount: 0
+                      total: 320
+                  receiptDate: "2023-11-28T00:00:00Z"
+                  paymentMadeDate: "2023-12-05T12:30:00Z"
+      responses:
+        '201':
+          description: Created
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+        '409':
+          description: Conflict
+          content: {}        
+  
+  "/bill/payment":
+    post:
+      tags:
+        - Bill Payments
+      summary: Create a bill payment
+      description: Create a new bill payment
+      operationId: create-bill-payment
+      requestBody:
+        description: Bill payment to create
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                externalId:
+                  type: string
+                billId:
+                  type: string
+                reference:
+                  type: string
+                vendorId:
+                  type: string
+                date:
+                  type: string
+                  format: date
+                amount:
+                  type: number
+                currency:
+                  type: string
+                fxRate:
+                  type: number
+                convertedAmount:
+                  type: number
+                paymentFee:
+                  type: number
+              required:
+                - billId
+                - externalId
+                - reference
+                - vendorId
+                - date
+                - amount
+                - currency
+            examples:
+              Example:
+                value:
+                  billId: "1234567890"
+                  externalId: "PAYMENT-001"
+                  reference: "INV-2023-001"
+                  vendorId: "VENDOR-123"
+                  date: "2023-11-28"
+                  amount: 500.25
+                  currency: "USD"
+                  fxRate: 1.2
+                  convertedAmount: 600.30
+                  paymentFee: 10.00
+      responses:
+        '201':
+          description: Created
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+        '409':
+          description: Conflict
+          content: {}
+  "/bill/payment/{externalId}":
+    put:
+      tags:
+        - Bill Payments
+      summary: Update a bill payment
+      description: Update a bill payment
+      operationId: update-bill-payment
+      requestBody:
+        description: Bill payment to update
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                billId:
+                  type: string
+                reference:
+                  type: string
+                vendorId:
+                  type: string
+                date:
+                  type: string
+                  format: date
+                amount:
+                  type: number
+                currency:
+                  type: string
+                fxRate:
+                  type: number
+                convertedAmount:
+                  type: number
+                paymentFee:
+                  type: number
+              required:
+                - billId
+                - reference
+                - vendorId
+                - date
+                - amount
+                - currency
+            examples:
+              Example:
+                value:
+                  billId: "1234567890"
+                  reference: "INV-2023-001"
+                  vendorId: "VENDOR-123"
+                  date: "2023-11-28"
+                  amount: 500.25
+                  currency: "USD"
+                  fxRate: 1.2
+                  convertedAmount: 600.30
+                  paymentFee: 10.00
+      responses:
+        '201':
+          description: Created
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+        '409':
+          description: Conflict
+          content: {}
+
+  "/purchase-order":
+    post:
+      tags:
+        - Purchase Orders
+      summary: Create a purchase order
+      description: Create a new purchase order
+      operationId: create-purchase-order
+      requestBody:
+        description: Purchase order to create
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                externalId:
+                  type: string
+                totalAmount:
+                  type: number
+                POAmount:
+                  type: number
+                totalWHT:
+                  type: number
+                paidAmount:
+                  type: number
+                balanceAmount:
+                  type: number
+                currency:
+                  type: string
+                issueDate:
+                  type: string
+                dueDate:
+                  type: string
+                notes:
+                  type: string
+                deliveryInstructions:
+                  type: string
+                status:
+                  type: string
+                totalTax:
+                  type: number
+                fxRate:
+                  type: number
+                convertedAmount:
+                  type: number
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      contentType:
+                        type: string
+                      fileSize:
+                        type: number
+                      base64:
+                        type: string
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties: # You can populate this structure from the 'items' field in the bill structure
+                      itemId:
+                        type: string
+                      name:
+                        type: string
+                      unit:
+                        type: string
+                      description:
+                        type: string
+                      quantity:
+                        type: number
+                      unitPrice:
+                        type: number
+                      accountId:
+                        type: string
+                      wht:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          referenceId:
+                            type: string
+                          code:
+                            type: string
+                          displayName:
+                            type: string
+                          amount:
+                            type: number
+                      taxes:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            externalId:
+                              type: string
+                            name:
+                              type: string
+                            amount:
+                              type: number
+                            priceIncludesTax:
+                              type: boolean
+                            amountType:
+                              type: string
+                              enum:
+                                - fixed
+                                - percentage
+                            perc:
+                              type: number
+                      discounts:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            externalId:
+                              type: string
+                            name:
+                              type: string
+                            amount:
+                              type: number
+                            amountType:
+                              type: string
+                              enum:
+                                - fixed
+                                - percentage
+                PONumber:
+                  type: string
+                PQNumber:
+                  type: string
+                vendorId:
+                  type: string
+                receiptDate:
+                  type: string
+                deliveryDate:
+                  type: string
+                bills:
+                  type: array
+                  items:
+                    type: string
+                receiptNotes:
+                  type: array
+                  items:
+                    type: string
+                balanceQuantity:
+                  type: number
+            examples:
+              Example:
+                value:
+                  externalId: "po-001"
+                  totalAmount: 5000
+                  POAmount: 4500
+                  totalWHT: 300
+                  paidAmount: 3000
+                  balanceAmount: 2000
+                  currency: "USD"
+                  issueDate: "2023-11-01T00:00:00Z"
+                  dueDate: "2023-12-01T00:00:00Z"
+                  notes: "Payment due for invoice #1234"
+                  deliveryInstructions: "Deliver to Suite 200, Building A"
+                  status: "approved"
+                  totalTax: 200
+                  fxRate: 1.2
+                  convertedAmount: 6000
+                  attachments:
+                    - id: "attachment_id_1"
+                      name: "Attachment 1"
+                      contentType: "application/pdf"
+                      fileSize: 1024
+                      base64: "Base64EncodedContent1"
+                  items:
+                    - itemId: "ITEM001"
+                      name: "Product A"
+                      unit: "unit"
+                      description: "Description for Product A"
+                      quantity: 2
+                      unitPrice: 150
+                      accountId: "ACC001"
+                      wht:
+                        id: "WHT001"
+                        referenceId: "REF001"
+                        code: "WHT_CODE"
+                        displayName: "Withholding Tax"
+                        amount: 10
+                      taxes:
+                        - externalId: "TAX001"
+                          name: "Sales Tax"
+                          amount: 20
+                          priceIncludesTax: true
+                          amountType: "percentage"
+                          perc: 5
+                      discounts:
+                        - externalId: "Discount101"
+                          name: "New user discount"
+                          amount: 20
+                          amountType: "percentage"
+                      totalTax: 20
+                      totalDiscount: 0
+                      total: 320
+                  PONumber: "PO-5678"
+                  PQNumber: "PQ-1234"
+                  vendorId: "vendor_123"
+                  receiptDate: "2023-11-15T00:00:00Z"
+                  deliveryDate: "2023-11-20T00:00:00Z"
+                  bills: ["Bill5678", "Bill5679"]
+                  receiptNotes: ["RN-001", "RN-002"]
+                  balanceQuantity: 100
+      responses:
+        '201':
+          description: Created
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+        '409':
+          description: Conflict
+          content: {}
+  "/purchase-order/{externalId}":
+    get:
+      tags:
+        - Purchase Orders
+      summary: Get a purchase order by ID
+      description: Retrieve details of a specific purchase order
+      operationId: get-purchase-order
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: ID of the purchase order to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  externalId:
+                    type: string
+                  totalAmount:
+                    type: number
+                  POAmount:
+                    type: number
+                  totalWHT:
+                    type: number
+                  paidAmount:
+                    type: number
+                  balanceAmount:
+                    type: number
+                  currency:
+                    type: string
+                  issueDate:
+                    type: string
+                  dueDate:
+                    type: string
+                  notes:
+                    type: string
+                  deliveryInstructions:
+                    type: string
+                  status:
+                    type: string
+                  totalTax:
+                    type: number
+                  fxRate:
+                    type: number
+                  convertedAmount:
+                    type: number
+                  attachments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        contentType:
+                          type: string
+                        fileSize:
+                          type: number
+                        base64:
+                          type: string
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties: # You can populate this structure from the 'items' field in the bill structure
+                        itemId:
+                          type: string
+                        name:
+                          type: string
+                        unit:
+                          type: string
+                        description:
+                          type: string
+                        quantity:
+                          type: number
+                        unitPrice:
+                          type: number
+                        accountId:
+                          type: string
+                        wht:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            referenceId:
+                              type: string
+                            code:
+                              type: string
+                            displayName:
+                              type: string
+                            amount:
+                              type: number
+                        taxes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              externalId:
+                                type: string
+                              name:
+                                type: string
+                              amount:
+                                type: number
+                              priceIncludesTax:
+                                type: boolean
+                              amountType:
+                                type: string
+                                enum:
+                                  - fixed
+                                  - percentage
+                              perc:
+                                type: number
+                        discounts:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              externalId:
+                                type: string
+                              name:
+                                type: string
+                              amount:
+                                type: number
+                              amountType:
+                                type: string
+                                enum:
+                                  - fixed
+                                  - percentage
+                  PONumber:
+                    type: string
+                  PQNumber:
+                    type: string
+                  vendorId:
+                    type: string
+                  receiptDate:
+                    type: string
+                  deliveryDate:
+                    type: string
+                  bills:
+                    type: array
+                    items:
+                      type: string
+                  receiptNotes:
+                    type: array
+                    items:
+                      type: string
+                  balanceQuantity:
+                    type: number
+              examples:
+                Example:
+                  value:
+                    totalAmount: 5000
+                    POAmount: 4500
+                    totalWHT: 300
+                    paidAmount: 3000
+                    balanceAmount: 2000
+                    currency: "USD"
+                    issueDate: "2023-11-01T00:00:00Z"
+                    dueDate: "2023-12-01T00:00:00Z"
+                    notes: "Payment due for invoice #1234"
+                    deliveryInstructions: "Deliver to Suite 200, Building A"
+                    status: "approved"
+                    totalTax: 200
+                    fxRate: 1.2
+                    convertedAmount: 6000
+                    attachments:
+                      - id: "attachment_id_1"
+                        name: "Attachment 1"
+                        contentType: "application/pdf"
+                        fileSize: 1024
+                        base64: "Base64EncodedContent1"
+                    items:
+                      - itemId: "ITEM001"
+                        name: "Product A"
+                        unit: "unit"
+                        description: "Description for Product A"
+                        quantity: 2
+                        unitPrice: 150
+                        accountId: "ACC001"
+                        wht:
+                          id: "WHT001"
+                          referenceId: "REF001"
+                          code: "WHT_CODE"
+                          displayName: "Withholding Tax"
+                          amount: 10
+                        taxes:
+                          - externalId: "TAX001"
+                            name: "Sales Tax"
+                            amount: 20
+                            priceIncludesTax: true
+                            amountType: "percentage"
+                            perc: 5
+                        discounts:
+                          - externalId: "Discount101"
+                            name: "New user discount"
+                            amount: 20
+                            amountType: "percentage"
+                    PONumber: "PO-5678"
+                    PQNumber: "PQ-1234"
+                    vendorId: "vendor_123"
+                    receiptDate: "2023-11-15T00:00:00Z"
+                    deliveryDate: "2023-11-20T00:00:00Z"
+                    bills: ["Bill5678", "Bill5679"]
+                    receiptNotes: ["RN-001", "RN-002"]
+                    balanceQuantity: 100
+        '404':
+          description: Not Found
+          content: {}
+    put:
+      tags:
+        - Purchase Orders
+      summary: Update a purchase order by ID
+      description: Update an existing purchase order
+      operationId: update-purchase-order
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: ID of the purchase order to update
+          schema:
+            type: string
+      requestBody:
+        description: Updated purchase order details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                totalAmount:
+                  type: number
+                POAmount:
+                  type: number
+                totalWHT:
+                  type: number
+                paidAmount:
+                  type: number
+                balanceAmount:
+                  type: number
+                currency:
+                  type: string
+                issueDate:
+                  type: string
+                dueDate:
+                  type: string
+                notes:
+                  type: string
+                deliveryInstructions:
+                  type: string
+                status:
+                  type: string
+                totalTax:
+                  type: number
+                fxRate:
+                  type: number
+                convertedAmount:
+                  type: number
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      contentType:
+                        type: string
+                      fileSize:
+                        type: number
+                      base64:
+                        type: string
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties: # You can populate this structure from the 'items' field in the bill structure
+                      itemId:
+                        type: string
+                      name:
+                        type: string
+                      unit:
+                        type: string
+                      description:
+                        type: string
+                      quantity:
+                        type: number
+                      unitPrice:
+                        type: number
+                      accountId:
+                        type: string
+                      wht:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          referenceId:
+                            type: string
+                          code:
+                            type: string
+                          displayName:
+                            type: string
+                          amount:
+                            type: number
+                      taxes:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            externalId:
+                              type: string
+                            name:
+                              type: string
+                            amount:
+                              type: number
+                            priceIncludesTax:
+                              type: boolean
+                            amountType:
+                              type: string
+                              enum:
+                                - fixed
+                                - percentage
+                            perc:
+                              type: number
+                      discounts:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            externalId:
+                              type: string
+                            name:
+                              type: string
+                            amount:
+                              type: number
+                            amountType:
+                              type: string
+                              enum:
+                                - fixed
+                                - percentage
+                PONumber:
+                  type: string
+                PQNumber:
+                  type: string
+                vendorId:
+                  type: string
+                receiptDate:
+                  type: string
+                deliveryDate:
+                  type: string
+                bills:
+                  type: array
+                  items:
+                    type: string
+                receiptNotes:
+                  type: array
+                  items:
+                    type: string
+                balanceQuantity:
+                  type: number
+            examples:
+              Example:
+                value:
+                  totalAmount: 5500
+                  POAmount: 5000
+                  totalWHT: 350
+                  paidAmount: 3200
+                  balanceAmount: 2300
+                  currency: "USD"
+                  issueDate: "2023-11-01T00:00:00Z"
+                  dueDate: "2023-12-10T00:00:00Z"
+                  notes: "Payment due for invoice #5678"
+                  deliveryInstructions: "Deliver to Suite 300, Building B"
+                  status: "approved"
+                  totalTax: 250
+                  fxRate: 1.25
+                  convertedAmount: 6875
+                  attachments:
+                    - id: "attachment_id_2"
+                      name: "Updated Attachment"
+                      contentType: "application/pdf"
+                      fileSize: 2048
+                      base64: "UpdatedBase64EncodedContent"
+                  items:
+                    - itemId: "ITEM002"
+                      name: "Product B"
+                      unit: "unit"
+                      description: "Updated Description for Product B"
+                      quantity: 3
+                      unitPrice: 200
+                      accountId: "ACC002"
+                      wht:
+                        id: "WHT002"
+                        referenceId: "REF002"
+                        code: "WHT_CODE_UPDATED"
+                        displayName: "Withholding Tax"
+                        amount: 15
+                      taxes:
+                        - externalId: "TAX002"
+                          name: "VAT"
+                          amount: 30
+                          priceIncludesTax: true
+                          amountType: "percentage"
+                          perc: 6
+                      discounts:
+                        - externalId: "Discount202"
+                          name: "Special discount"
+                          amount: 25
+                          amountType: "percentage"
+                  PONumber: "PO-9876"
+                  PQNumber: "PQ-5678"
+                  vendorId: "vendor_456"
+                  receiptDate: "2023-11-20T00:00:00Z"
+                  deliveryDate: "2023-11-25T00:00:00Z"
+                  bills: ["Bill6789", "Bill6790"]
+                  receiptNotes: ["RN-003", "RN-004"]
+                  balanceQuantity: 150
+      responses:
+        '200':
+          description: OK
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+        '404':
+          description: Not Found
+          content: {}
+  "/{webhook-url-for-purchase-order}":
+    post:
+      tags:
+        - Purchase Orders
+      summary: Webhook for purchase order
+      description:  Webhook for purchase order update
+      operationId: webhook-purchase-order
+      requestBody:
+        description: Updated purchase order details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                totalAmount:
+                  type: number
+                POAmount:
+                  type: number
+                totalWHT:
+                  type: number
+                paidAmount:
+                  type: number
+                balanceAmount:
+                  type: number
+                currency:
+                  type: string
+                issueDate:
+                  type: string
+                dueDate:
+                  type: string
+                notes:
+                  type: string
+                deliveryInstructions:
+                  type: string
+                status:
+                  type: string
+                totalTax:
+                  type: number
+                fxRate:
+                  type: number
+                convertedAmount:
+                  type: number
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      contentType:
+                        type: string
+                      fileSize:
+                        type: number
+                      base64:
+                        type: string
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties: # You can populate this structure from the 'items' field in the bill structure
+                      itemId:
+                        type: string
+                      name:
+                        type: string
+                      unit:
+                        type: string
+                      description:
+                        type: string
+                      quantity:
+                        type: number
+                      unitPrice:
+                        type: number
+                      accountId:
+                        type: string
+                      wht:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          referenceId:
+                            type: string
+                          code:
+                            type: string
+                          displayName:
+                            type: string
+                          amount:
+                            type: number
+                      taxes:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            externalId:
+                              type: string
+                            name:
+                              type: string
+                            amount:
+                              type: number
+                            priceIncludesTax:
+                              type: boolean
+                            amountType:
+                              type: string
+                              enum:
+                                - fixed
+                                - percentage
+                            perc:
+                              type: number
+                      discounts:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            externalId:
+                              type: string
+                            name:
+                              type: string
+                            amount:
+                              type: number
+                            amountType:
+                              type: string
+                              enum:
+                                - fixed
+                                - percentage
+                PONumber:
+                  type: string
+                PQNumber:
+                  type: string
+                vendorId:
+                  type: string
+                receiptDate:
+                  type: string
+                deliveryDate:
+                  type: string
+                bills:
+                  type: array
+                  items:
+                    type: string
+                receiptNotes:
+                  type: array
+                  items:
+                    type: string
+                balanceQuantity:
+                  type: number
+            examples:
+              Example:
+                value:
+                  totalAmount: 5500
+                  POAmount: 5000
+                  totalWHT: 350
+                  paidAmount: 3200
+                  balanceAmount: 2300
+                  currency: "USD"
+                  issueDate: "2023-11-01T00:00:00Z"
+                  dueDate: "2023-12-10T00:00:00Z"
+                  notes: "Payment due for invoice #5678"
+                  deliveryInstructions: "Deliver to Suite 300, Building B"
+                  status: "approved"
+                  totalTax: 250
+                  fxRate: 1.25
+                  convertedAmount: 6875
+                  attachments:
+                    - id: "attachment_id_2"
+                      name: "Updated Attachment"
+                      contentType: "application/pdf"
+                      fileSize: 2048
+                      base64: "UpdatedBase64EncodedContent"
+                  items:
+                    - itemId: "ITEM002"
+                      name: "Product B"
+                      unit: "unit"
+                      description: "Updated Description for Product B"
+                      quantity: 3
+                      unitPrice: 200
+                      accountId: "ACC002"
+                      wht:
+                        id: "WHT002"
+                        referenceId: "REF002"
+                        code: "WHT_CODE_UPDATED"
+                        displayName: "Withholding Tax"
+                        amount: 15
+                      taxes:
+                        - externalId: "TAX002"
+                          name: "VAT"
+                          amount: 30
+                          priceIncludesTax: true
+                          amountType: "percentage"
+                          perc: 6
+                      discounts:
+                        - externalId: "Discount202"
+                          name: "Special discount"
+                          amount: 25
+                          amountType: "percentage"
+                  PONumber: "PO-9876"
+                  PQNumber: "PQ-5678"
+                  vendorId: "vendor_456"
+                  receiptDate: "2023-11-20T00:00:00Z"
+                  deliveryDate: "2023-11-25T00:00:00Z"
+                  bills: ["Bill6789", "Bill6790"]
+                  receiptNotes: ["RN-003", "RN-004"]
+                  balanceQuantity: 150
+      responses:
+        '200':
+          description: OK
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+        '404':
+          description: Not Found
+          content: {}
+
+  "/receipt-notes":
+    post:
+      tags:
+        - Receipt Notes
+      summary: Create a receipt note
+      description: Create a new receipt note
+      operationId: create-receipt-note
+      requestBody:
+        description: Receipt note to create
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                externalId:
+                  type: string
+                receiptNoteNumber:
+                  type: string
+                deliveryDate:
+                  type: string
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      contentType:
+                        type: string
+                      fileSize:
+                        type: number
+                      base64:
+                        type: string
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties: # You can populate this structure from the 'items' field in the bill structure
+                      itemId:
+                        type: string
+                      name:
+                        type: string
+                      unit:
+                        type: string
+                      description:
+                        type: string
+                      quantity:
+                        type: number
+                      unitPrice:
+                        type: number
+                      accountId:
+                        type: string
+                      wht:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          referenceId:
+                            type: string
+                          code:
+                            type: string
+                          displayName:
+                            type: string
+                          amount:
+                            type: number
+                      taxes:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            externalId:
+                              type: string
+                            name:
+                              type: string
+                            amount:
+                              type: number
+                            priceIncludesTax:
+                              type: boolean
+                            amountType:
+                              type: string
+                              enum:
+                                - fixed
+                                - percentage
+                            perc:
+                              type: number
+                      discounts:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            externalId:
+                              type: string
+                            name:
+                              type: string
+                            amount:
+                              type: number
+                            amountType:
+                              type: string
+                              enum:
+                                - fixed
+                                - percentage
+                purchaseOrder:
+                  type: string
+                vendorId:
+                  type: string
+                receiptNoteAmount:
+                  type: number
+                totalAmount:
+                  type: number
+                totalTax:
+                  type: number
+                totalWHT:
+                  type: number
+                currency:
+                  type: string
+                status:
+                  type: string
+                notes:
+                  type: string
+                fxRate:
+                  type: number
+                convertedAmount:
+                  type: number
+            examples:
+              Example:
+                value:
+                  externalId: "rn-0001"
+                  receiptNoteNumber: "RN12345"
+                  deliveryDate: "2023-11-28"
+                  attachments:
+                    - id: "attachment_id_2"
+                      name: "Updated Attachment"
+                      contentType: "application/pdf"
+                      fileSize: 2048
+                      base64: "UpdatedBase64EncodedContent"
+                  items:
+                    - itemId: "ITEM002"
+                      name: "Product B"
+                      unit: "unit"
+                      description: "Updated Description for Product B"
+                      quantity: 3
+                      unitPrice: 200
+                      accountId: "ACC002"
+                      wht:
+                        id: "WHT002"
+                        referenceId: "REF002"
+                        code: "WHT_CODE_UPDATED"
+                        displayName: "Withholding Tax"
+                        amount: 15
+                      taxes:
+                        - externalId: "TAX002"
+                          name: "VAT"
+                          amount: 30
+                          priceIncludesTax: true
+                          amountType: "percentage"
+                          perc: 6
+                      discounts:
+                        - externalId: "Discount202"
+                          name: "Special discount"
+                          amount: 25
+                          amountType: "percentage"
+                  purchaseOrder: "PO7890"
+                  vendorId: "V123"
+                  receiptNoteAmount: 100.0
+                  totalAmount: 100.0
+                  totalTax: 5.0
+                  totalWHT: 2.0
+                  currency: "USD"
+                  status: "approved"
+                  notes: "Received items in good condition."
+                  fxRate: 1.2
+                  convertedAmount: 120.0
+      responses:
+        '201':
+          description: Created
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+        '409':
+          description: Conflict
+          content: {}
+  "/receipt-notes/{externalId}":
+    get:
+      tags:
+        - Receipt Notes
+      summary: Get a receipt note
+      description: Retrieve details of a specific receipt note
+      operationId: get-receipt-note
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External ID of the receipt note to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  receiptNoteNumber:
+                    type: string
+                  deliveryDate:
+                    type: string
+                  attachments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        contentType:
+                          type: string
+                        fileSize:
+                          type: number
+                        base64:
+                          type: string
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties: # You can populate this structure from the 'items' field in the bill structure
+                        itemId:
+                          type: string
+                        name:
+                          type: string
+                        unit:
+                          type: string
+                        description:
+                          type: string
+                        quantity:
+                          type: number
+                        unitPrice:
+                          type: number
+                        accountId:
+                          type: string
+                        wht:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            referenceId:
+                              type: string
+                            code:
+                              type: string
+                            displayName:
+                              type: string
+                            amount:
+                              type: number
+                        taxes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              externalId:
+                                type: string
+                              name:
+                                type: string
+                              amount:
+                                type: number
+                              priceIncludesTax:
+                                type: boolean
+                              amountType:
+                                type: string
+                                enum:
+                                  - fixed
+                                  - percentage
+                              perc:
+                                type: number
+                        discounts:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              externalId:
+                                type: string
+                              name:
+                                type: string
+                              amount:
+                                type: number
+                              amountType:
+                                type: string
+                                enum:
+                                  - fixed
+                                  - percentage
+                  purchaseOrder:
+                    type: string
+                  vendorId:
+                    type: string
+                  receiptNoteAmount:
+                    type: number
+                  totalAmount:
+                    type: number
+                  totalTax:
+                    type: number
+                  totalWHT:
+                    type: number
+                  currency:
+                    type: string
+                  status:
+                    type: string
+                  notes:
+                    type: string
+                  fxRate:
+                    type: number
+                  convertedAmount:
+                    type: number
+              examples:
+                Example:
+                  value:
+                    externalId: "rn-0001"
+                    receiptNoteNumber: "RN12345"
+                    deliveryDate: "2023-11-28"
+                    attachments:
+                    - id: "attachment_id_2"
+                      name: "Updated Attachment"
+                      contentType: "application/pdf"
+                      fileSize: 2048
+                      base64: "UpdatedBase64EncodedContent"
+                    items:
+                      - itemId: "ITEM002"
+                        name: "Product B"
+                        unit: "unit"
+                        description: "Updated Description for Product B"
+                        quantity: 3
+                        unitPrice: 200
+                        accountId: "ACC002"
+                        wht:
+                          id: "WHT002"
+                          referenceId: "REF002"
+                          code: "WHT_CODE_UPDATED"
+                          displayName: "Withholding Tax"
+                          amount: 15
+                        taxes:
+                          - externalId: "TAX002"
+                            name: "VAT"
+                            amount: 30
+                            priceIncludesTax: true
+                            amountType: "percentage"
+                            perc: 6
+                        discounts:
+                          - externalId: "Discount202"
+                            name: "Special discount"
+                            amount: 25
+                            amountType: "percentage"
+                    purchaseOrder: "PO7890"
+                    vendorId: "V123"
+                    receiptNoteAmount: 100.0
+                    totalAmount: 100.0
+                    totalTax: 5.0
+                    totalWHT: 2.0
+                    currency: "USD"
+                    status: "approved"
+                    notes: "Received items in good condition."
+                    fxRate: 1.2
+                    convertedAmount: 120.0
+        '404':
+          description: Not Found
+          content: {}
+    put:
+      tags:
+        - Receipt Notes
+      summary: Update a receipt note
+      description: Update an existing receipt note
+      operationId: update-receipt-note
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External id of the receipt note to update
+          schema:
+            type: string
+      requestBody:
+        description: Updated receipt note details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                externalId:
+                  type: string
+                receiptNoteNumber:
+                  type: string
+                deliveryDate:
+                  type: string
+                items:
+                  type: array
+                  items: {}
+                purchaseOrder:
+                  type: string
+                vendorId:
+                  type: string
+                receiptNoteAmount:
+                  type: number
+                totalAmount:
+                  type: number
+                totalTax:
+                  type: number
+                totalWHT:
+                  type: number
+                currency:
+                  type: string
+                status:
+                  type: string
+                notes:
+                  type: string
+                attachments:
+                  type: array
+                  items: {}
+                fxRate:
+                  type: number
+                convertedAmount:
+                  type: number
+            examples:
+              Example:
+                value:
+                  externalId: "rn-0001"
+                  receiptNoteNumber: "RN12345"
+                  deliveryDate: "2023-11-28"
+                  items: []
+                  purchaseOrder: "PO7890"
+                  vendorId: "V123"
+                  receiptNoteAmount: 100.0
+                  totalAmount: 100.0
+                  totalTax: 5.0
+                  totalWHT: 2.0
+                  currency: "USD"
+                  status: "approved"
+                  notes: "Received items in good condition."
+                  attachments: []
+                  fxRate: 1.2
+                  convertedAmount: 120.0
+      responses:
+        '200':
+          description: OK
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+        '404':
+          description: Not Found
+          content: {}
+  "/{webhook-url-for-receipt-note}":
+    post:
+      tags:
+        - Receipt Notes
+      summary: Receipt note webhook
+      description: Webhook for receipt note updae
+      operationId: webhook-receipt-note
+      requestBody:
+        description: Webhook for receipt note update
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                externalId:
+                  type: string
+                receiptNoteNumber:
+                  type: string
+                deliveryDate:
+                  type: string
+                items:
+                  type: array
+                  items: {}
+                purchaseOrder:
+                  type: string
+                vendorId:
+                  type: string
+                receiptNoteAmount:
+                  type: number
+                totalAmount:
+                  type: number
+                totalTax:
+                  type: number
+                totalWHT:
+                  type: number
+                currency:
+                  type: string
+                status:
+                  type: string
+                notes:
+                  type: string
+                attachments:
+                  type: array
+                  items: {}
+                fxRate:
+                  type: number
+                convertedAmount:
+                  type: number
+            examples:
+              Example:
+                value:
+                  externalId: "rn-0001"
+                  receiptNoteNumber: "RN12345"
+                  deliveryDate: "2023-11-28"
+                  items: []
+                  purchaseOrder: "PO7890"
+                  vendorId: "V123"
+                  receiptNoteAmount: 100.0
+                  totalAmount: 100.0
+                  totalTax: 5.0
+                  totalWHT: 2.0
+                  currency: "USD"
+                  status: "approved"
+                  notes: "Received items in good condition."
+                  attachments: []
+                  fxRate: 1.2
+                  convertedAmount: 120.0
+      responses:
+        '200':
+          description: OK
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+        '404':
+          description: Not Found
+          content: {}
+
+  "/vendor-credit-notes":
+    post:
+      tags:
+        - Vendor Credit Notes
+      summary: Create a vendor credit note
+      description: Create a new vendor credit note
+      operationId: create-vendor-credit-note
+      requestBody:
+        description: Vendor credit note to create
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                externalId:
+                  type: string
+                vendorId:
+                  type: string
+                receiveDate:
+                  type: string
+                creditNoteNumber:
+                  type: string
+                totalAmount:
+                  type: number
+                remainingCredit:
+                  type: number
+                currency:
+                  type: string
+                lineItems:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      bill:
+                        type: string
+                      amount:
+                        type: number
+                note:
+                  type: string
+                status:
+                  type: string
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      contentType:
+                        type: string
+                      fileSize:
+                        type: number
+                      base64:
+                        type: string
+                fxRate:
+                  type: number
+                convertedAmount:
+                  type: number
+                baseCurrency:
+                  type: string
+            examples:
+              Example:
+                value:
+                  externalId: "CN-001"
+                  vendorId: "VENDOR123"
+                  receiveDate: "2023-11-28"
+                  creditNoteNumber: "CN-001"
+                  totalAmount: 1500
+                  remainingCredit: 750
+                  currency: "USD"
+                  lineItems:
+                    - bill: "Bill1"
+                      amount: 500
+                  note: "This is a credit note for overdue payments."
+                  status: "active"
+                  attachments:
+                    - id: "attachment_id_1"
+                      name: "Attachment 1"
+                      contentType: "application/pdf"
+                      fileSize: 1024
+                      base64: "Base64EncodedContent1"
+                  fxRate: 1.25
+                  convertedAmount: 1875
+                  baseCurrency: "EUR"
+      responses:
+        '201':
+          description: Created
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+        '409':
+          description: Conflict
+          content: {}
+  "/vendor-credit-notes/{externalId}":
+    get:
+      tags:
+        - Vendor Credit Notes
+      summary: Get a vendor credit note by external id
+      description: Retrieve details of a specific vendor credit note
+      operationId: get-vendor-credit-note
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External ID of the vendor credit note to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  externalId:
+                    type: string
+                  vendorId:
+                    type: string
+                  receiveDate:
+                    type: string
+                  creditNoteNumber:
+                    type: string
+                  totalAmount:
+                    type: number
+                  remainingCredit:
+                    type: number
+                  currency:
+                    type: string
+                  lineItems:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        bill:
+                          type: string
+                        amount:
+                          type: number
+                  note:
+                    type: string
+                  status:
+                    type: string
+                  attachments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        contentType:
+                          type: string
+                        fileSize:
+                          type: number
+                        base64:
+                          type: string
+                  fxRate:
+                    type: number
+                  convertedAmount:
+                    type: number
+                  baseCurrency:
+                    type: string
+              examples:
+                Example:
+                  value:
+                    externalId: "CN-001"
+                    vendorId: "VENDOR123"
+                    receiveDate: "2023-11-28"
+                    creditNoteNumber: "CN-001"
+                    totalAmount: 1500
+                    remainingCredit: 750
+                    currency: "USD"
+                    lineItems:
+                      - bill: "Bill1"
+                        amount: 500
+                    note: "This is a credit note for overdue payments."
+                    status: "active"
+                    attachments:
+                      - id: "attachment_id_1"
+                        name: "Attachment 1"
+                        contentType: "application/pdf"
+                        fileSize: 1024
+                        base64: "Base64EncodedContent1"
+                    fxRate: 1.25
+                    convertedAmount: 1875
+                    baseCurrency: "EUR"
+        '404':
+          description: Not Found
+          content: {}
+    put:
+      tags:
+        - Vendor Credit Notes
+      summary: Update a vendor credit note
+      description: Update an existing vendor credit note
+      operationId: update-vendor-credit-note
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External ID of the vendor credit note to update
+          schema:
+            type: string
+      requestBody:
+        description: Updated vendor credit note details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                externalId:
+                  type: string
+                vendorId:
+                  type: string
+                receiveDate:
+                  type: string
+                creditNoteNumber:
+                  type: string
+                totalAmount:
+                  type: number
+                remainingCredit:
+                  type: number
+                currency:
+                  type: string
+                lineItems:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      bill:
+                        type: string
+                      amount:
+                        type: number
+                note:
+                  type: string
+                status:
+                  type: string
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      contentType:
+                        type: string
+                      fileSize:
+                        type: number
+                      base64:
+                        type: string
+                fxRate:
+                  type: number
+                convertedAmount:
+                  type: number
+                baseCurrency:
+                  type: string
+            examples:
+              Example:
+                value:
+                  externalId: "CN-001"
+                  vendorId: "VENDOR123"
+                  receiveDate: "2023-11-28"
+                  creditNoteNumber: "CN-001"
+                  totalAmount: 1500
+                  remainingCredit: 750
+                  currency: "USD"
+                  lineItems:
+                    - bill: "Bill1"
+                      amount: 500
+                  note: "This is a credit note for overdue payments."
+                  status: "active"
+                  attachments:
+                    - id: "attachment_id_1"
+                      name: "Attachment 1"
+                      contentType: "application/pdf"
+                      fileSize: 1024
+                      base64: "Base64EncodedContent1"
+                  fxRate: 1.25
+                  convertedAmount: 1875
+                  baseCurrency: "EUR"
+      responses:
+        '200':
+          description: OK
+          content: {}
+        '400':
+          description: Bad request
+          content: {}
+        '404':
+          description: Not Found
+          content: {}
+
 components:
   schemas:
     Customer:
