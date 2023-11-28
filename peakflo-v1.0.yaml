@@ -2994,10 +2994,14 @@ paths:
       responses:
         '201':
           description: Created
-          content: {}
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorCreditNote'
         '400':
           description: Bad request
-          content: {}
+          content:
+            {}
         '409':
           description: Conflict
           content: {}
@@ -3194,7 +3198,10 @@ paths:
       responses:
         '200':
           description: OK
-          content: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorCreditNote'
         '400':
           description: Bad request
           content: {}
@@ -4463,6 +4470,99 @@ components:
         - vendorId
         - purchaseOrder
         - items
+
+    VendorCreditNote:
+      description: Details of a vendor credit note
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External ID of the vendor credit note
+          example: "CN-001"
+        vendorId:
+          type: string
+          description: ID of the vendor associated with the credit note
+          example: "VENDOR123"
+        receiveDate:
+          type: string
+          description: Date of receipt of the credit note (ISO8601 date format)
+          example: "2023-11-28"
+        creditNoteNumber:
+          type: string
+          description: Credit note number
+          example: "CN-001"
+        totalAmount:
+          type: number
+          description: Total amount of the credit note
+          example: 1500
+        remainingCredit:
+          type: number
+          description: Remaining credit amount
+          example: 750
+        currency:
+          type: string
+          description: Currency of the credit note
+          example: "USD"
+        lineItems:
+          type: array
+          items:
+            type: object
+            properties:
+              bill:
+                type: string
+                description: Bill associated with the credit note line item
+                example: "Bill1"
+              amount:
+                type: number
+                description: Amount for the credit note line item
+                example: 500
+          description: List of line items included in the credit note
+        note:
+          type: string
+          description: Note related to the credit note
+          example: "This is a credit note for overdue payments."
+        status:
+          type: string
+          description: Status of the credit note
+          example: "active"
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              contentType:
+                type: string
+              fileSize:
+                type: number
+              base64:
+                type: string
+          description: List of attachments related to the credit note
+        fxRate:
+          type: number
+          description: Currency conversion rate
+          example: 1.25
+        convertedAmount:
+          type: number
+          description: Converted amount in base currency
+          example: 1875
+        baseCurrency:
+          type: string
+          description: Base currency of the credit note
+          example: "EUR"
+      required:
+        - externalId
+        - vendorId
+        - receiveDate
+        - creditNoteNumber
+        - totalAmount
+        - remainingCredit
+        - currency
+        - lineItems
+        - status
 
   securitySchemes:
     bearerAuth:
