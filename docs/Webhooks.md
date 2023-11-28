@@ -434,11 +434,11 @@ The PO_UPDATED event is triggered when an existing purchase is updated. The requ
 | attachments          | array   | An array containing details of attachments for the purchase order.|
 | items                | array   | An array containing details of line items in the purchase order|
 | PONumber             | string  | The purchase order number.                                    |
-| PQNumber             | string  | The purchase quotation number.                                |
+| PQNumber             | string  | The purchase quote number.                                |
 | vendorId             | string  | The ID of the vendor associated with the purchase order.          |
 | receiptDate          | string  | The date when the receipt was generated.                      |
 | deliveryDate         | string  | The expected delivery date.                                   |
 | bills                | array   | An array containing IDs of bills.             |
 | receiptNotes         | array   | An array containing receipt notes id.                  |
-| balanceQuantity      | number  | The remaining quantity in stock.                              |
+| balanceQuantity      | number  | The remaining quantity.                              |
 
