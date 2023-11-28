@@ -1564,7 +1564,10 @@ paths:
       responses:
         '201':
           description: Created
-          content: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillPayment'
         '400':
           description: Bad request
           content: {}
@@ -1582,7 +1585,7 @@ paths:
         - name: externalId
           in: path
           required: true
-          description: ID of the purchase order to retrieve
+          description: ID of the bill payment to retrieve
           schema:
             type: string
       requestBody:
@@ -1637,7 +1640,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Bill'
+                $ref: '#/components/schemas/BillPayment'
         '400':
           description: Bad request
           content: {}
@@ -1860,7 +1863,10 @@ paths:
       responses:
         '201':
           description: Created
-          content: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurchaseOrder'
         '400':
           description: Bad request
           content: {}
@@ -2300,7 +2306,10 @@ paths:
       responses:
         '200':
           description: OK
-          content: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurchaseOrder'
         '400':
           description: Bad request
           content: {}
@@ -2486,7 +2495,10 @@ paths:
       responses:
         '201':
           description: Created
-          content: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReceiptNote'
         '400':
           description: Bad request
           content: {}
@@ -2753,7 +2765,10 @@ paths:
       responses:
         '200':
           description: OK
-          content: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReceiptNote'
         '400':
           description: Bad request
           content: {}
@@ -3925,7 +3940,401 @@ components:
         - paymentAmount
         - totalAmount
         - items
-
+    BillPayment:
+      description: Details of a bill payment
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External ID of the bill payment
+          example: "EXT123"
+        billId:
+          type: string
+          description: ID of the bill associated with the payment
+          example: "BILL789"
+        reference:
+          type: string
+          description: Reference for the payment
+          example: "Payment REF123"
+        vendorId:
+          type: string
+          description: ID of the vendor associated with the payment
+          example: "VENDOR456"
+        date:
+          type: string
+          description: Date of the payment (ISO8601 date format)
+          format: date
+          example: "2023-11-30"
+        amount:
+          type: number
+          description: Amount of the payment
+          example: 500
+        currency:
+          type: string
+          description: Currency of the payment
+          example: "USD"
+        fxRate:
+          type: number
+          description: Currency conversion rate
+          example: 1.25
+        convertedAmount:
+          type: number
+          description: Converted amount in base currency
+          example: 625
+        paymentFee:
+          type: number
+          description: Fee associated with the payment
+          example: 10
+      required:
+        - billId
+        - externalId
+        - reference
+        - vendorId
+        - date
+        - amount
+        - currency
+    PurchaseOrder:
+      description: Details of a purchase order
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External ID of the purchase order
+          example: "PO_EXT001"
+        totalAmount:
+          type: number
+          description: Total amount of the purchase order
+          example: 1000
+        POAmount:
+          type: number
+          description: Amount related to the purchase order
+          example: 950
+        totalWHT:
+          type: number
+          description: Total withholding tax amount
+          example: 50
+        paidAmount:
+          type: number
+          description: Amount already paid
+          example: 500
+        balanceAmount:
+          type: number
+          description: Remaining balance amount
+          example: 450
+        currency:
+          type: string
+          description: Currency of the purchase order
+          example: "USD"
+        issueDate:
+          type: string
+          description: Issue date of the purchase order (ISO8601 date format)
+          example: "2023-11-28"
+        dueDate:
+          type: string
+          description: Due date of the purchase order (ISO8601 date format)
+          example: "2023-12-15"
+        notes:
+          type: string
+          description: Notes related to the purchase order
+          example: "This is a test purchase order"
+        deliveryInstructions:
+          type: string
+          description: Instructions for delivery
+          example: "Delivery should be made before 5 PM"
+        status:
+          type: string
+          description: Status of the purchase order
+          example: "pending"
+        totalTax:
+          type: number
+          description: Total tax amount
+          example: 50
+        fxRate:
+          type: number
+          description: Currency conversion rate
+          example: 1.25
+        convertedAmount:
+          type: number
+          description: Converted amount in base currency
+          example: 1125
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              contentType:
+                type: string
+              fileSize:
+                type: number
+              base64:
+                type: string
+          description: List of attachments related to the purchase order
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              itemId:
+                type: string
+              name:
+                type: string
+              unit:
+                type: string
+              description:
+                type: string
+              quantity:
+                type: number
+              unitPrice:
+                type: number
+              accountId:
+                type: string
+              wht:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  referenceId:
+                    type: string
+                  code:
+                    type: string
+                  displayName:
+                    type: string
+                  amount:
+                    type: number
+              taxes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    externalId:
+                      type: string
+                    name:
+                      type: string
+                    amount:
+                      type: number
+                    priceIncludesTax:
+                      type: boolean
+                    amountType:
+                      type: string
+                      enum:
+                        - fixed
+                        - percentage
+                    perc:
+                      type: number
+              discounts:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    externalId:
+                      type: string
+                    name:
+                      type: string
+                    amount:
+                      type: number
+                    amountType:
+                      type: string
+                      enum:
+                        - fixed
+                        - percentage
+          description: List of items included in the purchase order
+        PONumber:
+          type: string
+          description: Purchase order number
+          example: "PO123"
+        PQNumber:
+          type: string
+          description: Purchase quote number
+          example: "PQ456"
+        updatedAt:
+          type: string
+          description: Date when the purchase order was last updated (ISO8601 format)
+          example: "2023-12-05T12:30:00Z"
+        vendorId:
+          type: string
+          description: ID of the vendor associated with the purchase order
+          example: "VENDOR789"
+        receiptDate:
+          type: string
+          description: Date of purchase order receipt (ISO8601 format)
+          example: "2023-11-30"
+        deliveryDate:
+          type: string
+          description: Date of expected delivery (ISO8601 format)
+          example: "2023-12-10"
+        bills:
+          type: array
+          items:
+            type: string
+          description: List of associated bill IDs
+        receiptNotes:
+          type: array
+          items:
+            type: string
+          description: Notes related to the receipt
+        balanceQuantity:
+          type: number
+          description: Remaining quantity balance
+          example: 
+    ReceiptNote:
+      description: Details of a receipt note
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External ID of the receipt note
+          example: "RN_EXT001"
+        receiptNoteNumber:
+          type: string
+          description: Receipt note number
+          example: "RN123"
+        deliveryDate:
+          type: string
+          description: Date of delivery (ISO8601 date format)
+          example: "2023-12-10"
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              contentType:
+                type: string
+              fileSize:
+                type: number
+              base64:
+                type: string
+          description: List of attachments related to the receipt note
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              itemId:
+                type: string
+              name:
+                type: string
+              unit:
+                type: string
+              description:
+                type: string
+              quantity:
+                type: number
+              unitPrice:
+                type: number
+              accountId:
+                type: string
+              wht:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  referenceId:
+                    type: string
+                  code:
+                    type: string
+                  displayName:
+                    type: string
+                  amount:
+                    type: number
+              taxes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    externalId:
+                      type: string
+                    name:
+                      type: string
+                    amount:
+                      type: number
+                    priceIncludesTax:
+                      type: boolean
+                    amountType:
+                      type: string
+                      enum:
+                        - fixed
+                        - percentage
+                    perc:
+                      type: number
+              discounts:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    externalId:
+                      type: string
+                    name:
+                      type: string
+                    amount:
+                      type: number
+                    amountType:
+                      type: string
+                      enum:
+                        - fixed
+                        - percentage
+          description: List of items included in the receipt note
+        purchaseOrder:
+          type: string
+          description: Associated purchase order ID
+          example: "PO123"
+        vendorId:
+          type: string
+          description: ID of the vendor associated with the receipt note
+          example: "VENDOR789"
+        receiptNoteAmount:
+          type: number
+          description: Amount related to the receipt note
+          example: 950
+        totalAmount:
+          type: number
+          description: Total amount of the receipt note
+          example: 1000
+        totalTax:
+          type: number
+          description: Total tax amount
+          example: 50
+        totalWHT:
+          type: number
+          description: Total withholding tax amount
+          example: 50
+        currency:
+          type: string
+          description: Currency of the receipt note
+          example: "USD"
+        status:
+          type: string
+          description: Status of the receipt note
+          example: "pending"
+        notes:
+          type: string
+          description: Notes related to the receipt note
+          example: "This is a test receipt note"
+        fxRate:
+          type: number
+          description: Currency conversion rate
+          example: 1.25
+        convertedAmount:
+          type: number
+          description: Converted amount in base currency
+          example: 1187.5
+      required:
+        - externalId
+        - receiptNoteNumber
+        - status
+        - currency
+        - totalAmount
+        - receiptNoteAmount
+        - vendorId
+        - purchaseOrder
+        - items
 
   securitySchemes:
     bearerAuth:
