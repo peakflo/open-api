@@ -1777,6 +1777,8 @@ paths:
                   type: string
                 PQNumber:
                   type: string
+                updatedAt:
+                  type: string
                 vendorId:
                   type: string
                 receiptDate:
@@ -1848,6 +1850,7 @@ paths:
                       total: 320
                   PONumber: "PO-5678"
                   PQNumber: "PQ-1234"
+                  updatedAt: "2023-11-01T00:00:00Z"
                   vendorId: "vendor_123"
                   receiptDate: "2023-11-15T00:00:00Z"
                   deliveryDate: "2023-11-20T00:00:00Z"
@@ -2003,6 +2006,8 @@ paths:
                     type: string
                   PQNumber:
                     type: string
+                  updatedAt:
+                    type: string
                   vendorId:
                     type: string
                   receiptDate:
@@ -2070,6 +2075,7 @@ paths:
                             amountType: "percentage"
                     PONumber: "PO-5678"
                     PQNumber: "PQ-1234"
+                    updatedAt: "2023-11-01T00:00:00Z"
                     vendorId: "vendor_123"
                     receiptDate: "2023-11-15T00:00:00Z"
                     deliveryDate: "2023-11-20T00:00:00Z"
@@ -2215,6 +2221,8 @@ paths:
                   type: string
                 PQNumber:
                   type: string
+                updatedAt:
+                  type: string
                 vendorId:
                   type: string
                 receiptDate:
@@ -2282,6 +2290,7 @@ paths:
                           amountType: "percentage"
                   PONumber: "PO-9876"
                   PQNumber: "PQ-5678"
+                  updatedAt: "2023-11-01T00:00:00Z"
                   vendorId: "vendor_456"
                   receiptDate: "2023-11-20T00:00:00Z"
                   deliveryDate: "2023-11-25T00:00:00Z"
@@ -2428,6 +2437,8 @@ paths:
                   type: string
                 PQNumber:
                   type: string
+                updatedAt:
+                  type: string
                 vendorId:
                   type: string
                 receiptDate:
@@ -2495,6 +2506,7 @@ paths:
                           amountType: "percentage"
                   PONumber: "PO-9876"
                   PQNumber: "PQ-5678"
+                  updatedAt: "2023-11-01T00:00:00Z"
                   vendorId: "vendor_456"
                   receiptDate: "2023-11-20T00:00:00Z"
                   deliveryDate: "2023-11-25T00:00:00Z"
