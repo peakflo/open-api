@@ -846,6 +846,117 @@ paths:
         description: ''
   
   "/bill":
+    get:
+      summary: Get multiple bills with filters and pagination
+      tags:
+        - Bills
+      parameters:
+        - name: updatedAtFrom
+          in: query
+          schema:
+            type: string
+        - name: updatedAtTo
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Filter bills by status
+          schema:
+            type: string
+        - name: vendorId
+          in: query
+          description: Filter bills by vendorId
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number for pagination
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          description: Number of bills per page
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bills:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Bill'
+                  totalCount:
+                    type: integer
+                example:
+                  bills:
+                    - billNumber: "BILL12345"
+                      status: "paid"
+                      billExternalId: "123456789"
+                      paymentId: "PAY789"
+                      vendorId: "VENDOR001"
+                      vendorName: "ABC Vendor"
+                      date: "2023-11-27T12:00:00Z"
+                      dueDate: "2023-12-15T23:59:59Z"
+                      updatedAt: "2023-12-15T23:59:59Z"
+                      attachments:
+                        - id: "attachment_id_1"
+                          name: "Attachment 1"
+                          contentType: "application/pdf"
+                          fileSize: 1024
+                          base64: "Base64EncodedContent1"
+                      currency: "USD"
+                      subTotal: 500
+                      totalTax: 50
+                      paymentAmount: 450
+                      totalAmount: 550
+                      notes: "This is a test bill"
+                      billPaymentId: "BP789"
+                      totalWHT: 20
+                      items:
+                        - itemId: "ITEM001"
+                          name: "Product A"
+                          unit: "unit"
+                          description: "Description for Product A"
+                          quantity: 2
+                          unitPrice: 150
+                          accountId: "ACC001"
+                          wht:
+                            id: "WHT001"
+                            referenceId: "REF001"
+                            code: "WHT_CODE"
+                            displayName: "Withholding Tax"
+                            amount: 10
+                          taxes:
+                            - externalId: "TAX001"
+                              name: "Sales Tax"
+                              amount: 20
+                              priceIncludesTax: true
+                              amountType: "percentage"
+                              perc: 5
+                          discounts:
+                            - externalId: "Discount101"
+                              name: "New user discount"
+                              amount: 20
+                              amountType: "percentage"
+                          totalTax: 20
+                          totalDiscount: 0
+                          total: 320
+                      receiptDate: "2023-11-28T00:00:00Z"
+                      paymentMadeDate: "2023-12-05T12:30:00Z"
+                  totalCount: 50
+        '400':
+          description: Bad Request
     post:
       tags:
         - Bills
@@ -1649,6 +1760,122 @@ paths:
           content: {}
 
   "/purchase-order":
+    get:
+      tags:
+        - Vendor Purchase Orders
+      summary: Get multiple purchase orders with filters and pagination
+      description: Retrieve multiple purchase orders based on specified filters and pagination
+      operationId: get-multiple-purchase-orders
+      parameters:
+        - name: updatedAtFrom
+          in: query
+          schema:
+            type: string
+        - name: updatedAtTo
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Filter purchase orders by status
+          schema:
+            type: string
+        - name: vendorId
+          in: query
+          description: Filter purchase orders by vendorId
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number for pagination
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          description: Number of purchase orders per page
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  purchaseOrders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PurchaseOrder'
+                  totalCount:
+                    type: integer
+                example:
+                  purchaseOrders:
+                    - externalId: "PO-123"
+                      totalAmount: 500
+                      POAmount: 450
+                      totalWHT: 30
+                      paidAmount: 300
+                      balanceAmount: 200
+                      currency: "USD"
+                      issueDate: "2023-11-01T00:00:00Z"
+                      dueDate: "2023-12-01T00:00:00Z"
+                      notes: "Payment due for invoice #1234"
+                      deliveryInstructions: "Deliver to Suite 200, Building A"
+                      status: "approved"
+                      totalTax: 20
+                      fxRate: 1.2
+                      convertedAmount: 600
+                      attachments:
+                        - id: "attachment_id_1"
+                          name: "Attachment 1"
+                          contentType: "application/pdf"
+                          fileSize: 1024
+                          base64: "Base64EncodedContent1"
+                      items:
+                        - itemId: "ITEM001"
+                          name: "Product A"
+                          unit: "unit"
+                          description: "Description for Product A"
+                          quantity: 2
+                          unitPrice: 150
+                          accountId: "ACC001"
+                          wht:
+                            id: "WHT001"
+                            referenceId: "REF001"
+                            code: "WHT_CODE"
+                            displayName: "Withholding Tax"
+                            amount: 10
+                          taxes:
+                            - externalId: "TAX001"
+                              name: "Sales Tax"
+                              amount: 20
+                              priceIncludesTax: true
+                              amountType: "percentage"
+                              perc: 5
+                          discounts:
+                            - externalId: "Discount101"
+                              name: "New user discount"
+                              amount: 20
+                              amountType: "percentage"
+                      PONumber: "PO-5678"
+                      PQNumber: "PQ-1234"
+                      updatedAt: "2023-11-01T00:00:00Z"
+                      vendorId: "vendor_123"
+                      receiptDate: "2023-11-15T00:00:00Z"
+                      deliveryDate: "2023-11-20T00:00:00Z"
+                      bills: ["Bill5678", "Bill5679"]
+                      receiptNotes: ["RN-001", "RN-002"]
+                      balanceQuantity: 100
+                  totalCount: 50
+        '404':
+          description: Not Found
+          content: {}
     post:
       tags:
         - Vendor Purchase Orders
@@ -2318,6 +2545,112 @@ paths:
           content: {}
 
   "/receipt-notes":
+    get:
+      tags:
+        - Vendor Receipt Notes
+      summary: Get multiple receipt notes with filters and pagination
+      description: Retrieve multiple receipt notes based on specified filters and pagination
+      operationId: get-multiple-receipt-notes
+      parameters:
+        - name: updatedAtFrom
+          in: query
+          schema:
+            type: string
+        - name: updatedAtTo
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Filter receipt notes by status
+          schema:
+            type: string
+        - name: vendorId
+          in: query
+          description: Filter receipt notes by vendorId
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number for pagination
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          description: Number of receipt notes per page
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  receiptNotes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ReceiptNote'
+                  totalCount:
+                    type: integer
+                example:
+                  receiptNotes:
+                    - externalId: "rn-0001"
+                      receiptNoteNumber: "RN12345"
+                      deliveryDate: "2023-11-28"
+                      attachments:
+                        - id: "attachment_id_2"
+                          name: "Updated Attachment"
+                          contentType: "application/pdf"
+                          fileSize: 2048
+                          base64: "UpdatedBase64EncodedContent"
+                      items:
+                        - itemId: "ITEM002"
+                          name: "Product B"
+                          unit: "unit"
+                          description: "Updated Description for Product B"
+                          quantity: 3
+                          unitPrice: 200
+                          accountId: "ACC002"
+                          wht:
+                            id: "WHT002"
+                            referenceId: "REF002"
+                            code: "WHT_CODE_UPDATED"
+                            displayName: "Withholding Tax"
+                            amount: 15
+                          taxes:
+                            - externalId: "TAX002"
+                              name: "VAT"
+                              amount: 30
+                              priceIncludesTax: true
+                              amountType: "percentage"
+                              perc: 6
+                          discounts:
+                            - externalId: "Discount202"
+                              name: "Special discount"
+                              amount: 25
+                              amountType: "percentage"
+                      purchaseOrder: "PO7890"
+                      vendorId: "V123"
+                      receiptNoteAmount: 100.0
+                      totalAmount: 100.0
+                      totalTax: 5.0
+                      totalWHT: 2.0
+                      currency: "USD"
+                      status: "approved"
+                      notes: "Received items in good condition."
+                      fxRate: 1.2
+                      convertedAmount: 120.0
+                  totalCount: 50
+        '404':
+          description: Not Found
+          content: {}
     post:
       tags:
         - Vendor Credit Notes
@@ -2905,6 +3238,87 @@ paths:
           content: {}
 
   "/vendor-credit-notes":
+    get:
+      tags:
+        - Vendor Credit Notes
+      summary: Get multiple vendor credit notes with filters and pagination
+      description: Retrieve multiple vendor credit notes based on specified filters and pagination
+      operationId: get-multiple-vendor-credit-notes
+      parameters:
+        - name: updatedAtFrom
+          in: query
+          schema:
+            type: string
+        - name: updatedAtTo
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Filter credit notes by status
+          schema:
+            type: string
+        - name: vendorId
+          in: query
+          description: Filter credit notes by vendorId
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number for pagination
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          description: Number of credit notes per page
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vendorCreditNotes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/VendorCreditNote'
+                  totalCount:
+                    type: integer
+                example:
+                  vendorCreditNotes:
+                    - externalId: "CN-001"
+                      vendorId: "VENDOR123"
+                      receiveDate: "2023-11-28"
+                      creditNoteNumber: "CN-001"
+                      totalAmount: 1500
+                      remainingCredit: 750
+                      currency: "USD"
+                      lineItems:
+                        - bill: "Bill1"
+                          amount: 500
+                      note: "This is a credit note for overdue payments."
+                      status: "active"
+                      attachments:
+                        - id: "attachment_id_1"
+                          name: "Attachment 1"
+                          contentType: "application/pdf"
+                          fileSize: 1024
+                          base64: "Base64EncodedContent1"
+                      fxRate: 1.25
+                      convertedAmount: 1875
+                      baseCurrency: "EUR"
+                  totalCount: 50
+        '404':
+          description: Not Found
+          content: {}
     post:
       tags:
         - Vendor Credit Notes
