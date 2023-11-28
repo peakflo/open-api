@@ -878,6 +878,8 @@ paths:
                   type: string
                 dueDate:
                   type: string
+                updatedAt:
+                  type: string
                 scheduledDate:
                   type: string
                 attachments:
@@ -1000,6 +1002,7 @@ paths:
                   vendorName: "ABC Vendor"
                   date: "2023-11-27T12:00:00Z"
                   dueDate: "2023-12-15T23:59:59Z"
+                  updatedAt: "2023-12-15T23:59:59Z"
                   scheduledDate: "2023-12-10T00:00:00Z"
                   attachments:
                     - id: "attachment_id_1"
@@ -1092,6 +1095,8 @@ paths:
                   date:
                     type: string
                   dueDate:
+                    type: string
+                  updatedAt:
                     type: string
                   scheduledDate:
                     type: string
@@ -1215,6 +1220,7 @@ paths:
                     vendorName: "ABC Vendor"
                     date: "2023-11-27T12:00:00Z"
                     dueDate: "2023-12-15T23:59:59Z"
+                    updatedAt: "2023-12-15T23:59:59Z"
                     scheduledDate: "2023-12-10T00:00:00Z"
                     attachments:
                     - id: "attachment_id_1"
@@ -1302,6 +1308,8 @@ paths:
                   type: string
                 dueDate:
                   type: string
+                updatedAt:
+                  type: string
                 scheduledDate:
                   type: string
                 attachments:
@@ -1423,6 +1431,7 @@ paths:
                   vendorName: "ABC Vendor"
                   date: "2023-11-27T12:00:00Z"
                   dueDate: "2023-12-15T23:59:59Z"
+                  updatedAt: "2023-12-15T23:59:59Z"
                   scheduledDate: "2023-12-10T00:00:00Z"
                   attachments:
                     - id: "attachment_id_1"
@@ -1497,218 +1506,7 @@ paths:
         name: billExternalId
         in: path
         required: true
-  "/webhook-url-for-bill":
-    post:
-      tags:
-        - Bills
-      summary: Bill webhook
-      description: Webhook for a bill update
-      operationId: webhook-bill
-      requestBody:
-        description: Updated bill
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                billNumber:
-                  type: string
-                status:
-                  type: string
-                  enum:
-                    - paid
-                billExternalId:
-                  type: string
-                paymentId:
-                  type: string
-                vendorId:
-                  type: string
-                vendorName:
-                  type: string
-                date:
-                  type: string
-                dueDate:
-                  type: string
-                scheduledDate:
-                  type: string
-                attachments:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      name:
-                        type: string
-                      contentType:
-                        type: string
-                      fileSize:
-                        type: number
-                      base64:
-                        type: string
-                currency:
-                  type: string
-                subTotal:
-                  type: number
-                totalTax:
-                  type: number
-                paymentAmount:
-                  type: number
-                totalAmount:
-                  type: number
-                notes:
-                  type: string
-                billPaymentId:
-                  type: string
-                totalWHT:
-                  type: number
-                items:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      itemId:
-                        type: string
-                      name:
-                        type: string
-                      unit:
-                        type: string
-                      description:
-                        type: string
-                      quantity:
-                        type: number
-                      unitPrice:
-                        type: number
-                      accountId:
-                        type: string
-                      wht:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                          referenceId:
-                            type: string
-                          code:
-                            type: string
-                          displayName:
-                            type: string
-                          amount:
-                            type: number
-                      taxes:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            externalId:
-                              type: string
-                            name:
-                              type: string
-                            amount:
-                              type: number
-                            priceIncludesTax:
-                              type: boolean
-                            amountType:
-                              type: string
-                              enum:
-                                - fixed
-                                - percentage
-                            perc:
-                              type: number
-                      discounts:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            externalId:
-                              type: string
-                            name:
-                              type: string
-                            amount:
-                              type: number
-                            amountType:
-                              type: string
-                              enum:
-                                - fixed
-                                - percentage
-                      totalTax:
-                        type: number
-                      totalDiscount:
-                        type: number
-                      total:
-                        type: number
-                receiptDate:
-                  type: string
-                paymentMadeDate:
-                  type: string
-            examples:
-              Example:
-                value:
-                  billNumber: "BILL12345"
-                  status: "paid"
-                  billExternalId: "123456789"
-                  paymentId: "PAY789"
-                  vendorId: "VENDOR001"
-                  vendorName: "ABC Vendor"
-                  date: "2023-11-27T12:00:00Z"
-                  dueDate: "2023-12-15T23:59:59Z"
-                  scheduledDate: "2023-12-10T00:00:00Z"
-                  attachments:
-                    - id: "attachment_id_1"
-                      name: "Attachment 1"
-                      contentType: "application/pdf"
-                      fileSize: 1024
-                      base64: "Base64EncodedContent1"
-                  currency: "USD"
-                  subTotal: 500
-                  totalTax: 50
-                  paymentAmount: 450
-                  totalAmount: 550
-                  notes: "This is a test bill"
-                  billPaymentId: "BP789"
-                  totalWHT: 20
-                  items:
-                    - itemId: "ITEM001"
-                      name: "Product A"
-                      unit: "unit"
-                      description: "Description for Product A"
-                      quantity: 2
-                      unitPrice: 150
-                      accountId: "ACC001"
-                      wht:
-                        id: "WHT001"
-                        referenceId: "REF001"
-                        code: "WHT_CODE"
-                        displayName: "Withholding Tax"
-                        amount: 10
-                      taxes:
-                        - externalId: "TAX001"
-                          name: "Sales Tax"
-                          amount: 20
-                          priceIncludesTax: true
-                          amountType: "percentage"
-                          perc: 5
-                      discounts:
-                        - externalId: "Discount101"
-                          name: "New user discount"
-                          amount: 20
-                          amountType: "percentage"
-                      totalTax: 20
-                      totalDiscount: 0
-                      total: 320
-                  receiptDate: "2023-11-28T00:00:00Z"
-                  paymentMadeDate: "2023-12-05T12:30:00Z"
-      responses:
-        '201':
-          description: Created
-          content: {}
-        '400':
-          description: Bad request
-          content: {}
-        '409':
-          description: Conflict
-          content: {}        
-  
+
   "/bill-payment":
     post:
       tags:
