@@ -1840,6 +1840,8 @@ paths:
                       items:
                         - itemId: "ITEM001"
                           name: "Product A"
+                          balanceQuantity: 1
+                          balanceAmount: 120
                           unit: "unit"
                           description: "Description for Product A"
                           quantity: 2
@@ -1939,7 +1941,7 @@ paths:
                   type: array
                   items:
                     type: object
-                    properties: # You can populate this structure from the 'items' field in the bill structure
+                    properties:
                       itemId:
                         type: string
                       name:
@@ -1951,6 +1953,10 @@ paths:
                       quantity:
                         type: number
                       unitPrice:
+                        type: number
+                      balanceQuantity:
+                        type: number
+                      balanceAmount:
                         type: number
                       accountId:
                         type: string
@@ -2052,6 +2058,8 @@ paths:
                   items:
                     - itemId: "ITEM001"
                       name: "Product A"
+                      balanceAmount: 120
+                      balanceQuantity: 1
                       unit: "unit"
                       description: "Description for Product A"
                       quantity: 2
@@ -2171,7 +2179,7 @@ paths:
                     type: array
                     items:
                       type: object
-                      properties: # You can populate this structure from the 'items' field in the bill structure
+                      properties:
                         itemId:
                           type: string
                         name:
@@ -2181,6 +2189,10 @@ paths:
                         description:
                           type: string
                         quantity:
+                          type: number
+                        balanceQuantity:
+                          type: number
+                        balanceAmount:
                           type: number
                         unitPrice:
                           type: number
@@ -2286,6 +2298,8 @@ paths:
                         unit: "unit"
                         description: "Description for Product A"
                         quantity: 2
+                        balanceQuantity: 1
+                        balanceAmount: 120
                         unitPrice: 150
                         accountId: "ACC001"
                         wht:
@@ -2386,7 +2400,7 @@ paths:
                   type: array
                   items:
                     type: object
-                    properties: # You can populate this structure from the 'items' field in the bill structure
+                    properties:
                       itemId:
                         type: string
                       name:
@@ -2396,6 +2410,10 @@ paths:
                       description:
                         type: string
                       quantity:
+                        type: number
+                      balanceQuantity:
+                        type: number
+                      balanceAmount:
                         type: number
                       unitPrice:
                         type: number
@@ -2501,7 +2519,9 @@ paths:
                       unit: "unit"
                       description: "Updated Description for Product B"
                       quantity: 3
+                      balanceQuantity: 1
                       unitPrice: 200
+                      balanceAmount: 120
                       accountId: "ACC002"
                       wht:
                         id: "WHT002"
@@ -2612,6 +2632,7 @@ paths:
                           base64: "UpdatedBase64EncodedContent"
                       items:
                         - itemId: "ITEM002"
+                          poItemId: "ITEM003"
                           name: "Product B"
                           unit: "unit"
                           description: "Updated Description for Product B"
@@ -2690,8 +2711,10 @@ paths:
                   type: array
                   items:
                     type: object
-                    properties: # You can populate this structure from the 'items' field in the bill structure
+                    properties:
                       itemId:
+                        type: string
+                      poItemId:
                         type: string
                       name:
                         type: string
@@ -2790,6 +2813,7 @@ paths:
                       base64: "UpdatedBase64EncodedContent"
                   items:
                     - itemId: "ITEM002"
+                      poItemId: "ITEM003"
                       name: "Product B"
                       unit: "unit"
                       description: "Updated Description for Product B"
@@ -2885,6 +2909,8 @@ paths:
                       type: object
                       properties:
                         itemId:
+                          type: string
+                        poItemId:
                           type: string
                         name:
                           type: string
@@ -2983,6 +3009,7 @@ paths:
                       base64: "UpdatedBase64EncodedContent"
                     items:
                       - itemId: "ITEM002"
+                        poItemId: "ITEM003"
                         name: "Product B"
                         unit: "unit"
                         description: "Updated Description for Product B"
@@ -3054,6 +3081,8 @@ paths:
                     type: object
                     properties:
                       itemId:
+                        type: string
+                      poItemId:
                         type: string
                       name:
                         type: string
@@ -3179,6 +3208,7 @@ paths:
                   deliveryDate: "2023-11-28"
                   items:
                     - itemId: "ITEM001"
+                      poItemId: "ITEM003"
                       name: "Product A"
                       unit: "unit"
                       description: "Description for Product A"
