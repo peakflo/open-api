@@ -786,7 +786,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Customer'
+                $ref: '#/components/schemas/Vendor'
               
         '400':
           description: Bad request
@@ -879,8 +879,6 @@ paths:
                 dueDate:
                   type: string
                 updatedAt:
-                  type: string
-                scheduledDate:
                   type: string
                 attachments:
                   type: array
@@ -1003,7 +1001,6 @@ paths:
                   date: "2023-11-27T12:00:00Z"
                   dueDate: "2023-12-15T23:59:59Z"
                   updatedAt: "2023-12-15T23:59:59Z"
-                  scheduledDate: "2023-12-10T00:00:00Z"
                   attachments:
                     - id: "attachment_id_1"
                       name: "Attachment 1"
@@ -1097,8 +1094,6 @@ paths:
                   dueDate:
                     type: string
                   updatedAt:
-                    type: string
-                  scheduledDate:
                     type: string
                   attachments:
                     type: array
@@ -1221,7 +1216,6 @@ paths:
                     date: "2023-11-27T12:00:00Z"
                     dueDate: "2023-12-15T23:59:59Z"
                     updatedAt: "2023-12-15T23:59:59Z"
-                    scheduledDate: "2023-12-10T00:00:00Z"
                     attachments:
                     - id: "attachment_id_1"
                       name: "Attachment 1"
@@ -1309,8 +1303,6 @@ paths:
                 dueDate:
                   type: string
                 updatedAt:
-                  type: string
-                scheduledDate:
                   type: string
                 attachments:
                   type: array
@@ -1432,7 +1424,6 @@ paths:
                   date: "2023-11-27T12:00:00Z"
                   dueDate: "2023-12-15T23:59:59Z"
                   updatedAt: "2023-12-15T23:59:59Z"
-                  scheduledDate: "2023-12-10T00:00:00Z"
                   attachments:
                     - id: "attachment_id_1"
                       name: "Attachment 1"
@@ -3568,6 +3559,365 @@ components:
         - customerExternalId
         - messageId
         - payload
+    Vendor:
+      description: Vendor information
+      type: object
+      properties:
+        companyName:
+          type: string
+          description: Name of the vendor company
+          example: "VendorCo"
+        companyId:
+          type: string
+          description: Unique identifier for the vendor
+          example: "V123456"
+        defaultCurrency:
+          type: string
+          description: Default currency used by the vendor
+          example: "USD"
+        addresses:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: Type of address (e.g., billing, shipping)
+                example: "billing"
+              line1:
+                type: string
+                description: Address line 1
+                example: "123 Vendor Street"
+              city:
+                type: string
+                description: City
+                example: "Vendorville"
+              country:
+                type: string
+                description: Country
+                example: "Vendorland"
+              postalCode:
+                type: string
+                description: Postal code
+                example: "12345"
+          description: Array of addresses associated with the vendor
+        registrationNumber:
+          type: string
+          description: Registration number of the vendor
+          example: "REG789"
+        taxNumber:
+          type: string
+          description: Tax number of the vendor
+          example: "TAX456"
+        notes:
+          type: string
+          description: Notes related to the vendor
+          example: "Vendor notes go here"
+        bankDetails:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Unique identifier for the bank details
+                example: "B12345"
+              bankName:
+                type: string
+                description: Name of the bank
+                example: "Vendor Bank"
+              bankCode:
+                type: string
+                description: Bank code
+                example: "VB456"
+              bankCountry:
+                type: string
+                description: Country where the bank is located
+                example: "Vendor Country"
+              accountNumber:
+                type: string
+                description: Bank account number
+                example: "ACC78901234"
+              accountHolder:
+                type: string
+                description: Name of the account holder
+                example: "Vendor Account Holder"
+              currency:
+                type: string
+                description: Currency used for the bank account
+                example: "USD"
+              bankAccountType:
+                type: string
+                description: Type of bank account (e.g., current, savings)
+                example: "current"
+              isDefault:
+                type: boolean
+                description: Indicates if this bank account is the default one for the vendor
+                example: true
+          description: Array of bank details associated with the vendor
+        entityType:
+          type: string
+          description: Type of entity (e.g., company, vendor)
+          example: "vendor"
+        beneficiaryCountry:
+          type: string
+          description: Country of the beneficiary
+          example: "Vendorland"
+        vendorFirstName:
+          type: string
+          description: First name of the vendor
+          example: "John"
+        vendorLastName:
+          type: string
+          description: Last name of the vendor
+          example: "Doe"
+      required:
+        - companyName
+        - companyId
+        - defaultCurrency
+        - addresses
+        - entityType
+        - vendorFirstName
+        - vendorLastName
+    Bill:
+      description: Details of a bill
+      type: object
+      properties:
+        billNumber:
+          type: string
+          description: Bill number
+          example: "BILL12345"
+        status:
+          type: string
+          description: Status of the bill
+          example: "paid"
+        billExternalId:
+          type: string
+          description: External ID of the bill
+          example: "123456789"
+        paymentId:
+          type: string
+          description: ID of the associated payment
+          example: "PAY789"
+        vendorId:
+          type: string
+          description: ID of the vendor associated with the bill
+          example: "VENDOR001"
+        vendorName:
+          type: string
+          description: Name of the vendor associated with the bill
+          example: "ABC Vendor"
+        date:
+          type: string
+          description: Date of the bill (ISO8601 format)
+          example: "2023-11-27T12:00:00Z"
+        dueDate:
+          type: string
+          description: Due date of the bill (ISO8601 format)
+          example: "2023-12-15T23:59:59Z"
+        updatedAt:
+          type: string
+          description: Date when the bill was last updated (ISO8601 format)
+          example: "2023-12-15T23:59:59Z"
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: ID of the attachment
+                example: "attachment_id_1"
+              name:
+                type: string
+                description: Name of the attachment
+                example: "Attachment 1"
+              contentType:
+                type: string
+                description: MIME type of the attachment
+                example: "application/pdf"
+              fileSize:
+                type: integer
+                description: Size of the attachment in bytes
+                example: 1024
+              base64:
+                type: string
+                description: Base64-encoded content of the attachment
+                example: "Base64EncodedContent1"
+          description: List of attachments related to the bill
+        currency:
+          type: string
+          description: Currency of the bill
+          example: "USD"
+        subTotal:
+          type: number
+          description: Subtotal amount of the bill
+          example: 500
+        totalTax:
+          type: number
+          description: Total tax amount of the bill
+          example: 50
+        paymentAmount:
+          type: number
+          description: Amount paid for the bill
+          example: 450
+        totalAmount:
+          type: number
+          description: Total amount of the bill
+          example: 550
+        notes:
+          type: string
+          description: Notes related to the bill
+          example: "This is a test bill"
+        billPaymentId:
+          type: string
+          description: ID of the bill payment
+          example: "BP789"
+        totalWHT:
+          type: number
+          description: Total withholding tax amount
+          example: 20
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              itemId:
+                type: string
+                description: ID of the item
+                example: "ITEM001"
+              name:
+                type: string
+                description: Name of the item
+                example: "Product A"
+              unit:
+                type: string
+                description: Unit of measurement
+                example: "unit"
+              description:
+                type: string
+                description: Description of the item
+                example: "Description for Product A"
+              quantity:
+                type: integer
+                description: Quantity of the item
+                example: 2
+              unitPrice:
+                type: number
+                description: Price per unit of the item
+                example: 150
+              accountId:
+                type: string
+                description: ID of the account associated with the item
+                example: "ACC001"
+              wht:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: ID of the withholding tax
+                    example: "WHT001"
+                  referenceId:
+                    type: string
+                    description: Reference ID of the withholding tax
+                    example: "REF001"
+                  code:
+                    type: string
+                    description: Code of the withholding tax
+                    example: "WHT_CODE"
+                  displayName:
+                    type: string
+                    description: Display name of the withholding tax
+                    example: "Withholding Tax"
+                  amount:
+                    type: number
+                    description: Amount of the withholding tax
+                    example: 10
+              taxes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    externalId:
+                      type: string
+                      description: External ID of the tax
+                      example: "TAX001"
+                    name:
+                      type: string
+                      description: Name of the tax
+                      example: "Sales Tax"
+                    amount:
+                      type: number
+                      description: Amount of the tax
+                      example: 20
+                    priceIncludesTax:
+                      type: boolean
+                      description: Indicates if price includes tax
+                      example: true
+                    amountType:
+                      type: string
+                      description: Type of tax amount (e.g., percentage)
+                      example: "percentage"
+                    perc:
+                      type: number
+                      description: Percentage of tax
+                      example: 5
+              discounts:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    externalId:
+                      type: string
+                      description: External ID of the discount
+                      example: "Discount101"
+                    name:
+                      type: string
+                      description: Name of the discount
+                      example: "New user discount"
+                    amount:
+                      type: number
+                      description: Amount of the discount
+                      example: 20
+                    amountType:
+                      type: string
+                      description: Type of discount amount (e.g., percentage)
+                      example: "percentage"
+              totalTax:
+                type: number
+                description: Total tax amount for the item
+                example: 20
+              totalDiscount:
+                type: number
+                description: Total discount amount for the item
+                example: 0
+              total:
+                type: number
+                description: Total amount for the item
+                example: 320
+          description: List of items included in the bill
+        receiptDate:
+          type: string
+          description: Date of bill receipt (ISO8601 format)
+          example: "2023-11-28T00:00:00Z"
+        paymentMadeDate:
+          type: string
+          description: Date when payment was made (ISO8601 format)
+          example: "2023-12-05T12:30:00Z"
+      required:
+        - billNumber
+        - status
+        - billExternalId
+        - vendorId
+        - date
+        - dueDate
+        - currency
+        - subTotal
+        - paymentAmount
+        - totalAmount
+        - items
+
+
   securitySchemes:
     bearerAuth:
       type: http
