@@ -1049,7 +1049,10 @@ paths:
       responses:
         '201':
           description: Created
-          content: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
         '400':
           description: Bad request
           content: {}
@@ -1471,9 +1474,12 @@ paths:
                   receiptDate: "2023-11-28T00:00:00Z"
                   paymentMadeDate: "2023-12-05T12:30:00Z"
       responses:
-        '201':
-          description: Updated
-          content: {}
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
         '400':
           description: Bad request
           content: {}
@@ -1626,9 +1632,12 @@ paths:
                   convertedAmount: 600.30
                   paymentFee: 10.00
       responses:
-        '201':
-          description: Created
-          content: {}
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
         '400':
           description: Bad request
           content: {}
