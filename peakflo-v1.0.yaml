@@ -51,7 +51,7 @@ paths:
                 value:
                   companyName: YouWin
                   externalId: '121989'
-                  externalRefNumber: '421670'
+                  externalRefNumber: ['421670']
                   sourceId: '121989'
                   currency: USD
                   status: active
@@ -101,7 +101,7 @@ paths:
                   companyName: YouWin
                   externalId: '121989'
                   sourceId: '121989'
-                  externalRefNumber: '421670'
+                  externalRefNumber: ['421670']
                   currency: SGD
                   status: active
                   accountManagerEmail: adrian@youwin.com
@@ -127,7 +127,7 @@ paths:
                     companyName: Mc win pte ltd
                     externalId: 1245a32
                     sourceId: 1245a32
-                    externalRefNumber: '421670'
+                    externalRefNumber: ['421670']
                     currency: USD
                     status: active
                     parentCompanyId: 23oc2344
@@ -295,7 +295,7 @@ paths:
                   value:
                     companyName: YouWin
                     externalId: '121989'
-                    externalRefNumber: '421670'
+                    externalRefNumber: ['421670']
                     currency: SGD
                     status: active
                     accountManagerEmail: adrian@youwin.com
@@ -664,7 +664,7 @@ components:
           companyName: string
           externalId: string
           sourceId: string
-          externalRefNumber: string
+          externalRefNumber: array
           currency: USD
           status: active
           parentCompanyId: string
@@ -689,7 +689,7 @@ components:
           type: string
           description: The external Id mapped to the source Id for data transfer between systems
         externalRefNumber:
-          type: string
+          type: array
           description: The external Id mapped to the source Id for data transfer between systems 
         companyName:
           type: string
