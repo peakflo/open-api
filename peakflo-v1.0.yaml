@@ -690,7 +690,7 @@ components:
           description: The external Id mapped to the source Id for data transfer between systems
         externalRefNumber:
           type: array
-          description: The external Id mapped to the source Id for data transfer between systems 
+          description: Additional IDs given to the customer for identification purposes 
         companyName:
           type: string
           description: The company name
