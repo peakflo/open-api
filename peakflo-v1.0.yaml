@@ -2565,116 +2565,9 @@ paths:
           content: {}
 
   "/receipt-notes":
-    get:
-      tags:
-        - Vendor Receipt Notes
-      summary: Get multiple receipt notes with filters and pagination
-      description: Retrieve multiple receipt notes based on specified filters and pagination
-      operationId: get-multiple-receipt-notes
-      parameters:
-        - name: updatedAtFrom
-          in: query
-          schema:
-            type: string
-        - name: updatedAtTo
-          in: query
-          schema:
-            type: string
-        - name: status
-          in: query
-          description: Filter receipt notes by status
-          schema:
-            type: string
-        - name: vendorId
-          in: query
-          description: Filter receipt notes by vendorId
-          schema:
-            type: string
-        - name: page
-          in: query
-          description: Page number for pagination
-          schema:
-            type: integer
-            minimum: 1
-            default: 1
-        - name: limit
-          in: query
-          description: Number of receipt notes per page
-          schema:
-            type: integer
-            minimum: 1
-            default: 10
-            maximum: 100
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  receiptNotes:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/ReceiptNote'
-                  totalCount:
-                    type: integer
-                example:
-                  receiptNotes:
-                    - externalId: "rn-0001"
-                      receiptNoteNumber: "RN12345"
-                      deliveryDate: "2023-11-28"
-                      attachments:
-                        - id: "attachment_id_2"
-                          name: "Updated Attachment"
-                          contentType: "application/pdf"
-                          fileSize: 2048
-                          base64: "UpdatedBase64EncodedContent"
-                      items:
-                        - itemId: "ITEM002"
-                          poItemId: "ITEM003"
-                          name: "Product B"
-                          unit: "unit"
-                          description: "Updated Description for Product B"
-                          quantity: 3
-                          unitPrice: 200
-                          accountId: "ACC002"
-                          wht:
-                            id: "WHT002"
-                            referenceId: "REF002"
-                            code: "WHT_CODE_UPDATED"
-                            displayName: "Withholding Tax"
-                            amount: 15
-                          taxes:
-                            - externalId: "TAX002"
-                              name: "VAT"
-                              amount: 30
-                              priceIncludesTax: true
-                              amountType: "percentage"
-                              perc: 6
-                          discounts:
-                            - externalId: "Discount202"
-                              name: "Special discount"
-                              amount: 25
-                              amountType: "percentage"
-                      purchaseOrder: "PO7890"
-                      vendorId: "V123"
-                      receiptNoteAmount: 100.0
-                      totalAmount: 100.0
-                      totalTax: 5.0
-                      totalWHT: 2.0
-                      currency: "USD"
-                      status: "approved"
-                      notes: "Received items in good condition."
-                      fxRate: 1.2
-                      convertedAmount: 120.0
-                  totalCount: 50
-        '404':
-          description: Not Found
-          content: {}
     post:
       tags:
-        - Vendor Credit Notes
+        - Vendor Receipt Notes
       summary: Create a receipt note
       description: Create a new receipt note
       operationId: create-receipt-note
@@ -2861,6 +2754,113 @@ paths:
           content: {}
         '409':
           description: Conflict
+          content: {}
+    get:
+      tags:
+        - Vendor Receipt Notes
+      summary: Get multiple receipt notes with filters and pagination
+      description: Retrieve multiple receipt notes based on specified filters and pagination
+      operationId: get-multiple-receipt-notes
+      parameters:
+        - name: updatedAtFrom
+          in: query
+          schema:
+            type: string
+        - name: updatedAtTo
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Filter receipt notes by status
+          schema:
+            type: string
+        - name: vendorId
+          in: query
+          description: Filter receipt notes by vendorId
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number for pagination
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          description: Number of receipt notes per page
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  receiptNotes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ReceiptNote'
+                  totalCount:
+                    type: integer
+                example:
+                  receiptNotes:
+                    - externalId: "rn-0001"
+                      receiptNoteNumber: "RN12345"
+                      deliveryDate: "2023-11-28"
+                      attachments:
+                        - id: "attachment_id_2"
+                          name: "Updated Attachment"
+                          contentType: "application/pdf"
+                          fileSize: 2048
+                          base64: "UpdatedBase64EncodedContent"
+                      items:
+                        - itemId: "ITEM002"
+                          poItemId: "ITEM003"
+                          name: "Product B"
+                          unit: "unit"
+                          description: "Updated Description for Product B"
+                          quantity: 3
+                          unitPrice: 200
+                          accountId: "ACC002"
+                          wht:
+                            id: "WHT002"
+                            referenceId: "REF002"
+                            code: "WHT_CODE_UPDATED"
+                            displayName: "Withholding Tax"
+                            amount: 15
+                          taxes:
+                            - externalId: "TAX002"
+                              name: "VAT"
+                              amount: 30
+                              priceIncludesTax: true
+                              amountType: "percentage"
+                              perc: 6
+                          discounts:
+                            - externalId: "Discount202"
+                              name: "Special discount"
+                              amount: 25
+                              amountType: "percentage"
+                      purchaseOrder: "PO7890"
+                      vendorId: "V123"
+                      receiptNoteAmount: 100.0
+                      totalAmount: 100.0
+                      totalTax: 5.0
+                      totalWHT: 2.0
+                      currency: "USD"
+                      status: "approved"
+                      notes: "Received items in good condition."
+                      fxRate: 1.2
+                      convertedAmount: 120.0
+                  totalCount: 50
+        '404':
+          description: Not Found
           content: {}
   "/receipt-notes/{externalId}":
     get:
