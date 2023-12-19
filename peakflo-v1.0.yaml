@@ -926,7 +926,7 @@ paths:
                       items:
                         - itemId: "ITEM001"
                           name: "Product A"
-                          unit: "unit"
+                          unit: "KG"
                           description: "Description for Product A"
                           quantity: 2
                           unitPrice: 150
@@ -1129,7 +1129,7 @@ paths:
                   items:
                     - itemId: "ITEM001"
                       name: "Product A"
-                      unit: "unit"
+                      unit: "KG"
                       description: "Description for Product A"
                       quantity: 2
                       unitPrice: 150
@@ -1347,7 +1347,7 @@ paths:
                     items:
                       - itemId: "ITEM001"
                         name: "Product A"
-                        unit: "unit"
+                        unit: "KG"
                         description: "Description for Product A"
                         quantity: 2
                         unitPrice: 150
@@ -1555,7 +1555,7 @@ paths:
                   items:
                     - itemId: "ITEM001"
                       name: "Product A"
-                      unit: "unit"
+                      unit: "KG"
                       description: "Description for Product A"
                       quantity: 2
                       unitPrice: 150
@@ -1842,7 +1842,7 @@ paths:
                           name: "Product A"
                           balanceQuantity: 1
                           balanceAmount: 120
-                          unit: "unit"
+                          unit: "KG"
                           description: "Description for Product A"
                           quantity: 2
                           unitPrice: 150
@@ -2060,7 +2060,7 @@ paths:
                       name: "Product A"
                       balanceAmount: 120
                       balanceQuantity: 1
-                      unit: "unit"
+                      unit: "KG"
                       description: "Description for Product A"
                       quantity: 2
                       unitPrice: 150
@@ -2295,7 +2295,7 @@ paths:
                     items:
                       - itemId: "ITEM001"
                         name: "Product A"
-                        unit: "unit"
+                        unit: "KG"
                         description: "Description for Product A"
                         quantity: 2
                         balanceQuantity: 1
@@ -2516,7 +2516,7 @@ paths:
                   items:
                     - itemId: "ITEM002"
                       name: "Product B"
-                      unit: "unit"
+                      unit: "KG"
                       description: "Updated Description for Product B"
                       quantity: 3
                       balanceQuantity: 1
@@ -2708,7 +2708,7 @@ paths:
                     - itemId: "ITEM002"
                       poItemId: "ITEM003"
                       name: "Product B"
-                      unit: "unit"
+                      unit: "KG"
                       description: "Updated Description for Product B"
                       quantity: 3
                       unitPrice: 200
@@ -2824,7 +2824,7 @@ paths:
                         - itemId: "ITEM002"
                           poItemId: "ITEM003"
                           name: "Product B"
-                          unit: "unit"
+                          unit: "KG"
                           description: "Updated Description for Product B"
                           quantity: 3
                           unitPrice: 200
@@ -3011,7 +3011,7 @@ paths:
                       - itemId: "ITEM002"
                         poItemId: "ITEM003"
                         name: "Product B"
-                        unit: "unit"
+                        unit: "KG"
                         description: "Updated Description for Product B"
                         quantity: 3
                         unitPrice: 200
@@ -3210,7 +3210,7 @@ paths:
                     - itemId: "ITEM001"
                       poItemId: "ITEM003"
                       name: "Product A"
-                      unit: "unit"
+                      unit: "KG"
                       description: "Description for Product A"
                       quantity: 2
                       unitPrice: 150
@@ -3651,6 +3651,131 @@ paths:
           content: {}
         '404':
           description: Not Found
+          content: {}
+
+  "/items":
+    post:
+      tags:
+        - Items
+      summary: Create an item
+      description: Create a new item
+      operationId: create-item
+      requestBody:
+        description: Item to create
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                externalId:
+                  type: string
+                name:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                unit:
+                  type: string
+                currency:
+                  type: string
+                type:
+                  type: string
+                  enum:
+                    - None
+                    - Product
+                    - Service
+                    - Hour
+                    - Day
+                    - Month
+                    - Year
+                    - Expense
+                    - Shipping
+            examples:
+              Example:
+                value:
+                  externalId: "item-001"
+                  name: "Product A"
+                  description: "Description for Product A"
+                  price: 150
+                  unit: "KG"
+                  currency: "USD"
+                  type: "Product"
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '400':
+          description: Bad request
+          content: {}
+        '409':
+          description: Conflict
+          content: {}
+      
+ 
+  "/items/{externalId}":
+    put:
+      tags:
+        - Items
+      summary: Update an item
+      description: Update a new item
+      operationId: update-item
+      requestBody:
+        description: Item to update
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                unit:
+                  type: string
+                currency:
+                  type: string
+                type:
+                  type: string
+                  enum:
+                    - None
+                    - Product
+                    - Service
+                    - Hour
+                    - Day
+                    - Month
+                    - Year
+                    - Expense
+                    - Shipping
+            examples:
+              Example:
+                value:
+                  externalId: "item-001"
+                  name: "Product A"
+                  description: "Description for Product A"
+                  price: 150
+                  unit: "KG"
+                  currency: "USD"
+                  type: "Product"
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '400':
+          description: Bad request
+          content: {}
+        '409':
+          description: Conflict
           content: {}
 
 components:
@@ -5007,6 +5132,58 @@ components:
         - currency
         - lineItems
         - status
+    Item:
+      type: object
+      x-examples:
+        Example:
+          externalId: "item-001"
+          name: "Product A"
+          description: "Description for Product A"
+          price: 150
+          unit: "KG"
+          currency: "USD"
+          type: "Product"
+      description: The item model
+      properties:
+        externalId:
+          type: string
+          description: The external Id of the item
+        name:
+          type: string
+          description: The item name
+        description:
+          type: string
+          description: The item description
+        price:
+          type: number
+          description: The item price
+        unit:
+          type: string
+          description: The item unit
+        currency:
+          type: string
+          description: The item currency. Must be an ISO 4217 code
+        type:
+          type: string
+          description: The type of the item
+          enum:
+            - None
+            - Product
+            - Service
+            - Hour
+            - Day
+            - Month
+            - Year
+            - Expense
+            - Shipping
+          example: Product
+      required:
+        - externalId
+        - name
+        - price
+        - unit
+        - currency
+        - type
 
   securitySchemes:
     bearerAuth:
