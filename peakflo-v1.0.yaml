@@ -681,6 +681,8 @@ paths:
                   type: string
                 companyId:
                   type: string
+                companyEmail:
+                  type: string
                 defaultCurrency:
                   type: string
                 addresses:
