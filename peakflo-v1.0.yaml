@@ -58,7 +58,6 @@ paths:
                   pauseWorkflow: false
                   contacts:
                     - externalId: 120989C1
-                      sourceId: 120989C1
                       firstName: Peter
                       lastName: Wong
                       email: peterwong@youwin.com
