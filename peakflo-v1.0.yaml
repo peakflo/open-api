@@ -52,7 +52,6 @@ paths:
                   companyName: YouWin
                   externalId: '121989'
                   externalRefNumber: ['421670']
-                  sourceId: '121989'
                   currency: USD
                   status: active
                   accountManagerEmail: emily@youwin.com
@@ -100,7 +99,6 @@ paths:
                 value:
                   companyName: YouWin
                   externalId: '121989'
-                  sourceId: '121989'
                   externalRefNumber: ['421670']
                   currency: SGD
                   status: active
@@ -126,7 +124,6 @@ paths:
                   value:
                     companyName: Mc win pte ltd
                     externalId: 1245a32
-                    sourceId: 1245a32
                     externalRefNumber: ['421670']
                     currency: USD
                     status: active
@@ -663,7 +660,6 @@ components:
         Example:
           companyName: string
           externalId: string
-          sourceId: string
           externalRefNumber: array
           currency: USD
           status: active
@@ -685,9 +681,6 @@ components:
         externalId:
           type: string
           description: The external Id of the company
-        sourceId:
-          type: string
-          description: The external Id mapped to the source Id for data transfer between systems
         externalRefNumber:
           type: array
           description: Additional IDs given to the customer for identification purposes 
