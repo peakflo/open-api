@@ -66,6 +66,7 @@ paths:
                 value:
                   companyName: YouWin
                   externalId: '121989'
+                  externalRefNumber: ['421670']
                   currency: USD
                   status: active
                   accountManagerEmail: emily@youwin.com
@@ -112,6 +113,7 @@ paths:
                 value:
                   companyName: YouWin
                   externalId: '121989'
+                  externalRefNumber: ['421670']
                   currency: SGD
                   status: active
                   accountManagerEmail: adrian@youwin.com
@@ -136,6 +138,7 @@ paths:
                   value:
                     companyName: Mc win pte ltd
                     externalId: 1245a32
+                    externalRefNumber: ['421670']
                     currency: USD
                     status: active
                     parentCompanyId: 23oc2344
@@ -303,6 +306,7 @@ paths:
                   value:
                     companyName: YouWin
                     externalId: '121989'
+                    externalRefNumber: ['421670']
                     currency: SGD
                     status: active
                     accountManagerEmail: adrian@youwin.com
@@ -3786,6 +3790,7 @@ components:
         Example:
           companyName: string
           externalId: string
+          externalRefNumber: array
           currency: USD
           status: active
           parentCompanyId: string
@@ -3806,6 +3811,9 @@ components:
         externalId:
           type: string
           description: The external Id of the company
+        externalRefNumber:
+          type: array
+          description: Additional IDs given to the customer for identification purposes 
         companyName:
           type: string
           description: The company name
