@@ -1022,8 +1022,6 @@ paths:
                   type: number
                 notes:
                   type: string
-                billPaymentId:
-                  type: string
                 totalWHT:
                   type: number
                 items:
@@ -1128,7 +1126,6 @@ paths:
                   paymentAmount: 450
                   totalAmount: 550
                   notes: "This is a test bill"
-                  billPaymentId: "BP789"
                   totalWHT: 20
                   items:
                     - itemId: "ITEM001"
@@ -1449,8 +1446,6 @@ paths:
                   type: number
                 notes:
                   type: string
-                billPaymentId:
-                  type: string
                 totalWHT:
                   type: number
                 items:
@@ -1554,7 +1549,6 @@ paths:
                   paymentAmount: 450
                   totalAmount: 550
                   notes: "This is a test bill"
-                  billPaymentId: "BP789"
                   totalWHT: 20
                   items:
                     - itemId: "ITEM001"
