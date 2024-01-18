@@ -1432,6 +1432,17 @@ paths:
                         type: string
                       fileSize:
                         type: number
+                      fileType:
+                        type: string
+                        enum:
+                          - cabinet
+                          - customFieldFile
+                          - incomingFile
+                          - invoice
+                          - paymentProof
+                          - statement
+                          - transaction
+                          - other
                       base64:
                         type: string
                 currency:
@@ -1542,6 +1553,7 @@ paths:
                       name: "Attachment 1"
                       contentType: "application/pdf"
                       fileSize: 1024
+                      fileType: "paymentProof"
                       base64: "Base64EncodedContent1"
                   currency: "USD"
                   subTotal: 500
