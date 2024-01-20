@@ -928,7 +928,7 @@ paths:
                       billPaymentId: "BP789"
                       totalWHT: 20
                       items:
-                        - itemId: "ITEM001"
+                        - externalId: "ITEM001"
                           name: "Product A"
                           unit: "KG"
                           description: "Description for Product A"
@@ -1029,7 +1029,7 @@ paths:
                   items:
                     type: object
                     properties:
-                      itemId:
+                      externalId:
                         type: string
                       name:
                         type: string
@@ -1128,7 +1128,7 @@ paths:
                   notes: "This is a test bill"
                   totalWHT: 20
                   items:
-                    - itemId: "ITEM001"
+                    - externalId: "ITEM001"
                       name: "Product A"
                       unit: "KG"
                       description: "Description for Product A"
@@ -1246,7 +1246,7 @@ paths:
                     items:
                       type: object
                       properties:
-                        itemId:
+                        externalId:
                           type: string
                         name:
                           type: string
@@ -1346,7 +1346,7 @@ paths:
                     billPaymentId: "BP789"
                     totalWHT: 20
                     items:
-                      - itemId: "ITEM001"
+                      - externalId: "ITEM001"
                         name: "Product A"
                         unit: "KG"
                         description: "Description for Product A"
@@ -1464,7 +1464,7 @@ paths:
                   items:
                     type: object
                     properties:
-                      itemId:
+                      externalId:
                         type: string
                       name:
                         type: string
@@ -1563,7 +1563,7 @@ paths:
                   notes: "This is a test bill"
                   totalWHT: 20
                   items:
-                    - itemId: "ITEM001"
+                    - externalId: "ITEM001"
                       name: "Product A"
                       unit: "KG"
                       description: "Description for Product A"
@@ -1848,7 +1848,7 @@ paths:
                           fileSize: 1024
                           base64: "Base64EncodedContent1"
                       items:
-                        - itemId: "ITEM001"
+                        - externalId: "ITEM001"
                           name: "Product A"
                           balanceQuantity: 1
                           balanceAmount: 120
@@ -1952,7 +1952,7 @@ paths:
                   items:
                     type: object
                     properties:
-                      itemId:
+                      externalId:
                         type: string
                       name:
                         type: string
@@ -2066,7 +2066,7 @@ paths:
                       fileSize: 1024
                       base64: "Base64EncodedContent1"
                   items:
-                    - itemId: "ITEM001"
+                    - externalId: "ITEM001"
                       name: "Product A"
                       balanceAmount: 120
                       balanceQuantity: 1
@@ -2190,7 +2190,7 @@ paths:
                     items:
                       type: object
                       properties:
-                        itemId:
+                        externalId:
                           type: string
                         name:
                           type: string
@@ -2303,7 +2303,7 @@ paths:
                         fileSize: 1024
                         base64: "Base64EncodedContent1"
                     items:
-                      - itemId: "ITEM001"
+                      - externalId: "ITEM001"
                         name: "Product A"
                         unit: "KG"
                         description: "Description for Product A"
@@ -2411,7 +2411,7 @@ paths:
                   items:
                     type: object
                     properties:
-                      itemId:
+                      externalId:
                         type: string
                       name:
                         type: string
@@ -2524,7 +2524,7 @@ paths:
                       fileSize: 2048
                       base64: "UpdatedBase64EncodedContent"
                   items:
-                    - itemId: "ITEM002"
+                    - externalId: "ITEM002"
                       name: "Product B"
                       unit: "KG"
                       description: "Updated Description for Product B"
@@ -2615,7 +2615,7 @@ paths:
                   items:
                     type: object
                     properties:
-                      itemId:
+                      externalId:
                         type: string
                       poItemId:
                         type: string
@@ -2715,7 +2715,7 @@ paths:
                       fileSize: 2048
                       base64: "UpdatedBase64EncodedContent"
                   items:
-                    - itemId: "ITEM002"
+                    - externalId: "ITEM002"
                       poItemId: "ITEM003"
                       name: "Product B"
                       unit: "KG"
@@ -2831,7 +2831,7 @@ paths:
                           fileSize: 2048
                           base64: "UpdatedBase64EncodedContent"
                       items:
-                        - itemId: "ITEM002"
+                        - externalId: "ITEM002"
                           poItemId: "ITEM003"
                           name: "Product B"
                           unit: "KG"
@@ -2918,7 +2918,7 @@ paths:
                     items:
                       type: object
                       properties:
-                        itemId:
+                        externalId:
                           type: string
                         poItemId:
                           type: string
@@ -3018,7 +3018,7 @@ paths:
                       fileSize: 2048
                       base64: "UpdatedBase64EncodedContent"
                     items:
-                      - itemId: "ITEM002"
+                      - externalId: "ITEM002"
                         poItemId: "ITEM003"
                         name: "Product B"
                         unit: "KG"
@@ -3090,7 +3090,7 @@ paths:
                   items:
                     type: object
                     properties:
-                      itemId:
+                      externalId:
                         type: string
                       poItemId:
                         type: string
@@ -3217,7 +3217,7 @@ paths:
                   receiptNoteNumber: "RN12345"
                   deliveryDate: "2023-11-28"
                   items:
-                    - itemId: "ITEM001"
+                    - externalId: "ITEM001"
                       poItemId: "ITEM003"
                       name: "Product A"
                       unit: "KG"
@@ -4524,7 +4524,7 @@ components:
           items:
             type: object
             properties:
-              itemId:
+              externalId:
                 type: string
                 description: ID of the item
                 example: "ITEM001"
@@ -4552,6 +4552,20 @@ components:
                 type: string
                 description: ID of the account associated with the item
                 example: "ACC001"
+              type:
+                type: string
+                description: The type of the item.
+                enum:
+                  - None
+                  - Product
+                  - Service
+                  - Hour
+                  - Day
+                  - Month
+                  - Year
+                  - Expense
+                  - Shipping
+                example: Product
               wht:
                 type: object
                 properties:
@@ -4796,7 +4810,7 @@ components:
           items:
             type: object
             properties:
-              itemId:
+              externalId:
                 type: string
               name:
                 type: string
@@ -4810,6 +4824,20 @@ components:
                 type: number
               accountId:
                 type: string
+              type:
+                type: string
+                description: The type of the item.
+                enum:
+                  - None
+                  - Product
+                  - Service
+                  - Hour
+                  - Day
+                  - Month
+                  - Year
+                  - Expense
+                  - Shipping
+                example: Product
               wht:
                 type: object
                 properties:
@@ -4935,7 +4963,7 @@ components:
           items:
             type: object
             properties:
-              itemId:
+              externalId:
                 type: string
               name:
                 type: string
@@ -4949,6 +4977,20 @@ components:
                 type: number
               accountId:
                 type: string
+              type:
+                type: string
+                description: The type of the item.
+                enum:
+                  - None
+                  - Product
+                  - Service
+                  - Hour
+                  - Day
+                  - Month
+                  - Year
+                  - Expense
+                  - Shipping
+                example: Product
               wht:
                 type: object
                 properties:
