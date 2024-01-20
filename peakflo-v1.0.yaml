@@ -935,6 +935,7 @@ paths:
                           quantity: 2
                           unitPrice: 150
                           accountId: "ACC001"
+                          type: "Product"
                           wht:
                             id: "WHT001"
                             referenceId: "REF001"
@@ -1043,6 +1044,18 @@ paths:
                         type: number
                       accountId:
                         type: string
+                      type:
+                        type: string
+                        enum:
+                          - None
+                          - Product
+                          - Service
+                          - Hour
+                          - Day
+                          - Month
+                          - Year
+                          - Expense
+                          - Shipping
                       wht:
                         type: object
                         properties:
@@ -1135,6 +1148,7 @@ paths:
                       quantity: 2
                       unitPrice: 150
                       accountId: "ACC001"
+                      type: "Product"
                       wht:
                         id: "WHT001"
                         referenceId: "REF001"
@@ -1260,6 +1274,18 @@ paths:
                           type: number
                         accountId:
                           type: string
+                        type:
+                          type: string
+                          enum:
+                            - None
+                            - Product
+                            - Service
+                            - Hour
+                            - Day
+                            - Month
+                            - Year
+                            - Expense
+                            - Shipping
                         wht:
                           type: object
                           properties:
@@ -1353,6 +1379,7 @@ paths:
                         quantity: 2
                         unitPrice: 150
                         accountId: "ACC001"
+                        type: "Product"
                         wht:
                           id: "WHT001"
                           referenceId: "REF001"
@@ -1478,6 +1505,18 @@ paths:
                         type: number
                       accountId:
                         type: string
+                      type:
+                        type: string
+                        enum:
+                          - None
+                          - Product
+                          - Service
+                          - Hour
+                          - Day
+                          - Month
+                          - Year
+                          - Expense
+                          - Shipping
                       wht:
                         type: object
                         properties:
@@ -1570,6 +1609,7 @@ paths:
                       quantity: 2
                       unitPrice: 150
                       accountId: "ACC001"
+                      type: "Product"
                       wht:
                         id: "WHT001"
                         referenceId: "REF001"
@@ -1857,6 +1897,7 @@ paths:
                           quantity: 2
                           unitPrice: 150
                           accountId: "ACC001"
+                          type: "Product"
                           wht:
                             id: "WHT001"
                             referenceId: "REF001"
@@ -1970,6 +2011,18 @@ paths:
                         type: number
                       accountId:
                         type: string
+                      type:
+                        type: string
+                        enum:
+                          - None
+                          - Product
+                          - Service
+                          - Hour
+                          - Day
+                          - Month
+                          - Year
+                          - Expense
+                          - Shipping
                       wht:
                         type: object
                         properties:
@@ -2075,6 +2128,7 @@ paths:
                       quantity: 2
                       unitPrice: 150
                       accountId: "ACC001"
+                      type: "Product"
                       wht:
                         id: "WHT001"
                         referenceId: "REF001"
@@ -2208,6 +2262,18 @@ paths:
                           type: number
                         accountId:
                           type: string
+                        type:
+                          type: string
+                          enum:
+                            - None
+                            - Product
+                            - Service
+                            - Hour
+                            - Day
+                            - Month
+                            - Year
+                            - Expense
+                            - Shipping
                         wht:
                           type: object
                           properties:
@@ -2312,6 +2378,7 @@ paths:
                         balanceAmount: 120
                         unitPrice: 150
                         accountId: "ACC001"
+                        type: "Product"
                         wht:
                           id: "WHT001"
                           referenceId: "REF001"
@@ -2429,6 +2496,18 @@ paths:
                         type: number
                       accountId:
                         type: string
+                      type:
+                        type: string
+                        enum:
+                          - None
+                          - Product
+                          - Service
+                          - Hour
+                          - Day
+                          - Month
+                          - Year
+                          - Expense
+                          - Shipping
                       wht:
                         type: object
                         properties:
@@ -2533,6 +2612,7 @@ paths:
                       unitPrice: 200
                       balanceAmount: 120
                       accountId: "ACC002"
+                      type: "Product"
                       wht:
                         id: "WHT002"
                         referenceId: "REF002"
@@ -2631,6 +2711,18 @@ paths:
                         type: number
                       accountId:
                         type: string
+                      type:
+                        type: string
+                        enum:
+                          - None
+                          - Product
+                          - Service
+                          - Hour
+                          - Day
+                          - Month
+                          - Year
+                          - Expense
+                          - Shipping
                       wht:
                         type: object
                         properties:
@@ -2723,6 +2815,7 @@ paths:
                       quantity: 3
                       unitPrice: 200
                       accountId: "ACC002"
+                      type: "Product"
                       wht:
                         id: "WHT002"
                         referenceId: "REF002"
@@ -2839,6 +2932,7 @@ paths:
                           quantity: 3
                           unitPrice: 200
                           accountId: "ACC002"
+                          type: "Product"
                           wht:
                             id: "WHT002"
                             referenceId: "REF002"
@@ -2934,6 +3028,18 @@ paths:
                           type: number
                         accountId:
                           type: string
+                        type:
+                          type: string
+                          enum:
+                            - None
+                            - Product
+                            - Service
+                            - Hour
+                            - Day
+                            - Month
+                            - Year
+                            - Expense
+                            - Shipping
                         wht:
                           type: object
                           properties:
@@ -3026,6 +3132,7 @@ paths:
                         quantity: 3
                         unitPrice: 200
                         accountId: "ACC002"
+                        type: "Product"
                         wht:
                           id: "WHT002"
                           referenceId: "REF002"
@@ -3106,6 +3213,18 @@ paths:
                         type: number
                       accountId:
                         type: string
+                      type:
+                        type: string
+                        enum:
+                          - None
+                          - Product
+                          - Service
+                          - Hour
+                          - Day
+                          - Month
+                          - Year
+                          - Expense
+                          - Shipping
                       wht:
                         type: object
                         properties:
@@ -3225,6 +3344,7 @@ paths:
                       quantity: 2
                       unitPrice: 150
                       accountId: "ACC001"
+                      type: "Product"
                       wht:
                         id: "WHT001"
                         referenceId: "REF001"
@@ -4826,7 +4946,6 @@ components:
                 type: string
               type:
                 type: string
-                description: The type of the item.
                 enum:
                   - None
                   - Product
@@ -4837,7 +4956,6 @@ components:
                   - Year
                   - Expense
                   - Shipping
-                example: Product
               wht:
                 type: object
                 properties:
@@ -4979,7 +5097,6 @@ components:
                 type: string
               type:
                 type: string
-                description: The type of the item.
                 enum:
                   - None
                   - Product
@@ -4990,7 +5107,6 @@ components:
                   - Year
                   - Expense
                   - Shipping
-                example: Product
               wht:
                 type: object
                 properties:
