@@ -29,8 +29,8 @@ For webhook payload schema and more details please go to respective pages.
     - [Created](./payment.md#payment-created)
     - [Updated](./payment.md#payment-updated)
     - [Deleted](./payment.md#payment-deleted)
-- [Reminders](./reminders.md)
-    - [Created](./reminder.md) - when a reminder is created and sent
+- [Reminders](./reminder.md)
+    - [Created](./reminder.md#push-reminder) - when a reminder is created and sent
 - [Bills](./bill.md)
     - [Updated](./bill.md#bill-updated)
     - [Status changed](./bill.md#bill-status-changed)
