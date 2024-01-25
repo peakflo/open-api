@@ -5403,25 +5403,17 @@ components:
       type: object
       x-examples:
         Example:
-          id: "field-001"
           customFieldNumber: "field-001"
           name: "Field A"
           value: "Value A"
-          sourceId: "source-001"
       description: The custom field
       properties:
-        id:
-          type: string
-          description: Custom field Peakflo id
         customFieldNumber:
           type: string
           description: Custom field number
         name:
           type: string
           description:  Custom field name
-        sourceId:
-          type: string
-          description:  Custom field  source id
         value:
           oneOf:
             - type: string
@@ -5430,6 +5422,9 @@ components:
               items:
                 type: string
           description:  Custom field value. can be string, number or array. dates needs to be sent in ISO 8601 date format
+      required:
+        - customFieldNumber
+        - value
 
   securitySchemes:
     bearerAuth:
