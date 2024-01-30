@@ -936,8 +936,6 @@ paths:
                           unitPrice: 150
                           accountId: "ACC001"
                           wht:
-                            id: "WHT001"
-                            referenceId: "REF001"
                             code: "WHT_CODE"
                             displayName: "Withholding Tax"
                             amount: 10
@@ -1046,10 +1044,6 @@ paths:
                       wht:
                         type: object
                         properties:
-                          id:
-                            type: string
-                          referenceId:
-                            type: string
                           code:
                             type: string
                           displayName:
@@ -1136,8 +1130,6 @@ paths:
                       unitPrice: 150
                       accountId: "ACC001"
                       wht:
-                        id: "WHT001"
-                        referenceId: "REF001"
                         code: "WHT_CODE"
                         displayName: "Withholding Tax"
                         amount: 10
@@ -1263,10 +1255,6 @@ paths:
                         wht:
                           type: object
                           properties:
-                            id:
-                              type: string
-                            referenceId:
-                              type: string
                             code:
                               type: string
                             displayName:
@@ -1354,8 +1342,6 @@ paths:
                         unitPrice: 150
                         accountId: "ACC001"
                         wht:
-                          id: "WHT001"
-                          referenceId: "REF001"
                           code: "WHT_CODE"
                           displayName: "Withholding Tax"
                           amount: 10
@@ -1481,10 +1467,6 @@ paths:
                       wht:
                         type: object
                         properties:
-                          id:
-                            type: string
-                          referenceId:
-                            type: string
                           code:
                             type: string
                           displayName:
@@ -1571,8 +1553,6 @@ paths:
                       unitPrice: 150
                       accountId: "ACC001"
                       wht:
-                        id: "WHT001"
-                        referenceId: "REF001"
                         code: "WHT_CODE"
                         displayName: "Withholding Tax"
                         amount: 10
@@ -1858,8 +1838,6 @@ paths:
                           unitPrice: 150
                           accountId: "ACC001"
                           wht:
-                            id: "WHT001"
-                            referenceId: "REF001"
                             code: "WHT_CODE"
                             displayName: "Withholding Tax"
                             amount: 10
@@ -1973,10 +1951,6 @@ paths:
                       wht:
                         type: object
                         properties:
-                          id:
-                            type: string
-                          referenceId:
-                            type: string
                           code:
                             type: string
                           displayName:
@@ -2076,8 +2050,6 @@ paths:
                       unitPrice: 150
                       accountId: "ACC001"
                       wht:
-                        id: "WHT001"
-                        referenceId: "REF001"
                         code: "WHT_CODE"
                         displayName: "Withholding Tax"
                         amount: 10
@@ -2211,10 +2183,6 @@ paths:
                         wht:
                           type: object
                           properties:
-                            id:
-                              type: string
-                            referenceId:
-                              type: string
                             code:
                               type: string
                             displayName:
@@ -2313,8 +2281,6 @@ paths:
                         unitPrice: 150
                         accountId: "ACC001"
                         wht:
-                          id: "WHT001"
-                          referenceId: "REF001"
                           code: "WHT_CODE"
                           displayName: "Withholding Tax"
                           amount: 10
@@ -2432,10 +2398,6 @@ paths:
                       wht:
                         type: object
                         properties:
-                          id:
-                            type: string
-                          referenceId:
-                            type: string
                           code:
                             type: string
                           displayName:
@@ -2534,8 +2496,6 @@ paths:
                       balanceAmount: 120
                       accountId: "ACC002"
                       wht:
-                        id: "WHT002"
-                        referenceId: "REF002"
                         code: "WHT_CODE_UPDATED"
                         displayName: "Withholding Tax"
                         amount: 15
@@ -2634,10 +2594,6 @@ paths:
                       wht:
                         type: object
                         properties:
-                          id:
-                            type: string
-                          referenceId:
-                            type: string
                           code:
                             type: string
                           displayName:
@@ -2724,8 +2680,6 @@ paths:
                       unitPrice: 200
                       accountId: "ACC002"
                       wht:
-                        id: "WHT002"
-                        referenceId: "REF002"
                         code: "WHT_CODE_UPDATED"
                         displayName: "Withholding Tax"
                         amount: 15
@@ -2840,8 +2794,6 @@ paths:
                           unitPrice: 200
                           accountId: "ACC002"
                           wht:
-                            id: "WHT002"
-                            referenceId: "REF002"
                             code: "WHT_CODE_UPDATED"
                             displayName: "Withholding Tax"
                             amount: 15
@@ -2937,10 +2889,6 @@ paths:
                         wht:
                           type: object
                           properties:
-                            id:
-                              type: string
-                            referenceId:
-                              type: string
                             code:
                               type: string
                             displayName:
@@ -3027,8 +2975,6 @@ paths:
                         unitPrice: 200
                         accountId: "ACC002"
                         wht:
-                          id: "WHT002"
-                          referenceId: "REF002"
                           code: "WHT_CODE_UPDATED"
                           displayName: "Withholding Tax"
                           amount: 15
@@ -3109,10 +3055,6 @@ paths:
                       wht:
                         type: object
                         properties:
-                          id:
-                            type: string
-                          referenceId:
-                            type: string
                           code:
                             type: string
                           displayName:
@@ -3226,8 +3168,6 @@ paths:
                       unitPrice: 150
                       accountId: "ACC001"
                       wht:
-                        id: "WHT001"
-                        referenceId: "REF001"
                         code: "WHT_CODE"
                         displayName: "Withholding Tax"
                         amount: 10
@@ -4555,14 +4495,6 @@ components:
               wht:
                 type: object
                 properties:
-                  id:
-                    type: string
-                    description: ID of the withholding tax
-                    example: "WHT001"
-                  referenceId:
-                    type: string
-                    description: Reference ID of the withholding tax
-                    example: "REF001"
                   code:
                     type: string
                     description: Code of the withholding tax
@@ -4813,10 +4745,6 @@ components:
               wht:
                 type: object
                 properties:
-                  id:
-                    type: string
-                  referenceId:
-                    type: string
                   code:
                     type: string
                   displayName:
@@ -4952,10 +4880,6 @@ components:
               wht:
                 type: object
                 properties:
-                  id:
-                    type: string
-                  referenceId:
-                    type: string
                   code:
                     type: string
                   displayName:
