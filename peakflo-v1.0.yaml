@@ -2577,8 +2577,6 @@ paths:
                     properties:
                       itemId:
                         type: string
-                      poItemId:
-                        type: string
                       name:
                         type: string
                       unit:
@@ -2672,7 +2670,6 @@ paths:
                       base64: "UpdatedBase64EncodedContent"
                   items:
                     - itemId: "ITEM002"
-                      poItemId: "ITEM003"
                       name: "Product B"
                       unit: "KG"
                       description: "Updated Description for Product B"
@@ -2786,7 +2783,6 @@ paths:
                           base64: "UpdatedBase64EncodedContent"
                       items:
                         - itemId: "ITEM002"
-                          poItemId: "ITEM003"
                           name: "Product B"
                           unit: "KG"
                           description: "Updated Description for Product B"
@@ -2871,8 +2867,6 @@ paths:
                       type: object
                       properties:
                         itemId:
-                          type: string
-                        poItemId:
                           type: string
                         name:
                           type: string
@@ -2967,7 +2961,6 @@ paths:
                       base64: "UpdatedBase64EncodedContent"
                     items:
                       - itemId: "ITEM002"
-                        poItemId: "ITEM003"
                         name: "Product B"
                         unit: "KG"
                         description: "Updated Description for Product B"
@@ -3037,8 +3030,6 @@ paths:
                     type: object
                     properties:
                       itemId:
-                        type: string
-                      poItemId:
                         type: string
                       name:
                         type: string
@@ -3160,7 +3151,6 @@ paths:
                   deliveryDate: "2023-11-28"
                   items:
                     - itemId: "ITEM001"
-                      poItemId: "ITEM003"
                       name: "Product A"
                       unit: "KG"
                       description: "Description for Product A"
