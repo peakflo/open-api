@@ -2634,8 +2634,6 @@ paths:
                               enum:
                                 - fixed
                                 - percentage
-                purchaseOrder:
-                  type: string
                 vendorId:
                   type: string
                 receiptNoteAmount:
@@ -2692,7 +2690,6 @@ paths:
                           name: "Special discount"
                           amount: 25
                           amountType: "percentage"
-                  purchaseOrder: "PO7890"
                   vendorId: "V123"
                   receiptNoteAmount: 100.0
                   totalAmount: 100.0
@@ -2805,7 +2802,6 @@ paths:
                               name: "Special discount"
                               amount: 25
                               amountType: "percentage"
-                      purchaseOrder: "PO7890"
                       vendorId: "V123"
                       receiptNoteAmount: 100.0
                       totalAmount: 100.0
@@ -2925,8 +2921,6 @@ paths:
                                 enum:
                                   - fixed
                                   - percentage
-                  purchaseOrder:
-                    type: string
                   vendorId:
                     type: string
                   receiptNoteAmount:
@@ -2983,7 +2977,6 @@ paths:
                             name: "Special discount"
                             amount: 25
                             amountType: "percentage"
-                    purchaseOrder: "PO7890"
                     vendorId: "V123"
                     receiptNoteAmount: 100.0
                     totalAmount: 100.0
@@ -3094,9 +3087,6 @@ paths:
                         type: number
                       total:
                         type: number
-                
-                purchaseOrder:
-                  type: string
                 vendorId:
                   type: string
                 receiptNoteAmount:
@@ -3176,7 +3166,6 @@ paths:
                       totalTax: 20
                       totalDiscount: 0
                       total: 320
-                  purchaseOrder: "PO7890"
                   vendorId: "V123"
                   receiptNoteAmount: 100.0
                   totalAmount: 100.0
@@ -4913,10 +4902,6 @@ components:
                         - fixed
                         - percentage
           description: List of items included in the receipt note
-        purchaseOrder:
-          type: string
-          description: Associated purchase order ID
-          example: "PO123"
         vendorId:
           type: string
           description: ID of the vendor associated with the receipt note
@@ -4965,7 +4950,6 @@ components:
         - totalAmount
         - receiptNoteAmount
         - vendorId
-        - purchaseOrder
         - items
 
     VendorCreditNote:
