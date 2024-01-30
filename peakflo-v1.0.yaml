@@ -907,7 +907,6 @@ paths:
                     - billNumber: "BILL12345"
                       status: "paid"
                       billExternalId: "123456789"
-                      paymentId: "PAY789"
                       vendorId: "VENDOR001"
                       vendorName: "ABC Vendor"
                       date: "2023-11-27T12:00:00Z"
@@ -980,8 +979,6 @@ paths:
                   enum:
                     - paid
                 billExternalId:
-                  type: string
-                paymentId:
                   type: string
                 vendorId:
                   type: string
@@ -1102,7 +1099,6 @@ paths:
                   billNumber: "BILL12345"
                   status: "paid"
                   billExternalId: "123456789"
-                  paymentId: "PAY789"
                   vendorId: "VENDOR001"
                   vendorName: "ABC Vendor"
                   date: "2023-11-27T12:00:00Z"
@@ -1189,8 +1185,6 @@ paths:
                     enum:
                       - paid
                   billExternalId:
-                    type: string
-                  paymentId:
                     type: string
                   vendorId:
                     type: string
@@ -1313,7 +1307,6 @@ paths:
                     billNumber: "BILL12345"
                     status: "paid"
                     billExternalId: "123456789"
-                    paymentId: "PAY789"
                     vendorId: "VENDOR001"
                     vendorName: "ABC Vendor"
                     date: "2023-11-27T12:00:00Z"
@@ -1393,8 +1386,6 @@ paths:
                   type: string
                   enum:
                     - paid
-                paymentId:
-                  type: string
                 vendorId:
                   type: string
                 vendorName:
@@ -1524,7 +1515,6 @@ paths:
                 value:
                   billNumber: "BILL12345"
                   status: "paid"
-                  paymentId: "PAY789"
                   vendorId: "VENDOR001"
                   vendorName: "ABC Vendor"
                   date: "2023-11-27T12:00:00Z"
@@ -4356,10 +4346,6 @@ components:
           type: string
           description: External ID of the bill
           example: "123456789"
-        paymentId:
-          type: string
-          description: ID of the associated payment
-          example: "PAY789"
         vendorId:
           type: string
           description: ID of the vendor associated with the bill
