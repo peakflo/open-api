@@ -924,7 +924,6 @@ paths:
                       paymentAmount: 450
                       totalAmount: 550
                       notes: "This is a test bill"
-                      billPaymentId: "BP789"
                       totalWHT: 20
                       items:
                         - itemId: "ITEM001"
@@ -1223,8 +1222,6 @@ paths:
                     type: number
                   notes:
                     type: string
-                  billPaymentId:
-                    type: string
                   totalWHT:
                     type: number
                   items:
@@ -1324,7 +1321,6 @@ paths:
                     paymentAmount: 450
                     totalAmount: 550
                     notes: "This is a test bill"
-                    billPaymentId: "BP789"
                     totalWHT: 20
                     items:
                       - itemId: "ITEM001"
@@ -4416,10 +4412,6 @@ components:
           type: string
           description: Notes related to the bill
           example: "This is a test bill"
-        billPaymentId:
-          type: string
-          description: ID of the bill payment
-          example: "BP789"
         totalWHT:
           type: number
           description: Total withholding tax amount
