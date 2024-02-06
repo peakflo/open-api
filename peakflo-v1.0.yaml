@@ -2460,28 +2460,7 @@ paths:
                 deliveryDate:
                   type: string
                 attachments:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      name:
-                        type: string
-                      contentType:
-                        type: string
-                      fileSize:
-                        type: number
-                      fileType:
-                        type: string
-                        enum:
-                          - invoice
-                          - paymentProof
-                          - statement
-                          - transaction
-                          - other
-                      base64:
-                        type: string
+                  $ref: '#/components/schemas/APAttachments'
                 items:
                   type: array
                   items:
@@ -2757,22 +2736,7 @@ paths:
                   deliveryDate:
                     type: string
                   attachments:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        name:
-                          type: string
-                        contentType:
-                          type: string
-                        fileSize:
-                          type: number
-                        fileType:
-                          type: string
-                        base64:
-                          type: string
+                    $ref: '#/components/schemas/APAttachments'
                   items:
                     type: array
                     items:
@@ -3019,39 +2983,7 @@ paths:
                 notes:
                   type: string
                 attachments:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        description: ID of the attachment
-                        example: "attachment_id_1"
-                      name:
-                        type: string
-                        description: Name of the attachment
-                        example: "Attachment 1"
-                      contentType:
-                        type: string
-                        description: MIME type of the attachment
-                        example: "application/pdf"
-                      fileSize:
-                        type: integer
-                        description: Size of the attachment in bytes
-                        example: 1024
-                      fileType:
-                        type: string
-                        enum:
-                          - invoice
-                          - paymentProof
-                          - statement
-                          - transaction
-                          - other
-                      base64:
-                        type: string
-                        description: Base64-encoded content of the attachment
-                        example: "Base64EncodedContent1"
-                  description: List of attachments related to the bill
+                  $ref: '#/components/schemas/APAttachments'
                 fxRate:
                   type: number
                 convertedAmount:
