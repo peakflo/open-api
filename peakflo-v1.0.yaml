@@ -4491,15 +4491,6 @@ components:
                 type: integer
                 description: Size of the attachment in bytes
                 example: 1024
-              fileType:
-                type: string
-                enum:
-                  - transaction
-                  - statement
-                  - invoice
-                  - paymentProof
-                  - other
-                example: transaction
               base64:
                 type: string
                 description: Base64-encoded content of the attachment
