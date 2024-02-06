@@ -991,28 +991,7 @@ paths:
                 updatedAt:
                   type: string
                 attachments:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      name:
-                        type: string
-                      contentType:
-                        type: string
-                      fileSize:
-                        type: number
-                      fileType:
-                        type: string
-                        enum:
-                          - invoice
-                          - paymentProof
-                          - statement
-                          - transaction
-                          - other
-                      base64:
-                        type: string
+                  $ref: '#/components/schemas/APAttachments'
                 currency:
                   type: string
                 subTotal:
@@ -1206,22 +1185,7 @@ paths:
                   updatedAt:
                     type: string
                   attachments:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        name:
-                          type: string
-                        contentType:
-                          type: string
-                        fileSize:
-                          type: number
-                        fileType:
-                          type: string
-                        base64:
-                          type: string
+                    $ref: '#/components/schemas/APAttachments'
                   currency:
                     type: string
                   subTotal:
@@ -1406,28 +1370,7 @@ paths:
                 updatedAt:
                   type: string
                 attachments:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      name:
-                        type: string
-                      contentType:
-                        type: string
-                      fileSize:
-                        type: number
-                      fileType:
-                        type: string
-                        enum:
-                          - invoice
-                          - paymentProof
-                          - statement
-                          - transaction
-                          - other
-                      base64:
-                        type: string
+                  $ref: '#/components/schemas/APAttachments'
                 currency:
                   type: string
                 subTotal:
