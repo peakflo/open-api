@@ -2080,7 +2080,7 @@ paths:
     get:
       tags:
         - Vendor Purchase Orders
-      summary: Get a purchase order by ID
+      summary: Get a purchase order
       description: Retrieve details of a specific purchase order
       operationId: get-purchase-order
       parameters:
@@ -2297,7 +2297,7 @@ paths:
     put:
       tags:
         - Vendor Purchase Orders
-      summary: Update a purchase order by ID
+      summary: Update a purchase order
       description: Update an existing purchase order
       operationId: update-purchase-order
       parameters:
@@ -2997,8 +2997,6 @@ paths:
             schema:
               type: object
               properties:
-                externalId:
-                  type: string
                 receiptNoteNumber:
                   type: string
                 deliveryDate:
@@ -3122,7 +3120,6 @@ paths:
             examples:
               Example:
                 value:
-                  externalId: "rn-0001"
                   receiptNoteNumber: "RN12345"
                   deliveryDate: "2023-11-28"
                   items:
@@ -3533,7 +3530,6 @@ paths:
             examples:
               Example:
                 value:
-                  externalId: "CN-001"
                   vendorId: "VENDOR123"
                   receiveDate: "2023-11-28"
                   creditNoteNumber: "CN-001"
@@ -3672,7 +3668,6 @@ paths:
             examples:
               Example:
                 value:
-                  externalId: "item-001"
                   name: "Product A"
                   description: "Description for Product A"
                   price: 150
