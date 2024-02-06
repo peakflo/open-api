@@ -1078,7 +1078,6 @@ paths:
                     - billNumber: "BILL12345"
                       status: "paid"
                       billExternalId: "123456789"
-                      paymentId: "PAY789"
                       vendorId: "VENDOR001"
                       vendorName: "ABC Vendor"
                       date: "2023-11-27T12:00:00Z"
@@ -1096,7 +1095,6 @@ paths:
                       paymentAmount: 450
                       totalAmount: 550
                       notes: "This is a test bill"
-                      billPaymentId: "BP789"
                       totalWHT: 20
                       items:
                         - itemId: "ITEM001"
@@ -1107,8 +1105,6 @@ paths:
                           unitPrice: 150
                           accountId: "ACC001"
                           wht:
-                            id: "WHT001"
-                            referenceId: "REF001"
                             code: "WHT_CODE"
                             displayName: "Withholding Tax"
                             amount: 10
@@ -1153,8 +1149,6 @@ paths:
                   enum:
                     - paid
                 billExternalId:
-                  type: string
-                paymentId:
                   type: string
                 vendorId:
                   type: string
@@ -1217,10 +1211,6 @@ paths:
                       wht:
                         type: object
                         properties:
-                          id:
-                            type: string
-                          referenceId:
-                            type: string
                           code:
                             type: string
                           displayName:
@@ -1283,7 +1273,6 @@ paths:
                   billNumber: "BILL12345"
                   status: "paid"
                   billExternalId: "123456789"
-                  paymentId: "PAY789"
                   vendorId: "VENDOR001"
                   vendorName: "ABC Vendor"
                   date: "2023-11-27T12:00:00Z"
@@ -1311,8 +1300,6 @@ paths:
                       unitPrice: 150
                       accountId: "ACC001"
                       wht:
-                        id: "WHT001"
-                        referenceId: "REF001"
                         code: "WHT_CODE"
                         displayName: "Withholding Tax"
                         amount: 10
@@ -1373,8 +1360,6 @@ paths:
                       - paid
                   billExternalId:
                     type: string
-                  paymentId:
-                    type: string
                   vendorId:
                     type: string
                   vendorName:
@@ -1412,8 +1397,6 @@ paths:
                     type: number
                   notes:
                     type: string
-                  billPaymentId:
-                    type: string
                   totalWHT:
                     type: number
                   items:
@@ -1438,10 +1421,6 @@ paths:
                         wht:
                           type: object
                           properties:
-                            id:
-                              type: string
-                            referenceId:
-                              type: string
                             code:
                               type: string
                             displayName:
@@ -1500,7 +1479,6 @@ paths:
                     billNumber: "BILL12345"
                     status: "paid"
                     billExternalId: "123456789"
-                    paymentId: "PAY789"
                     vendorId: "VENDOR001"
                     vendorName: "ABC Vendor"
                     date: "2023-11-27T12:00:00Z"
@@ -1518,7 +1496,6 @@ paths:
                     paymentAmount: 450
                     totalAmount: 550
                     notes: "This is a test bill"
-                    billPaymentId: "BP789"
                     totalWHT: 20
                     items:
                       - itemId: "ITEM001"
@@ -1529,8 +1506,6 @@ paths:
                         unitPrice: 150
                         accountId: "ACC001"
                         wht:
-                          id: "WHT001"
-                          referenceId: "REF001"
                           code: "WHT_CODE"
                           displayName: "Withholding Tax"
                           amount: 10
@@ -1582,8 +1557,6 @@ paths:
                   type: string
                   enum:
                     - paid
-                paymentId:
-                  type: string
                 vendorId:
                   type: string
                 vendorName:
@@ -1656,10 +1629,6 @@ paths:
                       wht:
                         type: object
                         properties:
-                          id:
-                            type: string
-                          referenceId:
-                            type: string
                           code:
                             type: string
                           displayName:
@@ -1721,7 +1690,6 @@ paths:
                 value:
                   billNumber: "BILL12345"
                   status: "paid"
-                  paymentId: "PAY789"
                   vendorId: "VENDOR001"
                   vendorName: "ABC Vendor"
                   date: "2023-11-27T12:00:00Z"
@@ -1750,8 +1718,6 @@ paths:
                       unitPrice: 150
                       accountId: "ACC001"
                       wht:
-                        id: "WHT001"
-                        referenceId: "REF001"
                         code: "WHT_CODE"
                         displayName: "Withholding Tax"
                         amount: 10
@@ -2037,8 +2003,6 @@ paths:
                           unitPrice: 150
                           accountId: "ACC001"
                           wht:
-                            id: "WHT001"
-                            referenceId: "REF001"
                             code: "WHT_CODE"
                             displayName: "Withholding Tax"
                             amount: 10
@@ -2152,10 +2116,6 @@ paths:
                       wht:
                         type: object
                         properties:
-                          id:
-                            type: string
-                          referenceId:
-                            type: string
                           code:
                             type: string
                           displayName:
@@ -2259,8 +2219,6 @@ paths:
                       unitPrice: 150
                       accountId: "ACC001"
                       wht:
-                        id: "WHT001"
-                        referenceId: "REF001"
                         code: "WHT_CODE"
                         displayName: "Withholding Tax"
                         amount: 10
@@ -2394,10 +2352,6 @@ paths:
                         wht:
                           type: object
                           properties:
-                            id:
-                              type: string
-                            referenceId:
-                              type: string
                             code:
                               type: string
                             displayName:
@@ -2496,8 +2450,6 @@ paths:
                         unitPrice: 150
                         accountId: "ACC001"
                         wht:
-                          id: "WHT001"
-                          referenceId: "REF001"
                           code: "WHT_CODE"
                           displayName: "Withholding Tax"
                           amount: 10
@@ -2608,10 +2560,6 @@ paths:
                       wht:
                         type: object
                         properties:
-                          id:
-                            type: string
-                          referenceId:
-                            type: string
                           code:
                             type: string
                           displayName:
@@ -2714,8 +2662,6 @@ paths:
                       balanceAmount: 120
                       accountId: "ACC002"
                       wht:
-                        id: "WHT002"
-                        referenceId: "REF002"
                         code: "WHT_CODE_UPDATED"
                         displayName: "Withholding Tax"
                         amount: 15
@@ -2807,8 +2753,6 @@ paths:
                     properties:
                       itemId:
                         type: string
-                      poItemId:
-                        type: string
                       name:
                         type: string
                       unit:
@@ -2824,10 +2768,6 @@ paths:
                       wht:
                         type: object
                         properties:
-                          id:
-                            type: string
-                          referenceId:
-                            type: string
                           code:
                             type: string
                           displayName:
@@ -2870,8 +2810,6 @@ paths:
                               enum:
                                 - fixed
                                 - percentage
-                purchaseOrder:
-                  type: string
                 vendorId:
                   type: string
                 receiptNoteAmount:
@@ -2910,7 +2848,6 @@ paths:
                       base64: "UpdatedBase64EncodedContent"
                   items:
                     - itemId: "ITEM002"
-                      poItemId: "ITEM003"
                       name: "Product B"
                       unit: "KG"
                       description: "Updated Description for Product B"
@@ -2918,8 +2855,6 @@ paths:
                       unitPrice: 200
                       accountId: "ACC002"
                       wht:
-                        id: "WHT002"
-                        referenceId: "REF002"
                         code: "WHT_CODE_UPDATED"
                         displayName: "Withholding Tax"
                         amount: 15
@@ -2935,7 +2870,6 @@ paths:
                           name: "Special discount"
                           amount: 25
                           amountType: "percentage"
-                  purchaseOrder: "PO7890"
                   vendorId: "V123"
                   receiptNoteAmount: 100.0
                   totalAmount: 100.0
@@ -3026,7 +2960,6 @@ paths:
                           base64: "UpdatedBase64EncodedContent"
                       items:
                         - itemId: "ITEM002"
-                          poItemId: "ITEM003"
                           name: "Product B"
                           unit: "KG"
                           description: "Updated Description for Product B"
@@ -3034,8 +2967,6 @@ paths:
                           unitPrice: 200
                           accountId: "ACC002"
                           wht:
-                            id: "WHT002"
-                            referenceId: "REF002"
                             code: "WHT_CODE_UPDATED"
                             displayName: "Withholding Tax"
                             amount: 15
@@ -3051,7 +2982,6 @@ paths:
                               name: "Special discount"
                               amount: 25
                               amountType: "percentage"
-                      purchaseOrder: "PO7890"
                       vendorId: "V123"
                       receiptNoteAmount: 100.0
                       totalAmount: 100.0
@@ -3114,8 +3044,6 @@ paths:
                       properties:
                         itemId:
                           type: string
-                        poItemId:
-                          type: string
                         name:
                           type: string
                         unit:
@@ -3131,10 +3059,6 @@ paths:
                         wht:
                           type: object
                           properties:
-                            id:
-                              type: string
-                            referenceId:
-                              type: string
                             code:
                               type: string
                             displayName:
@@ -3177,8 +3101,6 @@ paths:
                                 enum:
                                   - fixed
                                   - percentage
-                  purchaseOrder:
-                    type: string
                   vendorId:
                     type: string
                   receiptNoteAmount:
@@ -3213,7 +3135,6 @@ paths:
                       base64: "UpdatedBase64EncodedContent"
                     items:
                       - itemId: "ITEM002"
-                        poItemId: "ITEM003"
                         name: "Product B"
                         unit: "KG"
                         description: "Updated Description for Product B"
@@ -3221,8 +3142,6 @@ paths:
                         unitPrice: 200
                         accountId: "ACC002"
                         wht:
-                          id: "WHT002"
-                          referenceId: "REF002"
                           code: "WHT_CODE_UPDATED"
                           displayName: "Withholding Tax"
                           amount: 15
@@ -3238,7 +3157,6 @@ paths:
                             name: "Special discount"
                             amount: 25
                             amountType: "percentage"
-                    purchaseOrder: "PO7890"
                     vendorId: "V123"
                     receiptNoteAmount: 100.0
                     totalAmount: 100.0
@@ -3279,8 +3197,6 @@ paths:
                     properties:
                       itemId:
                         type: string
-                      poItemId:
-                        type: string
                       name:
                         type: string
                       unit:
@@ -3296,10 +3212,6 @@ paths:
                       wht:
                         type: object
                         properties:
-                          id:
-                            type: string
-                          referenceId:
-                            type: string
                           code:
                             type: string
                           displayName:
@@ -3348,9 +3260,6 @@ paths:
                         type: number
                       total:
                         type: number
-                
-                purchaseOrder:
-                  type: string
                 vendorId:
                   type: string
                 receiptNoteAmount:
@@ -3409,7 +3318,6 @@ paths:
                   deliveryDate: "2023-11-28"
                   items:
                     - itemId: "ITEM001"
-                      poItemId: "ITEM003"
                       name: "Product A"
                       unit: "KG"
                       description: "Description for Product A"
@@ -3417,8 +3325,6 @@ paths:
                       unitPrice: 150
                       accountId: "ACC001"
                       wht:
-                        id: "WHT001"
-                        referenceId: "REF001"
                         code: "WHT_CODE"
                         displayName: "Withholding Tax"
                         amount: 10
@@ -3437,7 +3343,6 @@ paths:
                       totalTax: 20
                       totalDiscount: 0
                       total: 320
-                  purchaseOrder: "PO7890"
                   vendorId: "V123"
                   receiptNoteAmount: 100.0
                   totalAmount: 100.0
@@ -4638,10 +4543,6 @@ components:
           type: string
           description: External ID of the bill
           example: "123456789"
-        paymentId:
-          type: string
-          description: ID of the associated payment
-          example: "PAY789"
         vendorId:
           type: string
           description: ID of the vendor associated with the bill
@@ -4712,10 +4613,6 @@ components:
           type: string
           description: Notes related to the bill
           example: "This is a test bill"
-        billPaymentId:
-          type: string
-          description: ID of the bill payment
-          example: "BP789"
         totalWHT:
           type: number
           description: Total withholding tax amount
@@ -4756,14 +4653,6 @@ components:
               wht:
                 type: object
                 properties:
-                  id:
-                    type: string
-                    description: ID of the withholding tax
-                    example: "WHT001"
-                  referenceId:
-                    type: string
-                    description: Reference ID of the withholding tax
-                    example: "REF001"
                   code:
                     type: string
                     description: Code of the withholding tax
@@ -5014,10 +4903,6 @@ components:
               wht:
                 type: object
                 properties:
-                  id:
-                    type: string
-                  referenceId:
-                    type: string
                   code:
                     type: string
                   displayName:
@@ -5153,10 +5038,6 @@ components:
               wht:
                 type: object
                 properties:
-                  id:
-                    type: string
-                  referenceId:
-                    type: string
                   code:
                     type: string
                   displayName:
@@ -5200,10 +5081,6 @@ components:
                         - fixed
                         - percentage
           description: List of items included in the receipt note
-        purchaseOrder:
-          type: string
-          description: Associated purchase order ID
-          example: "PO123"
         vendorId:
           type: string
           description: ID of the vendor associated with the receipt note
@@ -5252,7 +5129,6 @@ components:
         - totalAmount
         - receiptNoteAmount
         - vendorId
-        - purchaseOrder
         - items
 
     VendorCreditNote:
