@@ -991,10 +991,9 @@ paths:
                 updatedAt:
                   type: string
                 attachments:
-                  type: Array
                   description: List of attachments
-                  items:
-                    $ref: '#/components/schemas/APAttachments'
+                  type: Array
+                  $ref: '#/components/schemas/APAttachments'
                 currency:
                   type: string
                 subTotal:
@@ -1190,8 +1189,7 @@ paths:
                   attachments:
                     type: Array
                     description: List of attachments
-                    items:
-                      $ref: '#/components/schemas/APAttachments'
+                    $ref: '#/components/schemas/APAttachments'
                   currency:
                     type: string
                   subTotal:
@@ -1378,8 +1376,7 @@ paths:
                 attachments:
                   type: Array
                   description: List of attachments
-                  items:
-                    $ref: '#/components/schemas/APAttachments'
+                  $ref: '#/components/schemas/APAttachments'
                 currency:
                   type: string
                 subTotal:
@@ -1862,8 +1859,7 @@ paths:
                 attachments:
                   type: Array
                   description: List of attachments
-                  items:
-                    $ref: '#/components/schemas/APAttachments'
+                  $ref: '#/components/schemas/APAttachments'
                 items:
                   type: array
                   items:
@@ -2085,8 +2081,7 @@ paths:
                   attachments:
                     type: Array
                     description: List of attachments
-                    items:
-                      $ref: '#/components/schemas/APAttachments'
+                    $ref: '#/components/schemas/APAttachments'
                   items:
                     type: array
                     items:
@@ -2291,8 +2286,7 @@ paths:
                 attachments:
                   type: Array
                   description: List of attachments
-                  items:
-                    $ref: '#/components/schemas/APAttachments'
+                  $ref: '#/components/schemas/APAttachments'
                 items:
                   type: array
                   items:
@@ -2480,8 +2474,7 @@ paths:
                 attachments:
                   type: Array
                   description: List of attachments
-                  items:
-                    $ref: '#/components/schemas/APAttachments'
+                  $ref: '#/components/schemas/APAttachments'
                 items:
                   type: array
                   items:
@@ -2759,8 +2752,7 @@ paths:
                   attachments:
                     type: Array
                     description: List of attachments
-                    items:
-                      $ref: '#/components/schemas/APAttachments'
+                    $ref: '#/components/schemas/APAttachments'
                   items:
                     type: array
                     items:
@@ -3009,8 +3001,7 @@ paths:
                 attachments:
                   type: Array
                   description: List of attachments
-                  items:
-                    $ref: '#/components/schemas/APAttachments'
+                  $ref: '#/components/schemas/APAttachments'
                 fxRate:
                   type: number
                 convertedAmount:
@@ -3205,8 +3196,7 @@ paths:
                 attachments:
                   type: Array
                   description: List of attachments
-                  items:
-                    $ref: '#/components/schemas/APAttachments'
+                  $ref: '#/components/schemas/APAttachments'
                 fxRate:
                   type: number
                 convertedAmount:
@@ -3304,8 +3294,7 @@ paths:
                   attachments:
                     type: Array
                     description: List of attachments
-                    items:
-                      $ref: '#/components/schemas/APAttachments'
+                    $ref: '#/components/schemas/APAttachments'
                   fxRate:
                     type: number
                   convertedAmount:
@@ -3391,8 +3380,7 @@ paths:
                 attachments:
                   type: Array
                   description: List of attachments
-                  items:
-                    $ref: '#/components/schemas/APAttachments'
+                  $ref: '#/components/schemas/APAttachments'
                 fxRate:
                   type: number
                 convertedAmount:
@@ -3799,6 +3787,13 @@ components:
           type: string
           description: Base64-encoded content of the attachment
           example: "Base64EncodedContent1"
+      required:
+        - id
+        - name
+        - contentType
+        - fileSize
+        - fileType
+        - base64
     Invoice:
       description: ''
       type: object
