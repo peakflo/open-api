@@ -991,7 +991,10 @@ paths:
                 updatedAt:
                   type: string
                 attachments:
-                  $ref: '#/components/schemas/APAttachments'
+                  type: Array
+                  description: List of attachments
+                  items:
+                    $ref: '#/components/schemas/APAttachments'
                 currency:
                   type: string
                 subTotal:
@@ -1185,7 +1188,10 @@ paths:
                   updatedAt:
                     type: string
                   attachments:
-                    $ref: '#/components/schemas/APAttachments'
+                    type: Array
+                    description: List of attachments
+                    items:
+                      $ref: '#/components/schemas/APAttachments'
                   currency:
                     type: string
                   subTotal:
@@ -1370,7 +1376,10 @@ paths:
                 updatedAt:
                   type: string
                 attachments:
-                  $ref: '#/components/schemas/APAttachments'
+                  type: Array
+                  description: List of attachments
+                  items:
+                    $ref: '#/components/schemas/APAttachments'
                 currency:
                   type: string
                 subTotal:
@@ -1851,7 +1860,10 @@ paths:
                 convertedAmount:
                   type: number
                 attachments:
-                  $ref: '#/components/schemas/APAttachments'
+                  type: Array
+                  description: List of attachments
+                  items:
+                    $ref: '#/components/schemas/APAttachments'
                 items:
                   type: array
                   items:
@@ -2071,7 +2083,10 @@ paths:
                   convertedAmount:
                     type: number
                   attachments:
-                    $ref: '#/components/schemas/APAttachments'
+                    type: Array
+                    description: List of attachments
+                    items:
+                      $ref: '#/components/schemas/APAttachments'
                   items:
                     type: array
                     items:
@@ -2274,7 +2289,10 @@ paths:
                 convertedAmount:
                   type: number
                 attachments:
-                  $ref: '#/components/schemas/APAttachments'
+                  type: Array
+                  description: List of attachments
+                  items:
+                    $ref: '#/components/schemas/APAttachments'
                 items:
                   type: array
                   items:
@@ -2460,7 +2478,10 @@ paths:
                 deliveryDate:
                   type: string
                 attachments:
-                  $ref: '#/components/schemas/APAttachments'
+                  type: Array
+                  description: List of attachments
+                  items:
+                    $ref: '#/components/schemas/APAttachments'
                 items:
                   type: array
                   items:
@@ -2736,7 +2757,10 @@ paths:
                   deliveryDate:
                     type: string
                   attachments:
-                    $ref: '#/components/schemas/APAttachments'
+                    type: Array
+                    description: List of attachments
+                    items:
+                      $ref: '#/components/schemas/APAttachments'
                   items:
                     type: array
                     items:
@@ -2983,7 +3007,10 @@ paths:
                 notes:
                   type: string
                 attachments:
-                  $ref: '#/components/schemas/APAttachments'
+                  type: Array
+                  description: List of attachments
+                  items:
+                    $ref: '#/components/schemas/APAttachments'
                 fxRate:
                   type: number
                 convertedAmount:
@@ -3176,7 +3203,10 @@ paths:
                 status:
                   type: string
                 attachments:
-                  $ref: '#/components/schemas/APAttachments'
+                  type: Array
+                  description: List of attachments
+                  items:
+                    $ref: '#/components/schemas/APAttachments'
                 fxRate:
                   type: number
                 convertedAmount:
@@ -3272,7 +3302,10 @@ paths:
                   status:
                     type: string
                   attachments:
-                    $ref: '#/components/schemas/APAttachments'
+                    type: Array
+                    description: List of attachments
+                    items:
+                      $ref: '#/components/schemas/APAttachments'
                   fxRate:
                     type: number
                   convertedAmount:
@@ -3356,7 +3389,10 @@ paths:
                 status:
                   type: string
                 attachments:
-                  $ref: '#/components/schemas/APAttachments'
+                  type: Array
+                  description: List of attachments
+                  items:
+                    $ref: '#/components/schemas/APAttachments'
                 fxRate:
                   type: number
                 convertedAmount:
@@ -3730,42 +3766,39 @@ components:
       x-examples:
         Example: Invoice
     APAttachments:
-      description: List of attachments
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-            description: ID of the attachment
-            example: "attachment_id_1"
-          name:
-            type: string
-            description: Name of the attachment
-            example: "Attachment 1"
-          contentType:
-            type: string
-            description: MIME type of the attachment
-            example: "application/pdf"
-          fileSize:
-            type: integer
-            description: Size of the attachment in bytes
-            example: 1024
-          fileType:
-            type: string
-            description: Type of attachment
-            enum:
-              - transaction
-              - statement
-              - cabinet
-              - invoice
-              - paymentProof
-              - other
-            example: transaction
-          base64:
-            type: string
-            description: Base64-encoded content of the attachment
-            example: "Base64EncodedContent1"
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the attachment
+          example: "attachment_id_1"
+        name:
+          type: string
+          description: Name of the attachment
+          example: "Attachment 1"
+        contentType:
+          type: string
+          description: MIME type of the attachment
+          example: "application/pdf"
+        fileSize:
+          type: integer
+          description: Size of the attachment in bytes
+          example: 1024
+        fileType:
+          type: string
+          description: Type of attachment
+          enum:
+            - transaction
+            - statement
+            - cabinet
+            - invoice
+            - paymentProof
+            - other
+          example: transaction
+        base64:
+          type: string
+          description: Base64-encoded content of the attachment
+          example: "Base64EncodedContent1"
     Invoice:
       description: ''
       type: object
