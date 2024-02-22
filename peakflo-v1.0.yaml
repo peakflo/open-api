@@ -712,8 +712,6 @@ paths:
                         type: string
                       postalCode:
                         type: string
-                registrationNumber:
-                  type: string
                 taxNumber:
                   type: string
                 notes:
@@ -767,7 +765,6 @@ paths:
                       city: Sample City
                       country: Sample Country
                       postalCode: '12345'
-                  registrationNumber: ABC123
                   taxNumber: XYZ456
                   notes: Sample notes
                   bankDetails:
@@ -4145,10 +4142,6 @@ components:
                 description: Postal code
                 example: "12345"
           description: Array of addresses associated with the vendor
-        registrationNumber:
-          type: string
-          description: Registration number of the vendor
-          example: "REG789"
         taxNumber:
           type: string
           description: Tax number of the vendor
