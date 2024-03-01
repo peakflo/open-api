@@ -913,7 +913,6 @@ paths:
               Example:
                 value:
                   companyName: YouWin
-                  companyId: '121989'
                   defaultCurrency: USD
                   addresses:
                     - type: billing
