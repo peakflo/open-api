@@ -796,6 +796,199 @@ paths:
           description: Conflict
           content: {}
       x-codegen-request-body-name: Vendors
+  '/v1/vendors/{externalId}':
+    put:
+      summary: Update vendor info
+      description: Update vendor info
+      operationId: update-vendor
+      tags:
+        - Vendors
+      parameters:
+        - schema:
+            type: string
+          name: externalId
+          in: path
+          required: true
+      requestBody:
+        description: Vendor to Edit
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyName:
+                  type: string
+                defaultCurrency:
+                  type: string
+                addresses:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                          - billing
+                          - delivery
+                          - other
+                      line1:
+                        type: string
+                      line2:
+                        type: string
+                        nullable: true
+                      city:
+                        type: string
+                      region:
+                        type: string
+                        nullable: true
+                      country:
+                        type: string
+                      postalCode:
+                        type: string
+                taxNumber:
+                  type: string
+                notes:
+                  type: string
+                bankDetails:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      bankName:
+                        type: string
+                      bankCode:
+                        type: string
+                      bankCountry:
+                        type: string
+                      accountNumber:
+                        type: string
+                      accountHolder:
+                        type: string
+                      currency:
+                        type: string
+                      bankAccountType:
+                        type: string
+                        enum:
+                          - current
+                          - savings
+                      isDefault:
+                        type: boolean
+                entityType:
+                  type: string
+                  enum:
+                    - company
+                    - individual
+                beneficiaryCountry:
+                  type: string
+                vendorFirstName:
+                  type: string
+                vendorLastName:
+                  type: string
+            examples:
+              Example:
+                value:
+                  companyName: YouWin
+                  defaultCurrency: USD
+                  addresses:
+                    - type: billing
+                      line1: Sample Address Line 1
+                      city: Sample City
+                      country: Sample Country
+                      postalCode: '12345'
+                  taxNumber: XYZ456
+                  notes: Sample notes
+                  bankDetails:
+                    - id: '1'
+                      bankName: Sample Bank
+                      bankCode: B123
+                      bankCountry: Bank Country
+                      accountNumber: Account123
+                      accountHolder: Account Holder
+                      currency: USD
+                      bankAccountType: current
+                      isDefault: true
+                  entityType: company
+                  beneficiaryCountry: Beneficiary Country
+                  vendorFirstName: John
+                  vendorLastName: Doe
+      responses:
+        '200':
+          description: Update Vendor Info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+        '404':
+          description: Not Found
+        '400':
+          description: Bad Request
+    delete:
+      tags:
+        - Vendors
+      summary: Delete a vendor
+      description: Delete a vendor
+      operationId: deleteVendor
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External id of the vendor to update
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+  '/v1/vendors/{externalId}/archive':
+    parameters:
+      - schema:
+          type: string
+        name: externalId
+        in: path
+        required: true
+        description: The vendor external Id to toggle archive status
+    put:
+      tags:
+        - Vendors
+      summary: Archive Vendor
+      operationId: archive-vendor
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vendorId:
+                    type: string
+                    description: ID of the vendor
+                    example: "VENDOR789"
+                vendorName:
+                  type: string
+                  description: Name of the vendor
+                  example: "ABC Vendor"
+                  status:
+                    type: string
+                    description: The status of the vendor
+                    enum:
+                      - active
+                      - archived
+                    example: active
+              examples:
+                Example:
+                  value:
+                    vendorId: VENDOR001
+                    vendorName: ABC Vendor
+                    status: archived
+        '404':
+          description: Not Found
+        '409':
+          description: Conflict
   '/vendors/{vendorExternalId}/contacts':
     parameters:
       - schema:
@@ -987,10 +1180,6 @@ paths:
                   type: string
                 updatedAt:
                   type: string
-                attachments:
-                  description: List of attachments
-                  type: array
-                  $ref: '#/components/schemas/APAttachments'
                 currency:
                   type: string
                 subTotal:
@@ -1090,13 +1279,6 @@ paths:
                   date: "2023-11-27T12:00:00Z"
                   dueDate: "2023-12-15T23:59:59Z"
                   updatedAt: "2023-12-15T23:59:59Z"
-                  attachments:
-                    - id: "attachment_id_1"
-                      name: "Attachment 1"
-                      contentType: "application/pdf"
-                      fileSize: 1024
-                      fileType: "invoice"
-                      base64: "Base64EncodedContent1"
                   currency: "USD"
                   subTotal: 500
                   totalTax: 50
@@ -1370,10 +1552,6 @@ paths:
                   type: string
                 updatedAt:
                   type: string
-                attachments:
-                  type: array
-                  description: List of attachments
-                  $ref: '#/components/schemas/APAttachments'
                 currency:
                   type: string
                 subTotal:
@@ -1472,13 +1650,6 @@ paths:
                   date: "2023-11-27T12:00:00Z"
                   dueDate: "2023-12-15T23:59:59Z"
                   updatedAt: "2023-12-15T23:59:59Z"
-                  attachments:
-                    - id: "attachment_id_1"
-                      name: "Attachment 1"
-                      contentType: "application/pdf"
-                      fileSize: 1024
-                      fileType: "invoice"
-                      base64: "Base64EncodedContent1"
                   currency: "USD"
                   subTotal: 500
                   totalTax: 50
@@ -1540,13 +1711,36 @@ paths:
         '404':
           description: Not Found
       description: Delete a bill
-    parameters:
-      - schema:
-          type: string
-        name: billExternalId
-        in: path
-        required: true
-
+      parameters:
+        - schema:
+            type: string
+          name: billExternalId
+          in: path
+          required: true
+  "/bill/{billExternalId}/attachments":
+    put:
+      summary: Add an attachment to Bill
+      operationId: add-bill-attachment
+      responses:
+        '200':
+          description: OK
+      tags:
+        - Bills
+      description: Add an attachment to bill
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APAttachments'
+            examples:
+              example:
+                value:
+                  id: "attachment_id_1"
+                  name: "Attachment 1"
+                  contentType: "application/pdf"
+                  fileSize: 1024
+                  fileType: "invoice"
+                  base64: "Base64EncodedContent1"
   "/bill-payment":
     post:
       tags:
@@ -1853,10 +2047,6 @@ paths:
                   type: number
                 convertedAmount:
                   type: number
-                attachments:
-                  type: array
-                  description: List of attachments
-                  $ref: '#/components/schemas/APAttachments'
                 items:
                   type: array
                   items:
@@ -1965,13 +2155,6 @@ paths:
                   totalTax: 200
                   fxRate: 1.2
                   convertedAmount: 6000
-                  attachments:
-                    - id: "attachment_id_1"
-                      name: "Attachment 1"
-                      contentType: "application/pdf"
-                      fileSize: 1024
-                      fileType: "invoice"
-                      base64: "Base64EncodedContent1"
                   items:
                     - itemId: "ITEM001"
                       name: "Product A"
@@ -2280,10 +2463,6 @@ paths:
                   type: number
                 convertedAmount:
                   type: number
-                attachments:
-                  type: array
-                  description: List of attachments
-                  $ref: '#/components/schemas/APAttachments'
                 items:
                   type: array
                   items:
@@ -2391,13 +2570,6 @@ paths:
                   totalTax: 250
                   fxRate: 1.25
                   convertedAmount: 6875
-                  attachments:
-                    - id: "attachment_id_2"
-                      name: "Updated Attachment"
-                      contentType: "application/pdf"
-                      fileSize: 2048
-                      fileType: "inovice"
-                      base64: "UpdatedBase64EncodedContent"
                   items:
                     - itemId: "ITEM002"
                       name: "Product B"
@@ -2446,7 +2618,48 @@ paths:
         '404':
           description: Not Found
           content: {}
-
+    delete:
+      tags:
+        - Vendor Purchase Orders
+      summary: Delete a purchase order
+      description: Delete a purchase order
+      operationId: deleteVendorPurchaseOrder
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External id of the purchase order to update
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+  "/purchase-order/{externalId}/attachments":
+    put:
+      summary: Add an attachment to purchase order
+      operationId: add-po-attachment
+      responses:
+        '200':
+          description: OK
+      tags:
+        - Vendor Purchase Orders
+      description: Add an attachment to purchase order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APAttachments'
+            examples:
+              example:
+                value:
+                  id: "attachment_id_1"
+                  name: "Attachment 1"
+                  contentType: "application/pdf"
+                  fileSize: 1024
+                  fileType: "invoice"
+                  base64: "Base64EncodedContent1"
   "/receipt-notes":
     post:
       tags:
@@ -2468,10 +2681,6 @@ paths:
                   type: string
                 deliveryDate:
                   type: string
-                attachments:
-                  type: array
-                  description: List of attachments
-                  $ref: '#/components/schemas/APAttachments'
                 items:
                   type: array
                   items:
@@ -2562,13 +2771,6 @@ paths:
                   externalId: "rn-0001"
                   receiptNoteNumber: "RN12345"
                   deliveryDate: "2023-11-28"
-                  attachments:
-                    - id: "attachment_id_2"
-                      name: "Updated Attachment"
-                      contentType: "application/pdf"
-                      fileSize: 2048
-                      fileType: "invoice"
-                      base64: "UpdatedBase64EncodedContent"
                   items:
                     - itemId: "ITEM002"
                       name: "Product B"
@@ -2995,10 +3197,6 @@ paths:
                   type: string
                 notes:
                   type: string
-                attachments:
-                  type: array
-                  description: List of attachments
-                  $ref: '#/components/schemas/APAttachments'
                 fxRate:
                   type: number
                 convertedAmount:
@@ -3043,13 +3241,6 @@ paths:
                   currency: "USD"
                   status: "approved"
                   notes: "Received items in good condition."
-                  attachments:
-                    - id: "attachment_id_1"
-                      name: "Attachment 1"
-                      contentType: "application/pdf"
-                      fileSize: 1024
-                      fileType: "invoice"
-                      base64: "Base64EncodedContent1"
                   fxRate: 1.2
                   convertedAmount: 120.0
       responses:
@@ -3065,7 +3256,48 @@ paths:
         '404':
           description: Not Found
           content: {}
-
+    delete:
+      tags:
+        - Vendor Receipt Notes
+      summary: Delete a receipt note
+      description: Delete a receipt note
+      operationId: deleteReceiptNote
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External id of the receipt note to update
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+  "/receipt-notes/{externalId}/attachments":
+    put:
+      summary: Add an attachment to receipt note
+      operationId: add-rn-attachment
+      responses:
+        '200':
+          description: OK
+      tags:
+        - Vendor Receipt Notes
+      description: Add an attachment to receipt note
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APAttachments'
+            examples:
+              example:
+                value:
+                  id: "attachment_id_1"
+                  name: "Attachment 1"
+                  contentType: "application/pdf"
+                  fileSize: 1024
+                  fileType: "invoice"
+                  base64: "Base64EncodedContent1"
   "/vendor-credit-notes":
     get:
       tags:
@@ -3190,10 +3422,6 @@ paths:
                   type: string
                 status:
                   type: string
-                attachments:
-                  type: array
-                  description: List of attachments
-                  $ref: '#/components/schemas/APAttachments'
                 fxRate:
                   type: number
                 convertedAmount:
@@ -3215,13 +3443,6 @@ paths:
                       amount: 500
                   note: "This is a credit note for overdue payments."
                   status: "active"
-                  attachments:
-                    - id: "attachment_id_1"
-                      name: "Attachment 1"
-                      contentType: "application/pdf"
-                      fileSize: 1024
-                      fileType: "invoice"
-                      base64: "Base64EncodedContent1"
                   fxRate: 1.25
                   convertedAmount: 1875
                   baseCurrency: "EUR"
@@ -3374,10 +3595,6 @@ paths:
                   type: string
                 status:
                   type: string
-                attachments:
-                  type: array
-                  description: List of attachments
-                  $ref: '#/components/schemas/APAttachments'
                 fxRate:
                   type: number
                 convertedAmount:
@@ -3398,13 +3615,6 @@ paths:
                       amount: 500
                   note: "This is a credit note for overdue payments."
                   status: "active"
-                  attachments:
-                    - id: "attachment_id_1"
-                      name: "Attachment 1"
-                      contentType: "application/pdf"
-                      fileSize: 1024
-                      fileType: "invoice"
-                      base64: "Base64EncodedContent1"
                   fxRate: 1.25
                   convertedAmount: 1875
                   baseCurrency: "EUR"
@@ -4252,32 +4462,6 @@ components:
           type: string
           description: Date when the bill was last updated (ISO8601 format)
           example: "2023-12-15T23:59:59Z"
-        attachments:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: ID of the attachment
-                example: "attachment_id_1"
-              name:
-                type: string
-                description: Name of the attachment
-                example: "Attachment 1"
-              contentType:
-                type: string
-                description: MIME type of the attachment
-                example: "application/pdf"
-              fileSize:
-                type: integer
-                description: Size of the attachment in bytes
-                example: 1024
-              base64:
-                type: string
-                description: Base64-encoded content of the attachment
-                example: "Base64EncodedContent1"
-          description: List of attachments related to the bill
         currency:
           type: string
           description: Currency of the bill
@@ -4554,22 +4738,6 @@ components:
           type: number
           description: Converted amount in base currency
           example: 1125
-        attachments:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
-              contentType:
-                type: string
-              fileSize:
-                type: number
-              base64:
-                type: string
-          description: List of attachments related to the purchase order
         items:
           type: array
           items:
@@ -4689,22 +4857,6 @@ components:
           type: string
           description: Date of delivery (ISO8601 date format)
           example: "2023-12-10"
-        attachments:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
-              contentType:
-                type: string
-              fileSize:
-                type: number
-              base64:
-                type: string
-          description: List of attachments related to the receipt note
         items:
           type: array
           items:
@@ -4874,22 +5026,6 @@ components:
           type: string
           description: Status of the credit note
           example: "active"
-        attachments:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
-              contentType:
-                type: string
-              fileSize:
-                type: number
-              base64:
-                type: string
-          description: List of attachments related to the credit note
         fxRate:
           type: number
           description: Currency conversion rate
