@@ -819,6 +819,136 @@ paths:
           description: Not Found
         '400':
           description: Bad Request
+    put:
+      summary: Update vendor info
+      description: Update vendor info
+      operationId: update-vendor
+      tags:
+        - Vendors
+      parameters:
+        - schema:
+            type: string
+          name: externalId
+          in: path
+          required: true
+            requestBody:
+        description: Vendor to add
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyName:
+                  type: string
+                defaultCurrency:
+                  type: string
+                addresses:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                          - billing
+                          - delivery
+                          - other
+                      line1:
+                        type: string
+                      line2:
+                        type: string
+                        nullable: true
+                      city:
+                        type: string
+                      region:
+                        type: string
+                        nullable: true
+                      country:
+                        type: string
+                      postalCode:
+                        type: string
+                taxNumber:
+                  type: string
+                notes:
+                  type: string
+                bankDetails:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      bankName:
+                        type: string
+                      bankCode:
+                        type: string
+                      bankCountry:
+                        type: string
+                      accountNumber:
+                        type: string
+                      accountHolder:
+                        type: string
+                      currency:
+                        type: string
+                      bankAccountType:
+                        type: string
+                        enum:
+                          - current
+                          - savings
+                      isDefault:
+                        type: boolean
+                entityType:
+                  type: string
+                  enum:
+                    - company
+                    - individual
+                beneficiaryCountry:
+                  type: string
+                vendorFirstName:
+                  type: string
+                vendorLastName:
+                  type: string
+            examples:
+              Example:
+                value:
+                  companyName: YouWin
+                  companyId: '121989'
+                  defaultCurrency: USD
+                  addresses:
+                    - type: billing
+                      line1: Sample Address Line 1
+                      city: Sample City
+                      country: Sample Country
+                      postalCode: '12345'
+                  taxNumber: XYZ456
+                  notes: Sample notes
+                  bankDetails:
+                    - id: '1'
+                      bankName: Sample Bank
+                      bankCode: B123
+                      bankCountry: Bank Country
+                      accountNumber: Account123
+                      accountHolder: Account Holder
+                      currency: USD
+                      bankAccountType: current
+                      isDefault: true
+                  entityType: company
+                  beneficiaryCountry: Beneficiary Country
+                  vendorFirstName: John
+                  vendorLastName: Doe
+      responses:
+        '200':
+          description: Update Vendor Info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+
+        '404':
+          description: Not Found
+        '400':
+          description: Bad Request
     delete:
       tags:
         - Vendors
