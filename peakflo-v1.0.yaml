@@ -3168,6 +3168,30 @@ paths:
           description: No Content
         '404':
           description: Not Found
+  "/receipt-notes/{externalId}/attachments":
+    put:
+      summary: Add an attachment to receipt note
+      operationId: add-rn-attachment
+      responses:
+        '200':
+          description: OK
+      tags:
+        - Vendor Receipt Note
+      description: Add an attachment to receipt note
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APAttachments'
+            examples:
+              example:
+                value:
+                  id: "attachment_id_1"
+                  name: "Attachment 1"
+                  contentType: "application/pdf"
+                  fileSize: 1024
+                  fileType: "invoice"
+                  base64: "Base64EncodedContent1"
   "/vendor-credit-notes":
     get:
       tags:
