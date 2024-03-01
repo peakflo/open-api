@@ -1605,12 +1605,36 @@ paths:
         '404':
           description: Not Found
       description: Delete a bill
-    parameters:
-      - schema:
-          type: string
-        name: billExternalId
-        in: path
-        required: true
+      parameters:
+        - schema:
+            type: string
+          name: billExternalId
+          in: path
+          required: true
+  "/bill/{billExternalId}/attachments":
+    put:
+      summary: Add an attachment to Bill
+      operationId: add-bill-attachment
+      responses:
+        '200':
+          description: OK
+      tags:
+        - Bills
+      description: Add an attachment to bill
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APAttachments'
+            examples:
+              example:
+                value:
+                  id: "attachment_id_1"
+                  name: "Attachment 1"
+                  contentType: "application/pdf"
+                  fileSize: 1024
+                  fileType: "invoice"
+                  base64: "Base64EncodedContent1"
 
   "/bill-payment":
     post:
