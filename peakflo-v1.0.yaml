@@ -4356,32 +4356,6 @@ components:
           type: string
           description: Date when the bill was last updated (ISO8601 format)
           example: "2023-12-15T23:59:59Z"
-        attachments:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: ID of the attachment
-                example: "attachment_id_1"
-              name:
-                type: string
-                description: Name of the attachment
-                example: "Attachment 1"
-              contentType:
-                type: string
-                description: MIME type of the attachment
-                example: "application/pdf"
-              fileSize:
-                type: integer
-                description: Size of the attachment in bytes
-                example: 1024
-              base64:
-                type: string
-                description: Base64-encoded content of the attachment
-                example: "Base64EncodedContent1"
-          description: List of attachments related to the bill
         currency:
           type: string
           description: Currency of the bill
@@ -4658,22 +4632,6 @@ components:
           type: number
           description: Converted amount in base currency
           example: 1125
-        attachments:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
-              contentType:
-                type: string
-              fileSize:
-                type: number
-              base64:
-                type: string
-          description: List of attachments related to the purchase order
         items:
           type: array
           items:
@@ -4793,22 +4751,6 @@ components:
           type: string
           description: Date of delivery (ISO8601 date format)
           example: "2023-12-10"
-        attachments:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
-              contentType:
-                type: string
-              fileSize:
-                type: number
-              base64:
-                type: string
-          description: List of attachments related to the receipt note
         items:
           type: array
           items:
@@ -4978,22 +4920,6 @@ components:
           type: string
           description: Status of the credit note
           example: "active"
-        attachments:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
-              contentType:
-                type: string
-              fileSize:
-                type: number
-              base64:
-                type: string
-          description: List of attachments related to the credit note
         fxRate:
           type: number
           description: Currency conversion rate
