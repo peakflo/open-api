@@ -1918,10 +1918,6 @@ paths:
                   type: number
                 convertedAmount:
                   type: number
-                attachments:
-                  type: array
-                  description: List of attachments
-                  $ref: '#/components/schemas/APAttachments'
                 items:
                   type: array
                   items:
@@ -2030,13 +2026,6 @@ paths:
                   totalTax: 200
                   fxRate: 1.2
                   convertedAmount: 6000
-                  attachments:
-                    - id: "attachment_id_1"
-                      name: "Attachment 1"
-                      contentType: "application/pdf"
-                      fileSize: 1024
-                      fileType: "invoice"
-                      base64: "Base64EncodedContent1"
                   items:
                     - itemId: "ITEM001"
                       name: "Product A"
@@ -2345,10 +2334,6 @@ paths:
                   type: number
                 convertedAmount:
                   type: number
-                attachments:
-                  type: array
-                  description: List of attachments
-                  $ref: '#/components/schemas/APAttachments'
                 items:
                   type: array
                   items:
@@ -2456,13 +2441,6 @@ paths:
                   totalTax: 250
                   fxRate: 1.25
                   convertedAmount: 6875
-                  attachments:
-                    - id: "attachment_id_2"
-                      name: "Updated Attachment"
-                      contentType: "application/pdf"
-                      fileSize: 2048
-                      fileType: "inovice"
-                      base64: "UpdatedBase64EncodedContent"
                   items:
                     - itemId: "ITEM002"
                       name: "Product B"
