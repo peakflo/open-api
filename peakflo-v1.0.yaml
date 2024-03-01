@@ -2528,10 +2528,6 @@ paths:
                   type: string
                 deliveryDate:
                   type: string
-                attachments:
-                  type: array
-                  description: List of attachments
-                  $ref: '#/components/schemas/APAttachments'
                 items:
                   type: array
                   items:
@@ -2622,13 +2618,6 @@ paths:
                   externalId: "rn-0001"
                   receiptNoteNumber: "RN12345"
                   deliveryDate: "2023-11-28"
-                  attachments:
-                    - id: "attachment_id_2"
-                      name: "Updated Attachment"
-                      contentType: "application/pdf"
-                      fileSize: 2048
-                      fileType: "invoice"
-                      base64: "UpdatedBase64EncodedContent"
                   items:
                     - itemId: "ITEM002"
                       name: "Product B"
@@ -3055,10 +3044,6 @@ paths:
                   type: string
                 notes:
                   type: string
-                attachments:
-                  type: array
-                  description: List of attachments
-                  $ref: '#/components/schemas/APAttachments'
                 fxRate:
                   type: number
                 convertedAmount:
@@ -3103,13 +3088,6 @@ paths:
                   currency: "USD"
                   status: "approved"
                   notes: "Received items in good condition."
-                  attachments:
-                    - id: "attachment_id_1"
-                      name: "Attachment 1"
-                      contentType: "application/pdf"
-                      fileSize: 1024
-                      fileType: "invoice"
-                      base64: "Base64EncodedContent1"
                   fxRate: 1.2
                   convertedAmount: 120.0
       responses:
