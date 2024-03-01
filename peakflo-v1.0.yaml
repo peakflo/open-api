@@ -831,9 +831,8 @@ paths:
           name: externalId
           in: path
           required: true
-            requestBody:
       requestBody:
-        description: Vendor to add
+        description: Vendor to Edit
         required: true
         content:
           application/json:
@@ -944,7 +943,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vendor'
-
         '404':
           description: Not Found
         '400':
