@@ -3282,7 +3282,7 @@ paths:
         '200':
           description: OK
       tags:
-        - Vendor Receipt Note
+        - Vendor Receipt Notes
       description: Add an attachment to receipt note
       requestBody:
         content:
