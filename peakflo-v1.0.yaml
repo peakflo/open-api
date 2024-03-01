@@ -832,6 +832,7 @@ paths:
           in: path
           required: true
             requestBody:
+      requestBody:
         description: Vendor to add
         required: true
         content:
@@ -913,7 +914,6 @@ paths:
               Example:
                 value:
                   companyName: YouWin
-                  companyId: '121989'
                   defaultCurrency: USD
                   addresses:
                     - type: billing
