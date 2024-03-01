@@ -848,8 +848,8 @@ paths:
     put:
       tags:
         - Vendors
-      summary: Update Vendor Status
-      operationId: update-status
+      summary: Archive Vendor
+      operationId: archive-vendor
       responses:
         '200':
           description: OK
