@@ -1635,7 +1635,6 @@ paths:
                   fileSize: 1024
                   fileType: "invoice"
                   base64: "Base64EncodedContent1"
-
   "/bill-payment":
     post:
       tags:
@@ -2531,6 +2530,30 @@ paths:
           description: No Content
         '404':
           description: Not Found
+  "/purchase-order/{externalId}/attachments":
+    put:
+      summary: Add an attachment to purchase order
+      operationId: add-po-attachment
+      responses:
+        '200':
+          description: OK
+      tags:
+        - Vendor Purchase Orders
+      description: Add an attachment to purchase order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APAttachments'
+            examples:
+              example:
+                value:
+                  id: "attachment_id_1"
+                  name: "Attachment 1"
+                  contentType: "application/pdf"
+                  fileSize: 1024
+                  fileType: "invoice"
+                  base64: "Base64EncodedContent1"
   "/receipt-notes":
     post:
       tags:
