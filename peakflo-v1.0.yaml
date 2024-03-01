@@ -796,10 +796,10 @@ paths:
           description: Conflict
           content: {}
       x-codegen-request-body-name: Vendors
-  '/v1/vendors/{externalId}':
+  '/vendors/{externalId}':
     put:
-      summary: Update vendor info
-      description: Update vendor info
+      summary: Update vendor
+      description: Update vendor
       operationId: update-vendor
       tags:
         - Vendors
@@ -810,7 +810,7 @@ paths:
           in: path
           required: true
       requestBody:
-        description: Vendor to Edit
+        description: Vendor to Update
         required: true
         content:
           application/json:
@@ -916,7 +916,7 @@ paths:
                   vendorLastName: Doe
       responses:
         '200':
-          description: Update Vendor Info
+          description: Update Vendor
           content:
             application/json:
               schema:
@@ -935,7 +935,7 @@ paths:
         - name: externalId
           in: path
           required: true
-          description: External id of the vendor to update
+          description: External id of the vendor to delete
           schema:
             type: string
       responses:
@@ -943,7 +943,7 @@ paths:
           description: No Content
         '404':
           description: Not Found
-  '/v1/vendors/{externalId}/archive':
+  '/vendors/{externalId}/archive':
     parameters:
       - schema:
           type: string
@@ -954,7 +954,7 @@ paths:
     put:
       tags:
         - Vendors
-      summary: Archive Vendor
+      summary: Toggle Archive Vendor
       operationId: archive-vendor
       responses:
         '200':
@@ -968,10 +968,10 @@ paths:
                     type: string
                     description: ID of the vendor
                     example: "VENDOR789"
-                vendorName:
-                  type: string
-                  description: Name of the vendor
-                  example: "ABC Vendor"
+                  vendorName:
+                    type: string
+                    description: Name of the vendor
+                    example: "ABC Vendor"
                   status:
                     type: string
                     description: The status of the vendor
@@ -1724,6 +1724,14 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APAttachments'
+        '404':
+          description: Not Found
+        '400':
+          description: Bad Request
       tags:
         - Bills
       description: Add an attachment to bill
@@ -2628,7 +2636,7 @@ paths:
         - name: externalId
           in: path
           required: true
-          description: External id of the purchase order to update
+          description: External id of the purchase order to delete
           schema:
             type: string
       responses:
@@ -2643,6 +2651,14 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APAttachments'
+        '404':
+          description: Not Found
+        '400':
+          description: Bad Request
       tags:
         - Vendor Purchase Orders
       description: Add an attachment to purchase order
@@ -3266,7 +3282,7 @@ paths:
         - name: externalId
           in: path
           required: true
-          description: External id of the receipt note to update
+          description: External id of the receipt note to delete
           schema:
             type: string
       responses:
@@ -3281,6 +3297,14 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APAttachments'
+        '404':
+          description: Not Found
+        '400':
+          description: Bad Request
       tags:
         - Vendor Receipt Notes
       description: Add an attachment to receipt note
