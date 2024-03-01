@@ -796,6 +796,93 @@ paths:
           description: Conflict
           content: {}
       x-codegen-request-body-name: Vendors
+  '/v1/vendors/{externalId}':
+    get:
+      summary: Read Vendor Info
+      tags:
+        - Vendors
+      parameters:
+        - schema:
+            type: string
+          name: externalId
+          in: path
+          required: true
+      responses:
+        '200':
+          description: Read Vendor Info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+
+        '404':
+          description: Not Found
+        '400':
+          description: Bad Request
+    delete:
+      tags:
+        - Vendors
+      summary: Delete a vendor
+      description: Delete a vendor
+      operationId: deleteVendor
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External id of the vendor to update
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+  '/v1/vendors/{externalId}/archive':
+    parameters:
+      - schema:
+          type: string
+        name: externalId
+        in: path
+        required: true
+        description: The vendor external Id to toggle archive status
+    put:
+      tags:
+        - Vendors
+      summary: Update Vendor Status
+      operationId: update-status
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vendorId:
+                    type: string
+                    description: ID of the vendor
+                    example: "VENDOR789"
+                vendorName:
+                  type: string
+                  description: Name of the vendor
+                  example: "ABC Vendor"
+                  status:
+                    type: string
+                    description: The status of the vendor
+                    enum:
+                      - active
+                      - archived
+                    example: active
+              examples:
+                Example:
+                  value:
+                    vendorId: VENDOR001
+                    vendorName: ABC Vendor
+                    status: archived
+        '404':
+          description: Not Found
+        '409':
+          description: Conflict
   '/vendors/{vendorExternalId}/contacts':
     parameters:
       - schema:
@@ -2446,7 +2533,24 @@ paths:
         '404':
           description: Not Found
           content: {}
-
+    delete:
+      tags:
+        - Vendor Purchase Orders
+      summary: Delete a purchase order
+      description: Delete a purchase order
+      operationId: deleteVendorPurchaseOrder
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External id of the purchase order to update
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
   "/receipt-notes":
     post:
       tags:
@@ -3065,7 +3169,24 @@ paths:
         '404':
           description: Not Found
           content: {}
-
+    delete:
+      tags:
+        - Vendor Receipt Notes
+      summary: Delete a receipt note
+      description: Delete a receipt note
+      operationId: deleteReceiptNote
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External id of the receipt note to update
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
   "/vendor-credit-notes":
     get:
       tags:
