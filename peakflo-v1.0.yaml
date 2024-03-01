@@ -1074,10 +1074,6 @@ paths:
                   type: string
                 updatedAt:
                   type: string
-                attachments:
-                  description: List of attachments
-                  type: array
-                  $ref: '#/components/schemas/APAttachments'
                 currency:
                   type: string
                 subTotal:
@@ -1177,13 +1173,6 @@ paths:
                   date: "2023-11-27T12:00:00Z"
                   dueDate: "2023-12-15T23:59:59Z"
                   updatedAt: "2023-12-15T23:59:59Z"
-                  attachments:
-                    - id: "attachment_id_1"
-                      name: "Attachment 1"
-                      contentType: "application/pdf"
-                      fileSize: 1024
-                      fileType: "invoice"
-                      base64: "Base64EncodedContent1"
                   currency: "USD"
                   subTotal: 500
                   totalTax: 50
@@ -1457,10 +1446,6 @@ paths:
                   type: string
                 updatedAt:
                   type: string
-                attachments:
-                  type: array
-                  description: List of attachments
-                  $ref: '#/components/schemas/APAttachments'
                 currency:
                   type: string
                 subTotal:
@@ -1559,13 +1544,6 @@ paths:
                   date: "2023-11-27T12:00:00Z"
                   dueDate: "2023-12-15T23:59:59Z"
                   updatedAt: "2023-12-15T23:59:59Z"
-                  attachments:
-                    - id: "attachment_id_1"
-                      name: "Attachment 1"
-                      contentType: "application/pdf"
-                      fileSize: 1024
-                      fileType: "invoice"
-                      base64: "Base64EncodedContent1"
                   currency: "USD"
                   subTotal: 500
                   totalTax: 50
