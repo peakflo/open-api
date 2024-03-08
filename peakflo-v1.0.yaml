@@ -1196,7 +1196,6 @@ paths:
                               amount: 20
                               priceIncludesTax: true
                               amountType: "percentage"
-                              perc: 5
                           discounts:
                             - externalId: "Discount101"
                               name: "New user discount"
@@ -1307,8 +1306,11 @@ paths:
                               enum:
                                 - fixed
                                 - percentage
-                            perc:
-                              type: number
+                          required:
+                            - externalId
+                            - name
+                            - amount
+                            - amountType
                       discounts:
                         type: array
                         items:
@@ -1325,12 +1327,23 @@ paths:
                               enum:
                                 - fixed
                                 - percentage
+                          required:
+                            - externalId
+                            - name
+                            - amount
+                            - amountType
                       totalTax:
                         type: number
                       totalDiscount:
                         type: number
                       total:
                         type: number
+                    required:
+                      - itemId
+                      - name
+                      - quantity
+                      - unitPrice
+                      - type
                 receiptDate:
                   type: string
                 paymentMadeDate:
@@ -1391,7 +1404,6 @@ paths:
                           amount: 20
                           priceIncludesTax: true
                           amountType: "percentage"
-                          perc: 5
                       discounts:
                         - externalId: "Discount101"
                           name: "New user discount"
@@ -1521,8 +1533,11 @@ paths:
                                 enum:
                                   - fixed
                                   - percentage
-                              perc:
-                                type: number
+                            required:
+                              - externalId
+                              - name
+                              - amount
+                              - amountType
                         discounts:
                           type: array
                           items:
@@ -1539,12 +1554,23 @@ paths:
                                 enum:
                                   - fixed
                                   - percentage
+                            required:
+                              - externalId
+                              - name
+                              - amount
+                              - amountType
                         totalTax:
                           type: number
                         totalDiscount:
                           type: number
                         total:
                           type: number
+                      required:
+                        - itemId
+                        - name
+                        - quantity
+                        - unitPrice
+                        - type
                   receiptDate:
                     type: string
                   paymentMadeDate:
@@ -1612,7 +1638,6 @@ paths:
                             amount: 20
                             priceIncludesTax: true
                             amountType: "percentage"
-                            perc: 5
                         discounts:
                           - externalId: "Discount101"
                             name: "New user discount"
@@ -1729,8 +1754,11 @@ paths:
                               enum:
                                 - fixed
                                 - percentage
-                            perc:
-                              type: number
+                          required:
+                            - externalId
+                            - name
+                            - amount
+                            - amountType
                       discounts:
                         type: array
                         items:
@@ -1747,12 +1775,23 @@ paths:
                               enum:
                                 - fixed
                                 - percentage
+                          required:
+                            - externalId
+                            - name
+                            - amount
+                            - amountType
                       totalTax:
                         type: number
                       totalDiscount:
                         type: number
                       total:
                         type: number
+                    required:
+                      - itemId
+                      - name
+                      - quantity
+                      - unitPrice
+                      - type
                 receiptDate:
                   type: string
                 paymentMadeDate:
@@ -1812,7 +1851,6 @@ paths:
                           amount: 20
                           priceIncludesTax: true
                           amountType: "percentage"
-                          perc: 5
                       discounts:
                         - externalId: "Discount101"
                           name: "New user discount"
@@ -2138,7 +2176,6 @@ paths:
                               amount: 20
                               priceIncludesTax: true
                               amountType: "percentage"
-                              perc: 5
                           discounts:
                             - externalId: "Discount101"
                               name: "New user discount"
@@ -2252,8 +2289,11 @@ paths:
                               enum:
                                 - fixed
                                 - percentage
-                            perc:
-                              type: number
+                          required:
+                            - externalId
+                            - name
+                            - amount
+                            - amountType
                       discounts:
                         type: array
                         items:
@@ -2270,6 +2310,17 @@ paths:
                               enum:
                                 - fixed
                                 - percentage
+                          required:
+                            - externalId
+                            - name
+                            - amount
+                            - amountType
+                    required:
+                      - itemId
+                      - name
+                      - quantity
+                      - unitPrice
+                      - type
                 PONumber:
                   type: string
                 PQNumber:
@@ -2359,7 +2410,6 @@ paths:
                           amount: 20
                           priceIncludesTax: true
                           amountType: "percentage"
-                          perc: 5
                       discounts:
                         - externalId: "Discount101"
                           name: "New user discount"
@@ -2497,8 +2547,6 @@ paths:
                                 enum:
                                   - fixed
                                   - percentage
-                              perc:
-                                type: number
                         discounts:
                           type: array
                           items:
@@ -2599,7 +2647,6 @@ paths:
                             amount: 20
                             priceIncludesTax: true
                             amountType: "percentage"
-                            perc: 5
                         discounts:
                           - externalId: "Discount101"
                             name: "New user discount"
@@ -2717,8 +2764,11 @@ paths:
                               enum:
                                 - fixed
                                 - percentage
-                            perc:
-                              type: number
+                          required:
+                            - externalId
+                            - name
+                            - amount
+                            - amountType
                       discounts:
                         type: array
                         items:
@@ -2735,6 +2785,17 @@ paths:
                               enum:
                                 - fixed
                                 - percentage
+                          required:
+                            - externalId
+                            - name
+                            - amount
+                            - amountType
+                    required:
+                      - itemId
+                      - name
+                      - quantity
+                      - unitPrice
+                      - type
                 PONumber:
                   type: string
                 PQNumber:
@@ -2812,7 +2873,6 @@ paths:
                           amount: 30
                           priceIncludesTax: true
                           amountType: "percentage"
-                          perc: 6
                       discounts:
                         - externalId: "Discount202"
                           name: "Special discount"
@@ -2968,8 +3028,11 @@ paths:
                               enum:
                                 - fixed
                                 - percentage
-                            perc:
-                              type: number
+                          required:
+                            - externalId
+                            - name
+                            - amount
+                            - amountType
                       discounts:
                         type: array
                         items:
@@ -2986,6 +3049,17 @@ paths:
                               enum:
                                 - fixed
                                 - percentage
+                          required:
+                            - externalId
+                            - name
+                            - amount
+                            - amountType
+                    required:
+                      - itemId
+                      - name
+                      - quantity
+                      - unitPrice
+                      - type
                 vendorId:
                   type: string
                 receiptNoteAmount:
@@ -3050,7 +3124,6 @@ paths:
                           amount: 30
                           priceIncludesTax: true
                           amountType: "percentage"
-                          perc: 6
                       discounts:
                         - externalId: "Discount202"
                           name: "Special discount"
@@ -3168,7 +3241,6 @@ paths:
                               amount: 30
                               priceIncludesTax: true
                               amountType: "percentage"
-                              perc: 6
                           discounts:
                             - externalId: "Discount202"
                               name: "Special discount"
@@ -3264,8 +3336,6 @@ paths:
                                 enum:
                                   - fixed
                                   - percentage
-                              perc:
-                                type: number
                         discounts:
                           type: array
                           items:
@@ -3353,7 +3423,6 @@ paths:
                             amount: 30
                             priceIncludesTax: true
                             amountType: "percentage"
-                            perc: 6
                         discounts:
                           - externalId: "Discount202"
                             name: "Special discount"
@@ -3448,8 +3517,11 @@ paths:
                               enum:
                                 - fixed
                                 - percentage
-                            perc:
-                              type: number
+                          required:
+                            - externalId
+                            - name
+                            - amount
+                            - amountType
                       discounts:
                         type: array
                         items:
@@ -3466,12 +3538,23 @@ paths:
                               enum:
                                 - fixed
                                 - percentage
+                          required:
+                            - externalId
+                            - name
+                            - amount
+                            - amountType
                       totalTax:
                         type: number
                       totalDiscount:
                         type: number
                       total:
                         type: number
+                    required:
+                      - itemId
+                      - name
+                      - quantity
+                      - unitPrice
+                      - type
                 vendorId:
                   type: string
                 receiptNoteAmount:
@@ -3535,7 +3618,6 @@ paths:
                           amount: 20
                           priceIncludesTax: true
                           amountType: "percentage"
-                          perc: 5
                       discounts:
                         - externalId: "Discount101"
                           name: "New user discount"
@@ -4942,7 +5024,7 @@ components:
                       example: "Sales Tax"
                     amount:
                       type: number
-                      description: Amount of the tax
+                      description: Amount/Percentage of the tax
                       example: 20
                     priceIncludesTax:
                       type: boolean
@@ -4950,12 +5032,16 @@ components:
                       example: true
                     amountType:
                       type: string
+                      enum:
+                        - fixed
+                        - percentage
                       description: Type of tax amount (e.g., percentage)
                       example: "percentage"
-                    perc:
-                      type: number
-                      description: Percentage of tax
-                      example: 5
+                  required:
+                    - externalId
+                    - name
+                    - amount
+                    - amountType
               discounts:
                 type: array
                 items:
@@ -4975,8 +5061,16 @@ components:
                       example: 20
                     amountType:
                       type: string
+                      enum:
+                        - fixed
+                        - percentage
                       description: Type of discount amount (e.g., percentage)
                       example: "percentage"
+                  required:
+                    - externalId
+                    - name
+                    - amount
+                    - amountType
               totalTax:
                 type: number
                 description: Total tax amount for the item
@@ -4989,6 +5083,12 @@ components:
                 type: number
                 description: Total amount for the item
                 example: 320
+            required:
+              - itemId
+              - name
+              - quantity
+              - unitPrice
+              - type
           description: List of items included in the bill
         receiptDate:
           type: string
@@ -5173,8 +5273,6 @@ components:
                       enum:
                         - fixed
                         - percentage
-                    perc:
-                      type: number
               discounts:
                 type: array
                 items:
@@ -5312,8 +5410,6 @@ components:
                       enum:
                         - fixed
                         - percentage
-                    perc:
-                      type: number
               discounts:
                 type: array
                 items:
