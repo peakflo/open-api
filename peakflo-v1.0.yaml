@@ -1282,7 +1282,6 @@ paths:
                       - name
                       - quantity
                       - unitPrice
-                      - type
                 receiptDate:
                   type: string
                 paymentMadeDate:
@@ -1484,7 +1483,6 @@ paths:
                         - name
                         - quantity
                         - unitPrice
-                        - type
                   receiptDate:
                     type: string
                   paymentMadeDate:
@@ -1680,7 +1678,6 @@ paths:
                       - name
                       - quantity
                       - unitPrice
-                      - type
                 receiptDate:
                   type: string
                 paymentMadeDate:
@@ -2179,7 +2176,6 @@ paths:
                       - name
                       - quantity
                       - unitPrice
-                      - type
                 PONumber:
                   type: string
                 PQNumber:
@@ -2605,7 +2601,6 @@ paths:
                       - name
                       - quantity
                       - unitPrice
-                      - type
                 PONumber:
                   type: string
                 PQNumber:
@@ -2840,7 +2835,6 @@ paths:
                       - name
                       - quantity
                       - unitPrice
-                      - type
                 vendorId:
                   type: string
                 receiptNoteAmount:
@@ -3285,7 +3279,6 @@ paths:
                       - name
                       - quantity
                       - unitPrice
-                      - type
                 vendorId:
                   type: string
                 receiptNoteAmount:
@@ -4733,7 +4726,6 @@ components:
               - name
               - quantity
               - unitPrice
-              - type
           description: List of items included in the bill
         receiptDate:
           type: string
@@ -5229,7 +5221,6 @@ components:
         - price
         - unit
         - currency
-        - type
 
   securitySchemes:
     bearerAuth:
