@@ -2153,6 +2153,11 @@ paths:
                       bills: ["Bill5678", "Bill5679"]
                       receiptNotes: ["RN-001", "RN-002"]
                       balanceQuantity: 100
+                      customField:
+                        - customFieldNumber: 'CF_Number'
+                          value: 1
+                        - customFieldNumber: 'CF_ML'
+                          value: ['ML1', 'ML2']
                   totalCount: 50
         '404':
           description: Not Found
