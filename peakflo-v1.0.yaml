@@ -1279,6 +1279,20 @@ paths:
                         type: number
                       accountId:
                         type: string
+                      currency:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                          - None
+                          - Product
+                          - Service
+                          - Hour
+                          - Day
+                          - Month
+                          - Year
+                          - Expense
+                          - Shipping
                       wht:
                         type: object
                         properties:
@@ -1505,6 +1519,20 @@ paths:
                           type: number
                         accountId:
                           type: string
+                        currency:
+                          type: string
+                        type:
+                          type: string
+                          enum:
+                            - None
+                            - Product
+                            - Service
+                            - Hour
+                            - Day
+                            - Month
+                            - Year
+                            - Expense
+                            - Shipping
                         wht:
                           type: object
                           properties:
@@ -1725,6 +1753,20 @@ paths:
                         type: number
                       accountId:
                         type: string
+                      currency:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                          - None
+                          - Product
+                          - Service
+                          - Hour
+                          - Day
+                          - Month
+                          - Year
+                          - Expense
+                          - Shipping
                       wht:
                         type: object
                         properties:
@@ -2259,6 +2301,20 @@ paths:
                         type: number
                       accountId:
                         type: string
+                      currency:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                          - None
+                          - Product
+                          - Service
+                          - Hour
+                          - Day
+                          - Month
+                          - Year
+                          - Expense
+                          - Shipping
                       wht:
                         type: object
                         properties:
@@ -2516,6 +2572,20 @@ paths:
                           type: number
                         accountId:
                           type: string
+                        currency:
+                          type: string
+                        type:
+                          type: string
+                          enum:
+                            - None
+                            - Product
+                            - Service
+                            - Hour
+                            - Day
+                            - Month
+                            - Year
+                            - Expense
+                            - Shipping
                         wht:
                           type: object
                           properties:
@@ -2733,6 +2803,20 @@ paths:
                         type: number
                       accountId:
                         type: string
+                      currency:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                          - None
+                          - Product
+                          - Service
+                          - Hour
+                          - Day
+                          - Month
+                          - Year
+                          - Expense
+                          - Shipping
                       wht:
                         type: object
                         properties:
@@ -2996,6 +3080,20 @@ paths:
                         type: number
                       accountId:
                         type: string
+                      currency:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                          - None
+                          - Product
+                          - Service
+                          - Hour
+                          - Day
+                          - Month
+                          - Year
+                          - Expense
+                          - Shipping
                       wht:
                         type: object
                         properties:
@@ -3303,6 +3401,20 @@ paths:
                           type: number
                         accountId:
                           type: string
+                        currency:
+                          type: string
+                        type:
+                          type: string
+                          enum:
+                            - None
+                            - Product
+                            - Service
+                            - Hour
+                            - Day
+                            - Month
+                            - Year
+                            - Expense
+                            - Shipping
                         wht:
                           type: object
                           properties:
@@ -3484,6 +3596,20 @@ paths:
                         type: number
                       accountId:
                         type: string
+                      currency:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                          - None
+                          - Product
+                          - Service
+                          - Hour
+                          - Day
+                          - Month
+                          - Year
+                          - Expense
+                          - Shipping
                       wht:
                         type: object
                         properties:
@@ -5238,6 +5364,20 @@ components:
                 type: number
               accountId:
                 type: string
+              currency:
+                type: string
+              type:
+                type: string
+                enum:
+                  - None
+                  - Product
+                  - Service
+                  - Hour
+                  - Day
+                  - Month
+                  - Year
+                  - Expense
+                  - Shipping
               wht:
                 type: object
                 properties:
@@ -5375,6 +5515,20 @@ components:
                 type: number
               accountId:
                 type: string
+              currency:
+                type: string
+              type:
+                type: string
+                enum:
+                  - None
+                  - Product
+                  - Service
+                  - Hour
+                  - Day
+                  - Month
+                  - Year
+                  - Expense
+                  - Shipping
               wht:
                 type: object
                 properties:
