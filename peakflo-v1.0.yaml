@@ -185,7 +185,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Contact'
+                $ref: '#/components/schemas/ContactResponse'
               examples:
                 Example:
                   value:
@@ -205,7 +205,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Contact'
+              $ref: '#/components/schemas/ContactRequest'
             examples:
               Example:
                 value:
@@ -247,7 +247,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Contact'
+                $ref: '#/components/schemas/ContactResponse'
               examples:
                 Example:
                   value:
@@ -267,7 +267,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Contact'
+              $ref: '#/components/schemas/ContactRequest'
             examples:
               example:
                 value:
@@ -290,6 +290,12 @@ paths:
       operationId: delete-contact
       description: Delete a contact
   '/customers/{customerExternalId}/portalUrl':
+    parameters:
+        - schema:
+            type: string
+          name: customerExternalId
+          in: path
+          required: true
     get:
       summary: Read Customer info
       tags:
@@ -500,7 +506,7 @@ paths:
                   customerRef: '120989'
                   totalAmount: 300
                   remainingCredit: 0
-                  status: Draft
+                  status: draft
                   issueDate: '2021-04-28T12:30:00'
                   currency: SGD
                   lineItems:
@@ -549,7 +555,7 @@ paths:
                   customerRef: '120989'
                   totalAmount: 300
                   remainingCredit: 0
-                  status: Draft
+                  status: draft
                   issueDate: '2021-04-28T12:30:00'
                   currency: SGD
                   lineItems:
@@ -755,6 +761,26 @@ paths:
                   type: string
                 paymentTerms:
                   type: number
+                customField:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      customFieldNumber:
+                        type: string
+                      value:
+                        oneOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: array
+                          items:
+                            type: string
+                      name:
+                        type: string
+                    required:
+                      - customFieldNumber
+                      - value 
             examples:
               Example:
                 value:
@@ -784,6 +810,11 @@ paths:
                   vendorFirstName: John
                   vendorLastName: Doe
                   paymentTerms: 10
+                  customField:
+                    - customFieldNumber: 'CF_Number'
+                      value: 1
+                    - customFieldNumber: 'CF_ML'
+                      value: ['ML1', 'ML2']
       responses:
         '201':
           description: Created
@@ -892,6 +923,26 @@ paths:
                   type: string
                 paymentTerms:
                   type: number
+                customField:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      customFieldNumber:
+                        type: string
+                      value:
+                        oneOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: array
+                          items:
+                            type: string 
+                      name:
+                        type: string
+                    required:
+                      - customFieldNumber
+                      - value 
             examples:
               Example:
                 value:
@@ -920,6 +971,11 @@ paths:
                   vendorFirstName: John
                   vendorLastName: Doe
                   paymentTerms: 10
+                  customField:
+                    - customFieldNumber: 'CF_Number'
+                      value: 1
+                    - customFieldNumber: 'CF_ML'
+                      value: ['ML1', 'ML2']
       responses:
         '200':
           description: Update Vendor
@@ -1013,7 +1069,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Contact'
+                $ref: '#/components/schemas/ContactResponse'
               examples:
                 Example:
                   value:
@@ -1033,7 +1089,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Contact'
+              $ref: '#/components/schemas/ContactRequest'
             examples:
               example:
                 value:
@@ -1151,6 +1207,11 @@ paths:
                           total: 320
                       receiptDate: "2023-11-28T00:00:00Z"
                       paymentMadeDate: "2023-12-05T12:30:00Z"
+                      customField:
+                    - customFieldNumber: 'CF_Number'
+                      value: 1
+                    - customFieldNumber: 'CF_ML'
+                      value: ['ML1', 'ML2']
                   totalCount: 50
         '400':
           description: Bad Request
@@ -1274,6 +1335,26 @@ paths:
                   type: string
                 paymentMadeDate:
                   type: string
+                customField:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      customFieldNumber:
+                        type: string
+                      value:
+                        oneOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: array
+                          items:
+                            type: string  
+                      name:
+                        type: string
+                    required:
+                      - customFieldNumber
+                      - value 
             examples:
               Example:
                 value:
@@ -1321,6 +1402,11 @@ paths:
                       total: 320
                   receiptDate: "2023-11-28T00:00:00Z"
                   paymentMadeDate: "2023-12-05T12:30:00Z"
+                  customField:
+                    - customFieldNumber: 'CF_Number'
+                      value: 1
+                    - customFieldNumber: 'CF_ML'
+                      value: ['ML1', 'ML2']
       responses:
         '201':
           description: Created
@@ -1463,6 +1549,26 @@ paths:
                     type: string
                   paymentMadeDate:
                     type: string
+                  customField:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        customFieldNumber:
+                          type: string
+                        value:
+                          oneOf:
+                          - type: string
+                          - type: number
+                          - type: string
+                          - type: array
+                            items:
+                              type: string  
+                        name:
+                          type: string
+                      required:
+                        - customFieldNumber
+                        - value       
               examples:
                 Example:
                   value:
@@ -1517,6 +1623,11 @@ paths:
                         total: 320
                     receiptDate: "2023-11-28T00:00:00Z"
                     paymentMadeDate: "2023-12-05T12:30:00Z"
+                    customField:
+                    - customFieldNumber: 'CF_Number'
+                      value: 1
+                    - customFieldNumber: 'CF_ML'
+                      value: ['ML1', 'ML2']
         
         '404':
           description: Not Found
@@ -1526,7 +1637,7 @@ paths:
       tags:
         - Bills
       summary: Update a bill
-      description: Update a bill
+      description: Update a bill / Mark bill as paid (vendorId and paymentAmount are required fields in requestBody)
       operationId: update-bill
       parameters:
         - schema:
@@ -1646,6 +1757,26 @@ paths:
                   type: string
                 paymentMadeDate:
                   type: string
+                customField:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        customFieldNumber:
+                          type: string
+                        value:
+                          oneOf:
+                          - type: string
+                          - type: number
+                          - type: string
+                          - type: array
+                            items:
+                              type: string  
+                        name:
+                          type: string
+                      required:
+                        - customFieldNumber
+                        - value 
             examples:
               Example:
                 value:
@@ -1693,6 +1824,11 @@ paths:
                       total: 320
                   receiptDate: "2023-11-28T00:00:00Z"
                   paymentMadeDate: "2023-12-05T12:30:00Z"
+                  customField:
+                    - customFieldNumber: 'CF_Number'
+                      value: 1
+                    - customFieldNumber: 'CF_ML'
+                      value: ['ML1', 'ML2']
       responses:
         '200':
           description: Ok
@@ -1724,6 +1860,12 @@ paths:
           in: path
           required: true
   "/bill/{billExternalId}/attachments":
+    parameters:
+        - schema:
+            type: string
+          name: billExternalId
+          in: path
+          required: true
     put:
       summary: Add an attachment to Bill
       operationId: add-bill-attachment
@@ -1981,8 +2123,6 @@ paths:
                       items:
                         - itemId: "ITEM001"
                           name: "Product A"
-                          balanceQuantity: 1
-                          balanceAmount: 120
                           unit: "KG"
                           description: "Description for Product A"
                           quantity: 2
@@ -2078,10 +2218,6 @@ paths:
                         type: number
                       unitPrice:
                         type: number
-                      balanceQuantity:
-                        type: number
-                      balanceAmount:
-                        type: number
                       accountId:
                         type: string
                       wht:
@@ -2137,6 +2273,8 @@ paths:
                   type: string
                 vendorId:
                   type: string
+                vendorName:
+                  type: string
                 receiptDate:
                   type: string
                 deliveryDate:
@@ -2151,6 +2289,35 @@ paths:
                     type: string
                 balanceQuantity:
                   type: number
+                customField:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      customFieldNumber:
+                        type: string
+                      value:
+                        oneOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: array
+                          items:
+                            type: string 
+                      name:
+                        type: string
+                    required:
+                      - customFieldNumber
+                      - value 
+              required:
+                - externalId
+                - POAmount
+                - currency
+                - issueDate
+                - dueDate
+                - status
+                - items
+                - vendorId
             examples:
               Example:
                 value:
@@ -2172,8 +2339,6 @@ paths:
                   items:
                     - itemId: "ITEM001"
                       name: "Product A"
-                      balanceAmount: 120
-                      balanceQuantity: 1
                       unit: "KG"
                       description: "Description for Product A"
                       quantity: 2
@@ -2207,6 +2372,11 @@ paths:
                   bills: ["Bill5678", "Bill5679"]
                   receiptNotes: ["RN-001", "RN-002"]
                   balanceQuantity: 100
+                  customField:
+                    - customFieldNumber: 'CF_Number'
+                      value: 1
+                    - customFieldNumber: 'CF_ML'
+                      value: ['ML1', 'ML2']
       responses:
         '201':
           description: Created
@@ -2291,10 +2461,6 @@ paths:
                           type: string
                         quantity:
                           type: number
-                        balanceQuantity:
-                          type: number
-                        balanceAmount:
-                          type: number
                         unitPrice:
                           type: number
                         accountId:
@@ -2366,6 +2532,26 @@ paths:
                       type: string
                   balanceQuantity:
                     type: number
+                  customField:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        customFieldNumber:
+                          type: string
+                        value:
+                          oneOf:
+                          - type: string
+                          - type: number
+                          - type: string
+                          - type: array
+                            items:
+                              type: string  
+                        name:
+                          type: string
+                      required:
+                        - customFieldNumber
+                        - value 
               examples:
                 Example:
                   value:
@@ -2396,8 +2582,6 @@ paths:
                         unit: "KG"
                         description: "Description for Product A"
                         quantity: 2
-                        balanceQuantity: 1
-                        balanceAmount: 120
                         unitPrice: 150
                         accountId: "ACC001"
                         wht:
@@ -2425,6 +2609,11 @@ paths:
                     bills: ["Bill5678", "Bill5679"]
                     receiptNotes: ["RN-001", "RN-002"]
                     balanceQuantity: 100
+                    customField:
+                    - customFieldNumber: 'CF_Number'
+                      value: 1
+                    - customFieldNumber: 'CF_ML'
+                      value: ['ML1', 'ML2']
         '404':
           description: Not Found
           content: {}
@@ -2491,10 +2680,6 @@ paths:
                       description:
                         type: string
                       quantity:
-                        type: number
-                      balanceQuantity:
-                        type: number
-                      balanceAmount:
                         type: number
                       unitPrice:
                         type: number
@@ -2567,6 +2752,26 @@ paths:
                     type: string
                 balanceQuantity:
                   type: number
+                customField:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      customFieldNumber:
+                        type: string
+                      value:
+                        oneOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: array
+                          items:
+                            type: string  
+                      name:
+                        type: string
+                    required:
+                      - customFieldNumber
+                      - value 
             examples:
               Example:
                 value:
@@ -2590,9 +2795,7 @@ paths:
                       unit: "KG"
                       description: "Updated Description for Product B"
                       quantity: 3
-                      balanceQuantity: 1
                       unitPrice: 200
-                      balanceAmount: 120
                       accountId: "ACC002"
                       wht:
                         code: "WHT_CODE_UPDATED"
@@ -2619,6 +2822,11 @@ paths:
                   bills: ["Bill6789", "Bill6790"]
                   receiptNotes: ["RN-003", "RN-004"]
                   balanceQuantity: 150
+                  customField:
+                    - customFieldNumber: 'CF_Number'
+                      value: 1
+                    - customFieldNumber: 'CF_ML'
+                      value: ['ML1', 'ML2']
       responses:
         '200':
           description: OK
@@ -2651,6 +2859,12 @@ paths:
         '404':
           description: Not Found
   "/purchase-order/{externalId}/attachments":
+    parameters:
+        - schema:
+            type: string
+          name: externalId
+          in: path
+          required: true
     put:
       summary: Add an attachment to purchase order
       operationId: add-po-attachment
@@ -2787,6 +3001,26 @@ paths:
                   type: number
                 convertedAmount:
                   type: number
+                customField:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        customFieldNumber:
+                          type: string
+                        value:
+                          oneOf:
+                          - type: string
+                          - type: number
+                          - type: string
+                          - type: array
+                            items:
+                              type: string  
+                        name:
+                          type: string
+                      required:
+                        - customFieldNumber
+                        - value 
             examples:
               Example:
                 value:
@@ -2827,6 +3061,11 @@ paths:
                   notes: "Received items in good condition."
                   fxRate: 1.2
                   convertedAmount: 120.0
+                  customField:
+                    - customFieldNumber: 'CF_Number'
+                      value: 1
+                    - customFieldNumber: 'CF_ML'
+                      value: ['ML1', 'ML2']
       responses:
         '201':
           description: Created
@@ -3058,6 +3297,26 @@ paths:
                     type: number
                   convertedAmount:
                     type: number
+                  customField:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        customFieldNumber:
+                          type: string
+                        value:
+                          oneOf:
+                          - type: string
+                          - type: number
+                          - type: string
+                          - type: array
+                            items:
+                              type: string  
+                        name:
+                          type: string
+                      required:
+                        - customFieldNumber
+                        - value 
               examples:
                 Example:
                   value:
@@ -3105,6 +3364,11 @@ paths:
                     notes: "Received items in good condition."
                     fxRate: 1.2
                     convertedAmount: 120.0
+                    customField:
+                    - customFieldNumber: 'CF_Number'
+                      value: 1
+                    - customFieldNumber: 'CF_ML'
+                      value: ['ML1', 'ML2']
         '404':
           description: Not Found
           content: {}
@@ -3223,6 +3487,26 @@ paths:
                   type: number
                 convertedAmount:
                   type: number
+                customField:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      customFieldNumber:
+                        type: string
+                      value:
+                        oneOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: array
+                          items:
+                            type: string 
+                      name:
+                        type: string
+                    required:
+                      - customFieldNumber
+                      - value 
             examples:
               Example:
                 value:
@@ -3265,6 +3549,11 @@ paths:
                   notes: "Received items in good condition."
                   fxRate: 1.2
                   convertedAmount: 120.0
+                  customField:
+                    - customFieldNumber: 'CF_Number'
+                      value: 1
+                    - customFieldNumber: 'CF_ML'
+                      value: ['ML1', 'ML2']
       responses:
         '200':
           description: OK
@@ -3297,6 +3586,12 @@ paths:
         '404':
           description: Not Found
   "/receipt-notes/{externalId}/attachments":
+    parameters:
+        - schema:
+            type: string
+          name: externalId
+          in: path
+          required: true
     put:
       summary: Add an attachment to receipt note
       operationId: add-rn-attachment
@@ -3727,6 +4022,12 @@ paths:
       
  
   "/items/{externalId}":
+    parameters:
+        - schema:
+            type: string
+          name: externalId
+          in: path
+          required: true
     put:
       tags:
         - Items
@@ -3851,7 +4152,7 @@ components:
         contacts:
           type: array
           items:
-            $ref: '#/components/schemas/Contact'
+            $ref: '#/components/schemas/ContactRequest'
         statementFile:
           type: string
           description: The statement file
@@ -3868,9 +4169,9 @@ components:
         - companyName
         - currency
         - status
-    Contact:
+    ContactRequest:
       type: object
-      description: The contact model
+      description: The contact req model
       properties:
         externalId:
           type: string
@@ -3922,6 +4223,55 @@ components:
         - firstName
         - lastName
         - email
+    ContactResponse:
+      type: object
+      description: The contact res model
+      properties:
+        externalId:
+          type: string
+          description: The external Id for the contact
+        firstName:
+          type: string
+          description: The first name of the contact
+        lastName:
+          type: string
+          description: The last name of the contact
+        email:
+          type: string
+          description: The email Id of the contact
+          example: johndoe@peakflo.co
+        middleName:
+          type: string
+          description: The middle name of the contact
+        phone:
+          type: string
+          description: The phone number of the contact along with country code
+          example: '6591234567'
+        isMainContact:
+          type: boolean
+          description: Indicate if this is the main contact.
+          default: false
+        title:
+          type: string
+          description: The title
+          example: Dr.
+        position:
+          type: string
+          enum:
+            - sales
+            - accounting
+            - management
+            - unknown
+          example: sales
+          description: The postion of the contact in the company
+        description:
+          type: string
+          description: Description about contact
+        suffix:
+          type: string
+        altPhone:
+          type: string
+          description: Alternate phone number
     LineItem:
       description: The line item
       type: object
