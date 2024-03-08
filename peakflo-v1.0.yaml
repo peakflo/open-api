@@ -1660,7 +1660,12 @@ paths:
       tags:
         - Bills
       summary: Update a bill
-      description: Update a bill / Mark bill as paid (vendorId and paymentAmount are required fields in requestBody)
+      description: |-
+        Update Bill API offers two primary functionalities: updating bill information and updating the status of a bill to "paid". 
+
+        to mark a bill as paid, users must supply the bill ID, along with the status set to "paid", vendor ID, and payment amount. 
+        
+        Note that when updating a bill to "paid", the parameters status, vendorId, and paymentAmount are mandatory, while other parameters are optional for updating additional bill details. 
       operationId: update-bill
       parameters:
         - schema:
