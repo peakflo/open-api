@@ -753,6 +753,8 @@ paths:
                   type: string
                 vendorLastName:
                   type: string
+                paymentTerms:
+                  type: number
             examples:
               Example:
                 value:
@@ -781,6 +783,7 @@ paths:
                   beneficiaryCountry: Beneficiary Country
                   vendorFirstName: John
                   vendorLastName: Doe
+                  paymentTerms: 10
       responses:
         '201':
           description: Created
@@ -887,6 +890,8 @@ paths:
                   type: string
                 vendorLastName:
                   type: string
+                paymentTerms:
+                  type: number
             examples:
               Example:
                 value:
@@ -914,6 +919,7 @@ paths:
                   beneficiaryCountry: Beneficiary Country
                   vendorFirstName: John
                   vendorLastName: Doe
+                  paymentTerms: 10
       responses:
         '200':
           description: Update Vendor
@@ -4442,6 +4448,10 @@ components:
           type: string
           description: Last name of the vendor
           example: "Doe"
+        paymentTerms:
+          type: number
+          description: Vendor Term of Payment
+          example: 10
       required:
         - companyName
         - companyId
