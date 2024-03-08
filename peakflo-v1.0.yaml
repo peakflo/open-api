@@ -1208,10 +1208,10 @@ paths:
                       receiptDate: "2023-11-28T00:00:00Z"
                       paymentMadeDate: "2023-12-05T12:30:00Z"
                       customField:
-                    - customFieldNumber: 'CF_Number'
-                      value: 1
-                    - customFieldNumber: 'CF_ML'
-                      value: ['ML1', 'ML2']
+                        - customFieldNumber: 'CF_Number'
+                          value: 1
+                        - customFieldNumber: 'CF_ML'
+                          value: ['ML1', 'ML2']
                   totalCount: 50
         '400':
           description: Bad Request
@@ -5224,7 +5224,27 @@ components:
         balanceQuantity:
           type: number
           description: Remaining quantity balance
-          example: 
+          example: 100
+        customField:
+          type: array
+          items:
+            type: object
+            properties:
+              customFieldNumber:
+                type: string
+              value:
+                oneOf:
+                - type: string
+                - type: number
+                - type: string
+                - type: array
+                  items:
+                    type: string
+              name:
+                type: string
+            required:
+              - customFieldNumber
+              - value  
     ReceiptNote:
       description: Details of a receipt note
       type: object
