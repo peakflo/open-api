@@ -987,37 +987,19 @@ paths:
           description: Not Found
         '400':
           description: Bad Request
-    delete:
-      tags:
-        - Vendors
-      summary: Delete a vendor
-      description: Delete a vendor
-      operationId: deleteVendor
-      parameters:
-        - name: externalId
-          in: path
-          required: true
-          description: External id of the vendor to delete
-          schema:
-            type: string
-      responses:
-        '204':
-          description: No Content
-        '404':
-          description: Not Found
-  '/vendors/{externalId}/archive':
+  '/vendors/{externalId}/status':
     parameters:
       - schema:
           type: string
         name: externalId
         in: path
         required: true
-        description: The vendor external Id to toggle archive status
+        description: The vendor external Id to update status
     put:
       tags:
         - Vendors
-      summary: Toggle Archive Vendor
-      operationId: archive-vendor
+      summary: Update Vendor Status
+      operationId: update-vendor-status
       responses:
         '200':
           description: OK
@@ -1040,6 +1022,7 @@ paths:
                     enum:
                       - active
                       - archived
+                      - deleted
                     example: active
               examples:
                 Example:
