@@ -1983,10 +1983,6 @@ paths:
                   type: number
                 totalWHT:
                   type: number
-                paidAmount:
-                  type: number
-                balanceAmount:
-                  type: number
                 currency:
                   type: string
                 issueDate:
@@ -2023,16 +2019,6 @@ paths:
                   type: string
                 deliveryDate:
                   type: string
-                bills:
-                  type: array
-                  items:
-                    type: string
-                receiptNotes:
-                  type: array
-                  items:
-                    type: string
-                balanceQuantity:
-                  type: number
                 customField:
                   type: array
                   items:
@@ -2562,6 +2548,8 @@ paths:
                   type: number
                 convertedAmount:
                   type: number
+                purchaseOrder:
+                  type: string
                 customField:
                     type: array
                     items:
