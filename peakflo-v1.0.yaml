@@ -1000,6 +1000,20 @@ paths:
         - Vendors
       summary: Update Vendor Status
       operationId: update-vendor-status
+      requestBody:
+        description: status to update
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+            examples:
+              Example:
+                value:
+                  status: deleted
       responses:
         '200':
           description: OK
