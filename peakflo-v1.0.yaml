@@ -764,23 +764,7 @@ paths:
                 customField:
                   type: array
                   items:
-                    type: object
-                    properties:
-                      customFieldNumber:
-                        type: string
-                      value:
-                        oneOf:
-                        - type: string
-                        - type: number
-                        - type: string
-                        - type: array
-                          items:
-                            type: string
-                      name:
-                        type: string
-                    required:
-                      - customFieldNumber
-                      - value 
+                    $ref: '#/components/schemas/CustomFields'
             examples:
               Example:
                 value:
@@ -811,10 +795,18 @@ paths:
                   vendorLastName: Doe
                   paymentTerms: 10
                   customField:
-                    - customFieldNumber: 'CF_Number'
-                      value: 1
-                    - customFieldNumber: 'CF_ML'
-                      value: ['ML1', 'ML2']
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
+                      value: 2
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                      value:
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
       responses:
         '201':
           description: Created
@@ -926,23 +918,7 @@ paths:
                 customField:
                   type: array
                   items:
-                    type: object
-                    properties:
-                      customFieldNumber:
-                        type: string
-                      value:
-                        oneOf:
-                        - type: string
-                        - type: number
-                        - type: string
-                        - type: array
-                          items:
-                            type: string 
-                      name:
-                        type: string
-                    required:
-                      - customFieldNumber
-                      - value 
+                    $ref: '#/components/schemas/CustomFields'
             examples:
               Example:
                 value:
@@ -972,10 +948,18 @@ paths:
                   vendorLastName: Doe
                   paymentTerms: 10
                   customField:
-                    - customFieldNumber: 'CF_Number'
-                      value: 1
-                    - customFieldNumber: 'CF_ML'
-                      value: ['ML1', 'ML2']
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
+                      value: 2
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                      value:
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
       responses:
         '200':
           description: Update Vendor
@@ -1201,13 +1185,34 @@ paths:
                           totalTax: 20
                           totalDiscount: 0
                           total: 320
+                          customField:
+                            - customFieldNumber: CustomFieldNumber1 (type - Number)
+                              value: 2
+                            - customFieldNumber: CustomFieldNumber2 (type - Date)
+                              value: "11/03/2024"
+                            - customFieldNumber: CustomFieldNumber3 (type - Input)
+                              value: "Value"
+                            - customFieldNumber: CustomFieldNumber4 (type - List)
+                              value: "List_Value1"
+                            - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                              value:
+                                - "MultiList_Value1"
+                                - "MultiList_Value2"
                       receiptDate: "2023-11-28T00:00:00Z"
                       paymentMadeDate: "2023-12-05T12:30:00Z"
                       customField:
-                        - customFieldNumber: 'CF_Number'
-                          value: 1
-                        - customFieldNumber: 'CF_ML'
-                          value: ['ML1', 'ML2']
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
+                          value: 2
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                          value:
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   totalCount: 50
         '400':
           description: Bad Request
@@ -1268,23 +1273,7 @@ paths:
                 customField:
                   type: array
                   items:
-                    type: object
-                    properties:
-                      customFieldNumber:
-                        type: string
-                      value:
-                        oneOf:
-                        - type: string
-                        - type: number
-                        - type: string
-                        - type: array
-                          items:
-                            type: string  
-                      name:
-                        type: string
-                    required:
-                      - customFieldNumber
-                      - value 
+                    $ref: '#/components/schemas/CustomFields'
             examples:
               Example:
                 value:
@@ -1329,13 +1318,34 @@ paths:
                       totalTax: 20
                       totalDiscount: 0
                       total: 320
+                      customField:
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
+                          value: 2
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                          value:
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   receiptDate: "2023-11-28T00:00:00Z"
                   paymentMadeDate: "2023-12-05T12:30:00Z"
                   customField:
-                    - customFieldNumber: 'CF_Number'
-                      value: 1
-                    - customFieldNumber: 'CF_ML'
-                      value: ['ML1', 'ML2']
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
+                      value: 2
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                      value:
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
       responses:
         '201':
           description: Created
@@ -1415,23 +1425,7 @@ paths:
                   customField:
                     type: array
                     items:
-                      type: object
-                      properties:
-                        customFieldNumber:
-                          type: string
-                        value:
-                          oneOf:
-                          - type: string
-                          - type: number
-                          - type: string
-                          - type: array
-                            items:
-                              type: string  
-                        name:
-                          type: string
-                      required:
-                        - customFieldNumber
-                        - value       
+                      $ref: '#/components/schemas/CustomFields'     
               examples:
                 Example:
                   value:
@@ -1483,13 +1477,34 @@ paths:
                         totalTax: 20
                         totalDiscount: 0
                         total: 320
+                        customField:
+                          - customFieldNumber: CustomFieldNumber1 (type - Number)
+                            value: 2
+                          - customFieldNumber: CustomFieldNumber2 (type - Date)
+                            value: "11/03/2024"
+                          - customFieldNumber: CustomFieldNumber3 (type - Input)
+                            value: "Value"
+                          - customFieldNumber: CustomFieldNumber4 (type - List)
+                            value: "List_Value1"
+                          - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                            value:
+                              - "MultiList_Value1"
+                              - "MultiList_Value2"
                     receiptDate: "2023-11-28T00:00:00Z"
                     paymentMadeDate: "2023-12-05T12:30:00Z"
                     customField:
-                    - customFieldNumber: 'CF_Number'
-                      value: 1
-                    - customFieldNumber: 'CF_ML'
-                      value: ['ML1', 'ML2']
+                      - customFieldNumber: CustomFieldNumber1 (type - Number)
+                        value: 2
+                      - customFieldNumber: CustomFieldNumber2 (type - Date)
+                        value: "11/03/2024"
+                      - customFieldNumber: CustomFieldNumber3 (type - Input)
+                        value: "Value"
+                      - customFieldNumber: CustomFieldNumber4 (type - List)
+                        value: "List_Value1"
+                      - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                        value:
+                          - "MultiList_Value1"
+                          - "MultiList_Value2"
         
         '404':
           description: Not Found
@@ -1559,25 +1574,9 @@ paths:
                 paymentMadeDate:
                   type: string
                 customField:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        customFieldNumber:
-                          type: string
-                        value:
-                          oneOf:
-                          - type: string
-                          - type: number
-                          - type: string
-                          - type: array
-                            items:
-                              type: string  
-                        name:
-                          type: string
-                      required:
-                        - customFieldNumber
-                        - value 
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/CustomFields'
             examples:
               Example:
                 value:
@@ -1622,13 +1621,34 @@ paths:
                       totalTax: 20
                       totalDiscount: 0
                       total: 320
+                      customField:
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
+                          value: 2
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                          value:
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   receiptDate: "2023-11-28T00:00:00Z"
                   paymentMadeDate: "2023-12-05T12:30:00Z"
                   customField:
-                    - customFieldNumber: 'CF_Number'
-                      value: 1
-                    - customFieldNumber: 'CF_ML'
-                      value: ['ML1', 'ML2']
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
+                      value: 2
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                      value:
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
       responses:
         '200':
           description: Ok
@@ -1943,6 +1963,19 @@ paths:
                               name: "New user discount"
                               amount: 20
                               amountType: "percentage"
+                          customField:
+                            - customFieldNumber: CustomFieldNumber1 (type - Number)
+                              value: 2
+                            - customFieldNumber: CustomFieldNumber2 (type - Date)
+                              value: "11/03/2024"
+                            - customFieldNumber: CustomFieldNumber3 (type - Input)
+                              value: "Value"
+                            - customFieldNumber: CustomFieldNumber4 (type - List)
+                              value: "List_Value1"
+                            - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                              value:
+                                - "MultiList_Value1"
+                                - "MultiList_Value2"
                       PONumber: "PO-5678"
                       PQNumber: "PQ-1234"
                       updatedAt: "2023-11-01T00:00:00Z"
@@ -1953,10 +1986,18 @@ paths:
                       receiptNotes: ["RN-001", "RN-002"]
                       balanceQuantity: 100
                       customField:
-                        - customFieldNumber: 'CF_Number'
-                          value: 1
-                        - customFieldNumber: 'CF_ML'
-                          value: ['ML1', 'ML2']
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
+                          value: 2
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                          value:
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   totalCount: 50
         '404':
           description: Not Found
@@ -2022,23 +2063,7 @@ paths:
                 customField:
                   type: array
                   items:
-                    type: object
-                    properties:
-                      customFieldNumber:
-                        type: string
-                      value:
-                        oneOf:
-                        - type: string
-                        - type: number
-                        - type: string
-                        - type: array
-                          items:
-                            type: string 
-                      name:
-                        type: string
-                    required:
-                      - customFieldNumber
-                      - value 
+                    $ref: '#/components/schemas/CustomFields'
               required:
                 - externalId
                 - POAmount
@@ -2092,6 +2117,19 @@ paths:
                       totalTax: 20
                       totalDiscount: 0
                       total: 320
+                      customField:
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
+                          value: 2
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                          value:
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   PONumber: "PO-5678"
                   PQNumber: "PQ-1234"
                   updatedAt: "2023-11-01T00:00:00Z"
@@ -2102,10 +2140,18 @@ paths:
                   receiptNotes: ["RN-001", "RN-002"]
                   balanceQuantity: 100
                   customField:
-                    - customFieldNumber: 'CF_Number'
-                      value: 1
-                    - customFieldNumber: 'CF_ML'
-                      value: ['ML1', 'ML2']
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
+                      value: 2
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                      value:
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
       responses:
         '201':
           description: Created
@@ -2204,23 +2250,7 @@ paths:
                   customField:
                     type: array
                     items:
-                      type: object
-                      properties:
-                        customFieldNumber:
-                          type: string
-                        value:
-                          oneOf:
-                          - type: string
-                          - type: number
-                          - type: string
-                          - type: array
-                            items:
-                              type: string  
-                        name:
-                          type: string
-                      required:
-                        - customFieldNumber
-                        - value 
+                      $ref: '#/components/schemas/CustomFields'
               examples:
                 Example:
                   value:
@@ -2268,6 +2298,19 @@ paths:
                             name: "New user discount"
                             amount: 20
                             amountType: "percentage"
+                        customField:
+                          - customFieldNumber: CustomFieldNumber1 (type - Number)
+                            value: 2
+                          - customFieldNumber: CustomFieldNumber2 (type - Date)
+                            value: "11/03/2024"
+                          - customFieldNumber: CustomFieldNumber3 (type - Input)
+                            value: "Value"
+                          - customFieldNumber: CustomFieldNumber4 (type - List)
+                            value: "List_Value1"
+                          - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                            value:
+                              - "MultiList_Value1"
+                              - "MultiList_Value2"
                     PONumber: "PO-5678"
                     PQNumber: "PQ-1234"
                     updatedAt: "2023-11-01T00:00:00Z"
@@ -2278,10 +2321,18 @@ paths:
                     receiptNotes: ["RN-001", "RN-002"]
                     balanceQuantity: 100
                     customField:
-                    - customFieldNumber: 'CF_Number'
-                      value: 1
-                    - customFieldNumber: 'CF_ML'
-                      value: ['ML1', 'ML2']
+                      - customFieldNumber: CustomFieldNumber1 (type - Number)
+                        value: 2
+                      - customFieldNumber: CustomFieldNumber2 (type - Date)
+                        value: "11/03/2024"
+                      - customFieldNumber: CustomFieldNumber3 (type - Input)
+                        value: "Value"
+                      - customFieldNumber: CustomFieldNumber4 (type - List)
+                        value: "List_Value1"
+                      - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                        value:
+                          - "MultiList_Value1"
+                          - "MultiList_Value2"
         '404':
           description: Not Found
           content: {}
@@ -2363,23 +2414,7 @@ paths:
                 customField:
                   type: array
                   items:
-                    type: object
-                    properties:
-                      customFieldNumber:
-                        type: string
-                      value:
-                        oneOf:
-                        - type: string
-                        - type: number
-                        - type: string
-                        - type: array
-                          items:
-                            type: string  
-                      name:
-                        type: string
-                    required:
-                      - customFieldNumber
-                      - value 
+                    $ref: '#/components/schemas/CustomFields'
             examples:
               Example:
                 value:
@@ -2420,6 +2455,19 @@ paths:
                           name: "Special discount"
                           amount: 25
                           amountType: "percentage"
+                      customField:
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
+                          value: 2
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                          value:
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   PONumber: "PO-9876"
                   PQNumber: "PQ-5678"
                   updatedAt: "2023-11-01T00:00:00Z"
@@ -2430,10 +2478,18 @@ paths:
                   receiptNotes: ["RN-003", "RN-004"]
                   balanceQuantity: 150
                   customField:
-                    - customFieldNumber: 'CF_Number'
-                      value: 1
-                    - customFieldNumber: 'CF_ML'
-                      value: ['ML1', 'ML2']
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
+                      value: 2
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                      value:
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
       responses:
         '200':
           description: OK
@@ -2551,25 +2607,9 @@ paths:
                 poExternalId:
                   type: string
                 customField:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        customFieldNumber:
-                          type: string
-                        value:
-                          oneOf:
-                          - type: string
-                          - type: number
-                          - type: string
-                          - type: array
-                            items:
-                              type: string  
-                        name:
-                          type: string
-                      required:
-                        - customFieldNumber
-                        - value 
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/CustomFields'
               required:
                 - externalId
                 - receiptNoteNumber
@@ -2605,6 +2645,19 @@ paths:
                           name: "Special discount"
                           amount: 25
                           amountType: "percentage"
+                      customField:
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
+                          value: 2
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                          value:
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   vendorId: "V123"
                   receiptNoteAmount: 100.0
                   totalAmount: 100.0
@@ -2616,10 +2669,18 @@ paths:
                   fxRate: 1.2
                   convertedAmount: 120.0
                   customField:
-                    - customFieldNumber: 'CF_Number'
-                      value: 1
-                    - customFieldNumber: 'CF_ML'
-                      value: ['ML1', 'ML2']
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
+                      value: 2
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                      value:
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
       responses:
         '201':
           description: Created
@@ -2722,6 +2783,19 @@ paths:
                               name: "Special discount"
                               amount: 25
                               amountType: "percentage"
+                          customField:
+                            - customFieldNumber: CustomFieldNumber1 (type - Number)
+                              value: 2
+                            - customFieldNumber: CustomFieldNumber2 (type - Date)
+                              value: "11/03/2024"
+                            - customFieldNumber: CustomFieldNumber3 (type - Input)
+                              value: "Value"
+                            - customFieldNumber: CustomFieldNumber4 (type - List)
+                              value: "List_Value1"
+                            - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                              value:
+                                - "MultiList_Value1"
+                                - "MultiList_Value2"
                       vendorId: "V123"
                       receiptNoteAmount: 100.0
                       totalAmount: 100.0
@@ -2732,6 +2806,19 @@ paths:
                       notes: "Received items in good condition."
                       fxRate: 1.2
                       convertedAmount: 120.0
+                      customField:
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
+                          value: 2
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                          value:
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   totalCount: 50
         '404':
           description: Not Found
@@ -2797,23 +2884,7 @@ paths:
                   customField:
                     type: array
                     items:
-                      type: object
-                      properties:
-                        customFieldNumber:
-                          type: string
-                        value:
-                          oneOf:
-                          - type: string
-                          - type: number
-                          - type: string
-                          - type: array
-                            items:
-                              type: string  
-                        name:
-                          type: string
-                      required:
-                        - customFieldNumber
-                        - value 
+                      $ref: '#/components/schemas/CustomFields'
               examples:
                 Example:
                   value:
@@ -2850,6 +2921,19 @@ paths:
                             name: "Special discount"
                             amount: 25
                             amountType: "percentage"
+                        customField:
+                          - customFieldNumber: CustomFieldNumber1 (type - Number)
+                            value: 2
+                          - customFieldNumber: CustomFieldNumber2 (type - Date)
+                            value: "11/03/2024"
+                          - customFieldNumber: CustomFieldNumber3 (type - Input)
+                            value: "Value"
+                          - customFieldNumber: CustomFieldNumber4 (type - List)
+                            value: "List_Value1"
+                          - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                            value:
+                              - "MultiList_Value1"
+                              - "MultiList_Value2"
                     vendorId: "V123"
                     receiptNoteAmount: 100.0
                     totalAmount: 100.0
@@ -2861,10 +2945,18 @@ paths:
                     fxRate: 1.2
                     convertedAmount: 120.0
                     customField:
-                    - customFieldNumber: 'CF_Number'
-                      value: 1
-                    - customFieldNumber: 'CF_ML'
-                      value: ['ML1', 'ML2']
+                      - customFieldNumber: CustomFieldNumber1 (type - Number)
+                        value: 2
+                      - customFieldNumber: CustomFieldNumber2 (type - Date)
+                        value: "11/03/2024"
+                      - customFieldNumber: CustomFieldNumber3 (type - Input)
+                        value: "Value"
+                      - customFieldNumber: CustomFieldNumber4 (type - List)
+                        value: "List_Value1"
+                      - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                        value:
+                          - "MultiList_Value1"
+                          - "MultiList_Value2"
         '404':
           description: Not Found
           content: {}
@@ -2922,23 +3014,7 @@ paths:
                 customField:
                   type: array
                   items:
-                    type: object
-                    properties:
-                      customFieldNumber:
-                        type: string
-                      value:
-                        oneOf:
-                        - type: string
-                        - type: number
-                        - type: string
-                        - type: array
-                          items:
-                            type: string 
-                      name:
-                        type: string
-                    required:
-                      - customFieldNumber
-                      - value 
+                    $ref: '#/components/schemas/CustomFields'
               required:
                 - externalId
                 - receiptNoteNumber
@@ -2976,6 +3052,19 @@ paths:
                       totalTax: 20
                       totalDiscount: 0
                       total: 320
+                      customField:
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
+                          value: 2
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                          value:
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   vendorId: "V123"
                   receiptNoteAmount: 100.0
                   totalAmount: 100.0
@@ -2987,10 +3076,18 @@ paths:
                   fxRate: 1.2
                   convertedAmount: 120.0
                   customField:
-                    - customFieldNumber: 'CF_Number'
-                      value: 1
-                    - customFieldNumber: 'CF_ML'
-                      value: ['ML1', 'ML2']
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
+                      value: 2
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                      value:
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
       responses:
         '200':
           description: OK
@@ -3421,6 +3518,8 @@ paths:
                   type: string
                 currency:
                   type: string
+                hsnCode:
+                  type: string
                 type:
                   type: string
                   enum:
@@ -3442,6 +3541,7 @@ paths:
                   price: 150
                   unit: "KG"
                   currency: "USD"
+                  hsnCode: "62.13.90"
                   type: "Product"
       responses:
         '201':
@@ -3489,6 +3589,8 @@ paths:
                   type: string
                 currency:
                   type: string
+                hsnCode:
+                  type: string
                 type:
                   type: string
                   enum:
@@ -3509,6 +3611,7 @@ paths:
                   price: 150
                   unit: "KG"
                   currency: "USD"
+                  hsnCode: "62.13.90"
                   type: "Product"
       responses:
         '201':
@@ -3876,6 +3979,10 @@ components:
           type: number
           description: Total amount for the item
           example: 320
+        customField:
+          type: array
+          items:
+          $ref: '#/components/schemas/CustomFields'
       required:
         - itemId
         - name
@@ -4378,6 +4485,10 @@ components:
           type: number
           description: Vendor Term of Payment
           example: 10
+        customField:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomFields'
       required:
         - companyName
         - companyId
@@ -4463,6 +4574,10 @@ components:
           type: string
           description: Date when payment was made (ISO8601 format)
           example: "2023-12-05T12:30:00Z"
+        customField:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomFields'
       required:
         - billNumber
         - status
@@ -4668,6 +4783,10 @@ components:
                       enum:
                         - fixed
                         - percentage
+              customField:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomFields'
           description: List of items included in the purchase order
         PONumber:
           type: string
@@ -4710,23 +4829,7 @@ components:
         customField:
           type: array
           items:
-            type: object
-            properties:
-              customFieldNumber:
-                type: string
-              value:
-                oneOf:
-                - type: string
-                - type: number
-                - type: string
-                - type: array
-                  items:
-                    type: string
-              name:
-                type: string
-            required:
-              - customFieldNumber
-              - value  
+            $ref: '#/components/schemas/CustomFields' 
     ReceiptNote:
       description: Details of a receipt note
       type: object
@@ -4819,6 +4922,10 @@ components:
                       enum:
                         - fixed
                         - percentage
+              customField:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomFields'
           description: List of items included in the receipt note
         vendorId:
           type: string
@@ -4866,6 +4973,10 @@ components:
         poNumber:
           type: string
           description: Reference number of connected Purchase Order
+        customField:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomFields'
       required:
         - externalId
         - receiptNoteNumber
@@ -4962,6 +5073,7 @@ components:
           price: 150
           unit: "KG"
           currency: "USD"
+          hsnCode: "62.13.90"
           type: "Product"
       description: The item model
       properties:
@@ -4983,6 +5095,9 @@ components:
         currency:
           type: string
           description: The item currency. Must be an ISO 4217 code
+        hsnCode:
+          type: string
+          description: HSN code of the item
         type:
           type: string
           description: The type of the item
@@ -5003,7 +5118,23 @@ components:
         - price
         - unit
         - currency
-
+    CustomFields:
+      type: object  
+      properties:
+        customFieldNumber:
+          type: string
+        value:
+          oneOf:
+          - type: string
+          - type: number
+          - type: array
+            items:
+              type: string  
+        name:
+          type: string
+      required:
+        - customFieldNumber
+        - value 
   securitySchemes:
     bearerAuth:
       type: http
