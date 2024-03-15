@@ -2024,10 +2024,6 @@ paths:
                   type: number
                 totalWHT:
                   type: number
-                paidAmount:
-                  type: number
-                balanceAmount:
-                  type: number
                 currency:
                   type: string
                 issueDate:
@@ -2064,16 +2060,6 @@ paths:
                   type: string
                 deliveryDate:
                   type: string
-                bills:
-                  type: array
-                  items:
-                    type: string
-                receiptNotes:
-                  type: array
-                  items:
-                    type: string
-                balanceQuantity:
-                  type: number
                 customField:
                   type: array
                   items:
@@ -2618,10 +2604,18 @@ paths:
                   type: number
                 convertedAmount:
                   type: number
+                poExternalId:
+                  type: string
                 customField:
                   type: array
                   items:
                     $ref: '#/components/schemas/CustomFields'
+              required:
+                - externalId
+                - receiptNoteNumber
+                - deliveryDate
+                - vendorId
+                - status
             examples:
               Example:
                 value:
@@ -2883,6 +2877,10 @@ paths:
                     type: number
                   convertedAmount:
                     type: number
+                  poExternalId:
+                    type: string
+                  poNumber:
+                    type: string
                   customField:
                     type: array
                     items:
@@ -3011,10 +3009,18 @@ paths:
                   type: number
                 convertedAmount:
                   type: number
+                poExternalId:
+                  type: string
                 customField:
                   type: array
                   items:
                     $ref: '#/components/schemas/CustomFields'
+              required:
+                - externalId
+                - receiptNoteNumber
+                - deliveryDate
+                - vendorId
+                - status
             examples:
               Example:
                 value:
@@ -4961,6 +4967,12 @@ components:
           type: number
           description: Converted amount in base currency
           example: 1187.5
+        poExternalId:
+          type: string
+          description: External Id of connected Purchase Order
+        poNumber:
+          type: string
+          description: Reference number of connected Purchase Order
         customField:
           type: array
           items:
