@@ -2548,7 +2548,7 @@ paths:
                   type: number
                 convertedAmount:
                   type: number
-                purchaseOrder:
+                poExternalId:
                   type: string
                 customField:
                     type: array
@@ -2917,6 +2917,8 @@ paths:
                   type: number
                 convertedAmount:
                   type: number
+                poExternalId:
+                  type: string
                 customField:
                   type: array
                   items:
