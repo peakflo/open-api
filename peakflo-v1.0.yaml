@@ -3973,6 +3973,10 @@ components:
           type: number
           description: Total amount for the item
           example: 320
+        customField:
+          type: array
+          items:
+          $ref: '#/components/schemas/CustomFields'
       required:
         - itemId
         - name
