@@ -3512,6 +3512,8 @@ paths:
                   type: string
                 currency:
                   type: string
+                hsnCode:
+                  type: string
                 type:
                   type: string
                   enum:
@@ -3533,6 +3535,7 @@ paths:
                   price: 150
                   unit: "KG"
                   currency: "USD"
+                  hsnCode: "62.13.90"
                   type: "Product"
       responses:
         '201':
@@ -3580,6 +3583,8 @@ paths:
                   type: string
                 currency:
                   type: string
+                hsnCode:
+                  type: string
                 type:
                   type: string
                   enum:
@@ -3600,6 +3605,7 @@ paths:
                   price: 150
                   unit: "KG"
                   currency: "USD"
+                  hsnCode: "62.13.90"
                   type: "Product"
       responses:
         '201':
@@ -5051,6 +5057,7 @@ components:
           price: 150
           unit: "KG"
           currency: "USD"
+          hsnCode: "62.13.90"
           type: "Product"
       description: The item model
       properties:
@@ -5072,6 +5079,9 @@ components:
         currency:
           type: string
           description: The item currency. Must be an ISO 4217 code
+        hsnCode:
+          type: string
+          description: HSN code of the item
         type:
           type: string
           description: The type of the item
