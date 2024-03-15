@@ -2790,6 +2790,10 @@ paths:
                     type: number
                   convertedAmount:
                     type: number
+                  poExternalId:
+                    type: string
+                  poNumber:
+                    type: string
                   customField:
                     type: array
                     items:
@@ -4854,6 +4858,12 @@ components:
           type: number
           description: Converted amount in base currency
           example: 1187.5
+        poExternalId:
+          type: string
+          description: External Id of connected Purchase Order
+        poNumber:
+          type: string
+          description: Reference number of connected Purchase Order
       required:
         - externalId
         - receiptNoteNumber
