@@ -795,18 +795,18 @@ paths:
                   vendorLastName: Doe
                   paymentTerms: 10
                   customField:
-                    - customFieldNumber: CF1 (type - Number)
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
                       value: 2
-                    - customFieldNumber: CF2 (type - Date)
-                      value: 11/03/2024
-                    - customFieldNumber: CF3 (type - Input)
-                      value: Value
-                    - customFieldNumber: CF4 (type - List)
-                      value: List_Value1
-                    - customFieldNumber: CF5 (type - MultiList)
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                       value:
-                        - MultiList_Value1
-                        - MultiList_Value2
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
       responses:
         '201':
           description: Created
@@ -948,18 +948,18 @@ paths:
                   vendorLastName: Doe
                   paymentTerms: 10
                   customField:
-                    - customFieldNumber: CF1 (type - Number)
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
                       value: 2
-                    - customFieldNumber: CF2 (type - Date)
-                      value: 11/03/2024
-                    - customFieldNumber: CF3 (type - Input)
-                      value: Value
-                    - customFieldNumber: CF4 (type - List)
-                      value: List_Value1
-                    - customFieldNumber: CF5 (type - MultiList)
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                       value:
-                        - MultiList_Value1
-                        - MultiList_Value2
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
       responses:
         '200':
           description: Update Vendor
@@ -1186,33 +1186,33 @@ paths:
                           totalDiscount: 0
                           total: 320
                           customField:
-                            - customFieldNumber: CF1 (type - Number)
+                            - customFieldNumber: CustomFieldNumber1 (type - Number)
                               value: 2
-                            - customFieldNumber: CF2 (type - Date)
-                              value: 11/03/2024
-                            - customFieldNumber: CF3 (type - Input)
-                              value: Value
-                            - customFieldNumber: CF4 (type - List)
-                              value: List_Value1
-                            - customFieldNumber: CF5 (type - MultiList)
+                            - customFieldNumber: CustomFieldNumber2 (type - Date)
+                              value: "11/03/2024"
+                            - customFieldNumber: CustomFieldNumber3 (type - Input)
+                              value: "Value"
+                            - customFieldNumber: CustomFieldNumber4 (type - List)
+                              value: "List_Value1"
+                            - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                               value:
-                                - MultiList_Value1
-                                - MultiList_Value2
+                                - "MultiList_Value1"
+                                - "MultiList_Value2"
                       receiptDate: "2023-11-28T00:00:00Z"
                       paymentMadeDate: "2023-12-05T12:30:00Z"
                       customField:
-                        - customFieldNumber: CF1 (type - Number)
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
                           value: 2
-                        - customFieldNumber: CF2 (type - Date)
-                          value: 11/03/2024
-                        - customFieldNumber: CF3 (type - Input)
-                          value: Value
-                        - customFieldNumber: CF4 (type - List)
-                          value: List_Value1
-                        - customFieldNumber: CF5 (type - MultiList)
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                           value:
-                            - MultiList_Value1
-                            - MultiList_Value2
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   totalCount: 50
         '400':
           description: Bad Request
@@ -1416,33 +1416,33 @@ paths:
                       totalDiscount: 0
                       total: 320
                       customField:
-                        - customFieldNumber: CF1 (type - Number)
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
                           value: 2
-                        - customFieldNumber: CF2 (type - Date)
-                          value: 11/03/2024
-                        - customFieldNumber: CF3 (type - Input)
-                          value: Value
-                        - customFieldNumber: CF4 (type - List)
-                          value: List_Value1
-                        - customFieldNumber: CF5 (type - MultiList)
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                           value:
-                            - MultiList_Value1
-                            - MultiList_Value2
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   receiptDate: "2023-11-28T00:00:00Z"
                   paymentMadeDate: "2023-12-05T12:30:00Z"
                   customField:
-                    - customFieldNumber: CF1 (type - Number)
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
                       value: 2
-                    - customFieldNumber: CF2 (type - Date)
-                      value: 11/03/2024
-                    - customFieldNumber: CF3 (type - Input)
-                      value: Value
-                    - customFieldNumber: CF4 (type - List)
-                      value: List_Value1
-                    - customFieldNumber: CF5 (type - MultiList)
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                       value:
-                        - MultiList_Value1
-                        - MultiList_Value2
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
       responses:
         '201':
           description: Created
@@ -1672,33 +1672,33 @@ paths:
                         totalDiscount: 0
                         total: 320
                         customField:
-                          - customFieldNumber: CF1 (type - Number)
+                          - customFieldNumber: CustomFieldNumber1 (type - Number)
                             value: 2
-                          - customFieldNumber: CF2 (type - Date)
-                            value: 11/03/2024
-                          - customFieldNumber: CF3 (type - Input)
-                            value: Value
-                          - customFieldNumber: CF4 (type - List)
-                            value: List_Value1
-                          - customFieldNumber: CF5 (type - MultiList)
+                          - customFieldNumber: CustomFieldNumber2 (type - Date)
+                            value: "11/03/2024"
+                          - customFieldNumber: CustomFieldNumber3 (type - Input)
+                            value: "Value"
+                          - customFieldNumber: CustomFieldNumber4 (type - List)
+                            value: "List_Value1"
+                          - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                             value:
-                              - MultiList_Value1
-                              - MultiList_Value2
+                              - "MultiList_Value1"
+                              - "MultiList_Value2"
                     receiptDate: "2023-11-28T00:00:00Z"
                     paymentMadeDate: "2023-12-05T12:30:00Z"
                     customField:
-                      - customFieldNumber: CF1 (type - Number)
+                      - customFieldNumber: CustomFieldNumber1 (type - Number)
                         value: 2
-                      - customFieldNumber: CF2 (type - Date)
-                        value: 11/03/2024
-                      - customFieldNumber: CF3 (type - Input)
-                        value: Value
-                      - customFieldNumber: CF4 (type - List)
-                        value: List_Value1
-                      - customFieldNumber: CF5 (type - MultiList)
+                      - customFieldNumber: CustomFieldNumber2 (type - Date)
+                        value: "11/03/2024"
+                      - customFieldNumber: CustomFieldNumber3 (type - Input)
+                        value: "Value"
+                      - customFieldNumber: CustomFieldNumber4 (type - List)
+                        value: "List_Value1"
+                      - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                         value:
-                          - MultiList_Value1
-                          - MultiList_Value2
+                          - "MultiList_Value1"
+                          - "MultiList_Value2"
         
         '404':
           description: Not Found
@@ -1913,33 +1913,33 @@ paths:
                       totalDiscount: 0
                       total: 320
                       customField:
-                        - customFieldNumber: CF1 (type - Number)
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
                           value: 2
-                        - customFieldNumber: CF2 (type - Date)
-                          value: 11/03/2024
-                        - customFieldNumber: CF3 (type - Input)
-                          value: Value
-                        - customFieldNumber: CF4 (type - List)
-                          value: List_Value1
-                        - customFieldNumber: CF5 (type - MultiList)
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                           value:
-                            - MultiList_Value1
-                            - MultiList_Value2
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   receiptDate: "2023-11-28T00:00:00Z"
                   paymentMadeDate: "2023-12-05T12:30:00Z"
                   customField:
-                    - customFieldNumber: CF1 (type - Number)
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
                       value: 2
-                    - customFieldNumber: CF2 (type - Date)
-                      value: 11/03/2024
-                    - customFieldNumber: CF3 (type - Input)
-                      value: Value
-                    - customFieldNumber: CF4 (type - List)
-                      value: List_Value1
-                    - customFieldNumber: CF5 (type - MultiList)
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                       value:
-                        - MultiList_Value1
-                        - MultiList_Value2
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
       responses:
         '200':
           description: Ok
@@ -2255,18 +2255,18 @@ paths:
                               amount: 20
                               amountType: "percentage"
                           customField:
-                            - customFieldNumber: CF1 (type - Number)
+                            - customFieldNumber: CustomFieldNumber1 (type - Number)
                               value: 2
-                            - customFieldNumber: CF2 (type - Date)
-                              value: 11/03/2024
-                            - customFieldNumber: CF3 (type - Input)
-                              value: Value
-                            - customFieldNumber: CF4 (type - List)
-                              value: List_Value1
-                            - customFieldNumber: CF5 (type - MultiList)
+                            - customFieldNumber: CustomFieldNumber2 (type - Date)
+                              value: "11/03/2024"
+                            - customFieldNumber: CustomFieldNumber3 (type - Input)
+                              value: "Value"
+                            - customFieldNumber: CustomFieldNumber4 (type - List)
+                              value: "List_Value1"
+                            - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                               value:
-                                - MultiList_Value1
-                                - MultiList_Value2
+                                - "MultiList_Value1"
+                                - "MultiList_Value2"
                       PONumber: "PO-5678"
                       PQNumber: "PQ-1234"
                       updatedAt: "2023-11-01T00:00:00Z"
@@ -2277,10 +2277,18 @@ paths:
                       receiptNotes: ["RN-001", "RN-002"]
                       balanceQuantity: 100
                       customField:
-                        - customFieldNumber: 'CF_Number'
-                          value: 1
-                        - customFieldNumber: 'CF_ML'
-                          value: ['ML1', 'ML2']
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
+                          value: 2
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                          value:
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   totalCount: 50
         '404':
           description: Not Found
@@ -2506,18 +2514,18 @@ paths:
                       totalDiscount: 0
                       total: 320
                       customField:
-                        - customFieldNumber: CF1 (type - Number)
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
                           value: 2
-                        - customFieldNumber: CF2 (type - Date)
-                          value: 11/03/2024
-                        - customFieldNumber: CF3 (type - Input)
-                          value: Value
-                        - customFieldNumber: CF4 (type - List)
-                          value: List_Value1
-                        - customFieldNumber: CF5 (type - MultiList)
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                           value:
-                            - MultiList_Value1
-                            - MultiList_Value2
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   PONumber: "PO-5678"
                   PQNumber: "PQ-1234"
                   updatedAt: "2023-11-01T00:00:00Z"
@@ -2528,18 +2536,18 @@ paths:
                   receiptNotes: ["RN-001", "RN-002"]
                   balanceQuantity: 100
                   customField:
-                    - customFieldNumber: CF1 (type - Number)
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
                       value: 2
-                    - customFieldNumber: CF2 (type - Date)
-                      value: 11/03/2024
-                    - customFieldNumber: CF3 (type - Input)
-                      value: Value
-                    - customFieldNumber: CF4 (type - List)
-                      value: List_Value1
-                    - customFieldNumber: CF5 (type - MultiList)
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                       value:
-                        - MultiList_Value1
-                        - MultiList_Value2
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
       responses:
         '201':
           description: Created
@@ -2763,18 +2771,18 @@ paths:
                             amount: 20
                             amountType: "percentage"
                         customField:
-                        - customFieldNumber: CF1 (type - Number)
-                          value: 2
-                        - customFieldNumber: CF2 (type - Date)
-                          value: 11/03/2024
-                        - customFieldNumber: CF3 (type - Input)
-                          value: Value
-                        - customFieldNumber: CF4 (type - List)
-                          value: List_Value1
-                        - customFieldNumber: CF5 (type - MultiList)
-                          value:
-                            - MultiList_Value1
-                            - MultiList_Value2
+                          - customFieldNumber: CustomFieldNumber1 (type - Number)
+                            value: 2
+                          - customFieldNumber: CustomFieldNumber2 (type - Date)
+                            value: "11/03/2024"
+                          - customFieldNumber: CustomFieldNumber3 (type - Input)
+                            value: "Value"
+                          - customFieldNumber: CustomFieldNumber4 (type - List)
+                            value: "List_Value1"
+                          - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                            value:
+                              - "MultiList_Value1"
+                              - "MultiList_Value2"
                     PONumber: "PO-5678"
                     PQNumber: "PQ-1234"
                     updatedAt: "2023-11-01T00:00:00Z"
@@ -2785,18 +2793,18 @@ paths:
                     receiptNotes: ["RN-001", "RN-002"]
                     balanceQuantity: 100
                     customField:
-                      - customFieldNumber: CF1 (type - Number)
+                      - customFieldNumber: CustomFieldNumber1 (type - Number)
                         value: 2
-                      - customFieldNumber: CF2 (type - Date)
-                        value: 11/03/2024
-                      - customFieldNumber: CF3 (type - Input)
-                        value: Value
-                      - customFieldNumber: CF4 (type - List)
-                        value: List_Value1
-                      - customFieldNumber: CF5 (type - MultiList)
+                      - customFieldNumber: CustomFieldNumber2 (type - Date)
+                        value: "11/03/2024"
+                      - customFieldNumber: CustomFieldNumber3 (type - Input)
+                        value: "Value"
+                      - customFieldNumber: CustomFieldNumber4 (type - List)
+                        value: "List_Value1"
+                      - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                         value:
-                          - MultiList_Value1
-                          - MultiList_Value2
+                          - "MultiList_Value1"
+                          - "MultiList_Value2"
         '404':
           description: Not Found
           content: {}
@@ -3011,18 +3019,18 @@ paths:
                           amount: 25
                           amountType: "percentage"
                       customField:
-                        - customFieldNumber: CF1 (type - Number)
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
                           value: 2
-                        - customFieldNumber: CF2 (type - Date)
-                          value: 11/03/2024
-                        - customFieldNumber: CF3 (type - Input)
-                          value: Value
-                        - customFieldNumber: CF4 (type - List)
-                          value: List_Value1
-                        - customFieldNumber: CF5 (type - MultiList)
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                           value:
-                            - MultiList_Value1
-                            - MultiList_Value2
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   PONumber: "PO-9876"
                   PQNumber: "PQ-5678"
                   updatedAt: "2023-11-01T00:00:00Z"
@@ -3033,18 +3041,18 @@ paths:
                   receiptNotes: ["RN-003", "RN-004"]
                   balanceQuantity: 150
                   customField:
-                    - customFieldNumber: CF1 (type - Number)
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
                       value: 2
-                    - customFieldNumber: CF2 (type - Date)
-                      value: 11/03/2024
-                    - customFieldNumber: CF3 (type - Input)
-                      value: Value
-                    - customFieldNumber: CF4 (type - List)
-                      value: List_Value1
-                    - customFieldNumber: CF5 (type - MultiList)
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                       value:
-                        - MultiList_Value1
-                        - MultiList_Value2]
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
       responses:
         '200':
           description: OK
@@ -3284,18 +3292,18 @@ paths:
                           amount: 25
                           amountType: "percentage"
                       customField:
-                        - customFieldNumber: CF1 (type - Number)
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
                           value: 2
-                        - customFieldNumber: CF2 (type - Date)
-                          value: 11/03/2024
-                        - customFieldNumber: CF3 (type - Input)
-                          value: Value
-                        - customFieldNumber: CF4 (type - List)
-                          value: List_Value1
-                        - customFieldNumber: CF5 (type - MultiList)
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                           value:
-                            - MultiList_Value1
-                            - MultiList_Value2
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   vendorId: "V123"
                   receiptNoteAmount: 100.0
                   totalAmount: 100.0
@@ -3307,18 +3315,18 @@ paths:
                   fxRate: 1.2
                   convertedAmount: 120.0
                   customField:
-                    - customFieldNumber: CF1 (type - Number)
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
                       value: 2
-                    - customFieldNumber: CF2 (type - Date)
-                      value: 11/03/2024
-                    - customFieldNumber: CF3 (type - Input)
-                      value: Value
-                    - customFieldNumber: CF4 (type - List)
-                      value: List_Value1
-                    - customFieldNumber: CF5 (type - MultiList)
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                       value:
-                        - MultiList_Value1
-                        - MultiList_Value2
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
       responses:
         '201':
           description: Created
@@ -3422,18 +3430,18 @@ paths:
                               amount: 25
                               amountType: "percentage"
                           customField:
-                            - customFieldNumber: CF1 (type - Number)
+                            - customFieldNumber: CustomFieldNumber1 (type - Number)
                               value: 2
-                            - customFieldNumber: CF2 (type - Date)
-                              value: 11/03/2024
-                            - customFieldNumber: CF3 (type - Input)
-                              value: Value
-                            - customFieldNumber: CF4 (type - List)
-                              value: List_Value1
-                            - customFieldNumber: CF5 (type - MultiList)
+                            - customFieldNumber: CustomFieldNumber2 (type - Date)
+                              value: "11/03/2024"
+                            - customFieldNumber: CustomFieldNumber3 (type - Input)
+                              value: "Value"
+                            - customFieldNumber: CustomFieldNumber4 (type - List)
+                              value: "List_Value1"
+                            - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                               value:
-                                - MultiList_Value1
-                                - MultiList_Value2
+                                - "MultiList_Value1"
+                                - "MultiList_Value2"
                       vendorId: "V123"
                       receiptNoteAmount: 100.0
                       totalAmount: 100.0
@@ -3445,18 +3453,18 @@ paths:
                       fxRate: 1.2
                       convertedAmount: 120.0
                       customField:
-                        - customFieldNumber: CF1 (type - Number)
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
                           value: 2
-                        - customFieldNumber: CF2 (type - Date)
-                          value: 11/03/2024
-                        - customFieldNumber: CF3 (type - Input)
-                          value: Value
-                        - customFieldNumber: CF4 (type - List)
-                          value: List_Value1
-                        - customFieldNumber: CF5 (type - MultiList)
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                           value:
-                            - MultiList_Value1
-                            - MultiList_Value2
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   totalCount: 50
         '404':
           description: Not Found
@@ -3632,18 +3640,18 @@ paths:
                             amount: 25
                             amountType: "percentage"
                         customField:
-                        - customFieldNumber: CF1 (type - Number)
-                          value: 2
-                        - customFieldNumber: CF2 (type - Date)
-                          value: 11/03/2024
-                        - customFieldNumber: CF3 (type - Input)
-                          value: Value
-                        - customFieldNumber: CF4 (type - List)
-                          value: List_Value1
-                        - customFieldNumber: CF5 (type - MultiList)
-                          value:
-                            - MultiList_Value1
-                            - MultiList_Value2
+                          - customFieldNumber: CustomFieldNumber1 (type - Number)
+                            value: 2
+                          - customFieldNumber: CustomFieldNumber2 (type - Date)
+                            value: "11/03/2024"
+                          - customFieldNumber: CustomFieldNumber3 (type - Input)
+                            value: "Value"
+                          - customFieldNumber: CustomFieldNumber4 (type - List)
+                            value: "List_Value1"
+                          - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                            value:
+                              - "MultiList_Value1"
+                              - "MultiList_Value2"
                     vendorId: "V123"
                     receiptNoteAmount: 100.0
                     totalAmount: 100.0
@@ -3655,18 +3663,18 @@ paths:
                     fxRate: 1.2
                     convertedAmount: 120.0
                     customField:
-                      - customFieldNumber: CF1 (type - Number)
+                      - customFieldNumber: CustomFieldNumber1 (type - Number)
                         value: 2
-                      - customFieldNumber: CF2 (type - Date)
-                        value: 11/03/2024
-                      - customFieldNumber: CF3 (type - Input)
-                        value: Value
-                      - customFieldNumber: CF4 (type - List)
-                        value: List_Value1
-                      - customFieldNumber: CF5 (type - MultiList)
+                      - customFieldNumber: CustomFieldNumber2 (type - Date)
+                        value: "11/03/2024"
+                      - customFieldNumber: CustomFieldNumber3 (type - Input)
+                        value: "Value"
+                      - customFieldNumber: CustomFieldNumber4 (type - List)
+                        value: "List_Value1"
+                      - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                         value:
-                          - MultiList_Value1
-                          - MultiList_Value2
+                          - "MultiList_Value1"
+                          - "MultiList_Value2"
         '404':
           description: Not Found
           content: {}
@@ -3852,18 +3860,18 @@ paths:
                       totalDiscount: 0
                       total: 320
                       customField:
-                        - customFieldNumber: CF1 (type - Number)
+                        - customFieldNumber: CustomFieldNumber1 (type - Number)
                           value: 2
-                        - customFieldNumber: CF2 (type - Date)
-                          value: 11/03/2024
-                        - customFieldNumber: CF3 (type - Input)
-                          value: Value
-                        - customFieldNumber: CF4 (type - List)
-                          value: List_Value1
-                        - customFieldNumber: CF5 (type - MultiList)
+                        - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          value: "11/03/2024"
+                        - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          value: "Value"
+                        - customFieldNumber: CustomFieldNumber4 (type - List)
+                          value: "List_Value1"
+                        - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                           value:
-                            - MultiList_Value1
-                            - MultiList_Value2
+                            - "MultiList_Value1"
+                            - "MultiList_Value2"
                   vendorId: "V123"
                   receiptNoteAmount: 100.0
                   totalAmount: 100.0
@@ -3875,18 +3883,18 @@ paths:
                   fxRate: 1.2
                   convertedAmount: 120.0
                   customField:
-                    - customFieldNumber: CF1 (type - Number)
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
                       value: 2
-                    - customFieldNumber: CF2 (type - Date)
-                      value: 11/03/2024
-                    - customFieldNumber: CF3 (type - Input)
-                      value: Value
-                    - customFieldNumber: CF4 (type - List)
-                      value: List_Value1
-                    - customFieldNumber: CF5 (type - MultiList)
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
                       value:
-                        - MultiList_Value1
-                        - MultiList_Value2
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
       responses:
         '200':
           description: OK
