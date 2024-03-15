@@ -2570,6 +2570,12 @@ paths:
                       required:
                         - customFieldNumber
                         - value 
+              required:
+                - externalId
+                - receiptNoteNumber
+                - deliveryDate
+                - vendorId
+                - status
             examples:
               Example:
                 value:
@@ -2927,6 +2933,12 @@ paths:
                     required:
                       - customFieldNumber
                       - value 
+              required:
+                - externalId
+                - receiptNoteNumber
+                - deliveryDate
+                - vendorId
+                - status
             examples:
               Example:
                 value:
