@@ -1738,8 +1738,6 @@ paths:
                   type: string
                 reference:
                   type: string
-                vendorId:
-                  type: string
                 date:
                   type: string
                   format: date
@@ -1749,16 +1747,12 @@ paths:
                   type: string
                 fxRate:
                   type: number
-                convertedAmount:
-                  type: number
                 paymentFee:
                   type: number
               required:
                 - billId
                 - externalId
                 - reference
-                - vendorId
-                - date
                 - amount
                 - currency
             examples:
@@ -1777,79 +1771,6 @@ paths:
       responses:
         '201':
           description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BillPayment'
-        '400':
-          description: Bad request
-          content: {}
-        '409':
-          description: Conflict
-          content: {}
-  "/bill-payment/{externalId}":
-    put:
-      tags:
-        - Bill Payments
-      summary: Update a bill payment
-      description: Update a bill payment
-      operationId: update-bill-payment
-      parameters:
-        - name: externalId
-          in: path
-          required: true
-          description: ID of the bill payment to retrieve
-          schema:
-            type: string
-      requestBody:
-        description: Bill payment to update
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                billId:
-                  type: string
-                reference:
-                  type: string
-                vendorId:
-                  type: string
-                date:
-                  type: string
-                  format: date
-                amount:
-                  type: number
-                currency:
-                  type: string
-                fxRate:
-                  type: number
-                convertedAmount:
-                  type: number
-                paymentFee:
-                  type: number
-              required:
-                - billId
-                - reference
-                - vendorId
-                - date
-                - amount
-                - currency
-            examples:
-              Example:
-                value:
-                  billId: "1234567890"
-                  reference: "INV-2023-001"
-                  vendorId: "VENDOR-123"
-                  date: "2023-11-28"
-                  amount: 500.25
-                  currency: "USD"
-                  fxRate: 1.2
-                  convertedAmount: 600.30
-                  paymentFee: 10.00
-      responses:
-        '200':
-          description: Ok
           content:
             application/json:
               schema:
