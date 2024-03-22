@@ -1933,6 +1933,7 @@ paths:
                       totalTax: 20
                       fxRate: 1.2
                       convertedAmount: 600
+                      paymentTerms: 20
                       attachments:
                         - id: "attachment_id_1"
                           name: "Attachment 1"
@@ -2042,6 +2043,8 @@ paths:
                   type: number
                 convertedAmount:
                   type: number
+                paymentTerms:
+                  type: number
                 items:
                   type: array
                   items:
@@ -2091,6 +2094,7 @@ paths:
                   totalTax: 200
                   fxRate: 1.2
                   convertedAmount: 6000
+                  paymentTerms: 20
                   items:
                     - itemId: "ITEM001"
                       name: "Product A"
@@ -2217,6 +2221,8 @@ paths:
                     type: number
                   convertedAmount:
                     type: number
+                  paymentTerms:
+                    type: number
                   attachments:
                     type: array
                     description: List of attachments
@@ -2268,6 +2274,7 @@ paths:
                     totalTax: 200
                     fxRate: 1.2
                     convertedAmount: 6000
+                    paymentTerms: 20
                     attachments:
                       - id: "attachment_id_1"
                         name: "Attachment 1"
@@ -2385,6 +2392,8 @@ paths:
                   type: number
                 convertedAmount:
                   type: number
+                paymentTerms:
+                  type: number
                 items:
                   type: array
                   items:
@@ -2432,6 +2441,7 @@ paths:
                   totalTax: 250
                   fxRate: 1.25
                   convertedAmount: 6875
+                  paymentTerms: 20
                   items:
                     - itemId: "ITEM002"
                       name: "Product B"
@@ -4707,6 +4717,10 @@ components:
           type: number
           description: Converted amount in base currency
           example: 1125
+        paymentTerms:
+          type: number
+          description: Payment terms
+          example: 30
         items:
           type: array
           items:
