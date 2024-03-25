@@ -1743,18 +1743,22 @@ paths:
                   format: date
                 amount:
                   type: number
-                currency:
+                baseCurrency:
                   type: string
                 fxRate:
                   type: number
                 paymentFee:
                   type: number
+                convertedAmount:
+                  type: number
+                receiverCurrency:
+                  type: string
               required:
                 - billId
                 - externalId
                 - reference
                 - amount
-                - currency
+                - baseCurrency
             examples:
               Example:
                 value:
@@ -1764,10 +1768,11 @@ paths:
                   vendorId: "VENDOR-123"
                   date: "2023-11-28"
                   amount: 500.25
-                  currency: "USD"
+                  baseCurrency: "USD"
                   fxRate: 1.2
                   convertedAmount: 600.30
                   paymentFee: 10.00
+                  receiverCurrency: "EUR"
       responses:
         '201':
           description: Created
@@ -1781,7 +1786,82 @@ paths:
         '409':
           description: Conflict
           content: {}
-
+  "/bill-payment/{externalId}":
+      put:
+        tags:
+          - Bill Payments
+        summary: Update a bill payment
+        description: Update a bill payment
+        operationId: update-bill-payment
+        parameters:
+          - name: externalId
+            in: path
+            required: true
+            description: ID of the bill payment to retrieve
+            schema:
+              type: string
+        requestBody:
+          description: Bill payment to update
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  billId:
+                    type: string
+                  reference:
+                    type: string
+                  vendorId:
+                    type: string
+                  date:
+                    type: string
+                    format: date
+                  amount:
+                    type: number
+                  baseCurrency:
+                    type: string
+                  fxRate:
+                    type: number
+                  convertedAmount:
+                    type: number
+                  paymentFee:
+                    type: number
+                  receiverCurrency:
+                    type: string
+                required:
+                  - billId
+                  - reference
+                  - vendorId
+                  - date
+                  - amount
+                  - baseCurrency
+              examples:
+                Example:
+                  value:
+                    billId: "1234567890"
+                    reference: "INV-2023-001"
+                    vendorId: "VENDOR-123"
+                    date: "2023-11-28"
+                    amount: 500.25
+                    baseCurrency: "USD"
+                    fxRate: 1.2
+                    convertedAmount: 600.30
+                    paymentFee: 10.00
+                    receiverCurrency: "EUR"
+        responses:
+          '200':
+            description: Ok
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/BillPayment'
+          '400':
+            description: Bad request
+            content: {}
+          '409':
+            description: Conflict
+            content: {}
   "/purchase-order":
     get:
       tags:
@@ -4540,7 +4620,7 @@ components:
           type: number
           description: Amount of the payment
           example: 500
-        currency:
+        baseCurrency:
           type: string
           description: Currency of the payment
           example: "USD"
@@ -4556,6 +4636,10 @@ components:
           type: number
           description: Fee associated with the payment
           example: 10
+        receiverCurrency:
+          type: string
+          description: Currency of the receiver
+          example: "USD"
       required:
         - billId
         - externalId
@@ -4563,7 +4647,7 @@ components:
         - vendorId
         - date
         - amount
-        - currency
+        - baseCurrency
     PurchaseOrder:
       description: Details of a purchase order
       type: object
