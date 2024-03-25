@@ -5134,9 +5134,18 @@ components:
         - currency
     CustomFields:
       type: object  
+      x-examples:
+        Example:
+          customFieldNumber: "customField1"
+          name: "Field A"
+          value: "Value A"
       properties:
         customFieldNumber:
           type: string
+          description: Custom field number can be seen in the peakflo web UI
+        name:
+          type: string
+          description:  Custom field name
         value:
           oneOf:
           - type: string
@@ -5144,11 +5153,10 @@ components:
           - type: array
             items:
               type: string  
-        name:
-          type: string
+          description:  Custom field value. can be string, number or array. dates needs to be sent in ISO 8601 date format
       required:
         - customFieldNumber
-        - value 
+        - value
   securitySchemes:
     bearerAuth:
       type: http
