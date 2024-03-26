@@ -12,6 +12,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
   "bills": [{
     "billExternalId": "bill-external-id-1",
     "billNumber": "BILL12345",
+    "subsidiaryReference": "subsidiary-001",
     "status": "approved",
     "poExternalId": "po-external-id-1",
     "poNumber": "PO001",
@@ -30,6 +31,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
     "dueDate": "2023-12-15T23:59:59Z",
     "receiptDate": "2023-11-28T00:00:00Z",
     "scheduledDate": "2023-12-10T00:00:00Z",
+    "updatedDate": "2023-08-10T00:00:00Z",
     "vendorExternalId": "VENDOR001",
     "vendorName": "ABC Vendor",
     "currency": "USD",
@@ -118,7 +120,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
 | totalWHT       | number  | The total amount of withholding tax for the bill.              |
 | items          | array   | An array containing details of items listed on the bill.       |
 | receiptDate    | string  | The date when the bill receipt was generated.                  |
-| updatedAt      | string  | The date when the bill was update.
+| updatedDate      | string  | The date when the bill was last update.
 | customFields   | array   | An array containing details of custom fields. [Possible Values](#possible-custom-field-type)                 |
 
 
@@ -138,7 +140,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
 ]
 ```
 
-### Possible Custom Filed Type
+### Possible Custom Field Type
 
 ```json
 [
