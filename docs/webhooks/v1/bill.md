@@ -105,6 +105,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
 |----------------|---------|--------------------------------------------------------------|
 | billExternalId | string  | An external ID associated with the bill.                       |
 | billNumber     | string  | The unique identifier for the bill.                           |
+| subsidiaryReference     | string  | Unique identifier for the subsidiary company tagged to bill.                           |
 | status         | string  | The status of the bill. [Possible Values](#possible-bill-status-values)      |
 | vendorExternalId | string  | The external ID of the vendor associated with the bill.                 |
 | vendorName     | string  | The name of the vendor.                                       |
