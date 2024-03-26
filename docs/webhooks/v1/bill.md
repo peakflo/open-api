@@ -74,6 +74,14 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
             "amountType": "percentage"
           }
         ],
+        "customFields": [
+          {
+            "customFieldNumber": "customField1",
+            "name": "Custom field name",
+            "type": "number",
+            "value": "Test Value",
+          }
+        ],
         "totalTax": 20,
         "totalDiscount": 0,
         "total": 320
@@ -81,9 +89,9 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
     ],
     "customFields": [
       {
-        "customFieldNumber": "customfield2",
-        "name": "Test field name",
-        "type": "string",
+        "customFieldNumber": "customField2",
+        "name": "Custom field name",
+        "type": "input",
         "value": "Test Value",
       }
     ]
@@ -111,7 +119,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
 | items          | array   | An array containing details of items listed on the bill.       |
 | receiptDate    | string  | The date when the bill receipt was generated.                  |
 | updatedAt      | string  | The date when the bill was update.
-| customFields   | array   | An array containing details of custom fields.                 |
+| customFields   | array   | An array containing details of custom fields. [Possible Values](#possible-custom-field-type)                 |
 
 
 ### Possible Bill Status Values
@@ -127,5 +135,17 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
  "paid",
  "deleted",
  "cancelled",
+]
+```
+
+### Possible Custom Filed Type
+
+```json
+[
+  "input",
+  "list",
+  "date",
+  "number",
+  "multiList",
 ]
 ```
