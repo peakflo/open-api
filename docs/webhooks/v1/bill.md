@@ -9,7 +9,8 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
   "eventId" : "45645666aff54497ba804e6f1ea09929",
   "eventType" : "BILL_STATUS_CHANGED",
   "eventCreatedAt" : "2021-04-05T14:48:00.000Z",
-  "bills": [{
+  "dataType": "BILL",
+  "data": [{
     "billExternalId": "bill-external-id-1",
     "billNumber": "BILL12345",
     "subsidiaryReference": "subsidiary-001",
