@@ -2347,7 +2347,12 @@ paths:
       tags:
         - Vendor Purchase Orders
       summary: Update a purchase order
-      description: Update an existing purchase order
+      description: |-
+        Update PurchaseOrder API offers two primary functionalities: updating purchaseOrder details and updating status of purchaseOrder.
+
+        To update purchaseOrder status, users must give purchaseOrder ID, along with the status and vendorID.
+        
+        Other parameters are used for updating purchaseOrder details.
       operationId: update-purchase-order
       parameters:
         - name: externalId
@@ -2974,7 +2979,12 @@ paths:
       tags:
         - Vendor Receipt Notes
       summary: Update a receipt note
-      description: Update an existing receipt note
+      description: |-
+        Update ReceiptNote API offers two primary functionalities: updating receiptNote details and updating status of receiptNote.
+
+        To update receiptNote status, users must give receiptNote ID, along with the status and vendorID.
+          
+        Other parameters are used for updating receiptNote details.
       operationId: update-receipt-note
       parameters:
         - name: externalId
