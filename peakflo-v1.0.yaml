@@ -1745,35 +1745,37 @@ paths:
                   format: date
                 amount:
                   type: number
-                currency:
+                baseCurrency:
                   type: string
+                paymentFee:
+                  type: number
                 fxRate:
                   type: number
                 convertedAmount:
                   type: number
-                paymentFee:
-                  type: number
+                receiverCurrency:
+                  type: string
               required:
-                - billId
                 - externalId
                 - reference
                 - vendorId
                 - date
                 - amount
-                - currency
+                - baseCurrency
             examples:
               Example:
                 value:
-                  billId: "1234567890"
                   externalId: "PAYMENT-001"
+                  billId: "1234567890"
                   reference: "INV-2023-001"
                   vendorId: "VENDOR-123"
                   date: "2023-11-28"
-                  amount: 500.25
-                  currency: "USD"
-                  fxRate: 1.2
-                  convertedAmount: 600.30
+                  amount: 500
+                  baseCurrency: "SGD"
                   paymentFee: 10.00
+                  fxRate: 1.5
+                  convertedAmount: 750
+                  receiverCurrency: "USD"
       responses:
         '201':
           description: Created
@@ -1820,21 +1822,22 @@ paths:
                   format: date
                 amount:
                   type: number
-                currency:
+                baseCurrency:
                   type: string
+                paymentFee:
+                  type: number
                 fxRate:
                   type: number
                 convertedAmount:
                   type: number
-                paymentFee:
-                  type: number
+                receiverCurrency:
+                  type: string
               required:
-                - billId
                 - reference
                 - vendorId
                 - date
                 - amount
-                - currency
+                - baseCurrency
             examples:
               Example:
                 value:
@@ -1842,11 +1845,12 @@ paths:
                   reference: "INV-2023-001"
                   vendorId: "VENDOR-123"
                   date: "2023-11-28"
-                  amount: 500.25
-                  currency: "USD"
-                  fxRate: 1.2
-                  convertedAmount: 600.30
+                  amount: 500
+                  baseCurrency: "SGD"
                   paymentFee: 10.00
+                  fxRate: 1.5
+                  convertedAmount: 750
+                  receiverCurrency: "USD"
       responses:
         '200':
           description: Ok
@@ -4629,30 +4633,33 @@ components:
           type: number
           description: Amount of the payment
           example: 500
-        currency:
+        baseCurrency:
           type: string
           description: Currency of the payment
           example: "USD"
-        fxRate:
-          type: number
-          description: Currency conversion rate
-          example: 1.25
-        convertedAmount:
-          type: number
-          description: Converted amount in base currency
-          example: 625
         paymentFee:
           type: number
           description: Fee associated with the payment
           example: 10
+        fxRate:
+          type: number
+          description: Currency conversion rate
+          example: 1.5
+        convertedAmount:
+          type: number
+          description: Converted amount in base currency
+          example: 750
+        receiverCurrency:
+          type: string
+          description: Currency of the receiver
+          example: "USD"
       required:
-        - billId
         - externalId
         - reference
         - vendorId
         - date
         - amount
-        - currency
+        - baseCurrency
     PurchaseOrder:
       description: Details of a purchase order
       type: object
