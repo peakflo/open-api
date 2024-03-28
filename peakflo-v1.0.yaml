@@ -1213,6 +1213,7 @@ paths:
                           value:
                             - "MultiList_Value1"
                             - "MultiList_Value2"
+                      subsidiary: "66055745fe17f01cf5b821ac"
                   totalCount: 50
         '400':
           description: Bad Request
@@ -1274,6 +1275,8 @@ paths:
                   type: array
                   items:
                     $ref: '#/components/schemas/CustomFields'
+                subsidiaryReference:
+                  type: string
             examples:
               Example:
                 value:
@@ -1346,6 +1349,7 @@ paths:
                       value:
                         - "MultiList_Value1"
                         - "MultiList_Value2"
+                  subsidiaryReference: "SUB001"
       responses:
         '201':
           description: Created
@@ -1425,7 +1429,9 @@ paths:
                   customField:
                     type: array
                     items:
-                      $ref: '#/components/schemas/CustomFields'     
+                      $ref: '#/components/schemas/CustomFields'  
+                  subsidiary:
+                    type: string   
               examples:
                 Example:
                   value:
@@ -1505,7 +1511,7 @@ paths:
                         value:
                           - "MultiList_Value1"
                           - "MultiList_Value2"
-        
+                    subsidiary: "66055745fe17f01cf5b821ac"
         '404':
           description: Not Found
         '400':
@@ -1577,6 +1583,8 @@ paths:
                   type: array
                   items:
                     $ref: '#/components/schemas/CustomFields'
+                subsidiaryReference:
+                  type: string
             examples:
               Example:
                 value:
@@ -1649,6 +1657,7 @@ paths:
                       value:
                         - "MultiList_Value1"
                         - "MultiList_Value2"
+                  subsidiaryReference: "SUB001"
       responses:
         '200':
           description: Ok
@@ -2003,6 +2012,7 @@ paths:
                           value:
                             - "MultiList_Value1"
                             - "MultiList_Value2"
+                      subsidiary: "66055745fe17f01cf5b821ac"
                   totalCount: 50
         '404':
           description: Not Found
@@ -2071,6 +2081,8 @@ paths:
                   type: array
                   items:
                     $ref: '#/components/schemas/CustomFields'
+                subsidiaryReference:
+                  type: string
               required:
                 - externalId
                 - POAmount
@@ -2160,6 +2172,7 @@ paths:
                       value:
                         - "MultiList_Value1"
                         - "MultiList_Value2"
+                  subsidiaryReference: "SUB001"
       responses:
         '201':
           description: Created
@@ -2261,6 +2274,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/CustomFields'
+                  subsidiary:
+                    type: string  
               examples:
                 Example:
                   value:
@@ -2344,6 +2359,7 @@ paths:
                         value:
                           - "MultiList_Value1"
                           - "MultiList_Value2"
+                    subsidiary: "66055745fe17f01cf5b821ac"
         '404':
           description: Not Found
           content: {}
@@ -2428,6 +2444,8 @@ paths:
                   type: array
                   items:
                     $ref: '#/components/schemas/CustomFields'
+                subsidiaryReference:
+                  type: string
             examples:
               Example:
                 value:
@@ -2504,6 +2522,7 @@ paths:
                       value:
                         - "MultiList_Value1"
                         - "MultiList_Value2"
+                  subsidiary: "66055745fe17f01cf5b821ac"
       responses:
         '200':
           description: OK
@@ -2624,6 +2643,8 @@ paths:
                   type: array
                   items:
                     $ref: '#/components/schemas/CustomFields'
+                subsidiaryReference:
+                  type: string
               required:
                 - externalId
                 - receiptNoteNumber
@@ -2695,6 +2716,7 @@ paths:
                       value:
                         - "MultiList_Value1"
                         - "MultiList_Value2"
+                  subsidiaryReference: "SUB001"
       responses:
         '201':
           description: Created
@@ -2833,6 +2855,7 @@ paths:
                           value:
                             - "MultiList_Value1"
                             - "MultiList_Value2"
+                      subsidiary: "66055745fe17f01cf5b821ac"
                   totalCount: 50
         '404':
           description: Not Found
@@ -2899,6 +2922,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/CustomFields'
+                  subsidiary:
+                    type: string  
               examples:
                 Example:
                   value:
@@ -2971,6 +2996,7 @@ paths:
                         value:
                           - "MultiList_Value1"
                           - "MultiList_Value2"
+                    subsidiary: "66055745fe17f01cf5b821ac"
         '404':
           description: Not Found
           content: {}
@@ -3029,6 +3055,8 @@ paths:
                   type: array
                   items:
                     $ref: '#/components/schemas/CustomFields'
+                subsidiaryReference:
+                  type: string
               required:
                 - externalId
                 - receiptNoteNumber
@@ -3102,6 +3130,7 @@ paths:
                       value:
                         - "MultiList_Value1"
                         - "MultiList_Value2"
+                  subsidiary: "66055745fe17f01cf5b821ac"
       responses:
         '200':
           description: OK
@@ -4592,6 +4621,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CustomFields'
+        subsidiary:
+          type: string
+          example: "66055745fe17f01cf5b821ac"
       required:
         - billNumber
         - status
@@ -4851,6 +4883,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CustomFields' 
+        subsidiary:
+          type: string
+          example: "66055745fe17f01cf5b821ac"
     ReceiptNote:
       description: Details of a receipt note
       type: object
@@ -4998,6 +5033,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CustomFields'
+        subsidiary:
+          type: string
+          example: "66055745fe17f01cf5b821ac"
       required:
         - externalId
         - receiptNoteNumber
