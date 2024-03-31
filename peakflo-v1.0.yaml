@@ -1213,7 +1213,7 @@ paths:
                           value:
                             - "MultiList_Value1"
                             - "MultiList_Value2"
-                      subsidiary: "SUB-001"
+                      subsidiaryReference: "SUB-001"
                   totalCount: 50
         '400':
           description: Bad Request
@@ -1430,7 +1430,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/CustomFields'  
-                  subsidiary:
+                  subsidiaryReference:
                     type: string   
               examples:
                 Example:
@@ -1511,7 +1511,7 @@ paths:
                         value:
                           - "MultiList_Value1"
                           - "MultiList_Value2"
-                    subsidiary: "SUB-001"
+                    subsidiaryReference: "SUB-001"
         '404':
           description: Not Found
         '400':
@@ -2012,7 +2012,7 @@ paths:
                           value:
                             - "MultiList_Value1"
                             - "MultiList_Value2"
-                      subsidiary: "SUB-001"
+                      subsidiaryReference: "SUB-001"
                   totalCount: 50
         '404':
           description: Not Found
@@ -2274,7 +2274,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/CustomFields'
-                  subsidiary:
+                  subsidiaryReference:
                     type: string  
               examples:
                 Example:
@@ -2359,7 +2359,7 @@ paths:
                         value:
                           - "MultiList_Value1"
                           - "MultiList_Value2"
-                    subsidiary: "SUB-001"
+                    subsidiaryReference: "SUB-001"
         '404':
           description: Not Found
           content: {}
@@ -2522,7 +2522,7 @@ paths:
                       value:
                         - "MultiList_Value1"
                         - "MultiList_Value2"
-                  subsidiary: "SUB-001"
+                  subsidiaryReference: "SUB-001"
       responses:
         '200':
           description: OK
@@ -2855,7 +2855,7 @@ paths:
                           value:
                             - "MultiList_Value1"
                             - "MultiList_Value2"
-                      subsidiary: "SUB-001"
+                      subsidiaryReference: "SUB-001"
                   totalCount: 50
         '404':
           description: Not Found
@@ -2922,7 +2922,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/CustomFields'
-                  subsidiary:
+                  subsidiaryReference:
                     type: string  
               examples:
                 Example:
@@ -2996,7 +2996,7 @@ paths:
                         value:
                           - "MultiList_Value1"
                           - "MultiList_Value2"
-                    subsidiary: "SUB-001"
+                    subsidiaryReference: "SUB-001"
         '404':
           description: Not Found
           content: {}
@@ -3130,7 +3130,7 @@ paths:
                       value:
                         - "MultiList_Value1"
                         - "MultiList_Value2"
-                  subsidiary: "SUB-001"
+                  subsidiaryReference: "SUB-001"
       responses:
         '200':
           description: OK
@@ -4621,7 +4621,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CustomFields'
-        subsidiary:
+        subsidiaryReference:
           type: string
           example: "SUB-001"
       required:
@@ -4883,7 +4883,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CustomFields' 
-        subsidiary:
+        subsidiaryReference:
           type: string
           example: "SUB-001"
     ReceiptNote:
@@ -5033,7 +5033,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CustomFields'
-        subsidiary:
+        subsidiaryReference:
           type: string
           example: "SUB-001"
       required:
