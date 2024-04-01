@@ -823,6 +823,27 @@ paths:
           content: {}
       x-codegen-request-body-name: Vendors
   '/vendors/{externalId}':
+    get:
+      summary: Read a Vendor
+      tags:
+        - Vendors
+      parameters:
+        - schema:
+            type: string
+          name: externalId
+          in: path
+          required: true  
+      responses:
+        '200':
+          description: Read a Vendor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+        '404':
+          description: Not Found
+        '400':
+          description: Bad Request
     put:
       summary: Update vendor
       description: Update vendor
