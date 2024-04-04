@@ -46,7 +46,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
     ],
     "items": [
       {
-        "itemId": "ITEM001",
+        "externalId": "ITEM001",
         "name": "Product A",
         "unit": "unit",
         "description": "Description for Product A",
