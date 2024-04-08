@@ -35,6 +35,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
     "updatedDate": "2023-08-10T00:00:00Z",
     "vendorExternalId": "VENDOR001",
     "vendorName": "ABC Vendor",
+    "vendorAccountNumber": "11223344",
     "currency": "USD",
     "currencyRate": 1,
     "notes": "This is a test bill",
