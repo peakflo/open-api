@@ -1977,6 +1977,7 @@ paths:
                           base64: "Base64EncodedContent1"
                       items:
                         - itemId: "ITEM001"
+                          sourceId: "line-17303130-xyz"
                           name: "Product A"
                           unit: "KG"
                           description: "Description for Product A"
@@ -2134,6 +2135,7 @@ paths:
                   paymentTerms: 20
                   items:
                     - itemId: "ITEM001"
+                      sourceId: "line-17303130-xyz"
                       name: "Product A"
                       unit: "KG"
                       description: "Description for Product A"
@@ -2324,6 +2326,7 @@ paths:
                         base64: "Base64EncodedContent1"
                     items:
                       - itemId: "ITEM001"
+                        sourceId: "line-17303130-xyz"
                         name: "Product A"
                         unit: "KG"
                         description: "Description for Product A"
@@ -2487,6 +2490,7 @@ paths:
                   paymentTerms: 20
                   items:
                     - itemId: "ITEM002"
+                      sourceId: "line-17303130-xyz"
                       name: "Product B"
                       unit: "KG"
                       description: "Updated Description for Product B"
