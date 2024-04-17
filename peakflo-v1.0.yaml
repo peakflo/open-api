@@ -3924,6 +3924,10 @@ components:
           type: string
           description: ID of the item
           example: "ITEM001"
+        sourceId:
+          type: string
+          description: unique identifier of line item, used in 3 Way Matching
+          example: "line-17303130-xyz"
         name:
           type: string
           description: Name of the item
@@ -3980,65 +3984,11 @@ components:
         taxes:
           type: array
           items:
-            type: object
-            properties:
-              externalId:
-                type: string
-                description: External ID of the tax
-                example: "TAX001"
-              name:
-                type: string
-                description: Name of the tax
-                example: "Sales Tax"
-              amount:
-                type: number
-                description: Amount/Percentage of the tax
-                example: 20
-              priceIncludesTax:
-                type: boolean
-                description: Indicates if price includes tax
-                example: true
-              amountType:
-                type: string
-                enum:
-                  - fixed
-                  - percentage
-                description: Type of tax amount (e.g., percentage)
-                example: "percentage"
-            required:
-              - externalId
-              - name
-              - amount
-              - amountType
+          $ref: '#/components/schemas/LineItemTax'
         discounts:
           type: array
           items:
-            type: object
-            properties:
-              externalId:
-                type: string
-                description: External ID of the discount
-                example: "Discount101"
-              name:
-                type: string
-                description: Name of the discount
-                example: "New user discount"
-              amount:
-                type: number
-                description: Amount of the discount
-                example: 20
-              amountType:
-                type: string
-                enum:
-                  - fixed
-                  - percentage
-                description: Type of discount amount (e.g., percentage)
-                example: "percentage"
-            required:
-              - externalId
-              - name
-              - amount
-              - amountType
+          $ref: '#/components/schemas/LineItemDiscount'
         totalTax:
           type: number
           description: Total tax amount for the item
@@ -4783,7 +4733,7 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/LineItem-2'
+            $ref: '#/components/schemas/LineItem-Bill'
           description: List of items included in the bill
         receiptDate:
           type: string
