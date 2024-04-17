@@ -2684,6 +2684,7 @@ paths:
                   deliveryDate: "2023-11-28"
                   items:
                     - itemId: "ITEM002"
+                      sourceId: "line-17303130-xyz"
                       name: "Product B"
                       unit: "KG"
                       description: "Updated Description for Product B"
@@ -2823,6 +2824,7 @@ paths:
                           base64: "UpdatedBase64EncodedContent"
                       items:
                         - itemId: "ITEM002"
+                          sourceId: "line-17303130-xyz"
                           name: "Product B"
                           unit: "KG"
                           description: "Updated Description for Product B"
@@ -2964,6 +2966,7 @@ paths:
                       base64: "UpdatedBase64EncodedContent"
                     items:
                       - itemId: "ITEM002"
+                        sourceId: "line-17303130-xyz"
                         name: "Product B"
                         unit: "KG"
                         description: "Updated Description for Product B"
@@ -3095,6 +3098,7 @@ paths:
                   deliveryDate: "2023-11-28"
                   items:
                     - itemId: "ITEM001"
+                      sourceId: "line-17303130-xyz"
                       name: "Product A"
                       unit: "KG"
                       description: "Description for Product A"
