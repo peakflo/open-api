@@ -1287,7 +1287,7 @@ paths:
                 items:
                   type: array
                   items:
-                    $ref: '#/components/schemas/LineItem-2'
+                    $ref: '#/components/schemas/LineItem-Bill'
                 receiptDate:
                   type: string
                 paymentMadeDate:
@@ -1442,7 +1442,7 @@ paths:
                   items:
                     type: array
                     items:
-                      $ref: '#/components/schemas/LineItem-2'
+                      $ref: '#/components/schemas/LineItem-Bill'
                   receiptDate:
                     type: string
                   paymentMadeDate:
@@ -1595,7 +1595,7 @@ paths:
                 items:
                   type: array
                   items:
-                    $ref: '#/components/schemas/LineItem-2'
+                    $ref: '#/components/schemas/LineItem-Bill'
                 receiptDate:
                   type: string
                 paymentMadeDate:
@@ -4060,6 +4060,153 @@ components:
         - name
         - quantity
         - unitPrice
+    LineItem-Bill:
+      type: object
+      properties:
+        itemId:
+          type: string
+          description: ID of the item
+          example: "ITEM001"
+        name:
+          type: string
+          description: Name of the item
+          example: "Product A"
+        unit:
+          type: string
+          description: Unit of measurement
+          example: "unit"
+        description:
+          type: string
+          description: Description of the item
+          example: "Description for Product A"
+        quantity:
+          type: integer
+          description: Quantity of the item
+          example: 2
+        unitPrice:
+          type: number
+          description: Price per unit of the item
+          example: 150
+        accountId:
+          type: string
+          description: ID of the account associated with the item
+          example: "ACC001"
+        currency:
+          type: string
+        type:
+          type: string
+          enum:
+            - None
+            - Product
+            - Service
+            - Hour
+            - Day
+            - Month
+            - Year
+            - Expense
+            - Shipping
+        wht:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Code of the withholding tax
+              example: "WHT_CODE"
+            displayName:
+              type: string
+              description: Display name of the withholding tax
+              example: "Withholding Tax"
+            amount:
+              type: number
+              description: Amount of the withholding tax
+              example: 10
+        taxes:
+          type: array
+          items:
+          $ref: '#/components/schemas/LineItemTax'
+        discounts:
+          type: array
+          items:
+          $ref: '#/components/schemas/LineItemDiscount'
+        totalTax:
+          type: number
+          description: Total tax amount for the item
+          example: 20
+        totalDiscount:
+          type: number
+          description: Total discount amount for the item
+          example: 0
+        total:
+          type: number
+          description: Total amount for the item
+          example: 320
+        customField:
+          type: array
+          items:
+          $ref: '#/components/schemas/CustomFields'
+      required:
+        - itemId
+        - name
+        - quantity
+        - unitPrice
+    LineItemTaxes:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External ID of the tax
+          example: "TAX001"
+        name:
+          type: string
+          description: Name of the tax
+          example: "Sales Tax"
+        amount:
+          type: number
+          description: Amount/Percentage of the tax
+          example: 20
+        priceIncludesTax:
+          type: boolean
+          description: Indicates if price includes tax
+          example: true
+        amountType:
+          type: string
+          enum:
+            - fixed
+            - percentage
+          description: Type of tax amount (e.g., percentage)
+          example: "percentage"
+      required:
+        - externalId
+        - name
+        - amount
+        - amountType
+    LineItemDiscount:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External ID of the discount
+          example: "Discount101"
+        name:
+          type: string
+          description: Name of the discount
+          example: "New user discount"
+        amount:
+          type: number
+          description: Amount of the discount
+          example: 20
+        amountType:
+          type: string
+          enum:
+            - fixed
+            - percentage
+          description: Type of discount amount (e.g., percentage)
+          example: "percentage"
+      required:
+        - externalId
+        - name
+        - amount
+        - amountType
     Attachment:
       description: The attachment
       type: object
