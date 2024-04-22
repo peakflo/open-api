@@ -98,6 +98,15 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
         "type": "input",
         "value": "Test Value",
       }
+    ],
+    "payments": [
+        {
+          "externalId": "80d6616d-4c5c-4634-9937-2c2aba1fe5eb",
+          "date": "2023-12-10T00:00:00Z",
+          "amount": 550,
+          "currency": "USD",
+          "status": "draft"
+        }
     ]
   }]
 }
@@ -125,6 +134,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
 | receiptDate    | string  | The date when the bill receipt was generated.                  |
 | updatedDate      | string  | The date when the bill was last update.
 | customFields   | array   | An array containing details of custom fields. [Possible Values](#possible-custom-field-type)                 |
+| payments   | array   | An array containing details of bill payments. [Possible Values](#possible-custom-field-type)                 |
 
 
 ### Possible Bill Status Values
