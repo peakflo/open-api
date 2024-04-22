@@ -1812,7 +1812,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BillPayment'
+                $ref: '#/components/schemas/BillPayment-create'
         '400':
           description: Bad request
           content: {}
@@ -4822,6 +4822,62 @@ components:
       required:
         - externalId
         - status
+        - reference
+        - vendorId
+        - date
+        - amount
+        - baseCurrency
+    BillPayment-Create:
+      description: Details of a bill payment
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External ID of the bill payment
+          example: "EXT123"
+        billId:
+          type: string
+          description: ID of the bill associated with the payment
+          example: "BILL789"
+        reference:
+          type: string
+          description: Reference for the payment
+          example: "Payment REF123"
+        vendorId:
+          type: string
+          description: ID of the vendor associated with the payment
+          example: "VENDOR456"
+        date:
+          type: string
+          description: Date of the payment (ISO8601 date format)
+          format: date
+          example: "2023-11-30"
+        amount:
+          type: number
+          description: Amount of the payment
+          example: 500
+        baseCurrency:
+          type: string
+          description: Currency of the payment
+          example: "USD"
+        paymentFee:
+          type: number
+          description: Fee associated with the payment
+          example: 10
+        fxRate:
+          type: number
+          description: Currency conversion rate
+          example: 1.5
+        convertedAmount:
+          type: number
+          description: Converted amount in base currency
+          example: 750
+        receiverCurrency:
+          type: string
+          description: Currency of the receiver
+          example: "USD"
+      required:
+        - externalId
         - reference
         - vendorId
         - date
