@@ -1,6 +1,6 @@
-# Bills
+# Bill Payment
 
-## Bill Status Changed
+## Bill Payment Created
 
 The BILL_PAYMENT_CREATED event is triggered when bill payment created in peakflo. The request body looks like this
 
