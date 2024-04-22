@@ -1841,6 +1841,8 @@ paths:
             schema:
               type: object
               properties:
+                status:
+                  type: string
                 billId:
                   type: string
                 reference:
@@ -1863,6 +1865,7 @@ paths:
                 receiverCurrency:
                   type: string
               required:
+                - status
                 - reference
                 - vendorId
                 - date
@@ -1871,6 +1874,7 @@ paths:
             examples:
               Example:
                 value:
+                  status: "paid"
                   billId: "1234567890"
                   reference: "INV-2023-001"
                   vendorId: "VENDOR-123"
@@ -4770,6 +4774,10 @@ components:
           type: string
           description: External ID of the bill payment
           example: "EXT123"
+        status:
+          type: string
+          description: Updated status of bill payment
+          example: "paid"
         billId:
           type: string
           description: ID of the bill associated with the payment
@@ -4813,6 +4821,7 @@ components:
           example: "USD"
       required:
         - externalId
+        - status
         - reference
         - vendorId
         - date
