@@ -134,7 +134,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
 | receiptDate    | string  | The date when the bill receipt was generated.                  |
 | updatedDate      | string  | The date when the bill was last update.
 | customFields   | array   | An array containing details of custom fields. [Possible Values](#possible-custom-field-type)                 |
-| payments   | array   | An array containing details of bill payments. [Possible Values](#possible-custom-field-type)                 |
+| payments   | array   | An array containing details of bill payments.                      |
 
 
 ### Possible Bill Status Values
