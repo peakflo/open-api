@@ -15,10 +15,9 @@ The BILL_PAYMENT_CREATED event is triggered when bill payment created in peakflo
       "externalId": "80d6616d-4c5c-4634-9937-2c2aba1fe5eb",
       "billExternalId": "bill-external-id-1",
       "vendorExternalId": "VENDOR001",
-      "reference": "bill reference",
       "date": "2024-01-01T00:00:00Z",
       "amount": 550,
-      "baseCurrency": "SGD",
+      "currency": "SGD",
       "status": "draft"
     },
   ]
@@ -27,10 +26,12 @@ The BILL_PAYMENT_CREATED event is triggered when bill payment created in peakflo
 
 | Property       | Type    | Description                                                  |
 |----------------|---------|--------------------------------------------------------------|
+| externalId | string  | An external ID associated with the bill payment.                       |
 | billExternalId | string  | An external ID associated with the bill.                       |
 | vendorExternalId | string  | The external ID of the vendor associated with the bill.                 |
-| vendorName     | string  | The name of the vendor.                                       |
-| totalWHT       | number  | The total amount of withholding tax for the bill.              |
+| date     | string  | the date which payment record created.                                       |
+| amount       | number  | The total amount of bill payment.              |
+| currency       | string  | currency of bill payment.              |
 | status         | string  | The status of the bill. [Possible Values](#possible-bill-payment-status-values)      |
 
 
