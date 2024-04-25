@@ -716,6 +716,8 @@ paths:
                         nullable: true
                       country:
                         type: string
+                        description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+                        example: "IN"
                       postalCode:
                         type: string
                 taxNumber:
@@ -735,6 +737,8 @@ paths:
                         type: string
                       bankCountry:
                         type: string
+                        description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+                        example: "IN"
                       accountNumber:
                         type: string
                       accountHolder:
@@ -755,6 +759,8 @@ paths:
                     - individual
                 beneficiaryCountry:
                   type: string
+                  description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+                  example: "IN"
                 vendorFirstName:
                   type: string
                 vendorLastName:
@@ -891,6 +897,8 @@ paths:
                         nullable: true
                       country:
                         type: string
+                        description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+                        example: "IN"
                       postalCode:
                         type: string
                 taxNumber:
@@ -910,6 +918,8 @@ paths:
                         type: string
                       bankCountry:
                         type: string
+                        description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+                        example: "IN"
                       accountNumber:
                         type: string
                       accountHolder:
@@ -930,6 +940,8 @@ paths:
                     - individual
                 beneficiaryCountry:
                   type: string
+                  description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+                  example: "IN"
                 vendorFirstName:
                   type: string
                 vendorLastName:
@@ -4339,7 +4351,8 @@ components:
           description: The city
         country:
           type: string
-          description: The country
+          description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+          example: "IN"
         postalCode:
           type: string
           description: The postal code
@@ -4581,8 +4594,8 @@ components:
                 example: "Vendorville"
               country:
                 type: string
-                description: Country
-                example: "Vendorland"
+                description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+                example: "IN"
               postalCode:
                 type: string
                 description: Postal code
@@ -4615,8 +4628,8 @@ components:
                 example: "VB456"
               bankCountry:
                 type: string
-                description: Country where the bank is located
-                example: "Vendor Country"
+                description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+                example: "IN"
               accountNumber:
                 type: string
                 description: Bank account number
@@ -4644,8 +4657,8 @@ components:
           example: "vendor"
         beneficiaryCountry:
           type: string
-          description: Country of the beneficiary
-          example: "Vendorland"
+          description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+          example: "IN"
         vendorFirstName:
           type: string
           description: First name of the vendor
@@ -5393,6 +5406,7 @@ components:
       required:
         - customFieldNumber
         - value
+ 
   securitySchemes:
     bearerAuth:
       type: http
