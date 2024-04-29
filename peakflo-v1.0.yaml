@@ -4115,7 +4115,7 @@ components:
         - name
         - quantity
         - unitPrice
-    LineItemTaxes:
+    LineItemTax:
       type: object
       properties:
         externalId:
