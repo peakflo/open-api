@@ -4137,7 +4137,7 @@ components:
         amountType:
           type: string
           enum:
-            - fixed
+            - flat
             - percentage
           description: Type of tax amount (e.g., percentage)
           example: "percentage"
@@ -4164,7 +4164,7 @@ components:
         amountType:
           type: string
           enum:
-            - fixed
+            - flat
             - percentage
           description: Type of discount amount (e.g., percentage)
           example: "percentage"
@@ -5022,7 +5022,7 @@ components:
                     amountType:
                       type: string
                       enum:
-                        - fixed
+                        - flat
                         - percentage
               discounts:
                 type: array
@@ -5038,7 +5038,7 @@ components:
                     amountType:
                       type: string
                       enum:
-                        - fixed
+                        - flat
                         - percentage
               customField:
                 type: array
@@ -5164,7 +5164,7 @@ components:
                     amountType:
                       type: string
                       enum:
-                        - fixed
+                        - flat
                         - percentage
               discounts:
                 type: array
@@ -5180,7 +5180,7 @@ components:
                     amountType:
                       type: string
                       enum:
-                        - fixed
+                        - flat
                         - percentage
               customField:
                 type: array
