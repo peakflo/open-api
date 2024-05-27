@@ -1209,12 +1209,12 @@ paths:
                               name: "Sales Tax"
                               amount: 20
                               priceIncludesTax: true
-                              amountType: "percentage"
+                              amountType: "Percentage"
                           discounts:
                             - externalId: "Discount101"
                               name: "New user discount"
                               amount: 20
-                              amountType: "percentage"
+                              amountType: "Percentage"
                           totalTax: 20
                           totalDiscount: 0
                           total: 320
@@ -1345,12 +1345,12 @@ paths:
                           name: "Sales Tax"
                           amount: 20
                           priceIncludesTax: true
-                          amountType: "percentage"
+                          amountType: "Percentage"
                       discounts:
                         - externalId: "Discount101"
                           name: "New user discount"
                           amount: 20
-                          amountType: "percentage"
+                          amountType: "Percentage"
                       totalTax: 20
                       totalDiscount: 0
                       total: 320
@@ -1507,12 +1507,12 @@ paths:
                             name: "Sales Tax"
                             amount: 20
                             priceIncludesTax: true
-                            amountType: "percentage"
+                            amountType: "Percentage"
                         discounts:
                           - externalId: "Discount101"
                             name: "New user discount"
                             amount: 20
-                            amountType: "percentage"
+                            amountType: "Percentage"
                         totalTax: 20
                         totalDiscount: 0
                         total: 320
@@ -1652,12 +1652,12 @@ paths:
                           name: "Sales Tax"
                           amount: 20
                           priceIncludesTax: true
-                          amountType: "percentage"
+                          amountType: "Percentage"
                       discounts:
                         - externalId: "Discount101"
                           name: "New user discount"
                           amount: 20
-                          amountType: "percentage"
+                          amountType: "Percentage"
 
                       totalTax: 20
                       totalDiscount: 0
@@ -2009,12 +2009,12 @@ paths:
                               name: "Sales Tax"
                               amount: 20
                               priceIncludesTax: true
-                              amountType: "percentage"
+                              amountType: "Percentage"
                           discounts:
                             - externalId: "Discount101"
                               name: "New user discount"
                               amount: 20
-                              amountType: "percentage"
+                              amountType: "Percentage"
                           customField:
                             - customFieldNumber: CustomFieldNumber1 (type - Number)
                               value: 2
@@ -2167,12 +2167,12 @@ paths:
                           name: "Sales Tax"
                           amount: 20
                           priceIncludesTax: true
-                          amountType: "percentage"
+                          amountType: "Percentage"
                       discounts:
                         - externalId: "Discount101"
                           name: "New user discount"
                           amount: 20
-                          amountType: "percentage"
+                          amountType: "Percentage"
                       totalTax: 20
                       totalDiscount: 0
                       total: 320
@@ -2358,12 +2358,12 @@ paths:
                             name: "Sales Tax"
                             amount: 20
                             priceIncludesTax: true
-                            amountType: "percentage"
+                            amountType: "Percentage"
                         discounts:
                           - externalId: "Discount101"
                             name: "New user discount"
                             amount: 20
-                            amountType: "percentage"
+                            amountType: "Percentage"
                         customField:
                           - customFieldNumber: CustomFieldNumber1 (type - Number)
                             value: 2
@@ -2522,12 +2522,12 @@ paths:
                           name: "VAT"
                           amount: 30
                           priceIncludesTax: true
-                          amountType: "percentage"
+                          amountType: "Percentage"
                       discounts:
                         - externalId: "Discount202"
                           name: "Special discount"
                           amount: 25
-                          amountType: "percentage"
+                          amountType: "Percentage"
                       customField:
                         - customFieldNumber: CustomFieldNumber1 (type - Number)
                           value: 2
@@ -2716,12 +2716,12 @@ paths:
                           name: "VAT"
                           amount: 30
                           priceIncludesTax: true
-                          amountType: "percentage"
+                          amountType: "Percentage"
                       discounts:
                         - externalId: "Discount202"
                           name: "Special discount"
                           amount: 25
-                          amountType: "percentage"
+                          amountType: "Percentage"
                       customField:
                         - customFieldNumber: CustomFieldNumber1 (type - Number)
                           value: 2
@@ -2856,12 +2856,12 @@ paths:
                               name: "VAT"
                               amount: 30
                               priceIncludesTax: true
-                              amountType: "percentage"
+                              amountType: "Percentage"
                           discounts:
                             - externalId: "Discount202"
                               name: "Special discount"
                               amount: 25
-                              amountType: "percentage"
+                              amountType: "Percentage"
                           customField:
                             - customFieldNumber: CustomFieldNumber1 (type - Number)
                               value: 2
@@ -2998,12 +2998,12 @@ paths:
                             name: "VAT"
                             amount: 30
                             priceIncludesTax: true
-                            amountType: "percentage"
+                            amountType: "Percentage"
                         discounts:
                           - externalId: "Discount202"
                             name: "Special discount"
                             amount: 25
-                            amountType: "percentage"
+                            amountType: "Percentage"
                         customField:
                           - customFieldNumber: CustomFieldNumber1 (type - Number)
                             value: 2
@@ -3130,12 +3130,12 @@ paths:
                           name: "Sales Tax"
                           amount: 20
                           priceIncludesTax: true
-                          amountType: "percentage"
+                          amountType: "Percentage"
                       discounts:
                         - externalId: "Discount101"
                           name: "New user discount"
                           amount: 20
-                          amountType: "percentage"
+                          amountType: "Percentage"
                       totalTax: 20
                       totalDiscount: 0
                       total: 320
@@ -4137,10 +4137,10 @@ components:
         amountType:
           type: string
           enum:
-            - flat
-            - percentage
-          description: Type of tax amount (e.g., percentage)
-          example: "percentage"
+            - Flat
+            - Percentage
+          description: Type of tax amount (e.g., Percentage)
+          example: "Percentage"
       required:
         - externalId
         - name
@@ -4164,10 +4164,10 @@ components:
         amountType:
           type: string
           enum:
-            - flat
-            - percentage
-          description: Type of discount amount (e.g., percentage)
-          example: "percentage"
+            - Flat
+            - Percentage
+          description: Type of discount amount (e.g., Percentage)
+          example: "Percentage"
       required:
         - externalId
         - name
@@ -5022,8 +5022,8 @@ components:
                     amountType:
                       type: string
                       enum:
-                        - flat
-                        - percentage
+                        - Flat
+                        - Percentage
               discounts:
                 type: array
                 items:
@@ -5038,8 +5038,8 @@ components:
                     amountType:
                       type: string
                       enum:
-                        - flat
-                        - percentage
+                        - Flat
+                        - Percentage
               customField:
                 type: array
                 items:
@@ -5164,8 +5164,8 @@ components:
                     amountType:
                       type: string
                       enum:
-                        - flat
-                        - percentage
+                        - Flat
+                        - Percentage
               discounts:
                 type: array
                 items:
@@ -5180,8 +5180,8 @@ components:
                     amountType:
                       type: string
                       enum:
-                        - flat
-                        - percentage
+                        - Flat
+                        - Percentage
               customField:
                 type: array
                 items:
