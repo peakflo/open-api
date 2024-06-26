@@ -1175,9 +1175,11 @@ paths:
                       billExternalId: "123456789"
                       vendorId: "VENDOR001"
                       vendorName: "ABC Vendor"
+                      vendorAccountNumber: "123456789"
                       date: "2023-11-27T12:00:00Z"
                       dueDate: "2023-12-15T23:59:59Z"
-                      updatedAt: "2023-12-15T23:59:59Z"
+                      scheduledDate: "2023-12-15T23:59:59Z"
+                      updatedDate: "2023-12-15T23:59:59Z"
                       attachments:
                         - id: "attachment_id_1"
                           name: "Attachment 1"
@@ -1186,12 +1188,24 @@ paths:
                           fileType: "invoice"
                           base64: "Base64EncodedContent1"
                       currency: "USD"
+                      currencyRate: 1
                       subTotal: 500
                       totalTax: 50
                       paymentAmount: 450
                       totalAmount: 550
                       notes: "This is a test bill"
                       totalWHT: 20
+                      poNumber: "PO001"
+                      poExternalId: "POExternal001"
+                      receiptNotes:
+                        - rnNumber: "RN001"
+                          rnExternalId: "RNExternal001"
+                      payments:
+                        - externalId: "PaymentExternalId001"
+                          date: "2023-12-15T23:59:59Z"
+                          amount: 100
+                          currency: "USD"
+                          status: "paid"
                       items:
                         - itemId: "ITEM001"
                           name: "Product A"
@@ -1201,6 +1215,7 @@ paths:
                           unitPrice: 150
                           accountId: "ACC001"
                           wht:
+                            referenceId: "REF001"
                             code: "WHT_CODE"
                             displayName: "Withholding Tax"
                             amount: 10
@@ -1220,32 +1235,52 @@ paths:
                           total: 320
                           customField:
                             - customFieldNumber: CustomFieldNumber1 (type - Number)
+                              name: "CustomField1"
                               value: 2
+                              type: Number
                             - customFieldNumber: CustomFieldNumber2 (type - Date)
+                              name: "CustomField2"
                               value: "11/03/2024"
+                              type: Date
                             - customFieldNumber: CustomFieldNumber3 (type - Input)
+                              name: "CustomField3"
                               value: "Value"
+                              type: Input
                             - customFieldNumber: CustomFieldNumber4 (type - List)
+                              name: "CustomField4"
                               value: "List_Value1"
+                              type: List
                             - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                              name: "CustomField5"
                               value:
                                 - "MultiList_Value1"
                                 - "MultiList_Value2"
+                              type: MultiList
                       receiptDate: "2023-11-28T00:00:00Z"
                       paymentMadeDate: "2023-12-05T12:30:00Z"
                       customField:
                         - customFieldNumber: CustomFieldNumber1 (type - Number)
+                          name: "CustomField1"
                           value: 2
+                          type: Number
                         - customFieldNumber: CustomFieldNumber2 (type - Date)
+                          name: "CustomField2"
                           value: "11/03/2024"
+                          type: Date
                         - customFieldNumber: CustomFieldNumber3 (type - Input)
+                          name: "CustomField3"
                           value: "Value"
+                          type: Input
                         - customFieldNumber: CustomFieldNumber4 (type - List)
+                          name: "CustomField4"
                           value: "List_Value1"
+                          type: List
                         - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                          name: "CustomField5"
                           value:
                             - "MultiList_Value1"
                             - "MultiList_Value2"
+                          type: MultiList
                       subsidiaryReference: "SUB-001"
                   totalCount: 50
         '400':
@@ -1427,11 +1462,15 @@ paths:
                     type: string
                   vendorName:
                     type: string
+                  vendorAccountNumber:
+                    type: string
                   date:
                     type: string
                   dueDate:
                     type: string
-                  updatedAt:
+                  scheduledDate:
+                    type: string
+                  updatedDate:
                     type: string
                   attachments:
                     type: array
@@ -1439,6 +1478,8 @@ paths:
                     $ref: '#/components/schemas/APAttachments'
                   currency:
                     type: string
+                  currencyRate:
+                    type: number
                   subTotal:
                     type: number
                   totalTax:
@@ -1451,6 +1492,34 @@ paths:
                     type: string
                   totalWHT:
                     type: number
+                  poNumber:
+                    type: string
+                  poExternalId:
+                    type: string
+                  receiptNotes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        rnNumber:
+                          type: string
+                        rnExternalId:
+                          type: string
+                  payments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        externalId:
+                          type: string
+                        date:
+                          type: string
+                        amount:
+                          type: number
+                        currency:
+                          type: string
+                        status:
+                          type: string
                   items:
                     type: array
                     items:
@@ -1462,7 +1531,7 @@ paths:
                   customField:
                     type: array
                     items:
-                      $ref: '#/components/schemas/CustomFields'  
+                      $ref: '#/components/schemas/Bill-CustomFields'  
                   subsidiaryReference:
                     type: string   
               examples:
@@ -1473,9 +1542,11 @@ paths:
                     billExternalId: "123456789"
                     vendorId: "VENDOR001"
                     vendorName: "ABC Vendor"
+                    vendorAccountNumber: "123456789"
                     date: "2023-11-27T12:00:00Z"
                     dueDate: "2023-12-15T23:59:59Z"
-                    updatedAt: "2023-12-15T23:59:59Z"
+                    scheduledDate: "2023-12-15T23:59:59Z"
+                    updatedDate: "2023-12-15T23:59:59Z"
                     attachments:
                     - id: "attachment_id_1"
                       name: "Attachment 1"
@@ -1484,12 +1555,24 @@ paths:
                       fileType: "invoice"
                       base64: "Base64EncodedContent1"
                     currency: "USD"
+                    currencyRate: 1
                     subTotal: 500
                     totalTax: 50
                     paymentAmount: 450
                     totalAmount: 550
                     notes: "This is a test bill"
                     totalWHT: 20
+                    poNumber: "PO001"
+                    poExternalId: "POExternal001"
+                    receiptNotes:
+                      - rnNumber: "RN001"
+                        rnExternalId: "RNExternal001"
+                    payments:
+                      - externalId: "PaymentExternalId001"
+                        date: "2023-12-15T23:59:59Z"
+                        amount: 100
+                        currency: "USD"
+                        status: "paid"
                     items:
                       - itemId: "ITEM001"
                         name: "Product A"
@@ -1499,6 +1582,7 @@ paths:
                         unitPrice: 150
                         accountId: "ACC001"
                         wht:
+                          referenceId: "REF001"
                           code: "WHT_CODE"
                           displayName: "Withholding Tax"
                           amount: 10
@@ -1518,14 +1602,23 @@ paths:
                         total: 320
                         customField:
                           - customFieldNumber: CustomFieldNumber1 (type - Number)
+                            name: "CustomField1"
                             value: 2
+                            type: Number
                           - customFieldNumber: CustomFieldNumber2 (type - Date)
+                            name: "CustomField2"
                             value: "11/03/2024"
+                            type: Date
                           - customFieldNumber: CustomFieldNumber3 (type - Input)
+                            name: "CustomField3"
                             value: "Value"
+                            type: Input
                           - customFieldNumber: CustomFieldNumber4 (type - List)
+                            name: "CustomField4"
                             value: "List_Value1"
+                            type: List
                           - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                            name: "CustomField5"
                             value:
                               - "MultiList_Value1"
                               - "MultiList_Value2"
@@ -1533,17 +1626,27 @@ paths:
                     paymentMadeDate: "2023-12-05T12:30:00Z"
                     customField:
                       - customFieldNumber: CustomFieldNumber1 (type - Number)
+                        name: "CustomField1"
                         value: 2
+                        type: Number
                       - customFieldNumber: CustomFieldNumber2 (type - Date)
+                        name: "CustomField2"
                         value: "11/03/2024"
+                        type: Date
                       - customFieldNumber: CustomFieldNumber3 (type - Input)
+                        name: "CustomField3"
                         value: "Value"
+                        type: Input
                       - customFieldNumber: CustomFieldNumber4 (type - List)
+                        name: "CustomField4"
                         value: "List_Value1"
+                        type: List
                       - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                        name: "CustomField5"
                         value:
                           - "MultiList_Value1"
                           - "MultiList_Value2"
+                        type: MultiList
                     subsidiaryReference: "SUB-001"
         '404':
           description: Not Found
@@ -4074,6 +4177,10 @@ components:
         wht:
           type: object
           properties:
+            referenceId:
+              type: string
+              description: ReferenceID of the withholding tax
+              example: "REFWHT001"
             code:
               type: string
               description: Code of the withholding tax
@@ -4109,7 +4216,7 @@ components:
         customField:
           type: array
           items:
-          $ref: '#/components/schemas/CustomFields'
+          $ref: '#/components/schemas/Bill-CustomFields'
       required:
         - itemId
         - name
@@ -4707,6 +4814,10 @@ components:
           type: string
           description: Name of the vendor associated with the bill
           example: "ABC Vendor"
+        vendorAccountNumber:
+          type: string
+          description: Vendor account number
+          example: "ACC12345"
         date:
           type: string
           description: Date of the bill (ISO8601 format)
@@ -4715,7 +4826,11 @@ components:
           type: string
           description: Due date of the bill (ISO8601 format)
           example: "2023-12-15T23:59:59Z"
-        updatedAt:
+        scheduledDate:
+          type: string
+          description: Date when the bill is scheduled to be paid (ISO8601 format)
+          example: "2023-12-15T23:59:59Z"
+        updatedDate:
           type: string
           description: Date when the bill was last updated (ISO8601 format)
           example: "2023-12-15T23:59:59Z"
@@ -4723,6 +4838,10 @@ components:
           type: string
           description: Currency of the bill
           example: "USD"
+        currencyRate:
+          type: number
+          description: Currency rate of the bill
+          example: 1
         subTotal:
           type: number
           description: Subtotal amount of the bill
@@ -4747,6 +4866,40 @@ components:
           type: number
           description: Total withholding tax amount
           example: 20
+        poNumber:
+          type: string
+          description: Purchase order number
+          example: "PO12345"
+        poExternalId:
+          type: string
+          description: External ID of the purchase order
+          example: "PO_EXT12345"
+        receiptNotes:
+          type: array
+          items:
+            type: object
+            properties:
+              rnNumber:
+                type: string
+              rnExternalId:
+                type: string
+          description: List of receipt notes included in the bill
+        payments:
+          type: array
+          items:
+            type: object
+            properties:
+              externalId:
+                type: string
+              date:
+                type: string
+              amount:
+                type: number
+              currency:
+                type: string
+              status:
+                type: string
+          description: List of payments made for the bill
         items:
           type: array
           items:
@@ -4763,7 +4916,7 @@ components:
         customField:
           type: array
           items:
-            $ref: '#/components/schemas/CustomFields'
+            $ref: '#/components/schemas/Bill-CustomFields'
         subsidiaryReference:
           type: string
           example: "SUB-001"
@@ -5403,6 +5556,40 @@ components:
             items:
               type: string  
           description:  Custom field value. can be string, number or array. dates needs to be sent in ISO 8601 date format
+      required:
+        - customFieldNumber
+        - value
+    Bill-CustomFields:
+      type: object  
+      x-examples:
+        Example:
+          customFieldNumber: "customField1"
+          name: "Field A"
+          type: "Input"
+          value: "Value A"
+      properties:
+        customFieldNumber:
+          type: string
+          description: Custom field number can be seen in the peakflo web UI
+        name:
+          type: string
+          description:  Custom field name
+        type:
+          oneOf:
+          - type: string
+          - type: number
+          - type: array
+            items:
+              type: string  
+          description:  Custom field type. can be string, number, date or array of strings
+        value:
+          oneOf:
+          - type: string
+          - type: number
+          - type: array
+            items:
+              type: string  
+          description:  Custom field value. can be string, number or array of strings. dates needs to be sent in ISO 8601 date format
       required:
         - customFieldNumber
         - value
