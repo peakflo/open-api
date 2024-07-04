@@ -1863,6 +1863,64 @@ paths:
                   fileType: "invoice"
                   base64: "Base64EncodedContent1"
   "/bill-payment":
+    get:
+      tags:
+        - Bill Payments
+      summary: Get bill payments with pagination and filters
+      parameters:
+        - name: vendorId
+          in: query
+          description: Filter bills-payments by vendorId
+          schema:
+            type: string
+        - name: reference
+          in: query
+          description: Filter bills-payments by reference
+          schema:
+            type: string
+        - name: amount
+          in: query
+          description: Filter bills-payments by amount
+          schema:
+            type: number
+        - name: remainingAmount
+          in: query
+          description: Filter bills-payments by remainingAmount
+          schema:
+            type: number
+        - name: page
+          in: query
+          description: Page number for pagination
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          description: Number of bill-payments per page
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+            maximum: 100
+      response:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bills:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BillPayment-2'
+                  totalCount:
+                    type: integer
+        '400':
+          description: Bad Request
+
+      
     post:
       tags:
         - Bill Payments
@@ -1935,6 +1993,57 @@ paths:
           description: Conflict
           content: {}
   "/bill-payment/{externalId}":
+    get:
+      tags:
+        - Bill Payments
+      summary: Read a bill-payment
+      parameters:
+        - schema:
+          type: string
+          name: billPaymentExternalId
+          in: path
+          required: true  
+      response:
+      '200':
+        description: 'Read bill payment info'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillPayment-2'
+              example:
+                Example:
+                  value:
+                    externalPaymentId: "21964c8b-c61b-439b-bb27-d12ebaf8e85ec",
+                  lastUpdatedAt: "2024-07-03T01:00:00+06:00",
+                  paymentDate: "2023-11-28",
+                  scheduledDate: "2023-11-28",
+                  reference: "INV-2023-001",
+                  externalVendorId: "VENDOR-123",
+                  vendorName: "VENDOR-123",
+                  accountNumber: "1122334455",
+                  receiverCurrency: "USD",
+                  amount: 500,
+                  remainingAmount: 400, 
+                  paymentFee: 10,
+                  fxRate: 1.5,
+                  status: "scheduled",
+                  baseCurrency: "SGD",
+                  convertedAmount: 750,
+                  customField:
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
+                      name: "CustomField1"
+                      value: 2
+                      type: Number
+                  bills: 
+                    - externalBillId: "1234567890",
+                      billNumber: "Bill-001",
+                      status: "scheduled",
+                      appliedAmount: 100,
+                      totalAmount: 500,
+      '404':
+          description: Not Found
+      '400':
+          description: Bad Request
     put:
       tags:
         - Bill Payments
@@ -4993,6 +5102,98 @@ components:
         - date
         - amount
         - baseCurrency
+    BillPayment-2:
+      description: Details of a bill payment
+      type: object
+        properties:
+          externalPaymentId:
+            type: string
+            description: External Payment ID of the bill payment
+            example: "EXT123"
+          lastUpdatedAt:
+            type: string
+            description: Timestamp of Last update action
+            example: "2024-07-03T01:00:00+06:00"
+          paymentDate:
+            type: string
+            description: Date of payment
+            example: "2023-11-28"
+          scheduledDate:
+            type: string
+            description: Date when payment is scheduled
+            example: "2023-11-28"
+          reference:
+            type: string
+            description: Reference for the payment
+            example: "INV-2023-001"
+          externalVendorId:
+            type: string
+            description: ExternalID of the vendor associated with the payment
+            example: "VENDOR456"
+          vendorName:
+            type: string
+            description: Name of the vendor associated with the payment
+            example: "VENDOR1234"
+          accountNumber:
+            type: string
+            description: Account number of Account associated with the payment
+            example: "1122334455"
+          receiverCurrency:
+            type: string
+            description: Currency code of Receiver
+            example: "USD"
+          amount:
+            type: number
+            description: Amount of bill payment
+            example: 500
+          remainingAmount:
+            type: number
+            description: Amount remaining to be paid
+            example: 100
+          paymentFee:
+            type: number
+            description: Payment Fee associated with payment
+            example: 10
+          fxRate:
+            type: number
+            description: Currency conversion rate
+            example: 1.5
+          status:
+            type: string
+            description: Updated status of bill payment
+            example: "paid"
+          baseCurrency:
+            type: string
+            description: Currency of the payment
+            example: "USD"
+          convertedAmount:
+            type: number
+            description: Converted amount in base currency
+            example: 750
+          customField:
+            type: array
+            items:
+              $ref: '#/components/schemas/Bill-CustomFields'  
+          bills:
+            type: array
+            items:
+              type: object
+              properties:
+                externalBillId: 
+                  type: string
+                billNumber: 
+                  type: string
+                status: 
+                  type: string
+                  enum:
+                    - draft
+                    - scheduled
+                    - processing
+                    - paid
+                appliedAmount: 
+                  type: number
+                totalAmount: 
+                  type: number
     BillPayment-Create:
       description: Details of a bill payment
       type: object
