@@ -2005,7 +2005,7 @@ paths:
           required: true  
       response:
       '200':
-        description: 'Read bill payment info'
+          description: 'Read bill payment info'
           content:
             application/json:
               schema:
