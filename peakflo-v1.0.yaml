@@ -2013,33 +2013,33 @@ paths:
               example:
                 Example:
                   value:
-                    externalPaymentId: "21964c8b-c61b-439b-bb27-d12ebaf8e85ec",
-                  lastUpdatedAt: "2024-07-03T01:00:00+06:00",
-                  paymentDate: "2023-11-28",
-                  scheduledDate: "2023-11-28",
-                  reference: "INV-2023-001",
-                  externalVendorId: "VENDOR-123",
-                  vendorName: "VENDOR-123",
-                  accountNumber: "1122334455",
-                  receiverCurrency: "USD",
-                  amount: 500,
-                  remainingAmount: 400, 
-                  paymentFee: 10,
-                  fxRate: 1.5,
-                  status: "scheduled",
-                  baseCurrency: "SGD",
-                  convertedAmount: 750,
+                  externalPaymentId: "21964c8b-c61b-439b-bb27-d12ebaf8e85ec"
+                  lastUpdatedAt: "2024-07-03T01:00:00+06:00"
+                  paymentDate: "2023-11-28"
+                  scheduledDate: "2023-11-28"
+                  reference: "INV-2023-001"
+                  externalVendorId: "VENDOR-123"
+                  vendorName: "VENDOR-123"
+                  accountNumber: "1122334455"
+                  receiverCurrency: "USD"
+                  amount: 500
+                  remainingAmount: 400 
+                  paymentFee: 10
+                  fxRate: 1.5
+                  status: "scheduled"
+                  baseCurrency: "SGD"
+                  convertedAmount: 750
                   customField:
                     - customFieldNumber: CustomFieldNumber1 (type - Number)
                       name: "CustomField1"
                       value: 2
                       type: Number
                   bills: 
-                    - externalBillId: "1234567890",
-                      billNumber: "Bill-001",
-                      status: "scheduled",
-                      appliedAmount: 100,
-                      totalAmount: 500,
+                    - externalBillId: "1234567890"
+                      billNumber: "Bill-001"
+                      status: "scheduled"
+                      appliedAmount: 100
+                      totalAmount: 500
       '404':
           description: Not Found
       '400':
@@ -5105,7 +5105,7 @@ components:
     BillPayment-2:
       description: Details of a bill payment
       type: object
-        properties:
+      properties:
           externalPaymentId:
             type: string
             description: External Payment ID of the bill payment
