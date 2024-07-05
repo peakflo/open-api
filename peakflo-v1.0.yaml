@@ -1904,12 +1904,61 @@ paths:
               schema:
                 type: object
                 properties:
-                  bills:
+                  billPayments:
                     type: array
                     items:
                       $ref: '#/components/schemas/BillPayment-2'
                   totalCount:
                     type: integer
+              example:
+                billPayments:
+                  - externalPaymentId: "21964c8b-c61b-439b-bb27-d12ebaf8e85ec"
+                    lastUpdatedAt: "2024-07-03T01:00:00+06:00"
+                    paymentDate: "2023-11-28"
+                    scheduledDate: "2023-11-28"
+                    reference: "INV-2023-001"
+                    externalVendorId: "VENDOR-123"
+                    vendorName: "VENDOR-123"
+                    accountNumber: "1122334455"
+                    receiverCurrency: "USD"
+                    amount: 500
+                    remainingAmount: 400 
+                    paymentFee: 10
+                    fxRate: 1.5
+                    status: "scheduled"
+                    baseCurrency: "SGD"
+                    convertedAmount: 750
+                    customField:
+                      - customFieldNumber: CustomFieldNumber1 (type - Number)
+                        name: "CustomField1"
+                        value: 2
+                        type: Number
+                      - customFieldNumber: CustomFieldNumber2 (type - Date)
+                        name: "CustomField2"
+                        value: "11/03/2024"
+                        type: Date
+                      - customFieldNumber: CustomFieldNumber3 (type - Input)
+                        name: "CustomField3"
+                        value: "Value"
+                        type: Input
+                      - customFieldNumber: CustomFieldNumber4 (type - List)
+                        name: "CustomField4"
+                        value: "List_Value1"
+                        type: List
+                      - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                        name: "CustomField5"
+                        value:
+                          - "MultiList_Value1"
+                          - "MultiList_Value2"
+                        type: MultiList
+                    bills: 
+                      - externalBillId: "1234567890"
+                        billNumber: "Bill-001"
+                        status: "scheduled"
+                        appliedAmount: 100
+                        totalAmount: 500
+                totalCount: 50
+                  
         '400':
           description: Bad Request
 
