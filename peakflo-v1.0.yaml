@@ -1868,26 +1868,19 @@ paths:
         - Bill Payments
       summary: Get bill payments with pagination and filters
       parameters:
-        - name: vendorId
+        - name: updatedAtFrom
+          in: query
+          schema:
+            type: string
+        - name: updatedAtTo
+          in: query
+          schema:
+            type: string
+        - name: vendorExternalId
           in: query
           description: Filter bills-payments by vendorId
           schema:
             type: string
-        - name: reference
-          in: query
-          description: Filter bills-payments by reference
-          schema:
-            type: string
-        - name: amount
-          in: query
-          description: Filter bills-payments by amount
-          schema:
-            type: number
-        - name: remainingAmount
-          in: query
-          description: Filter bills-payments by remainingAmount
-          schema:
-            type: number
         - name: page
           in: query
           description: Page number for pagination
