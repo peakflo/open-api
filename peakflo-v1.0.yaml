@@ -2040,7 +2040,7 @@ paths:
       summary: Read a bill-payment
       parameters:
         - schema:
-          type: string
+            type: string
           name: billPaymentExternalId
           in: path
           required: true  
