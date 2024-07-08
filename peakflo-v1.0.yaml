@@ -1919,7 +1919,6 @@ paths:
                     lastUpdatedAt: "2024-07-03T01:00:00+06:00"
                     paymentDate: "2023-11-28"
                     scheduledDate: "2023-11-28"
-                    reference: "INV-2023-001"
                     paymentReference: "INV-2023-001"
                     referenceObject: "PO-00113"
                     externalVendorId: "VENDOR-123"
@@ -2063,7 +2062,6 @@ paths:
                 paymentReference: "INV-2023-001"
                 referenceObject": "PO-00113"
                 scheduledDate: "2023-11-28"
-                reference: "INV-2023-001"
                 externalVendorId: "VENDOR-123"
                 vendorName: "VENDOR-123"
                 accountNumber: "1122334455"
@@ -5176,10 +5174,6 @@ components:
             type: string
             description: Date when payment is scheduled
             example: "2023-11-28"
-          reference:
-            type: string
-            description: Reference for the payment
-            example: "INV-2023-001"
           externalVendorId:
             type: string
             description: ExternalID of the vendor associated with the payment
