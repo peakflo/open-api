@@ -1872,15 +1872,18 @@ paths:
           in: query
           schema:
             type: string
+          example: "2024-07-05T15:49:48.223+00:00"
         - name: updatedAtTo
           in: query
           schema:
             type: string
+          example: "2024-07-05T15:49:48.223+00:00"
         - name: vendorExternalId
           in: query
           description: Filter bills-payments by vendorId
           schema:
             type: string
+          example: "665d9d2a7f54dd6787405831"
         - name: page
           in: query
           description: Page number for pagination
@@ -1917,6 +1920,8 @@ paths:
                     paymentDate: "2023-11-28"
                     scheduledDate: "2023-11-28"
                     reference: "INV-2023-001"
+                    paymentReference: "INV-2023-001"
+                    referenceObject: "PO-00113"
                     externalVendorId: "VENDOR-123"
                     vendorName: "VENDOR-123"
                     accountNumber: "1122334455"
@@ -2054,7 +2059,9 @@ paths:
               example:
                 externalPaymentId: "21964c8b-c61b-439b-bb27-d12ebaf8e85ec"
                 lastUpdatedAt: "2024-07-03T01:00:00+06:00"
-                paymentDate: "2023-11-28"
+                paymentDate: "2023-11-28"                
+                paymentReference: "INV-2023-001"
+                referenceObject": "PO-00113"
                 scheduledDate: "2023-11-28"
                 reference: "INV-2023-001"
                 externalVendorId: "VENDOR-123"
@@ -5157,6 +5164,14 @@ components:
             type: string
             description: Date of payment
             example: "2023-11-28"
+          paymentReference:
+            type: string
+            description: "Payment Reference"
+            example: "INV-2023-001"
+          referenceObject:
+            type: string
+            description: Reference object ID
+            example: "PO-00113"
           scheduledDate:
             type: string
             description: Date when payment is scheduled
