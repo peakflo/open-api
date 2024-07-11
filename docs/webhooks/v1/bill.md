@@ -107,7 +107,17 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
           "currency": "USD",
           "status": "draft"
         }
-    ]
+    ],
+    "fakturPajakData": {
+        "fgPengganti": "0",
+        "jumlahPpn": 100000,
+        "nomorFaktur": "01234567892534",
+        "tanggalFaktur": "2023-01-01T00:00:00.000Z",
+        "jumlahDpp": 1000000,
+        "refFaktur": "reference-01",
+        "jumlahPpnBm": 0,
+        "kdJenisTransaksi": "01"
+      }
   }]
 }
 ```
@@ -135,6 +145,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
 | updatedDate      | string  | The date when the bill was last update.
 | customFields   | array   | An array containing details of custom fields. [Possible Values](#possible-custom-field-type)                 |
 | payments   | array   | An array containing details of bill payments.                      |
+| fakturPajakData   | object   | An Object containing details of bill faktur pajak (Indonesian tax invoice).                      |
 
 
 ### Possible Bill Status Values

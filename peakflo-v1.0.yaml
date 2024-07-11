@@ -1125,12 +1125,12 @@ paths:
           in: query
           schema:
             type: string
-          example: "2024-07-05T15:49:48.223+00:00"
+          example: "2024-1-01"
         - name: updatedAtTo
           in: query
           schema:
             type: string
-          example: "2024-07-05T15:49:48.223+00:00"
+          example: "2024-1-01"
         - name: status
           in: query
           description: Filter bills by status
@@ -1876,18 +1876,18 @@ paths:
           in: query
           schema:
             type: string
-          example: "2024-07-05T15:49:48.223+00:00"
+          example: "2024-1-01"
         - name: updatedAtTo
           in: query
           schema:
             type: string
-          example: "2024-07-05T15:49:48.223+00:00"
+          example: "2024-1-01"
         - name: vendorExternalId
           in: query
-          description: Filter bills-payments by vendorId
+          description: Filter bills-payments by external vendor Id
           schema:
             type: string
-          example: "665d9d2a7f54dd6787405831"
+          example: "cf7e6236-c0ef-41d8-a235-7045a551bacb"
         - name: page
           in: query
           description: Page number for pagination
