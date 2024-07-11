@@ -1884,10 +1884,10 @@ paths:
           example: "2024-1-01"
         - name: vendorExternalId
           in: query
-          description: Filter bills-payments by vendorId
+          description: Filter bills-payments by external vendor Id
           schema:
             type: string
-          example: "665d9d2a7f54dd6787405831"
+          example: "cf7e6236-c0ef-41d8-a235-7045a551bacb"
         - name: page
           in: query
           description: Page number for pagination
