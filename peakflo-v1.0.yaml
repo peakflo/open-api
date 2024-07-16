@@ -2047,7 +2047,7 @@ paths:
       parameters:
         - schema:
             type: string
-          name: billPaymentExternalId
+          name: externalId
           in: path
           required: true
       responses:
