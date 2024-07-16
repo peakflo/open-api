@@ -49,6 +49,109 @@ tags:
 
 paths:
   "/bill-payment":
+    get:
+      tags:
+        - Bill Payments
+      summary: Get bill payments with pagination and filters
+      parameters:
+        - name: updatedAtFrom
+          in: query
+          schema:
+            type: string
+          example: "2024-07-05T15:49:48.223+00:00"
+        - name: updatedAtTo
+          in: query
+          schema:
+            type: string
+          example: "2024-07-05T15:49:48.223+00:00"
+        - name: vendorExternalId
+          in: query
+          description: Filter bills-payments by vendorId
+          schema:
+            type: string
+          example: "665d9d2a7f54dd6787405831"
+        - name: page
+          in: query
+          description: Page number for pagination
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          description: Number of bill-payments per page
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+            maximum: 100
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  billPayments:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/BillPayment"
+                  totalCount:
+                    type: integer
+              example:
+                billPayments:
+                  - externalPaymentId: "21964c8b-c61b-439b-bb27-d12ebaf8e85ec"
+                    paymentNumber: "PAYMENT_2134"
+                    lastUpdatedAt: "2024-07-03T01:00:00+06:00"
+                    paymentDate: "2023-11-28"
+                    scheduledDate: "2023-11-28"
+                    paymentReference: "INV-2023-001"
+                    referenceObject: "PO-00113"
+                    externalVendorId: "VENDOR-123"
+                    vendorName: "VENDOR-123"
+                    accountNumber: "1122334455"
+                    receiverCurrency: "USD"
+                    amount: 500
+                    remainingAmount: 400
+                    paymentFee: 10
+                    fxRate: 1.5
+                    status: "scheduled"
+                    baseCurrency: "SGD"
+                    convertedAmount: 750
+                    customField:
+                      - customFieldNumber: "CustomFieldNumber1 (type - Number)"
+                        name: "CustomField1"
+                        value: 2
+                        type: "Number"
+                      - customFieldNumber: "CustomFieldNumber2 (type - Date)"
+                        name: "CustomField2"
+                        value: "11/03/2024"
+                        type: "Date"
+                      - customFieldNumber: "CustomFieldNumber3 (type - Input)"
+                        name: "CustomField3"
+                        value: "Value"
+                        type: "Input"
+                      - customFieldNumber: "CustomFieldNumber4 (type - List)"
+                        name: "CustomField4"
+                        value: "List_Value1"
+                        type: "List"
+                      - customFieldNumber: "CustomFieldNumber5 (type - MultiList)"
+                        name: "CustomField5"
+                        value:
+                          - "MultiList_Value1"
+                          - "MultiList_Value2"
+                        type: "MultiList"
+                    bills:
+                      - externalBillId: "1234567890"
+                        billNumber: "Bill-001"
+                        status: "scheduled"
+                        appliedAmount: 100
+                        totalAmount: 500
+                totalCount: 50
+        "400":
+          description: Bad Request
+
     post:
       tags:
         - Bill Payments
@@ -142,6 +245,57 @@ paths:
           description: Conflict
           content: {}
   "/bill-payment/{exteralId}":
+    get:
+      tags:
+        - Bill Payments
+      summary: Read a bill-payment
+      parameters:
+        - schema:
+            type: string
+          name: externalId
+          in: path
+          required: true
+      responses:
+        "200":
+          description: "Read bill payment info"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BillPayment"
+              example:
+                externalPaymentId: "21964c8b-c61b-439b-bb27-d12ebaf8e85ec"
+                lastUpdatedAt: "2024-07-03T01:00:00+06:00"
+                paymentDate: "2023-11-28"
+                paymentReference: "INV-2023-001"
+                paymentNumber: "PAYMENT_2345"
+                referenceObject": "PO-00113"
+                scheduledDate: "2023-11-28"
+                externalVendorId: "VENDOR-123"
+                vendorName: "VENDOR-123"
+                accountNumber: "1122334455"
+                receiverCurrency: "USD"
+                amount: 500
+                remainingAmount: 400
+                paymentFee: 10
+                fxRate: 1.5
+                status: "scheduled"
+                baseCurrency: "SGD"
+                convertedAmount: 750
+                customField:
+                  - customFieldNumber: CustomFieldNumber1 (type - Number)
+                    name: "CustomField1"
+                    value: 2
+                    type: Number
+                bills:
+                  - externalBillId: "1234567890"
+                    billNumber: "Bill-001"
+                    status: "scheduled"
+                    appliedAmount: 100
+                    totalAmount: 500
+        "404":
+          description: Not Found
+        "400":
+          description: Bad Request
     put:
       tags:
         - Bill Payments
@@ -239,6 +393,10 @@ components:
           type: string
           description: Date of payment
           example: "2023-11-28"
+        paymentNumber:
+          type: string
+          description: Sequentially generated payment number 
+          example: "PAYMENT_2345"
         paymentReference:
           type: string
           description: "Payment Reference"
