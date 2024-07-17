@@ -1,0 +1,599 @@
+openapi: 3.0.1
+info:
+  title: Peakflo API v2
+  description: "The Peakflo API follows REST. Our APIs are organised as resource-oriented URLs, returns JSON responses.  They return standard HTTP response codes. You will need a JWT token to access the resources you are authorized to. "
+  contact:
+    url: "https://peakflo.co/"
+    email: info@peakflo.co
+  x-logo:
+    url: "https://assets.dorik.com/5fa7a91326674600114e7aca/images/logo_black_zv0e3kxb.png"
+    altText: Peakflo logo
+  license:
+    name: Apache 2.0
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+  version: 2.0.0
+externalDocs:
+  url: "https://docs.peakflo.co"
+servers:
+  - url: api.peakflo.co/v2
+    description: Production
+  - description: Staging
+    url: stage-api.peakflo.co/v2
+security:
+  - bearerAuth: []
+tags:
+  - name: Customers
+    description: The customer
+  - name: Contacts
+    description: The customers contact
+  - name: Invoices
+    description: The customers invoices
+  - name: Payments
+    description: The customers payments
+  - name: Credit Notes
+    description: The customers credit notes
+  - name: Vendors
+    description: The vendor
+  - name: Vendor Contacts
+    description: The vendor contacts
+  - name: Bills
+    description: Vendor bills
+  - name: Bill Payments
+    description: Vendor Bill Payments
+  - name: Vendor Purchase Orders
+    description: Vendor Purchase Orders
+  - name: Vendor Receipt Notes
+    description: Vendor Receipt Notes
+  - name: Vendor Credit Notes
+    description: Vendor Credit Notes
+
+paths:
+  "/bill-payment":
+    get:
+      tags:
+        - Bill Payments
+      summary: Get bill payments with pagination and filters
+      parameters:
+        - name: updatedAtFrom
+          in: query
+          schema:
+            type: string
+          example: "2024-07-05"
+        - name: updatedAtTo
+          in: query
+          schema:
+            type: string
+          example: "2024-07-05"
+        - name: status
+          in: query
+          description: Filter bills by status
+          schema:
+            type: string
+          example: "paid"
+        - name: vendorExternalId
+          in: query
+          description: Filter bills-payments by vendorId
+          schema:
+            type: string
+          example: "665d9d2a7f54dd6787405831"
+        - name: page
+          in: query
+          description: Page number for pagination
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          description: Number of bill-payments per page
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+            maximum: 100
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  billPayments:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/BillPayment"
+                  totalCount:
+                    type: integer
+              example:
+                billPayments:
+                  - externalPaymentId: "21964c8b-c61b-439b-bb27-d12ebaf8e85ec"
+                    paymentNumber: "PAYMENT_2134"
+                    lastUpdatedAt: "2024-07-03T01:00:00+06:00"
+                    paymentDate: "2023-11-28"
+                    scheduledDate: "2023-11-28"
+                    paymentReference: "INV-2023-001"
+                    referenceObject: "PO-00113"
+                    externalVendorId: "VENDOR-123"
+                    vendorName: "VENDOR-123"
+                    accountNumber: "1122334455"
+                    receiverCurrency: "USD"
+                    amount: 500
+                    remainingAmount: 400
+                    paymentFee: 10
+                    fxRate: 1.5
+                    status: "scheduled"
+                    baseCurrency: "SGD"
+                    convertedAmount: 750
+                    customField:
+                      - customFieldNumber: "CustomFieldNumber1 (type - Number)"
+                        name: "CustomField1"
+                        value: 2
+                        type: "Number"
+                      - customFieldNumber: "CustomFieldNumber2 (type - Date)"
+                        name: "CustomField2"
+                        value: "11/03/2024"
+                        type: "Date"
+                      - customFieldNumber: "CustomFieldNumber3 (type - Input)"
+                        name: "CustomField3"
+                        value: "Value"
+                        type: "Input"
+                      - customFieldNumber: "CustomFieldNumber4 (type - List)"
+                        name: "CustomField4"
+                        value: "List_Value1"
+                        type: "List"
+                      - customFieldNumber: "CustomFieldNumber5 (type - MultiList)"
+                        name: "CustomField5"
+                        value:
+                          - "MultiList_Value1"
+                          - "MultiList_Value2"
+                        type: "MultiList"
+                    bills:
+                      - externalBillId: "1234567890"
+                        billNumber: "Bill-001"
+                        status: "scheduled"
+                        appliedAmount: 100
+                        totalAmount: 500
+                totalCount: 50
+        "400":
+          description: Bad Request
+
+    post:
+      tags:
+        - Bill Payments
+      summary: Create a bill payment
+      description: Create a new bill payment
+      operationId: create-bill-payment
+      requestBody:
+        description: Bill payment to create
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                paymentDate:
+                  type: string
+                  format: date
+                scheduledDate:
+                  type: string
+                  format: date
+                paymentNumber:
+                  type: number
+                paymentReference:
+                  type: string
+                referenceObject:
+                  type: string
+                externalVendorId:
+                  type: string
+                accountNumber:
+                  type: string
+                amount:
+                  type: number
+                paymentFee:
+                  type: number
+                fxRate:
+                  type: number
+                status:
+                  type: string
+                  enum:
+                    - draft
+                    - scheduled
+                    - processing
+                    - paid
+                baseCurrency:
+                  type: string
+                convertedAmount:
+                  type: number
+                receiverCurrency:
+                  type: string
+                bills:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      externalBillId:
+                        type: string
+                      appliedAmount:
+                        type: number
+            examples:
+              Example:
+                value:
+                  paymentDate: "2023-11-28"
+                  scheduledDate: "2024-07-07"
+                  paymentNumber: "PAYMENT-001"
+                  paymentReference: "INV-2023-001"
+                  referenceObject: "PO-001133"
+                  externalVendorId: "VENDOR-123"
+                  accountNumber: "11223344556677"
+                  amount: 500
+                  paymentFee: 10
+                  fxRate: 1.5
+                  status: "draft"
+                  baseCurrency: "SGD"
+                  convertedAmount: 750
+                  receiverCurrency: "USD"
+                  bills:
+                    - externalBillId: "1234567890"
+                      appliedAmount: 500
+
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BillPayment-create"
+        "400":
+          description: Bad request
+          content: {}
+        "409":
+          description: Conflict
+          content: {}
+  "/bill-payment/{exteralId}":
+    get:
+      tags:
+        - Bill Payments
+      summary: Read a bill-payment
+      parameters:
+        - schema:
+            type: string
+          name: externalId
+          in: path
+          required: true
+      responses:
+        "200":
+          description: "Read bill payment info"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BillPayment"
+              example:
+                externalPaymentId: "21964c8b-c61b-439b-bb27-d12ebaf8e85ec"
+                lastUpdatedAt: "2024-07-03T01:00:00+06:00"
+                paymentDate: "2023-11-28"
+                paymentReference: "INV-2023-001"
+                paymentNumber: "PAYMENT_2345"
+                referenceObject": "PO-00113"
+                scheduledDate: "2023-11-28"
+                externalVendorId: "VENDOR-123"
+                vendorName: "VENDOR-123"
+                accountNumber: "1122334455"
+                receiverCurrency: "USD"
+                amount: 500
+                remainingAmount: 400
+                paymentFee: 10
+                fxRate: 1.5
+                status: "scheduled"
+                baseCurrency: "SGD"
+                convertedAmount: 750
+                customField:
+                  - customFieldNumber: CustomFieldNumber1 (type - Number)
+                    name: "CustomField1"
+                    value: 2
+                    type: Number
+                bills:
+                  - externalBillId: "1234567890"
+                    billNumber: "Bill-001"
+                    status: "scheduled"
+                    appliedAmount: 100
+                    totalAmount: 500
+        "404":
+          description: Not Found
+        "400":
+          description: Bad Request
+    put:
+      tags:
+        - Bill Payments
+      summary: Update a bill payment
+      description: Update a bill payment
+      operationId: update-bill-payment
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: ID of the bill payment to retrieve
+          schema:
+            type: string
+      requestBody:
+        description: Bill payment to update
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                billId:
+                  type: string
+                reference:
+                  type: string
+                vendorId:
+                  type: string
+                date:
+                  type: string
+                  format: date
+                amount:
+                  type: number
+                baseCurrency:
+                  type: string
+                paymentFee:
+                  type: number
+                fxRate:
+                  type: number
+                convertedAmount:
+                  type: number
+                receiverCurrency:
+                  type: string
+            examples:
+              Example:
+                value:
+                  paymentDate: "2023-11-28"
+                  scheduledDate: "2024-07-07"
+                  paymentNumber: "PAYMENT-001"
+                  paymentReference: "INV-2023-001"
+                  referenceObject: "PO-001133"
+                  externalVendorId: "VENDOR-123"
+                  accountNumber: "11223344556677"
+                  amount: 500
+                  paymentFee: 10
+                  fxRate: 1.5
+                  status: "paid"
+                  baseCurrency: "SGD"
+                  convertedAmount: 750
+                  receiverCurrency: "USD"
+                  bills:
+                    - externalBillId: "1234567890"
+                      appliedAmount: 500
+
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BillPayment"
+        "400":
+          description: Bad request
+          content: {}
+        "409":
+          description: Conflict
+          content: {}
+
+components:
+  schemas:
+    BillPayment:
+      description: Details of a bill payment
+      type: object
+      properties:
+        externalPaymentId:
+          type: string
+          description: External Payment ID of the bill payment
+          example: "EXT123"
+        lastUpdatedAt:
+          type: string
+          description: Timestamp of Last update action
+          example: "2024-07-03T01:00:00+06:00"
+        paymentDate:
+          type: string
+          description: Date of payment
+          example: "2023-11-28"
+        paymentNumber:
+          type: string
+          description: Sequentially generated payment number 
+          example: "PAYMENT_2345"
+        paymentReference:
+          type: string
+          description: "Payment Reference"
+          example: "INV-2023-001"
+        referenceObject:
+          type: string
+          description: Reference object ID
+          example: "PO-00113"
+        scheduledDate:
+          type: string
+          description: Date when payment is scheduled
+          example: "2023-11-28"
+        externalVendorId:
+          type: string
+          description: ExternalID of the vendor associated with the payment
+          example: "VENDOR456"
+        vendorName:
+          type: string
+          description: Name of the vendor associated with the payment
+          example: "VENDOR1234"
+        accountNumber:
+          type: string
+          description: Account number of Account associated with the payment
+          example: "1122334455"
+        receiverCurrency:
+          type: string
+          description: Currency code of Receiver
+          example: "USD"
+        amount:
+          type: number
+          description: Amount of bill payment
+          example: 500
+        remainingAmount:
+          type: number
+          description: Amount remaining to be paid
+          example: 100
+        paymentFee:
+          type: number
+          description: Payment Fee associated with payment
+          example: 10
+        fxRate:
+          type: number
+          description: Currency conversion rate
+          example: 1.5
+        status:
+          type: string
+          description: Updated status of bill payment
+          example: "paid"
+        baseCurrency:
+          type: string
+          description: Currency of the payment
+          example: "USD"
+        convertedAmount:
+          type: number
+          description: Converted amount in base currency
+          example: 750
+        customField:
+          type: array
+          items:
+            $ref: "#/components/schemas/Bill-CustomFields"
+        bills:
+          type: array
+          items:
+            type: object
+            properties:
+              externalBillId:
+                type: string
+              billNumber:
+                type: string
+              status:
+                type: string
+                enum:
+                  - draft
+                  - scheduled
+                  - processing
+                  - paid
+              appliedAmount:
+                type: number
+              totalAmount:
+                type: number
+    BillPayment-Create:
+      description: Detail of a Bill Payment
+      type: object
+      properties:
+        paymentDate:
+          type: string
+          description: Date of the payment (ISO8601 date format)
+          format: date
+          example: "2023-11-30"
+        scheduledDate:
+          type: string
+          format: date
+          description: Date when payment is scheduled
+          example: "2023-11-28"
+        paymentNumber:
+          type: number
+        paymentReference:
+          type: string
+          description: Reference for the payment
+          example: "Payment REF123"
+        referenceObject:
+          type: string
+          description: Test Field
+          example: "REF REF1234"
+        externalVendorId:
+          type: string
+          description: ExternalID of the vendor associated with the payment
+          example: "VENDOR456"
+        accountNumber:
+          type: string
+          description: Account number of Account associated with the payment
+          example: "1122334455"
+        amount:
+          type: number
+          description: Amount of the payment
+          example: 500
+        paymentFee:
+          type: number
+          description: Fee associated with the payment
+          example: 10
+        fxRate:
+          type: number
+          description: Currency conversion rate
+          example: 1.5
+        status:
+          type: string
+          enum:
+            - draft
+            - scheduled
+            - processing
+            - paid
+        baseCurrency:
+          type: string
+          description: Currency of the payment
+          example: "USD"
+        convertedAmount:
+          type: number
+          description: Converted amount in base currency
+          example: 750
+        receiverCurrency:
+          type: string
+          description: Currency code of Receiver
+          example: "USD"
+        bills:
+          type: array
+          description: Bills Associated with the payment
+          items:
+            type: object
+            properties:
+              externalBillId:
+                type: string
+              appliedAmount:
+                type: number
+    Bill-CustomFields:
+      type: object
+      x-examples:
+        Example:
+          customFieldNumber: "customField1"
+          name: "Field A"
+          type: "Input"
+          value: "Value A"
+      properties:
+        customFieldNumber:
+          type: string
+          description: Custom field number can be seen in the peakflo web UI
+        name:
+          type: string
+          description: Custom field name
+        type:
+          oneOf:
+            - type: string
+            - type: number
+            - type: array
+              items:
+                type: string
+          description: Custom field type. can be string, number, date or array of strings
+        value:
+          oneOf:
+            - type: string
+            - type: number
+            - type: array
+              items:
+                type: string
+          description: Custom field value. can be string, number or array of strings. dates needs to be sent in ISO 8601 date format
+      required:
+        - customFieldNumber
+        - value
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters: {}
