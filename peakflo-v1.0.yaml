@@ -1185,12 +1185,12 @@ paths:
                       scheduledDate: "2023-12-15T23:59:59Z"
                       updatedDate: "2023-12-15T23:59:59Z"
                       attachments:
-                        - id: "attachment_id_1"
-                          name: "Attachment 1"
+                        - name: "Attachment 1"
                           contentType: "application/pdf"
+                          dateCreated: "2024-06-25T09:50:05.061Z"
                           fileSize: 1024
                           fileType: "invoice"
-                          base64: "Base64EncodedContent1"
+                          signedUrl: "https://storage.googleapis.com/peakflo.appspot.com/GoFa1QPYCC338Ip2gPql/vendorFiles/GoFa1QPYCC338Ip2gPql/EDOD5dmJJYkr9UETayGXL/SRI-INV-202406000000391%20MIF.pdf?GoogleAccessId=billing-stage-324205%40appspot.gserviceaccount.com&Expires=1720481310&Signature=dB0CR9fnrWXsA3f6rTGCL0tTw6dtniNfDYqZ1RbdJ4i5rVBqk9QrIQQfV%2BsJkM%2FC9M8dPFL%2FMRI3ee0FTLO8X7umc4iQiLSeKKhAbIWqLTKM0Q%2FOU5xh8nk3uMfsMyvS3xQWeLb%2F%2BR%2FPosFDL0%2F%2FwmCu32ZIgSfwgg3F9IunSB7HJOfQ6tMrBRp%2FIFYqA5RIVzL8CpF0mkEjjSBmd3omegKM9B%2B%2BQWCCbOZsUuahDtWJrFCDOzukmvOFC8uO43QieknncEDofWdlHk7mFaYjOnR%2B11CCjlKaU9PGEFqPQUW1wOnw%2BFbUQr0%2FihJH8%2F4gyzFVDKSU1yl8yOj%2BhilwkA%3D%3D"
                       currency: "USD"
                       currencyRate: 1
                       subTotal: 500
@@ -1552,12 +1552,12 @@ paths:
                     scheduledDate: "2023-12-15T23:59:59Z"
                     updatedDate: "2023-12-15T23:59:59Z"
                     attachments:
-                    - id: "attachment_id_1"
-                      name: "Attachment 1"
-                      contentType: "application/pdf"
-                      fileSize: 1024
-                      fileType: "invoice"
-                      base64: "Base64EncodedContent1"
+                      - name: "Attachment 1"
+                        contentType: "application/pdf"
+                        dateCreated: "2024-06-25T09:50:05.061Z"
+                        fileSize: 1024
+                        fileType: "invoice"
+                        signedUrl: "https://storage.googleapis.com/peakflo.appspot.com/GoFa1QPYCC338Ip2gPql/vendorFiles/GoFa1QPYCC338Ip2gPql/EDOD5dmJJYr9UETayGXL/SRI-INV-202406000000391%20MIF.pdf?GoogleAccessId=billing-stage-324205%40appspot.gserviceaccount.com&Expires=1720481310&Signature=dB0CR9fnrWXsA3f6rTGCL0tTw6dtniNfDYqZ1RbdJ4i5rVBqk9QrIQQfV%2BsJkM%2FC9M8dPFL%2FMRI3ee0FTLO8X7umc4iQiLSeKKhAbIWqLTKM0Q%2FOU5xh8nk3uMfsMyvS3xQWeLb%2F%2BR%2FPosFDL0%2F%2FwmCu32ZIgSfwgg3F9IunSB7HJOfQ6tMrBRp%2FIFYqA5RIVzL8CpF0mkEjjSBmd3omegKM9B%2B%2BQWCCbOZsUuahDtWJrFCDOzukmvOFC8uO43QieknncEDofWdlHk7mFaYjOnR%2B11CCjlKaU9PGEFqPQUW1wOnw%2BFbUQr0%2FihJH8%2F4gyzFVDKSU1yl8yOj%2BhilwkA%3D%3D"
                     currency: "USD"
                     currencyRate: 1
                     subTotal: 500
@@ -4483,6 +4483,10 @@ components:
           type: string
           description: Name of the attachment
           example: "Attachment 1"
+        dateCreated:
+          type: string
+          description: Timestamp of attachment creation
+          example: "2024-06-25T09:50:05.061Z"
         contentType:
           type: string
           description: MIME type of the attachment
@@ -4506,13 +4510,16 @@ components:
           type: string
           description: Base64-encoded content of the attachment
           example: "Base64EncodedContent1"
+        signedUrl: 
+          type: string
+          description: Signed url for the attachment
+          example: "https://storage.googleapis.com/peakflo.appspot.com/GoFa1QPYCC338Ip2gPql/vendorFiles/GoFa1QPYCC338Ip2gPql/EDOD5dmJJYkr9UETayGXL/SRI-INV-202406000000391%20MIF.pdf?GoogleAccessId=billing-stage-324205%40appspot.gserviceaccount.com&Expires=1720481310&Signature=dB0CR9fnrWXsA3f6rTGCL0tTw6dtniNfDYqZ1RbdJ4i5rVBqk9QrIQQfV%2BsJkM%2FC9M8dPFL%2FMRI3ee0FTLO8X7umc4iQiLSeKKhAbIWqLTKM0Q%2FOU5xh8nk3uMfsMyvS3xQWeLb%2F%2BR%2FPosFDL0%2F%2FwmCu32ZIgSfwgg3F9IunSB7HJOfQ6tMrBRp%2FIFYqA5RIVzL8CpF0mkEjjSBmd3omegKM9B%2B%2BQWCCbOZsUuahDtWJrFCDOzukmvOFC8uO43QieknncEDofWdlHk7mFaYjOnR%2B11CCjlKaU9PGEFqPQUW1wOnw%2BFbUQr0%2FihJH8%2F4gyzFVDKSU1yl8yOj%2BhilwkA%3D%3D"
       required:
-        - id
         - name
         - contentType
+        - dateCreated
         - fileSize
         - fileType
-        - base64
     Invoice:
       description: ''
       type: object
@@ -5031,6 +5038,12 @@ components:
           type: string
           description: External ID of the purchase order
           example: "PO_EXT12345"
+        attachments:
+          type: array
+          items: 
+            type: object
+            schema: '#/components/schemas/APAttachments'
+
         receiptNotes:
           type: array
           items:
