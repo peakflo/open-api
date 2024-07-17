@@ -1,19 +1,19 @@
 openapi: 3.0.1
 info:
-  title: Peakflo API
-  description: 'The Peakflo API follows REST. Our APIs are organised as resource-oriented URLs, returns JSON responses.  They return standard HTTP response codes. You will need a JWT token to access the resources you are authorized to. '
+  title: Peakflo API v1
+  description: "The Peakflo API follows REST. Our APIs are organised as resource-oriented URLs, returns JSON responses.  They return standard HTTP response codes. You will need a JWT token to access the resources you are authorized to. "
   contact:
-    url: 'https://peakflo.co/'
+    url: "https://peakflo.co/"
     email: info@peakflo.co
   x-logo:
-    url: 'https://assets.dorik.com/5fa7a91326674600114e7aca/images/logo_black_zv0e3kxb.png'
+    url: "https://assets.dorik.com/5fa7a91326674600114e7aca/images/logo_black_zv0e3kxb.png"
     altText: Peakflo logo
   license:
     name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
   version: 1.0.0
 externalDocs:
-  url: 'https://docs.peakflo.co'
+  url: "https://docs.peakflo.co"
 servers:
   - url: api.peakflo.co/v1
     description: Production
@@ -34,7 +34,7 @@ tags:
     description: The customers credit notes
   - name: Vendors
     description: The vendor
-  - name: Vendor Contacts 
+  - name: Vendor Contacts
     description: The vendor contacts
   - name: Bills
     description: Vendor bills
@@ -60,13 +60,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Customer'
+              $ref: "#/components/schemas/Customer"
             examples:
               Example:
                 value:
                   companyName: YouWin
-                  externalId: '121989'
-                  externalRefNumber: ['421670']
+                  externalId: "121989"
+                  externalRefNumber: ["421670"]
                   currency: USD
                   status: active
                   accountManagerEmail: emily@youwin.com
@@ -76,30 +76,30 @@ paths:
                       firstName: Peter
                       lastName: Wong
                       email: peterwong@youwin.com
-                      phone: '6591234567'
+                      phone: "6591234567"
                       isMainContact: false
         required: false
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Customer'
+                $ref: "#/components/schemas/Customer"
               examples: {}
-        '400':
+        "400":
           description: Bad request
           content: {}
-        '409':
+        "409":
           description: Conflict
           content: {}
       x-codegen-request-body-name: Customer
     parameters: []
-  '/customers/{customerExternalId}':
+  "/customers/{customerExternalId}":
     put:
       tags:
         - Customers
-      summary: 'Update a customer '
+      summary: "Update a customer "
       description: Update an existing customer. Any field not provided will be left unchanged
       operationId: update-customer
       requestBody:
@@ -107,13 +107,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Customer'
+              $ref: "#/components/schemas/Customer"
             examples:
               Example:
                 value:
                   companyName: YouWin
-                  externalId: '121989'
-                  externalRefNumber: ['421670']
+                  externalId: "121989"
+                  externalRefNumber: ["421670"]
                   currency: SGD
                   status: active
                   accountManagerEmail: adrian@youwin.com
@@ -123,22 +123,22 @@ paths:
                       firstName: Peter
                       lastName: Wong
                       email: peterwong@youwin.com
-                      phone: '6591234567'
+                      phone: "6591234567"
                       isMainContact: true
         required: false
       responses:
-        '200':
+        "200":
           description: Updated customer
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Customer'
+                $ref: "#/components/schemas/Customer"
               examples:
                 Example:
                   value:
                     companyName: Mc win pte ltd
                     externalId: 1245a32
-                    externalRefNumber: ['421670']
+                    externalRefNumber: ["421670"]
                     currency: USD
                     status: active
                     parentCompanyId: 23oc2344
@@ -149,11 +149,11 @@ paths:
                         firstName: Peter
                         lastName: Wong
                         email: peterwong@mcwin.com
-                        phone: '6591234567'
+                        phone: "6591234567"
                         isMainContact: false
-        '404':
+        "404":
           description: Not Found
-        '409':
+        "409":
           description: Conflict
           content: {}
       x-codegen-request-body-name: Customer
@@ -163,9 +163,9 @@ paths:
       summary: Delete a customer
       operationId: delete-customer
       responses:
-        '204':
+        "204":
           description: No Content
-        '404':
+        "404":
           description: Not Found
       description: Delete a customer
     parameters:
@@ -174,18 +174,18 @@ paths:
         name: customerExternalId
         in: path
         required: true
-  '/customers/{customerExternalId}/contacts':
+  "/customers/{customerExternalId}/contacts":
     post:
       summary: Add a contact
       tags:
         - Contacts
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContactResponse'
+                $ref: "#/components/schemas/ContactResponse"
               examples:
                 Example:
                   value:
@@ -193,11 +193,11 @@ paths:
                     firstName: Peter
                     lastName: Wong
                     email: peterwong@mcwin.com
-                    phone: '6591234567'
+                    phone: "6591234567"
                     isMainContact: false
-        '400':
-          description: 'Bad Request '
-        '409':
+        "400":
+          description: "Bad Request "
+        "409":
           description: Conflict
       operationId: add-contact
       description: Add a contact to existing customer
@@ -205,15 +205,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ContactRequest'
+              $ref: "#/components/schemas/ContactRequest"
             examples:
               Example:
                 value:
-                  externalId: '178333'
+                  externalId: "178333"
                   firstName: Peter
                   lastName: Wong
                   email: peterwong@youwin.com
-                  phone: '6591234567'
+                  phone: "6591234567"
                   isMainContact: false
         description: Contact to add
     parameters:
@@ -223,7 +223,7 @@ paths:
         in: path
         required: true
         description: The customer external Id
-  '/customers/{customerExternalId}/contacts/{contactExternalId}':
+  "/customers/{customerExternalId}/contacts/{contactExternalId}":
     parameters:
       - schema:
           type: string
@@ -242,12 +242,12 @@ paths:
       tags:
         - Contacts
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContactResponse'
+                $ref: "#/components/schemas/ContactResponse"
               examples:
                 Example:
                   value:
@@ -255,11 +255,11 @@ paths:
                     firstName: Peter
                     lastName: Wong
                     email: peterwong@mcwin.com
-                    phone: '6591234567'
+                    phone: "6591234567"
                     isMainContact: false
-        '404':
+        "404":
           description: Not Found
-        '409':
+        "409":
           description: Conflict
       operationId: update-contact
       description: Update a contact
@@ -267,7 +267,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ContactRequest'
+              $ref: "#/components/schemas/ContactRequest"
             examples:
               example:
                 value:
@@ -275,44 +275,44 @@ paths:
                   firstName: Peter
                   lastName: bearing
                   email: pbearing@mcwin.com
-                  phone: '6591234567'
+                  phone: "6591234567"
                   isMainContact: false
-        description: ''
+        description: ""
     delete:
       summary: Delete a contact
       tags:
         - Contacts
       responses:
-        '204':
+        "204":
           description: No Content
-        '404':
+        "404":
           description: Not Found
       operationId: delete-contact
       description: Delete a contact
-  '/customers/{customerExternalId}/portalUrl':
+  "/customers/{customerExternalId}/portalUrl":
     parameters:
-        - schema:
-            type: string
-          name: customerExternalId
-          in: path
-          required: true
+      - schema:
+          type: string
+        name: customerExternalId
+        in: path
+        required: true
     get:
       summary: Read Customer info
       tags:
         - Customers
       responses:
-        '200':
-          description: 'Read Customer Info with portal link'
+        "200":
+          description: "Read Customer Info with portal link"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Customer'
+                $ref: "#/components/schemas/Customer"
               examples:
                 Example:
                   value:
                     companyName: YouWin
-                    externalId: '121989'
-                    externalRefNumber: ['421670']
+                    externalId: "121989"
+                    externalRefNumber: ["421670"]
                     currency: SGD
                     status: active
                     accountManagerEmail: adrian@youwin.com
@@ -322,39 +322,38 @@ paths:
                         firstName: Peter
                         lastName: Wong
                         email: peterwong@youwin.com
-                        phone: '6591234567'
+                        phone: "6591234567"
                         isMainContact: true
                     portalUrl: https://stage-portal.peakflo.co/?token=sampletoken
-        '404':
+        "404":
           description: Not Found
-        '400':
+        "400":
           description: Bad Request
 
-  
   /invoices:
     post:
       summary: Add an invoice
       operationId: add-invoice
       responses:
-        '201':
+        "201":
           description: Created
-        '400':
+        "400":
           description: Bad Request
-        '409':
+        "409":
           description: Conflict
       description: Add a new invoice
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Invoice'
+              $ref: "#/components/schemas/Invoice"
             examples:
               example:
                 value:
                   externalId: Inv-a12897888
-                  customerRef: '120989'
-                  issueDate: '2021-04-28T12:30:00'
-                  dueDate: '2021-10-28T12:30:00'
+                  customerRef: "120989"
+                  issueDate: "2021-04-28T12:30:00"
+                  dueDate: "2021-10-28T12:30:00"
                   currency: SGD
                   lineItems:
                     - description: Procurement for desk support
@@ -377,7 +376,7 @@ paths:
       tags:
         - Invoices
     parameters: []
-  '/invoices/{invoiceExternalId}':
+  "/invoices/{invoiceExternalId}":
     parameters:
       - schema:
           type: string
@@ -389,29 +388,29 @@ paths:
       summary: Update an invoice
       operationId: update-invoice
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Invoice'
-        '404':
+                $ref: "#/components/schemas/Invoice"
+        "404":
           description: Not Found
-        '409':
+        "409":
           description: Conflict
       description: Update an invoice. Any field not provided will be left unchanged.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Invoice'
+              $ref: "#/components/schemas/Invoice"
             examples:
               example:
                 value:
                   externalId: Inv-a12897888
-                  customerRef: '120989'
-                  issueDate: '2021-04-28T12:30:00'
-                  dueDate: '2021-10-28T12:30:00'
+                  customerRef: "120989"
+                  issueDate: "2021-04-28T12:30:00"
+                  dueDate: "2021-10-28T12:30:00"
                   currency: SGD
                   lineItems:
                     - description: Procurement for desk support
@@ -439,12 +438,12 @@ paths:
       summary: Delete an invoice
       operationId: delete-invoice
       responses:
-        '204':
+        "204":
           description: No Content
-        '404':
+        "404":
           description: Not Found
       description: Delete an invoice
-  '/invoices/{invoiceExternalId}/attachments':
+  "/invoices/{invoiceExternalId}/attachments":
     parameters:
       - schema:
           type: string
@@ -456,7 +455,7 @@ paths:
       summary: Add an attachment to invoice
       operationId: add-attachment
       responses:
-        '200':
+        "200":
           description: OK
       tags:
         - Invoices
@@ -465,7 +464,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Attachment'
+              $ref: "#/components/schemas/Attachment"
             examples:
               example:
                 value:
@@ -482,42 +481,42 @@ paths:
       summary: Add a credit note
       operationId: add-creditnotes
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreditNote'
-        '400':
+                $ref: "#/components/schemas/CreditNote"
+        "400":
           description: Bad Request
-        '409':
+        "409":
           description: Conflict
       description: Add a credit note
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreditNote'
+              $ref: "#/components/schemas/CreditNote"
             examples:
               example:
                 value:
                   externalId: cn_189237900328930
                   creditNoteNumber: crnum_181234
-                  customerRef: '120989'
+                  customerRef: "120989"
                   totalAmount: 300
                   remainingCredit: 0
                   status: draft
-                  issueDate: '2021-04-28T12:30:00'
+                  issueDate: "2021-04-28T12:30:00"
                   currency: SGD
                   lineItems:
                     - description: Outsourcing services
                       unitAmount: 300
                       quantity: 1
                       totalAmount: 300
-                      itemRef: 'crnum_181234L1 '
+                      itemRef: "crnum_181234L1 "
                   note: Ref. to outsourcing services month of march
         description: The credit note to add
-  '/creditnotes/{creditNoteExternalId}':
+  "/creditnotes/{creditNoteExternalId}":
     parameters:
       - schema:
           type: string
@@ -531,48 +530,48 @@ paths:
       summary: Update a credit note
       operationId: update-creditnote
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreditNote'
-        '404':
+                $ref: "#/components/schemas/CreditNote"
+        "404":
           description: Not Found
-        '409':
+        "409":
           description: Conflict
       description: Update a credit note
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreditNote'
+              $ref: "#/components/schemas/CreditNote"
             examples:
               example:
                 value:
                   externalId: cn_189237900328930
                   creditNoteNumber: crnum_181234
-                  customerRef: '120989'
+                  customerRef: "120989"
                   totalAmount: 300
                   remainingCredit: 0
                   status: draft
-                  issueDate: '2021-04-28T12:30:00'
+                  issueDate: "2021-04-28T12:30:00"
                   currency: SGD
                   lineItems:
                     - description: Outsourcing services
                       unitAmount: 300
                       quantity: 1
                       totalAmount: 300
-                      itemRef: 'crnum_181234L1 '
+                      itemRef: "crnum_181234L1 "
                   note: Ref. to outsourcing services month of march
         description: The credit note to update
     delete:
       summary: Delete a credit note
       operationId: delete-creditnote
       responses:
-        '204':
+        "204":
           description: No Content
-        '404':
+        "404":
           description: Not Found
       tags:
         - Credit Notes
@@ -582,15 +581,15 @@ paths:
       summary: Add a payment
       operationId: add-payment
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Payment'
-        '400':
+                $ref: "#/components/schemas/Payment"
+        "400":
           description: Bad Request
-        '409':
+        "409":
           description: Conflict
       tags:
         - Payments
@@ -599,25 +598,25 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Payment'
+              $ref: "#/components/schemas/Payment"
             examples:
               example:
                 value:
                   externalId: pay_189220000002223
-                  customerRef: '120989'
+                  customerRef: "120989"
                   totalAmount: 400
                   remainingAmount: 0
                   currency: SGD
                   currencyRate: 0
-                  date: '2021-04-28T12:30:00'
+                  date: "2021-04-28T12:30:00"
                   paymentLines:
                     - amount: 400
                       type: invoice
                       id: pay_189220000002223L1
-                  modifiedDate: '2021-10-28T12:30:00'
+                  modifiedDate: "2021-10-28T12:30:00"
                   reference: 120989Ref_98389273
         description: The payment to add
-  '/payments/{paymentExternalId}':
+  "/payments/{paymentExternalId}":
     parameters:
       - schema:
           type: string
@@ -629,11 +628,11 @@ paths:
       summary: Update a payment
       operationId: update-payment
       responses:
-        '200':
+        "200":
           description: OK
-        '404':
+        "404":
           description: Not Found
-        '409':
+        "409":
           description: Conflict
       tags:
         - Payments
@@ -642,36 +641,36 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Payment'
+              $ref: "#/components/schemas/Payment"
             examples:
               example:
                 value:
                   externalId: pay_189220000002223
-                  customerRef: '120989'
+                  customerRef: "120989"
                   totalAmount: 400
                   remainingAmount: 0
                   currency: SGD
                   currencyRate: 0
-                  date: '2021-04-28T12:30:00'
+                  date: "2021-04-28T12:30:00"
                   paymentLines:
                     - amount: 400
                       type: invoice
                       id: pay_189220000002223L1
-                  modifiedDate: '2021-10-28T12:30:00'
+                  modifiedDate: "2021-10-28T12:30:00"
                   reference: 120989Ref_98389273
         description: The payment to update
     delete:
       summary: Delete a payment
       operationId: delete-payment
       responses:
-        '204':
+        "204":
           description: No Content
-        '404':
+        "404":
           description: Not Found
       tags:
         - Payments
       description: Delete a payment
-  
+
   /vendors:
     post:
       tags:
@@ -716,7 +715,7 @@ paths:
                         nullable: true
                       country:
                         type: string
-                        description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+                        description: A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
                         example: "IN"
                       postalCode:
                         type: string
@@ -737,7 +736,7 @@ paths:
                         type: string
                       bankCountry:
                         type: string
-                        description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+                        description: A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
                         example: "IN"
                       accountNumber:
                         type: string
@@ -759,7 +758,7 @@ paths:
                     - individual
                 beneficiaryCountry:
                   type: string
-                  description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+                  description: A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
                   example: "IN"
                 vendorFirstName:
                   type: string
@@ -770,23 +769,23 @@ paths:
                 customField:
                   type: array
                   items:
-                    $ref: '#/components/schemas/CustomFields'
+                    $ref: "#/components/schemas/CustomFields"
             examples:
               Example:
                 value:
                   companyName: YouWin
-                  companyId: '121989'
+                  companyId: "121989"
                   defaultCurrency: USD
                   addresses:
                     - type: billing
                       line1: Sample Address Line 1
                       city: Sample City
                       country: Sample Country
-                      postalCode: '12345'
+                      postalCode: "12345"
                   taxNumber: XYZ456
                   notes: Sample notes
                   bankDetails:
-                    - id: '1'
+                    - id: "1"
                       bankName: Sample Bank
                       bankCode: B123
                       bankCountry: Bank Country
@@ -814,21 +813,21 @@ paths:
                         - "MultiList_Value1"
                         - "MultiList_Value2"
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Vendor'
-              
-        '400':
+                $ref: "#/components/schemas/Vendor"
+
+        "400":
           description: Bad request
           content: {}
-        '409':
+        "409":
           description: Conflict
           content: {}
       x-codegen-request-body-name: Vendors
-  '/vendors/{externalId}':
+  "/vendors/{externalId}":
     get:
       summary: Read a Vendor
       tags:
@@ -838,17 +837,17 @@ paths:
             type: string
           name: externalId
           in: path
-          required: true  
+          required: true
       responses:
-        '200':
+        "200":
           description: Read a Vendor
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Vendor'
-        '404':
+                $ref: "#/components/schemas/Vendor"
+        "404":
           description: Not Found
-        '400':
+        "400":
           description: Bad Request
     put:
       summary: Update vendor
@@ -897,7 +896,7 @@ paths:
                         nullable: true
                       country:
                         type: string
-                        description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+                        description: A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
                         example: "IN"
                       postalCode:
                         type: string
@@ -918,7 +917,7 @@ paths:
                         type: string
                       bankCountry:
                         type: string
-                        description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+                        description: A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
                         example: "IN"
                       accountNumber:
                         type: string
@@ -940,7 +939,7 @@ paths:
                     - individual
                 beneficiaryCountry:
                   type: string
-                  description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+                  description: A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
                   example: "IN"
                 vendorFirstName:
                   type: string
@@ -951,7 +950,7 @@ paths:
                 customField:
                   type: array
                   items:
-                    $ref: '#/components/schemas/CustomFields'
+                    $ref: "#/components/schemas/CustomFields"
             examples:
               Example:
                 value:
@@ -962,11 +961,11 @@ paths:
                       line1: Sample Address Line 1
                       city: Sample City
                       country: Sample Country
-                      postalCode: '12345'
+                      postalCode: "12345"
                   taxNumber: XYZ456
                   notes: Sample notes
                   bankDetails:
-                    - id: '1'
+                    - id: "1"
                       bankName: Sample Bank
                       bankCode: B123
                       bankCountry: Bank Country
@@ -994,17 +993,17 @@ paths:
                         - "MultiList_Value1"
                         - "MultiList_Value2"
       responses:
-        '200':
+        "200":
           description: Update Vendor
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Vendor'
-        '404':
+                $ref: "#/components/schemas/Vendor"
+        "404":
           description: Not Found
-        '400':
+        "400":
           description: Bad Request
-  '/vendors/{externalId}/status':
+  "/vendors/{externalId}/status":
     parameters:
       - schema:
           type: string
@@ -1032,7 +1031,7 @@ paths:
                 value:
                   status: deleted
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -1061,11 +1060,11 @@ paths:
                     vendorId: VENDOR001
                     vendorName: ABC Vendor
                     status: archived
-        '404':
+        "404":
           description: Not Found
-        '409':
+        "409":
           description: Conflict
-  '/vendors/{vendorExternalId}/contacts':
+  "/vendors/{vendorExternalId}/contacts":
     parameters:
       - schema:
           type: string
@@ -1078,12 +1077,12 @@ paths:
       tags:
         - Vendor Contacts
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContactResponse'
+                $ref: "#/components/schemas/ContactResponse"
               examples:
                 Example:
                   value:
@@ -1091,11 +1090,11 @@ paths:
                     firstName: Peter
                     lastName: Wong
                     email: peterwong@mcwin.com
-                    phone: '6591234567'
+                    phone: "6591234567"
                     isMainContact: false
-        '404':
+        "404":
           description: Not Found
-        '409':
+        "409":
           description: Conflict
       operationId: create-vendor-contact
       description: Create a vendor contact
@@ -1103,7 +1102,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ContactRequest'
+              $ref: "#/components/schemas/ContactRequest"
             examples:
               example:
                 value:
@@ -1111,10 +1110,10 @@ paths:
                   firstName: Peter
                   lastName: bearing
                   email: pbearing@mcwin.com
-                  phone: '6591234567'
+                  phone: "6591234567"
                   isMainContact: false
-        description: ''
-  
+        description: ""
+
   "/bill":
     get:
       summary: Get multiple bills with filters and pagination
@@ -1125,12 +1124,12 @@ paths:
           in: query
           schema:
             type: string
-          example: "2024-1-01"
+          example: "2024-07-05"
         - name: updatedAtTo
           in: query
           schema:
             type: string
-          example: "2024-1-01"
+          example: "2024-07-05"
         - name: status
           in: query
           description: Filter bills by status
@@ -1159,7 +1158,7 @@ paths:
             default: 10
             maximum: 100
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
@@ -1169,7 +1168,7 @@ paths:
                   bills:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Bill'
+                      $ref: "#/components/schemas/Bill"
                   totalCount:
                     type: integer
                 example:
@@ -1287,7 +1286,7 @@ paths:
                           type: MultiList
                       subsidiaryReference: "SUB-001"
                   totalCount: 50
-        '400':
+        "400":
           description: Bad Request
     post:
       tags:
@@ -1338,7 +1337,7 @@ paths:
                 items:
                   type: array
                   items:
-                    $ref: '#/components/schemas/LineItem-Bill'
+                    $ref: "#/components/schemas/LineItem-Bill"
                 receiptDate:
                   type: string
                 paymentMadeDate:
@@ -1346,7 +1345,7 @@ paths:
                 customField:
                   type: array
                   items:
-                    $ref: '#/components/schemas/CustomFields'
+                    $ref: "#/components/schemas/CustomFields"
                 subsidiaryReference:
                   type: string
             examples:
@@ -1423,18 +1422,18 @@ paths:
                         - "MultiList_Value2"
                   subsidiaryReference: "SUB-001"
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Bill'
-        '400':
+                $ref: "#/components/schemas/Bill"
+        "400":
           description: Bad request
           content: {}
-        '409':
+        "409":
           description: Conflict
-          content: {}        
+          content: {}
   "/bill/{billExternalId}":
     get:
       summary: Read a bill
@@ -1445,10 +1444,10 @@ paths:
             type: string
           name: billExternalId
           in: path
-          required: true  
+          required: true
       responses:
-        '200':
-          description: 'Read bill info'
+        "200":
+          description: "Read bill info"
           content:
             application/json:
               schema:
@@ -1479,7 +1478,7 @@ paths:
                   attachments:
                     type: array
                     description: List of attachments
-                    $ref: '#/components/schemas/APAttachments'
+                    $ref: "#/components/schemas/APAttachments"
                   currency:
                     type: string
                   currencyRate:
@@ -1527,7 +1526,7 @@ paths:
                   items:
                     type: array
                     items:
-                      $ref: '#/components/schemas/LineItem-Bill'
+                      $ref: "#/components/schemas/LineItem-Bill"
                   receiptDate:
                     type: string
                   paymentMadeDate:
@@ -1535,9 +1534,9 @@ paths:
                   customField:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Bill-CustomFields'  
+                      $ref: "#/components/schemas/Bill-CustomFields"
                   subsidiaryReference:
-                    type: string   
+                    type: string
               examples:
                 Example:
                   value:
@@ -1552,12 +1551,12 @@ paths:
                     scheduledDate: "2023-12-15T23:59:59Z"
                     updatedDate: "2023-12-15T23:59:59Z"
                     attachments:
-                    - id: "attachment_id_1"
-                      name: "Attachment 1"
-                      contentType: "application/pdf"
-                      fileSize: 1024
-                      fileType: "invoice"
-                      base64: "Base64EncodedContent1"
+                      - id: "attachment_id_1"
+                        name: "Attachment 1"
+                        contentType: "application/pdf"
+                        fileSize: 1024
+                        fileType: "invoice"
+                        base64: "Base64EncodedContent1"
                     currency: "USD"
                     currencyRate: 1
                     subTotal: 500
@@ -1652,9 +1651,9 @@ paths:
                           - "MultiList_Value2"
                         type: MultiList
                     subsidiaryReference: "SUB-001"
-        '404':
+        "404":
           description: Not Found
-        '400':
+        "400":
           description: Bad Request
     put:
       tags:
@@ -1664,8 +1663,8 @@ paths:
         Update Bill API offers two primary functionalities: updating bill information and updating the status of a bill to "paid". 
 
         to mark a bill as paid, users must supply the bill ID, along with the status set to "paid", vendor ID, and payment amount. 
-        
-        Note that when updating a bill to "paid", the parameters status, vendorId, and paymentAmount are mandatory, while other parameters are optional for updating additional bill details. 
+
+        Note that when updating a bill to "paid", the parameters status, vendorId, and paymentAmount are mandatory, while other parameters are optional for updating additional bill details.
       operationId: update-bill
       parameters:
         - schema:
@@ -1714,7 +1713,7 @@ paths:
                 items:
                   type: array
                   items:
-                    $ref: '#/components/schemas/LineItem-Bill'
+                    $ref: "#/components/schemas/LineItem-Bill"
                 receiptDate:
                   type: string
                 paymentMadeDate:
@@ -1722,7 +1721,7 @@ paths:
                 customField:
                   type: array
                   items:
-                    $ref: '#/components/schemas/CustomFields'
+                    $ref: "#/components/schemas/CustomFields"
                 subsidiaryReference:
                   type: string
             examples:
@@ -1799,16 +1798,16 @@ paths:
                         - "MultiList_Value2"
                   subsidiaryReference: "SUB-001"
       responses:
-        '200':
+        "200":
           description: Ok
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Bill'
-        '400':
+                $ref: "#/components/schemas/Bill"
+        "400":
           description: Bad request
           content: {}
-        '409':
+        "409":
           description: Conflict
           content: {}
     delete:
@@ -1817,9 +1816,9 @@ paths:
       summary: Delete a bill
       operationId: delete-bill
       responses:
-        '204':
+        "204":
           description: No Content
-        '404':
+        "404":
           description: Not Found
       description: Delete a bill
       parameters:
@@ -1830,24 +1829,24 @@ paths:
           required: true
   "/bill/{billExternalId}/attachments":
     parameters:
-        - schema:
-            type: string
-          name: billExternalId
-          in: path
-          required: true
+      - schema:
+          type: string
+        name: billExternalId
+        in: path
+        required: true
     put:
       summary: Add an attachment to Bill
       operationId: add-bill-attachment
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/APAttachments'
-        '404':
+                $ref: "#/components/schemas/APAttachments"
+        "404":
           description: Not Found
-        '400':
+        "400":
           description: Bad Request
       tags:
         - Bills
@@ -1856,7 +1855,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/APAttachments'
+              $ref: "#/components/schemas/APAttachments"
             examples:
               example:
                 value:
@@ -1867,109 +1866,6 @@ paths:
                   fileType: "invoice"
                   base64: "Base64EncodedContent1"
   "/bill-payment":
-    get:
-      tags:
-        - Bill Payments
-      summary: Get bill payments with pagination and filters
-      parameters:
-        - name: updatedAtFrom
-          in: query
-          schema:
-            type: string
-          example: "2024-1-01"
-        - name: updatedAtTo
-          in: query
-          schema:
-            type: string
-          example: "2024-1-01"
-        - name: vendorExternalId
-          in: query
-          description: Filter bills-payments by external vendor Id
-          schema:
-            type: string
-          example: "cf7e6236-c0ef-41d8-a235-7045a551bacb"
-        - name: page
-          in: query
-          description: Page number for pagination
-          schema:
-            type: integer
-            minimum: 1
-            default: 1
-        - name: limit
-          in: query
-          description: Number of bill-payments per page
-          schema:
-            type: integer
-            minimum: 1
-            default: 10
-            maximum: 100
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  billPayments:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/BillPayment-2'
-                  totalCount:
-                    type: integer
-              example:
-                billPayments:
-                  - externalPaymentId: "21964c8b-c61b-439b-bb27-d12ebaf8e85ec"
-                    lastUpdatedAt: "2024-07-03T01:00:00+06:00"
-                    paymentDate: "2023-11-28"
-                    scheduledDate: "2023-11-28"
-                    paymentReference: "INV-2023-001"
-                    referenceObject: "PO-00113"
-                    externalVendorId: "VENDOR-123"
-                    vendorName: "VENDOR-123"
-                    accountNumber: "1122334455"
-                    receiverCurrency: "USD"
-                    amount: 500
-                    remainingAmount: 400 
-                    paymentFee: 10
-                    fxRate: 1.5
-                    status: "scheduled"
-                    baseCurrency: "SGD"
-                    convertedAmount: 750
-                    customField:
-                      - customFieldNumber: "CustomFieldNumber1 (type - Number)"
-                        name: "CustomField1"
-                        value: 2
-                        type: "Number"
-                      - customFieldNumber: "CustomFieldNumber2 (type - Date)"
-                        name: "CustomField2"
-                        value: "11/03/2024"
-                        type: "Date"
-                      - customFieldNumber: "CustomFieldNumber3 (type - Input)"
-                        name: "CustomField3"
-                        value: "Value"
-                        type: "Input"
-                      - customFieldNumber: "CustomFieldNumber4 (type - List)"
-                        name: "CustomField4"
-                        value: "List_Value1"
-                        type: "List"
-                      - customFieldNumber: "CustomFieldNumber5 (type - MultiList)"
-                        name: "CustomField5"
-                        value:
-                          - "MultiList_Value1"
-                          - "MultiList_Value2"
-                        type: "MultiList"
-                    bills: 
-                      - externalBillId: "1234567890"
-                        billNumber: "Bill-001"
-                        status: "scheduled"
-                        appliedAmount: 100
-                        totalAmount: 500
-                totalCount: 50
-        '400':
-          description: Bad Request
-
-      
     post:
       tags:
         - Bill Payments
@@ -2029,69 +1925,19 @@ paths:
                   convertedAmount: 750
                   receiverCurrency: "USD"
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BillPayment-create'
-        '400':
+                $ref: "#/components/schemas/BillPayment-create"
+        "400":
           description: Bad request
           content: {}
-        '409':
+        "409":
           description: Conflict
           content: {}
   "/bill-payment/{externalId}":
-    get:
-      tags:
-        - Bill Payments
-      summary: Read a bill-payment
-      parameters:
-        - schema:
-            type: string
-          name: externalId
-          in: path
-          required: true  
-      responses:
-        '200':
-          description: 'Read bill payment info'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BillPayment-2'
-              example:
-                externalPaymentId: "21964c8b-c61b-439b-bb27-d12ebaf8e85ec"
-                lastUpdatedAt: "2024-07-03T01:00:00+06:00"
-                paymentDate: "2023-11-28"                
-                paymentReference: "INV-2023-001"
-                referenceObject": "PO-00113"
-                scheduledDate: "2023-11-28"
-                externalVendorId: "VENDOR-123"
-                vendorName: "VENDOR-123"
-                accountNumber: "1122334455"
-                receiverCurrency: "USD"
-                amount: 500
-                remainingAmount: 400 
-                paymentFee: 10
-                fxRate: 1.5
-                status: "scheduled"
-                baseCurrency: "SGD"
-                convertedAmount: 750
-                customField:
-                  - customFieldNumber: CustomFieldNumber1 (type - Number)
-                    name: "CustomField1"
-                    value: 2
-                    type: Number
-                bills: 
-                  - externalBillId: "1234567890"
-                    billNumber: "Bill-001"
-                    status: "scheduled"
-                    appliedAmount: 100
-                    totalAmount: 500
-        '404':
-            description: Not Found
-        '400':
-            description: Bad Request
     put:
       tags:
         - Bill Payments
@@ -2158,16 +2004,16 @@ paths:
                   convertedAmount: 750
                   receiverCurrency: "USD"
       responses:
-        '200':
+        "200":
           description: Ok
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BillPayment'
-        '400':
+                $ref: "#/components/schemas/BillPayment"
+        "400":
           description: Bad request
           content: {}
-        '409':
+        "409":
           description: Conflict
           content: {}
 
@@ -2213,7 +2059,7 @@ paths:
             default: 10
             maximum: 100
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
@@ -2223,7 +2069,7 @@ paths:
                   purchaseOrders:
                     type: array
                     items:
-                      $ref: '#/components/schemas/PurchaseOrder'
+                      $ref: "#/components/schemas/PurchaseOrder"
                   totalCount:
                     type: integer
                 example:
@@ -2312,7 +2158,7 @@ paths:
                             - "MultiList_Value2"
                       subsidiaryReference: "SUB-001"
                   totalCount: 50
-        '404':
+        "404":
           description: Not Found
           content: {}
     post:
@@ -2360,7 +2206,7 @@ paths:
                 items:
                   type: array
                   items:
-                    $ref: '#/components/schemas/LineItem-2'
+                    $ref: "#/components/schemas/LineItem-2"
                 PONumber:
                   type: string
                 PQNumber:
@@ -2378,7 +2224,7 @@ paths:
                 customField:
                   type: array
                   items:
-                    $ref: '#/components/schemas/CustomFields'
+                    $ref: "#/components/schemas/CustomFields"
                 subsidiaryReference:
                   type: string
               required:
@@ -2473,16 +2319,16 @@ paths:
                         - "MultiList_Value2"
                   subsidiaryReference: "SUB-001"
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PurchaseOrder'
-        '400':
+                $ref: "#/components/schemas/PurchaseOrder"
+        "400":
           description: Bad request
           content: {}
-        '409':
+        "409":
           description: Conflict
           content: {}
   "/purchase-order/{externalId}":
@@ -2500,7 +2346,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -2542,11 +2388,11 @@ paths:
                   attachments:
                     type: array
                     description: List of attachments
-                    $ref: '#/components/schemas/APAttachments'
+                    $ref: "#/components/schemas/APAttachments"
                   items:
                     type: array
                     items:
-                      $ref: '#/components/schemas/LineItem-2'
+                      $ref: "#/components/schemas/LineItem-2"
                   PONumber:
                     type: string
                   PQNumber:
@@ -2572,9 +2418,9 @@ paths:
                   customField:
                     type: array
                     items:
-                      $ref: '#/components/schemas/CustomFields'
+                      $ref: "#/components/schemas/CustomFields"
                   subsidiaryReference:
-                    type: string  
+                    type: string
               examples:
                 Example:
                   value:
@@ -2660,7 +2506,7 @@ paths:
                           - "MultiList_Value1"
                           - "MultiList_Value2"
                     subsidiaryReference: "SUB-001"
-        '404':
+        "404":
           description: Not Found
           content: {}
     put:
@@ -2717,7 +2563,7 @@ paths:
                 items:
                   type: array
                   items:
-                    $ref: '#/components/schemas/LineItem-2'
+                    $ref: "#/components/schemas/LineItem-2"
                 PONumber:
                   type: string
                 PQNumber:
@@ -2743,7 +2589,7 @@ paths:
                 customField:
                   type: array
                   items:
-                    $ref: '#/components/schemas/CustomFields'
+                    $ref: "#/components/schemas/CustomFields"
                 subsidiaryReference:
                   type: string
             examples:
@@ -2825,16 +2671,16 @@ paths:
                         - "MultiList_Value2"
                   subsidiaryReference: "SUB-001"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PurchaseOrder'
-        '400':
+                $ref: "#/components/schemas/PurchaseOrder"
+        "400":
           description: Bad request
           content: {}
-        '404':
+        "404":
           description: Not Found
           content: {}
     delete:
@@ -2851,30 +2697,30 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        "204":
           description: No Content
-        '404':
+        "404":
           description: Not Found
   "/purchase-order/{externalId}/attachments":
     parameters:
-        - schema:
-            type: string
-          name: externalId
-          in: path
-          required: true
+      - schema:
+          type: string
+        name: externalId
+        in: path
+        required: true
     put:
       summary: Add an attachment to purchase order
       operationId: add-po-attachment
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/APAttachments'
-        '404':
+                $ref: "#/components/schemas/APAttachments"
+        "404":
           description: Not Found
-        '400':
+        "400":
           description: Bad Request
       tags:
         - Vendor Purchase Orders
@@ -2883,7 +2729,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/APAttachments'
+              $ref: "#/components/schemas/APAttachments"
             examples:
               example:
                 value:
@@ -2917,7 +2763,7 @@ paths:
                 items:
                   type: array
                   items:
-                    $ref: '#/components/schemas/LineItem-2'
+                    $ref: "#/components/schemas/LineItem-2"
                 vendorId:
                   type: string
                 receiptNoteAmount:
@@ -2943,7 +2789,7 @@ paths:
                 customField:
                   type: array
                   items:
-                    $ref: '#/components/schemas/CustomFields'
+                    $ref: "#/components/schemas/CustomFields"
                 subsidiaryReference:
                   type: string
               required:
@@ -3020,16 +2866,16 @@ paths:
                         - "MultiList_Value2"
                   subsidiaryReference: "SUB-001"
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReceiptNote'
-        '400':
+                $ref: "#/components/schemas/ReceiptNote"
+        "400":
           description: Bad request
           content: {}
-        '409':
+        "409":
           description: Conflict
           content: {}
     get:
@@ -3073,7 +2919,7 @@ paths:
             default: 10
             maximum: 100
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
@@ -3083,7 +2929,7 @@ paths:
                   receiptNotes:
                     type: array
                     items:
-                      $ref: '#/components/schemas/ReceiptNote'
+                      $ref: "#/components/schemas/ReceiptNote"
                   totalCount:
                     type: integer
                 example:
@@ -3160,7 +3006,7 @@ paths:
                             - "MultiList_Value2"
                       subsidiaryReference: "SUB-001"
                   totalCount: 50
-        '404':
+        "404":
           description: Not Found
           content: {}
   "/receipt-notes/{externalId}":
@@ -3178,7 +3024,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -3192,11 +3038,11 @@ paths:
                   attachments:
                     type: array
                     description: List of attachments
-                    $ref: '#/components/schemas/APAttachments'
+                    $ref: "#/components/schemas/APAttachments"
                   items:
                     type: array
                     items:
-                      $ref: '#/components/schemas/LineItem-2'
+                      $ref: "#/components/schemas/LineItem-2"
                   vendorId:
                     type: string
                   receiptNoteAmount:
@@ -3224,9 +3070,9 @@ paths:
                   customField:
                     type: array
                     items:
-                      $ref: '#/components/schemas/CustomFields'
+                      $ref: "#/components/schemas/CustomFields"
                   subsidiaryReference:
-                    type: string  
+                    type: string
               examples:
                 Example:
                   value:
@@ -3234,12 +3080,12 @@ paths:
                     receiptNoteNumber: "RN12345"
                     deliveryDate: "2023-11-28"
                     attachments:
-                    - id: "attachment_id_2"
-                      name: "Updated Attachment"
-                      contentType: "application/pdf"
-                      fileSize: 2048
-                      fileType: "invoice"
-                      base64: "UpdatedBase64EncodedContent"
+                      - id: "attachment_id_2"
+                        name: "Updated Attachment"
+                        contentType: "application/pdf"
+                        fileSize: 2048
+                        fileType: "invoice"
+                        base64: "UpdatedBase64EncodedContent"
                     items:
                       - itemId: "ITEM002"
                         sourceId: "line-17303130-xyz"
@@ -3301,7 +3147,7 @@ paths:
                           - "MultiList_Value1"
                           - "MultiList_Value2"
                     subsidiaryReference: "SUB-001"
-        '404':
+        "404":
           description: Not Found
           content: {}
     put:
@@ -3332,7 +3178,7 @@ paths:
                 items:
                   type: array
                   items:
-                    $ref: '#/components/schemas/LineItem-2'
+                    $ref: "#/components/schemas/LineItem-2"
                 vendorId:
                   type: string
                 receiptNoteAmount:
@@ -3358,7 +3204,7 @@ paths:
                 customField:
                   type: array
                   items:
-                    $ref: '#/components/schemas/CustomFields'
+                    $ref: "#/components/schemas/CustomFields"
                 subsidiaryReference:
                   type: string
               required:
@@ -3437,16 +3283,16 @@ paths:
                         - "MultiList_Value2"
                   subsidiaryReference: "SUB-001"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReceiptNote'
-        '400':
+                $ref: "#/components/schemas/ReceiptNote"
+        "400":
           description: Bad request
           content: {}
-        '404':
+        "404":
           description: Not Found
           content: {}
     delete:
@@ -3463,30 +3309,30 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        "204":
           description: No Content
-        '404':
+        "404":
           description: Not Found
   "/receipt-notes/{externalId}/attachments":
     parameters:
-        - schema:
-            type: string
-          name: externalId
-          in: path
-          required: true
+      - schema:
+          type: string
+        name: externalId
+        in: path
+        required: true
     put:
       summary: Add an attachment to receipt note
       operationId: add-rn-attachment
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/APAttachments'
-        '404':
+                $ref: "#/components/schemas/APAttachments"
+        "404":
           description: Not Found
-        '400':
+        "400":
           description: Bad Request
       tags:
         - Vendor Receipt Notes
@@ -3495,7 +3341,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/APAttachments'
+              $ref: "#/components/schemas/APAttachments"
             examples:
               example:
                 value:
@@ -3547,7 +3393,7 @@ paths:
             default: 10
             maximum: 100
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
@@ -3557,7 +3403,7 @@ paths:
                   vendorCreditNotes:
                     type: array
                     items:
-                      $ref: '#/components/schemas/VendorCreditNote'
+                      $ref: "#/components/schemas/VendorCreditNote"
                   totalCount:
                     type: integer
                 example:
@@ -3585,7 +3431,7 @@ paths:
                       convertedAmount: 1875
                       baseCurrency: "EUR"
                   totalCount: 50
-        '404':
+        "404":
           description: Not Found
           content: {}
     post:
@@ -3654,17 +3500,16 @@ paths:
                   convertedAmount: 1875
                   baseCurrency: "EUR"
       responses:
-        '201':
+        "201":
           description: Created
-          content: 
+          content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VendorCreditNote'
-        '400':
+                $ref: "#/components/schemas/VendorCreditNote"
+        "400":
           description: Bad request
-          content:
-            {}
-        '409':
+          content: {}
+        "409":
           description: Conflict
           content: {}
   "/vendor-credit-notes/{externalId}":
@@ -3682,7 +3527,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -3719,7 +3564,7 @@ paths:
                   attachments:
                     type: array
                     description: List of attachments
-                    $ref: '#/components/schemas/APAttachments'
+                    $ref: "#/components/schemas/APAttachments"
                   fxRate:
                     type: number
                   convertedAmount:
@@ -3751,7 +3596,7 @@ paths:
                     fxRate: 1.25
                     convertedAmount: 1875
                     baseCurrency: "EUR"
-        '404':
+        "404":
           description: Not Found
           content: {}
     put:
@@ -3826,16 +3671,16 @@ paths:
                   convertedAmount: 1875
                   baseCurrency: "EUR"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VendorCreditNote'
-        '400':
+                $ref: "#/components/schemas/VendorCreditNote"
+        "400":
           description: Bad request
           content: {}
-        '404':
+        "404":
           description: Not Found
           content: {}
 
@@ -3892,27 +3737,26 @@ paths:
                   hsnCode: "62.13.90"
                   type: "Product"
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
-        '400':
+                $ref: "#/components/schemas/Item"
+        "400":
           description: Bad request
           content: {}
-        '409':
+        "409":
           description: Conflict
           content: {}
-      
- 
+
   "/items/{externalId}":
     parameters:
-        - schema:
-            type: string
-          name: externalId
-          in: path
-          required: true
+      - schema:
+          type: string
+        name: externalId
+        in: path
+        required: true
     put:
       tags:
         - Items
@@ -3962,16 +3806,16 @@ paths:
                   hsnCode: "62.13.90"
                   type: "Product"
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
-        '400':
+                $ref: "#/components/schemas/Item"
+        "400":
           description: Bad request
           content: {}
-        '409':
+        "409":
           description: Conflict
           content: {}
 
@@ -3997,7 +3841,7 @@ components:
               lastName: string
               middleName: string
               email: johndoe@peakflo.co
-              phone: '6591234567'
+              phone: "6591234567"
               isMainContact: false
       description: The customer model
       properties:
@@ -4006,7 +3850,7 @@ components:
           description: The external Id of the company
         externalRefNumber:
           type: array
-          description: Additional IDs given to the customer for identification purposes 
+          description: Additional IDs given to the customer for identification purposes
         companyName:
           type: string
           description: The company name
@@ -4040,7 +3884,7 @@ components:
         contacts:
           type: array
           items:
-            $ref: '#/components/schemas/ContactRequest'
+            $ref: "#/components/schemas/ContactRequest"
         statementFile:
           type: string
           description: The statement file
@@ -4048,10 +3892,10 @@ components:
           type: array
           description: The customers addresses
           items:
-            $ref: '#/components/schemas/Address'
+            $ref: "#/components/schemas/Address"
         portalUrl:
           type: string
-          description: Peakflo Portal URL 
+          description: Peakflo Portal URL
       required:
         - externalId
         - companyName
@@ -4080,7 +3924,7 @@ components:
         phone:
           type: string
           description: The phone number of the contact along with country code
-          example: '6591234567'
+          example: "6591234567"
         isMainContact:
           type: boolean
           description: Indicate if this is the main contact.
@@ -4134,7 +3978,7 @@ components:
         phone:
           type: string
           description: The phone number of the contact along with country code
-          example: '6591234567'
+          example: "6591234567"
         isMainContact:
           type: boolean
           description: Indicate if this is the main contact.
@@ -4172,7 +4016,7 @@ components:
           description: Amount per unit for the line item
         quantity:
           type: number
-          description: 'Number of units '
+          description: "Number of units "
         totalAmount:
           type: number
           description: The total amount
@@ -4187,7 +4031,7 @@ components:
           description: The tax amount
         itemRef:
           type: string
-          description: 'Reference to the product, service type, or inventory item, to which the line item is linked.'
+          description: "Reference to the product, service type, or inventory item, to which the line item is linked."
       required:
         - description
         - unitAmount
@@ -4260,11 +4104,11 @@ components:
         taxes:
           type: array
           items:
-          $ref: '#/components/schemas/LineItemTax'
+          $ref: "#/components/schemas/LineItemTax"
         discounts:
           type: array
           items:
-          $ref: '#/components/schemas/LineItemDiscount'
+          $ref: "#/components/schemas/LineItemDiscount"
         totalTax:
           type: number
           description: Total tax amount for the item
@@ -4280,7 +4124,7 @@ components:
         customField:
           type: array
           items:
-          $ref: '#/components/schemas/CustomFields'
+          $ref: "#/components/schemas/CustomFields"
       required:
         - itemId
         - name
@@ -4353,11 +4197,11 @@ components:
         taxes:
           type: array
           items:
-          $ref: '#/components/schemas/LineItemTax'
+          $ref: "#/components/schemas/LineItemTax"
         discounts:
           type: array
           items:
-          $ref: '#/components/schemas/LineItemDiscount'
+          $ref: "#/components/schemas/LineItemDiscount"
         totalTax:
           type: number
           description: Total tax amount for the item
@@ -4373,7 +4217,7 @@ components:
         customField:
           type: array
           items:
-          $ref: '#/components/schemas/Bill-CustomFields'
+          $ref: "#/components/schemas/Bill-CustomFields"
       required:
         - itemId
         - name
@@ -4446,7 +4290,7 @@ components:
           description: The external Id for the attachment
         name:
           type: string
-          description: 'Name of the attachment '
+          description: "Name of the attachment "
         contentType:
           type: string
           description: Content type of attachment
@@ -4457,7 +4301,7 @@ components:
           type: string
           description: The date at which the attachment created. Follow ISO 8601 format
         fileType:
-          $ref: '#/components/schemas/FileType'
+          $ref: "#/components/schemas/FileType"
       required:
         - externalId
         - name
@@ -4514,7 +4358,7 @@ components:
         - fileType
         - base64
     Invoice:
-      description: ''
+      description: ""
       type: object
       properties:
         externalId:
@@ -4526,11 +4370,11 @@ components:
         issueDate:
           type: string
           description: Invoice issue date. Follow ISO8601 format
-          example: '2021-04-28T12:30:00'
+          example: "2021-04-28T12:30:00"
         dueDate:
           type: string
           description: The invoice due date. Follow ISO8601 format
-          example: '2021-10-28T12:30:00'
+          example: "2021-10-28T12:30:00"
         totalAmount:
           type: number
           description: The total invoice amount
@@ -4555,7 +4399,7 @@ components:
           uniqueItems: true
           description: The invoice line items
           items:
-            $ref: '#/components/schemas/LineItem'
+            $ref: "#/components/schemas/LineItem"
         totalDiscount:
           type: number
           description: Discount on invoice total amount
@@ -4585,7 +4429,7 @@ components:
           uniqueItems: true
           description: The invoice attachments
           items:
-            $ref: '#/components/schemas/Attachment'
+            $ref: "#/components/schemas/Attachment"
         expectedPaymentDate:
           type: string
           description: The expected payment date. Follow ISO8601 format
@@ -4615,7 +4459,7 @@ components:
           description: The city
         country:
           type: string
-          description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+          description: A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
           example: "IN"
         postalCode:
           type: string
@@ -4640,7 +4484,7 @@ components:
         - country
         - postalCode
     CreditNote:
-      description: ''
+      description: ""
       type: object
       properties:
         externalId:
@@ -4692,7 +4536,7 @@ components:
         lineItems:
           type: array
           items:
-            $ref: '#/components/schemas/LineItem'
+            $ref: "#/components/schemas/LineItem"
         modifiedDate:
           type: string
           description: Credit note last modified date. Follow ISO8601 format
@@ -4707,7 +4551,7 @@ components:
         - issueDate
         - currency
     Payment:
-      description: ''
+      description: ""
       type: object
       properties:
         externalId:
@@ -4745,7 +4589,7 @@ components:
           uniqueItems: true
           minItems: 1
           items:
-            $ref: '#/components/schemas/PaymentLine'
+            $ref: "#/components/schemas/PaymentLine"
         modifiedDate:
           type: string
           minLength: 1
@@ -4858,7 +4702,7 @@ components:
                 example: "Vendorville"
               country:
                 type: string
-                description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+                description: A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
                 example: "IN"
               postalCode:
                 type: string
@@ -4892,7 +4736,7 @@ components:
                 example: "VB456"
               bankCountry:
                 type: string
-                description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+                description: A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
                 example: "IN"
               accountNumber:
                 type: string
@@ -4921,7 +4765,7 @@ components:
           example: "vendor"
         beneficiaryCountry:
           type: string
-          description:  A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
+          description: A string representing the country in **ALPHA-2 code**. For a list, see [Country Codes](https://www.iban.com/country-codes).
           example: "IN"
         vendorFirstName:
           type: string
@@ -4938,7 +4782,7 @@ components:
         customField:
           type: array
           items:
-            $ref: '#/components/schemas/CustomFields'
+            $ref: "#/components/schemas/CustomFields"
       required:
         - companyName
         - companyId
@@ -5060,7 +4904,7 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/LineItem-Bill'
+            $ref: "#/components/schemas/LineItem-Bill"
           description: List of items included in the bill
         receiptDate:
           type: string
@@ -5073,7 +4917,7 @@ components:
         customField:
           type: array
           items:
-            $ref: '#/components/schemas/Bill-CustomFields'
+            $ref: "#/components/schemas/Bill-CustomFields"
         subsidiaryReference:
           type: string
           example: "SUB-001"
@@ -5154,98 +4998,98 @@ components:
       description: Details of a bill payment
       type: object
       properties:
-          externalPaymentId:
-            type: string
-            description: External Payment ID of the bill payment
-            example: "EXT123"
-          lastUpdatedAt:
-            type: string
-            description: Timestamp of Last update action
-            example: "2024-07-03T01:00:00+06:00"
-          paymentDate:
-            type: string
-            description: Date of payment
-            example: "2023-11-28"
-          paymentReference:
-            type: string
-            description: "Payment Reference"
-            example: "INV-2023-001"
-          referenceObject:
-            type: string
-            description: Reference object ID
-            example: "PO-00113"
-          scheduledDate:
-            type: string
-            description: Date when payment is scheduled
-            example: "2023-11-28"
-          externalVendorId:
-            type: string
-            description: ExternalID of the vendor associated with the payment
-            example: "VENDOR456"
-          vendorName:
-            type: string
-            description: Name of the vendor associated with the payment
-            example: "VENDOR1234"
-          accountNumber:
-            type: string
-            description: Account number of Account associated with the payment
-            example: "1122334455"
-          receiverCurrency:
-            type: string
-            description: Currency code of Receiver
-            example: "USD"
-          amount:
-            type: number
-            description: Amount of bill payment
-            example: 500
-          remainingAmount:
-            type: number
-            description: Amount remaining to be paid
-            example: 100
-          paymentFee:
-            type: number
-            description: Payment Fee associated with payment
-            example: 10
-          fxRate:
-            type: number
-            description: Currency conversion rate
-            example: 1.5
-          status:
-            type: string
-            description: Updated status of bill payment
-            example: "paid"
-          baseCurrency:
-            type: string
-            description: Currency of the payment
-            example: "USD"
-          convertedAmount:
-            type: number
-            description: Converted amount in base currency
-            example: 750
-          customField:
-            type: array
-            items:
-              $ref: '#/components/schemas/Bill-CustomFields'  
-          bills:
-            type: array
-            items:
-              type: object
-              properties:
-                externalBillId: 
-                  type: string
-                billNumber: 
-                  type: string
-                status: 
-                  type: string
-                  enum:
-                    - draft
-                    - scheduled
-                    - processing
-                    - paid
-                appliedAmount: 
-                  type: number
-                totalAmount: 
-                  type: number
+        externalPaymentId:
+          type: string
+          description: External Payment ID of the bill payment
+          example: "EXT123"
+        lastUpdatedAt:
+          type: string
+          description: Timestamp of Last update action
+          example: "2024-07-03T01:00:00+06:00"
+        paymentDate:
+          type: string
+          description: Date of payment
+          example: "2023-11-28"
+        paymentReference:
+          type: string
+          description: "Payment Reference"
+          example: "INV-2023-001"
+        referenceObject:
+          type: string
+          description: Reference object ID
+          example: "PO-00113"
+        scheduledDate:
+          type: string
+          description: Date when payment is scheduled
+          example: "2023-11-28"
+        externalVendorId:
+          type: string
+          description: ExternalID of the vendor associated with the payment
+          example: "VENDOR456"
+        vendorName:
+          type: string
+          description: Name of the vendor associated with the payment
+          example: "VENDOR1234"
+        accountNumber:
+          type: string
+          description: Account number of Account associated with the payment
+          example: "1122334455"
+        receiverCurrency:
+          type: string
+          description: Currency code of Receiver
+          example: "USD"
+        amount:
+          type: number
+          description: Amount of bill payment
+          example: 500
+        remainingAmount:
+          type: number
+          description: Amount remaining to be paid
+          example: 100
+        paymentFee:
+          type: number
+          description: Payment Fee associated with payment
+          example: 10
+        fxRate:
+          type: number
+          description: Currency conversion rate
+          example: 1.5
+        status:
+          type: string
+          description: Updated status of bill payment
+          example: "paid"
+        baseCurrency:
+          type: string
+          description: Currency of the payment
+          example: "USD"
+        convertedAmount:
+          type: number
+          description: Converted amount in base currency
+          example: 750
+        customField:
+          type: array
+          items:
+            $ref: "#/components/schemas/Bill-CustomFields"
+        bills:
+          type: array
+          items:
+            type: object
+            properties:
+              externalBillId:
+                type: string
+              billNumber:
+                type: string
+              status:
+                type: string
+                enum:
+                  - draft
+                  - scheduled
+                  - processing
+                  - paid
+              appliedAmount:
+                type: number
+              totalAmount:
+                type: number
     BillPayment-Create:
       description: Details of a bill payment
       type: object
@@ -5449,7 +5293,7 @@ components:
               customField:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CustomFields'
+                  $ref: "#/components/schemas/CustomFields"
           description: List of items included in the purchase order
         PONumber:
           type: string
@@ -5492,7 +5336,7 @@ components:
         customField:
           type: array
           items:
-            $ref: '#/components/schemas/CustomFields' 
+            $ref: "#/components/schemas/CustomFields"
         subsidiaryReference:
           type: string
           example: "SUB-001"
@@ -5591,7 +5435,7 @@ components:
               customField:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CustomFields'
+                  $ref: "#/components/schemas/CustomFields"
           description: List of items included in the receipt note
         vendorId:
           type: string
@@ -5642,7 +5486,7 @@ components:
         customField:
           type: array
           items:
-            $ref: '#/components/schemas/CustomFields'
+            $ref: "#/components/schemas/CustomFields"
         subsidiaryReference:
           type: string
           example: "SUB-001"
@@ -5788,7 +5632,7 @@ components:
         - unit
         - currency
     CustomFields:
-      type: object  
+      type: object
       x-examples:
         Example:
           customFieldNumber: "customField1"
@@ -5800,20 +5644,20 @@ components:
           description: Custom field number can be seen in the peakflo web UI
         name:
           type: string
-          description:  Custom field name
+          description: Custom field name
         value:
           oneOf:
-          - type: string
-          - type: number
-          - type: array
-            items:
-              type: string  
-          description:  Custom field value. can be string, number or array. dates needs to be sent in ISO 8601 date format
+            - type: string
+            - type: number
+            - type: array
+              items:
+                type: string
+          description: Custom field value. can be string, number or array. dates needs to be sent in ISO 8601 date format
       required:
         - customFieldNumber
         - value
     Bill-CustomFields:
-      type: object  
+      type: object
       x-examples:
         Example:
           customFieldNumber: "customField1"
@@ -5826,27 +5670,27 @@ components:
           description: Custom field number can be seen in the peakflo web UI
         name:
           type: string
-          description:  Custom field name
+          description: Custom field name
         type:
           oneOf:
-          - type: string
-          - type: number
-          - type: array
-            items:
-              type: string  
-          description:  Custom field type. can be string, number, date or array of strings
+            - type: string
+            - type: number
+            - type: array
+              items:
+                type: string
+          description: Custom field type. can be string, number, date or array of strings
         value:
           oneOf:
-          - type: string
-          - type: number
-          - type: array
-            items:
-              type: string  
-          description:  Custom field value. can be string, number or array of strings. dates needs to be sent in ISO 8601 date format
+            - type: string
+            - type: number
+            - type: array
+              items:
+                type: string
+          description: Custom field value. can be string, number or array of strings. dates needs to be sent in ISO 8601 date format
       required:
         - customFieldNumber
         - value
- 
+
   securitySchemes:
     bearerAuth:
       type: http
