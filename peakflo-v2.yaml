@@ -114,6 +114,8 @@ paths:
                     scheduledDate: "2023-11-28"
                     paymentReference: "INV-2023-001"
                     referenceObject: "PO-00113"
+                    subsidiaryReference: "REF-00113"
+                    subsidiaryName: "SubName"
                     externalVendorId: "VENDOR-123"
                     vendorName: "VENDOR-123"
                     accountNumber: "1122334455"
@@ -395,13 +397,21 @@ components:
           type: string
           description: Timestamp of Last update action
           example: "2024-07-03T01:00:00+06:00"
+        subsidiaryName:
+          type: string
+          description: Name for the subsidiary associated for Bill Payment
+          example: "SUBSIDIARY123"
+        subsidiaryReference:
+          type: string
+          description: Reference for the subsidiary associated for Bill Payment
+          example: "SUB_REF123"
         paymentDate:
           type: string
           description: Date of payment
           example: "2023-11-28"
         paymentNumber:
           type: string
-          description: Sequentially generated payment number 
+          description: Sequentially generated payment number
           example: "PAYMENT_2345"
         paymentReference:
           type: string
