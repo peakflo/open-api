@@ -1124,12 +1124,13 @@ paths:
           in: query
           schema:
             type: string
-          example: "2024-07-05"
+            example: "2024-07-01T13:40:01"
         - name: updatedAtTo
           in: query
           schema:
             type: string
-          example: "2024-07-05"
+            example: "2024-07-01T13:40:01"
+        - name: updatedAtTo
         - name: status
           in: query
           description: Filter bills by status
@@ -2029,10 +2030,12 @@ paths:
           in: query
           schema:
             type: string
+            example: "2024-07-01T13:40:01"
         - name: updatedAtTo
           in: query
           schema:
             type: string
+            example: "2024-07-01T13:40:01"
         - name: status
           in: query
           description: Filter purchase orders by status
@@ -2895,10 +2898,12 @@ paths:
           in: query
           schema:
             type: string
+            example: "2024-07-01T13:40:01"
         - name: updatedAtTo
           in: query
           schema:
             type: string
+            example: "2024-07-01T13:40:01"
         - name: status
           in: query
           description: Filter receipt notes by status
@@ -3369,10 +3374,12 @@ paths:
           in: query
           schema:
             type: string
+            example: "2024-07-01T13:40:01"
         - name: updatedAtTo
           in: query
           schema:
             type: string
+            example: "2024-07-01T13:40:01"
         - name: status
           in: query
           description: Filter credit notes by status
