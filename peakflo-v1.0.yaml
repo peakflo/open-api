@@ -1124,12 +1124,13 @@ paths:
           in: query
           schema:
             type: string
-          example: "2024-07-05"
+            example: "2024-07-01T13:40:01"
         - name: updatedAtTo
           in: query
           schema:
             type: string
-          example: "2024-07-05"
+            example: "2024-07-01T13:40:01"
+        - name: updatedAtTo
         - name: status
           in: query
           description: Filter bills by status
@@ -2029,10 +2030,12 @@ paths:
           in: query
           schema:
             type: string
+            example: "2024-07-01T13:40:01"
         - name: updatedAtTo
           in: query
           schema:
             type: string
+            example: "2024-07-01T13:40:01"
         - name: status
           in: query
           description: Filter purchase orders by status
@@ -2187,6 +2190,8 @@ paths:
                   type: string
                 issueDate:
                   type: string
+                requestedBy:
+                  type: string
                 dueDate:
                   type: string
                 notes:
@@ -2248,6 +2253,7 @@ paths:
                   currency: "USD"
                   issueDate: "2023-11-01T00:00:00Z"
                   dueDate: "2023-12-01T00:00:00Z"
+                  requestedBy: "test.user@email.com"
                   notes: "Payment due for invoice #1234"
                   deliveryInstructions: "Deliver to Suite 200, Building A"
                   status: "approved"
@@ -2544,6 +2550,8 @@ paths:
                   type: string
                 issueDate:
                   type: string
+                requestedBy:
+                  type: string
                 dueDate:
                   type: string
                 notes:
@@ -2602,6 +2610,7 @@ paths:
                   balanceAmount: 2300
                   currency: "USD"
                   issueDate: "2023-11-01T00:00:00Z"
+                  requestedBy: "test.user1@email.com"
                   dueDate: "2023-12-10T00:00:00Z"
                   notes: "Payment due for invoice #5678"
                   deliveryInstructions: "Deliver to Suite 300, Building B"
@@ -2889,10 +2898,12 @@ paths:
           in: query
           schema:
             type: string
+            example: "2024-07-01T13:40:01"
         - name: updatedAtTo
           in: query
           schema:
             type: string
+            example: "2024-07-01T13:40:01"
         - name: status
           in: query
           description: Filter receipt notes by status
@@ -3363,10 +3374,12 @@ paths:
           in: query
           schema:
             type: string
+            example: "2024-07-01T13:40:01"
         - name: updatedAtTo
           in: query
           schema:
             type: string
+            example: "2024-07-01T13:40:01"
         - name: status
           in: query
           description: Filter credit notes by status
