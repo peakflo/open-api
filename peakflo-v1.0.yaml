@@ -4332,10 +4332,6 @@ components:
     APAttachments:
       type: object
       properties:
-        id:
-          type: string
-          description: ID of the attachment
-          example: "attachment_id_1"
         name:
           type: string
           description: Name of the attachment
@@ -4363,10 +4359,6 @@ components:
             - paymentProof
             - other
           example: transaction
-        base64:
-          type: string
-          description: Base64-encoded content of the attachment
-          example: "Base64EncodedContent1"
         signedUrl: 
           type: string
           description: Signed url for the attachment
