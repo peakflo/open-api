@@ -409,6 +409,14 @@ components:
           type: string
           description: Date of payment
           example: "2023-11-28"
+        createdAt:
+          type: string
+          description: Date of creation
+          example: "2024-08-07T10:59:40.776Z"
+        createdBy:
+          type: string
+          description: Name of user who created bill-payment
+          example: "John Doe"
         paymentNumber:
           type: string
           description: Sequentially generated payment number
