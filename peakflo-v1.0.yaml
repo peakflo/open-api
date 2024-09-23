@@ -766,6 +766,8 @@ paths:
                   type: string
                 paymentTerms:
                   type: number
+                vatApplicable:
+                  type: boolean
                 customField:
                   type: array
                   items:
@@ -798,6 +800,7 @@ paths:
                   beneficiaryCountry: Beneficiary Country
                   vendorFirstName: John
                   vendorLastName: Doe
+                  vatApplicable: true
                   paymentTerms: 10
                   customField:
                     - customFieldNumber: CustomFieldNumber1 (type - Number)
@@ -951,6 +954,8 @@ paths:
                   type: array
                   items:
                     $ref: "#/components/schemas/CustomFields"
+                vatApplicable:
+                  type: boolean
             examples:
               Example:
                 value:
@@ -979,6 +984,7 @@ paths:
                   vendorFirstName: John
                   vendorLastName: Doe
                   paymentTerms: 10
+                  vatApplicable: true
                   customField:
                     - customFieldNumber: CustomFieldNumber1 (type - Number)
                       value: 2
@@ -4359,7 +4365,7 @@ components:
             - paymentProof
             - other
           example: transaction
-        signedUrl: 
+        signedUrl:
           type: string
           description: Signed url for the attachment
           example: "https://storage.googleapis.com/peakflo.appspot.com/GoFa1QPYCC338Ip2gPql/vendorFiles/GoFa1QPYCC338Ip2gPql/EDOD5dmJJYkr9UETayGXL/SRI-INV-202406000000391%20MIF.pdf?GoogleAccessId=billing-stage-324205%40appspot.gserviceaccount.com&Expires=1720481310&Signature=dB0CR9fnrWXsA3f6rTGCL0tTw6dtniNfDYqZ1RbdJ4i5rVBqk9QrIQQfV%2BsJkM%2FC9M8dPFL%2FMRI3ee0FTLO8X7umc4iQiLSeKKhAbIWqLTKM0Q%2FOU5xh8nk3uMfsMyvS3xQWeLb%2F%2BR%2FPosFDL0%2F%2FwmCu32ZIgSfwgg3F9IunSB7HJOfQ6tMrBRp%2FIFYqA5RIVzL8CpF0mkEjjSBmd3omegKM9B%2B%2BQWCCbOZsUuahDtWJrFCDOzukmvOFC8uO43QieknncEDofWdlHk7mFaYjOnR%2B11CCjlKaU9PGEFqPQUW1wOnw%2BFbUQr0%2FihJH8%2F4gyzFVDKSU1yl8yOj%2BhilwkA%3D%3D"
@@ -4795,6 +4801,9 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/CustomFields"
+        vatApplicable:
+          type: boolean
+          description: Is VAT applicable for vendor
       required:
         - companyName
         - companyId
@@ -4889,9 +4898,9 @@ components:
           example: "PO_EXT12345"
         attachments:
           type: array
-          items: 
+          items:
             type: object
-            schema: '#/components/schemas/APAttachments'
+            schema: "#/components/schemas/APAttachments"
 
         receiptNotes:
           type: array
