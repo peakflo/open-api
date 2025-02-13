@@ -3744,6 +3744,16 @@ paths:
                     - Year
                     - Expense
                     - Shipping
+                altUnits:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      unit:
+                        type: string
+                      rate:
+                        type: number
+                        format: float
             examples:
               Example:
                 value:
@@ -3755,6 +3765,11 @@ paths:
                   currency: "USD"
                   hsnCode: "62.13.90"
                   type: "Product"
+                  altUnits:
+                    - unit: "Box"
+                      rate: 10
+                    - unit: "Piece"
+                      rate: 1
       responses:
         "201":
           description: Created
@@ -3814,6 +3829,16 @@ paths:
                     - Year
                     - Expense
                     - Shipping
+                altUnits:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      unit:
+                        type: string
+                      rate:
+                        type: number
+                        format: float
             examples:
               Example:
                 value:
@@ -3824,6 +3849,11 @@ paths:
                   currency: "USD"
                   hsnCode: "62.13.90"
                   type: "Product"
+                  altUnits:
+                    - unit: "Box"
+                      rate: 10
+                    - unit: "Piece"
+                      rate: 1
       responses:
         "201":
           description: Created
@@ -5615,6 +5645,11 @@ components:
           currency: "USD"
           hsnCode: "62.13.90"
           type: "Product"
+          altUnits:
+            - unit: "Box"
+              rate: 10
+            - unit: "Piece"
+              rate: 1
       description: The item model
       properties:
         externalId:
@@ -5652,6 +5687,16 @@ components:
             - Expense
             - Shipping
           example: Product
+        altUnits:
+          type: array
+          items:
+            type: object
+            properties:
+              unit:
+                type: string
+              rate:
+                type: number
+                format: float
       required:
         - externalId
         - name
