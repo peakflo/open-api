@@ -719,6 +719,35 @@ paths:
                         example: "IN"
                       postalCode:
                         type: string
+                contacts:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      -externalId
+                      -email
+                    properties:
+                      externalId:
+                        type: string
+                        description: The external Id for the contact
+                      firstName:
+                        type: string
+                        description: The first name of the contact
+                      lastName:
+                        type: string
+                        description: The last name of the contact
+                      email:
+                        type: string
+                        description: The email Id of the contact
+                        example: example@peakflo.co
+                      phone:
+                        type: string
+                        description: The phone number of the contact along with country code
+                        example: "6591234567"
+                      isMainContact:
+                        type: boolean
+                        description: Indicate if this is the main contact.
+                        default: false
                 taxNumber:
                   type: string
                 notes:
@@ -784,6 +813,13 @@ paths:
                       city: Sample City
                       country: Sample Country
                       postalCode: "12345"
+                  contacts:
+                    - externalId: "67890-def"
+                      email: "example@peakflo.co"
+                      firstName: "Test1"
+                      lastName: "Test2"
+                      phone: "6597654321"
+                      isMainContact: false
                   taxNumber: XYZ456
                   notes: Sample notes
                   bankDetails:
@@ -815,6 +851,7 @@ paths:
                       value:
                         - "MultiList_Value1"
                         - "MultiList_Value2"
+    
       responses:
         "201":
           description: Created
@@ -903,6 +940,35 @@ paths:
                         example: "IN"
                       postalCode:
                         type: string
+                contacts:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      -externalId
+                      -email
+                    properties:
+                      externalId:
+                        type: string
+                        description: The external Id for the contact
+                      firstName:
+                        type: string
+                        description: The first name of the contact
+                      lastName:
+                        type: string
+                        description: The last name of the contact
+                      email:
+                        type: string
+                        description: The email Id of the contact
+                        example: example@peakflo.co
+                      phone:
+                        type: string
+                        description: The phone number of the contact along with country code
+                        example: "6591234567"
+                      isMainContact:
+                        type: boolean
+                        description: Indicate if this is the main contact.
+                        default: false
                 taxNumber:
                   type: string
                 notes:
@@ -967,6 +1033,13 @@ paths:
                       city: Sample City
                       country: Sample Country
                       postalCode: "12345"
+                  contacts:
+                    - externalId: "67890-def"
+                      email: "example@peakflo.co"
+                      firstName: "Test1"
+                      lastName: "Test2"
+                      phone: "6597654321"
+                      isMainContact: false
                   taxNumber: XYZ456
                   notes: Sample notes
                   bankDetails:
@@ -4727,6 +4800,35 @@ components:
                 description: Postal code
                 example: "12345"
           description: Array of addresses associated with the vendor
+        contacts: 
+          type: array
+          items:
+            type: object
+            properties:
+              externalId:
+                type: string
+                description: Identifier for the contact
+              firstName:
+                type: string
+                description: First name of the contact
+                example: "John"
+              lastName:
+                type: string 
+                description: Last name of the contact
+                example: "Doe"
+              phone:
+                type: string
+                description: Phone number of the contact
+                example: "+1 123 456 7890"
+              email:
+                type: string
+                description: Email address of the contact
+                example: "john.doe@example.com"
+              isMainContact: 
+                type: boolean 
+                description: Whether this contact is the main contact for the vendor
+                example: true     
+          description: Array of contacts associated with the vendor
         taxNumber:
           type: string
           description: Tax number of the vendor
