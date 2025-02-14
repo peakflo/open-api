@@ -724,8 +724,9 @@ paths:
                   items:
                     type: object
                     required:
-                      -externalId
-                      -email
+                      - firstName
+                      - externalId
+                      - email
                     properties:
                       externalId:
                         type: string
@@ -945,8 +946,9 @@ paths:
                   items:
                     type: object
                     required:
-                      -externalId
-                      -email
+                      - firstName
+                      - externalId
+                      - email
                     properties:
                       externalId:
                         type: string
@@ -4827,7 +4829,11 @@ components:
               isMainContact: 
                 type: boolean 
                 description: Whether this contact is the main contact for the vendor
-                example: true     
+                example: true    
+            required:
+              - firstName
+              - externalId
+              - email 
           description: Array of contacts associated with the vendor
         taxNumber:
           type: string
