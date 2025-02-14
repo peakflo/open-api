@@ -76,7 +76,7 @@ paths:
                       firstName: Peter
                       lastName: Wong
                       email: peterwong@youwin.com
-                      phone: "6591234567"
+                      phone: "+6591234567"
                       isMainContact: false
         required: false
       responses:
@@ -123,7 +123,7 @@ paths:
                       firstName: Peter
                       lastName: Wong
                       email: peterwong@youwin.com
-                      phone: "6591234567"
+                      phone: "+6591234567"
                       isMainContact: true
         required: false
       responses:
@@ -149,7 +149,7 @@ paths:
                         firstName: Peter
                         lastName: Wong
                         email: peterwong@mcwin.com
-                        phone: "6591234567"
+                        phone: "+6591234567"
                         isMainContact: false
         "404":
           description: Not Found
@@ -193,7 +193,7 @@ paths:
                     firstName: Peter
                     lastName: Wong
                     email: peterwong@mcwin.com
-                    phone: "6591234567"
+                    phone: "+6591234567"
                     isMainContact: false
         "400":
           description: "Bad Request "
@@ -213,7 +213,7 @@ paths:
                   firstName: Peter
                   lastName: Wong
                   email: peterwong@youwin.com
-                  phone: "6591234567"
+                  phone: "+6591234567"
                   isMainContact: false
         description: Contact to add
     parameters:
@@ -255,7 +255,7 @@ paths:
                     firstName: Peter
                     lastName: Wong
                     email: peterwong@mcwin.com
-                    phone: "6591234567"
+                    phone: "+6591234567"
                     isMainContact: false
         "404":
           description: Not Found
@@ -275,7 +275,7 @@ paths:
                   firstName: Peter
                   lastName: bearing
                   email: pbearing@mcwin.com
-                  phone: "6591234567"
+                  phone: "+6591234567"
                   isMainContact: false
         description: ""
     delete:
@@ -322,7 +322,7 @@ paths:
                         firstName: Peter
                         lastName: Wong
                         email: peterwong@youwin.com
-                        phone: "6591234567"
+                        phone: "+6591234567"
                         isMainContact: true
                     portalUrl: https://stage-portal.peakflo.co/?token=sampletoken
         "404":
@@ -743,7 +743,7 @@ paths:
                       phone:
                         type: string
                         description: The phone number of the contact along with country code
-                        example: "6591234567"
+                        example: "+6591234567"
                       isMainContact:
                         type: boolean
                         description: Indicate if this is the main contact.
@@ -818,7 +818,7 @@ paths:
                       email: "example@peakflo.co"
                       firstName: "Test1"
                       lastName: "Test2"
-                      phone: "6597654321"
+                      phone: "+6597654321"
                       isMainContact: false
                   taxNumber: XYZ456
                   notes: Sample notes
@@ -964,7 +964,7 @@ paths:
                       phone:
                         type: string
                         description: The phone number of the contact along with country code
-                        example: "6591234567"
+                        example: "+6591234567"
                       isMainContact:
                         type: boolean
                         description: Indicate if this is the main contact.
@@ -1038,7 +1038,7 @@ paths:
                       email: "example@peakflo.co"
                       firstName: "Test1"
                       lastName: "Test2"
-                      phone: "6597654321"
+                      phone: "+6597654321"
                       isMainContact: false
                   taxNumber: XYZ456
                   notes: Sample notes
@@ -1169,7 +1169,7 @@ paths:
                     firstName: Peter
                     lastName: Wong
                     email: peterwong@mcwin.com
-                    phone: "6591234567"
+                    phone: "+6591234567"
                     isMainContact: false
         "404":
           description: Not Found
@@ -1189,7 +1189,7 @@ paths:
                   firstName: Peter
                   lastName: bearing
                   email: pbearing@mcwin.com
-                  phone: "6591234567"
+                  phone: "+6591234567"
                   isMainContact: false
         description: ""
 
@@ -3933,7 +3933,7 @@ components:
               lastName: string
               middleName: string
               email: johndoe@peakflo.co
-              phone: "6591234567"
+              phone: "+6591234567"
               isMainContact: false
       description: The customer model
       properties:
@@ -4016,7 +4016,7 @@ components:
         phone:
           type: string
           description: The phone number of the contact along with country code
-          example: "6591234567"
+          example: "+6591234567"
         isMainContact:
           type: boolean
           description: Indicate if this is the main contact.
@@ -4070,7 +4070,7 @@ components:
         phone:
           type: string
           description: The phone number of the contact along with country code
-          example: "6591234567"
+          example: "+6591234567"
         isMainContact:
           type: boolean
           description: Indicate if this is the main contact.
@@ -4819,7 +4819,7 @@ components:
               phone:
                 type: string
                 description: Phone number of the contact
-                example: "+1 123 456 7890"
+                example: "+11234567890"
               email:
                 type: string
                 description: Email address of the contact
