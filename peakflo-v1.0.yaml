@@ -78,6 +78,9 @@ paths:
                       email: peterwong@youwin.com
                       phone: "+6591234567"
                       isMainContact: false
+                      mobilePhone: "+6591234568"
+                      altPhone: "+6591234569"
+                      description: "Primary technical contact"
         required: false
       responses:
         "201":
@@ -125,6 +128,9 @@ paths:
                       email: peterwong@youwin.com
                       phone: "+6591234567"
                       isMainContact: true
+                      mobilePhone: "+6591234568"
+                      altPhone: "+6591234569"
+                      description: "Primary technical contact"
         required: false
       responses:
         "200":
@@ -151,6 +157,9 @@ paths:
                         email: peterwong@mcwin.com
                         phone: "+6591234567"
                         isMainContact: false
+                        mobilePhone: "+6591234568"
+                        altPhone: "+6591234569"
+                        description: "Primary technical contact"
         "404":
           description: Not Found
         "409":
@@ -195,6 +204,9 @@ paths:
                     email: peterwong@mcwin.com
                     phone: "+6591234567"
                     isMainContact: false
+                    mobilePhone: "+6591234568"
+                    altPhone: "+6591234569"
+                    description: "Primary technical contact"
         "400":
           description: "Bad Request "
         "409":
@@ -215,6 +227,9 @@ paths:
                   email: peterwong@youwin.com
                   phone: "+6591234567"
                   isMainContact: false
+                  mobilePhone: "+6591234568"
+                  altPhone: "+6591234569"
+                  description: "Primary technical contact"
         description: Contact to add
     parameters:
       - schema:
@@ -257,6 +272,9 @@ paths:
                     email: peterwong@mcwin.com
                     phone: "+6591234567"
                     isMainContact: false
+                    mobilePhone: "+6591234568"
+                    altPhone: "+6591234569"
+                    description: "Primary technical contact"
         "404":
           description: Not Found
         "409":
@@ -277,6 +295,9 @@ paths:
                   email: pbearing@mcwin.com
                   phone: "+6591234567"
                   isMainContact: false
+                  mobilePhone: "+6591234568"
+                  altPhone: "+6591234569"
+                  description: "Primary technical contact"
         description: ""
     delete:
       summary: Delete a contact
@@ -324,6 +345,9 @@ paths:
                         email: peterwong@youwin.com
                         phone: "+6591234567"
                         isMainContact: true
+                        mobilePhone: "+6591234568"
+                        altPhone: "+6591234569"
+                        description: "Primary technical contact"
                     portalUrl: https://stage-portal.peakflo.co/?token=sampletoken
         "404":
           description: Not Found
@@ -745,6 +769,18 @@ paths:
                         type: string
                         description: The phone number of the contact along with country code
                         example: "+6591234567"
+                      mobilePhone:
+                        type: string
+                        description: The mobile phone number of the contact along with country code
+                        example: "+6591234567"
+                      altPhone:
+                        type: string
+                        description: The alternate phone number of the contact along with country code
+                        example: "+6591234567"
+                      description:
+                        type: string
+                        description: Description about the contact
+                        example: "Primary technical contact"
                       isMainContact:
                         type: boolean
                         description: Indicate if this is the main contact.
@@ -821,6 +857,9 @@ paths:
                       lastName: "Test2"
                       phone: "+6597654321"
                       isMainContact: false
+                      mobilePhone: "+6591234568"
+                      altPhone: "+6591234569"
+                      description: "Primary technical contact"
                   taxNumber: XYZ456
                   notes: Sample notes
                   bankDetails:
@@ -967,6 +1006,18 @@ paths:
                         type: string
                         description: The phone number of the contact along with country code
                         example: "+6591234567"
+                      mobilePhone:
+                        type: string
+                        description: The mobile phone number of the contact along with country code
+                        example: "+6591234567"
+                      altPhone:
+                        type: string
+                        description: The alternate phone number of the contact along with country code
+                        example: "+6591234567"
+                      description:
+                        type: string
+                        description: Description about the contact
+                        example: "Primary technical contact"
                       isMainContact:
                         type: boolean
                         description: Indicate if this is the main contact.
@@ -1042,6 +1093,9 @@ paths:
                       lastName: "Test2"
                       phone: "+6597654321"
                       isMainContact: false
+                      mobilePhone: "+6591234568"
+                      altPhone: "+6591234569"
+                      description: "Primary technical contact"
                   taxNumber: XYZ456
                   notes: Sample notes
                   bankDetails:
@@ -1173,6 +1227,9 @@ paths:
                     email: peterwong@mcwin.com
                     phone: "+6591234567"
                     isMainContact: false
+                    mobilePhone: "+6591234568"
+                    altPhone: "+6591234569"
+                    description: "Primary technical contact"
         "404":
           description: Not Found
         "409":
@@ -1193,6 +1250,9 @@ paths:
                   email: pbearing@mcwin.com
                   phone: "+6591234567"
                   isMainContact: false
+                  mobilePhone: "+6591234568"
+                  altPhone: "+6591234569"
+                  description: "Primary technical contact"
         description: ""
 
   "/bill":
@@ -4856,6 +4916,18 @@ components:
                 type: string
                 description: Email address of the contact
                 example: "john.doe@example.com"
+              mobilePhone:
+                type: string
+                description: The mobile phone number of the contact along with country code
+                example: "+6591234567"
+              altPhone:
+                type: string
+                description: The alternate phone number of the contact along with country code
+                example: "+6591234567"
+              description:
+                type: string
+                description: Description about the contact
+                example: "Primary technical contact"
               isMainContact: 
                 type: boolean 
                 description: Whether this contact is the main contact for the vendor
