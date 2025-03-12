@@ -672,6 +672,91 @@ paths:
       description: Delete a payment
 
   /vendors:
+    get:
+      tags:
+        - Vendors
+      summary: Get multiple vendors with pagination
+      description: Retrieve a list of vendors with pagination
+      operationId: get-vendors
+      parameters:
+        - name: next
+          in: query
+          description: Cursor for pagination
+          schema:
+            type: string
+            example: "21zEDmm9ZSKkszFkndOn"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Vendor"
+                  next:
+                    type: string
+                    description: Cursor to the next page of results (use this value in the next request)
+              examples:
+                BasicSearch:
+                  summary: Basic search with pagination
+                  value:
+                    results:
+                      - companyId: "TEST-300efe5f"
+                        companyName: "TEST-300efe5f"
+                        defaultCurrency: "SGD"
+                        taxNumber: "-"
+                        entityType: "company"
+                        beneficiaryCountry: "SG"
+                        addresses:
+                          - type: "billing"
+                            city: "Singapore"
+                            country: "SG"
+                            line1: "107 Defu Lane 10 05-01"
+                            line2: "Paradise Group iHQ"
+                            postalCode: "1"
+                        bankDetails: []
+                        vatApplicable: false
+                        updatedAt: "12-03-2025"
+                        status: "active"
+                      - companyId: "TEST-9579aa7c"
+                        companyName: "TEST-9579aa7c"
+                        defaultCurrency: "SGD"
+                        taxNumber: "-"
+                        entityType: "company"
+                        beneficiaryCountry: "SG"
+                        addresses:
+                          - type: "billing"
+                            city: "Singapore"
+                            country: "SG"
+                            line1: "107 Defu Lane 10 05-01"
+                            line2: "Paradise Group iHQ"
+                            postalCode: "1"
+                        bankDetails: []
+                        vatApplicable: false
+                        updatedAt: "12-03-2025"
+                        status: "active"
+                      - companyId: "IC2611"
+                        companyName: "ERSHADUL PTE LTD"
+                        defaultCurrency: "SGD"
+                        taxNumber: "-"
+                        entityType: "company"
+                        beneficiaryCountry: "SG"
+                        addresses:
+                          - type: "billing"
+                            city: "Singapore"
+                            country: "SG"
+                            line1: "107 Defu Lane 10 05-01"
+                            line2: "Paradise Group iHQ"
+                            postalCode: "1"
+                        bankDetails: []
+                        vatApplicable: false
+                        updatedAt: "12-03-2025"
+                        status: "active"
+                    next: "21zEDmm9ZSKkszFkndOn"         
     post:
       tags:
         - Vendors
