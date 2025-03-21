@@ -685,6 +685,26 @@ paths:
           schema:
             type: string
             example: "21zEDmm9ZSKkszFkndOn"
+        - name: limit
+          in: query
+          description: Limit the number of results
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+            maximum: 100
+        - name: updatedAtFrom
+          in: query
+          description: Filter by updatedAt from
+          schema:
+            type: string
+            example: "2021-04-28T12:30:00"
+        - name: updatedAtTo
+          in: query
+          description: Filter by updatedAt to
+          schema:
+            type: string
+            example: "2021-04-28T12:30:00"
       responses:
         "200":
           description: OK
