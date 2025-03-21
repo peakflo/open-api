@@ -2071,6 +2071,8 @@ paths:
                   type: string
                 billId:
                   type: string
+                paymentNumber:
+                  type: number
                 reference:
                   type: string
                 vendorId:
@@ -2106,6 +2108,7 @@ paths:
                 value:
                   externalId: "PAYMENT-001"
                   billId: "1234567890"
+                  paymentNumber: "PAYMENT-001"
                   reference: "INV-2023-001"
                   vendorId: "VENDOR-123"
                   date: "2023-11-28"
