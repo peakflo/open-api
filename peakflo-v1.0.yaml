@@ -4275,7 +4275,7 @@ components:
           example: "ITEM001"
         sourceId:
           type: string
-          description: unique identifier of line item, used in 3 Way Matching
+          description: Unique identifier of line item, used in 3 Way Matching. For a given Object there should be no 2 line items with same sourceId.
           example: "line-17303130-xyz"
         name:
           type: string
