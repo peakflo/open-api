@@ -2071,6 +2071,8 @@ paths:
                   type: string
                 billId:
                   type: string
+                paymentNumber:
+                  type: number
                 reference:
                   type: string
                 vendorId:
@@ -2090,6 +2092,10 @@ paths:
                   type: number
                 receiverCurrency:
                   type: string
+                customField:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/CustomFields"
               required:
                 - externalId
                 - reference
@@ -2102,6 +2108,7 @@ paths:
                 value:
                   externalId: "PAYMENT-001"
                   billId: "1234567890"
+                  paymentNumber: "PAYMENT-001"
                   reference: "INV-2023-001"
                   vendorId: "VENDOR-123"
                   date: "2023-11-28"
@@ -2111,6 +2118,19 @@ paths:
                   fxRate: 1.5
                   convertedAmount: 750
                   receiverCurrency: "USD"
+                  customField:
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
+                      value: 2
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                      value:
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
       responses:
         "201":
           description: Created

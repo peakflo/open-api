@@ -218,6 +218,10 @@ paths:
                         type: string
                       appliedAmount:
                         type: number
+                customField:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Bill-CustomFields"
             examples:
               Example:
                 value:
@@ -238,6 +242,19 @@ paths:
                   bills:
                     - externalBillId: "1234567890"
                       appliedAmount: 500
+                  customField:
+                    - customFieldNumber: CustomFieldNumber1 (type - Number)
+                      value: 2
+                    - customFieldNumber: CustomFieldNumber2 (type - Date)
+                      value: "11/03/2024"
+                    - customFieldNumber: CustomFieldNumber3 (type - Input)
+                      value: "Value"
+                    - customFieldNumber: CustomFieldNumber4 (type - List)
+                      value: "List_Value1"
+                    - customFieldNumber: CustomFieldNumber5 (type - MultiList)
+                      value:
+                        - "MultiList_Value1"
+                        - "MultiList_Value2"
 
       responses:
         "201":
