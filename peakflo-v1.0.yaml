@@ -2276,7 +2276,6 @@ paths:
                       deliveryInstructions: "Deliver to Suite 200, Building A"
                       status: "approved"
                       totalTax: 20
-                      totalDiscount: 0
                       fxRate: 1.2
                       convertedAmount: 600
                       paymentTerms: 20
@@ -2629,7 +2628,6 @@ paths:
                     deliveryInstructions: "Deliver to Suite 200, Building A"
                     status: "approved"
                     totalTax: 200
-                    totalDiscount: 0
                     fxRate: 1.2
                     convertedAmount: 6000
                     paymentTerms: 20
