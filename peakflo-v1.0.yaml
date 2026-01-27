@@ -5910,6 +5910,24 @@ components:
               rate:
                 type: number
                 format: float
+        subsidiaryReference:
+          type: string
+          description: Reference for the subsidiary associated with the item
+        status:
+          type: string
+          description: Status of the item
+          enum:
+            - active
+            - delete
+        taxable:
+          type: boolean
+          description: Indicates whether the item is taxable
+        discountable:
+          type: boolean
+          description: Indicates whether the item is eligible for discounts
+        defaultAccountAP:
+          type: boolean
+          description: Indicates whether this is the default AP account item
       required:
         - externalId
         - name

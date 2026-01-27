@@ -46,6 +46,12 @@ tags:
     description: Vendor Receipt Notes
   - name: Vendor Credit Notes
     description: Vendor Credit Notes
+  - name: G/L Accounts
+    description: General Ledger Accounts
+  - name: Taxes
+    description: Tax configurations
+  - name: Currency Exchange Rates
+    description: Currency exchange rate configurations
 
 paths:
   "/bill-payment":
@@ -188,6 +194,8 @@ paths:
                   type: string
                 externalVendorId:
                   type: string
+                subsidiaryReference:
+                  type: string
                 accountNumber:
                   type: string
                 amount:
@@ -227,6 +235,7 @@ paths:
                   paymentReference: "INV-2023-001"
                   referenceObject: "PO-001133"
                   externalVendorId: "VENDOR-123"
+                  subsidiaryReference: "SUB-001"
                   accountNumber: "11223344556677"
                   amount: 500
                   paymentFee: 10
@@ -333,6 +342,8 @@ paths:
                   type: string
                 vendorId:
                   type: string
+                subsidiaryReference:
+                  type: string
                 date:
                   type: string
                   format: date
@@ -357,6 +368,7 @@ paths:
                   paymentReference: "INV-2023-001"
                   referenceObject: "PO-001133"
                   externalVendorId: "VENDOR-123"
+                  subsidiaryReference: "SUB-001"
                   accountNumber: "11223344556677"
                   amount: 500
                   paymentFee: 10
@@ -376,6 +388,215 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BillPayment"
+        "400":
+          description: Bad request
+          content: {}
+        "409":
+          description: Conflict
+          content: {}
+
+  "/gl-account":
+    post:
+      tags:
+        - G/L Accounts
+      summary: Create a G/L account
+      description: Create a new G/L account
+      operationId: create-gl-account
+      requestBody:
+        description: G/L account to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GLAccount-Create"
+            examples:
+              Example:
+                value:
+                  externalAccountId: "ACC-001"
+                  subsidiaryReference: "SUB-001"
+                  code: "1000"
+                  name: "Cash Account"
+                  type: "asset"
+                  currency: "USD"
+                  status: "active"
+                  paymentAllowed: true
+                  expenseAllowed: false
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GLAccount"
+        "400":
+          description: Bad request
+          content: {}
+        "409":
+          description: Conflict
+          content: {}
+
+  "/gl-account/{externalId}":
+    put:
+      tags:
+        - G/L Accounts
+      summary: Update a G/L account
+      description: Update an existing G/L account
+      operationId: update-gl-account
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External ID of the G/L account to update
+          schema:
+            type: string
+      requestBody:
+        description: G/L account fields to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GLAccount-Update"
+            examples:
+              Example:
+                value:
+                  code: "1001"
+                  name: "Updated Cash Account"
+                  type: "asset"
+                  currency: "USD"
+                  status: "active"
+                  paymentAllowed: true
+                  expenseAllowed: false
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GLAccount"
+        "400":
+          description: Bad request
+          content: {}
+        "404":
+          description: Not Found
+          content: {}
+        "409":
+          description: Conflict
+          content: {}
+
+  "/tax":
+    post:
+      tags:
+        - Taxes
+      summary: Create a tax
+      description: Create a new tax configuration
+      operationId: create-tax
+      requestBody:
+        description: Tax to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Tax-Create"
+            examples:
+              Example:
+                value:
+                  externalId: "TAX-001"
+                  subsidiaryReference: "SUB-001"
+                  name: "VAT 10%"
+                  amount: 10
+                  status: "active"
+                  amountType: "Percentage"
+                  priceIncludesTax: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tax"
+        "400":
+          description: Bad request
+          content: {}
+        "409":
+          description: Conflict
+          content: {}
+
+  "/tax/{externalId}":
+    put:
+      tags:
+        - Taxes
+      summary: Update a tax
+      description: Update an existing tax configuration
+      operationId: update-tax
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External ID of the tax to update
+          schema:
+            type: string
+      requestBody:
+        description: Tax fields to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Tax-Update"
+            examples:
+              Example:
+                value:
+                  name: "Updated VAT 10%"
+                  amount: 8
+                  status: "active"
+                  amountType: "Percentage"
+                  priceIncludesTax: false
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tax"
+        "400":
+          description: Bad request
+          content: {}
+        "404":
+          description: Not Found
+          content: {}
+        "409":
+          description: Conflict
+          content: {}
+
+  "/currency-exchange-rate":
+    post:
+      tags:
+        - Currency Exchange Rates
+      summary: Create a currency exchange rate
+      description: Create a new currency exchange rate configuration
+      operationId: create-currency-exchange-rate
+      requestBody:
+        description: Currency exchange rate to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CurrencyExchangeRate-Create"
+            examples:
+              Example:
+                value:
+                  externalRateId: "RATE-001"
+                  fxRate: 1.25
+                  fromCurrency: "USD"
+                  toCurrency: "IDR"
+                  startEffectiveDate: "2024-07-01"
+                  isDeleted: false
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CurrencyExchangeRate"
         "400":
           description: Bad request
           content: {}
@@ -529,6 +750,10 @@ components:
           type: string
           description: ExternalID of the vendor associated with the payment
           example: "VENDOR456"
+        subsidiaryReference:
+          type: string
+          description: Reference for the subsidiary associated with the bill payment
+          example: "SUB-001"
         accountNumber:
           type: string
           description: Account number of Account associated with the payment
@@ -608,6 +833,375 @@ components:
       required:
         - customFieldNumber
         - value
+
+    GLAccount:
+      description: Details of a G/L Account
+      type: object
+      properties:
+        externalAccountId:
+          type: string
+          description: External unique identifier for the G/L account
+          example: "ACC-001"
+        subsidiaryReference:
+          type: string
+          description: Reference for the subsidiary associated with the account
+          example: "SUB-001"
+        code:
+          type: string
+          description: Account code
+          example: "1000"
+        name:
+          type: string
+          description: Account name
+          example: "Cash Account"
+        type:
+          type: string
+          description: Type of the G/L account
+          enum:
+            - asset
+            - equity
+            - expense
+            - liability
+            - bank
+            - revenue
+            - other
+          example: "asset"
+        currency:
+          type: string
+          description: Currency code (ISO 4217)
+          example: "USD"
+        status:
+          type: string
+          description: Status of the G/L account
+          enum:
+            - active
+            - archived
+          example: "active"
+        paymentAllowed:
+          type: boolean
+          description: Whether payments are allowed for this account
+          example: true
+        expenseAllowed:
+          type: boolean
+          description: Whether expenses are allowed for this account
+          example: false
+        lastUpdatedAt:
+          type: string
+          description: Timestamp of last update action
+          example: "2024-07-03T01:00:00+06:00"
+      required:
+        - externalAccountId
+        - code
+        - name
+        - type
+        - currency
+        - status
+
+    GLAccount-Create:
+      description: Payload for creating a G/L Account
+      type: object
+      properties:
+        externalAccountId:
+          type: string
+          description: External unique identifier for the G/L account
+          example: "ACC-001"
+        subsidiaryReference:
+          type: string
+          description: Reference for the subsidiary associated with the account
+          example: "SUB-001"
+        code:
+          type: string
+          description: Account code
+          example: "1000"
+        name:
+          type: string
+          description: Account name
+          example: "Cash Account"
+        type:
+          type: string
+          description: Type of the G/L account
+          enum:
+            - asset
+            - equity
+            - expense
+            - liability
+            - bank
+            - revenue
+            - other
+          example: "asset"
+        currency:
+          type: string
+          description: Currency code (ISO 4217)
+          example: "USD"
+        status:
+          type: string
+          description: Status of the G/L account
+          enum:
+            - active
+            - archived
+          example: "active"
+        paymentAllowed:
+          type: boolean
+          description: Whether payments are allowed for this account
+          example: true
+        expenseAllowed:
+          type: boolean
+          description: Whether expenses are allowed for this account
+          example: false
+      required:
+        - externalAccountId
+        - code
+        - name
+        - type
+        - currency
+        - status
+
+    GLAccount-Update:
+      description: Payload for updating a G/L Account
+      type: object
+      properties:
+        subsidiaryReference:
+          type: string
+          description: Reference for the subsidiary associated with the account
+          example: "SUB-001"
+        code:
+          type: string
+          description: Account code
+          example: "1000"
+        name:
+          type: string
+          description: Account name
+          example: "Cash Account"
+        type:
+          type: string
+          description: Type of the G/L account
+          enum:
+            - asset
+            - equity
+            - expense
+            - liability
+            - bank
+            - revenue
+            - other
+          example: "asset"
+        currency:
+          type: string
+          description: Currency code (ISO 4217)
+          example: "USD"
+        status:
+          type: string
+          description: Status of the G/L account
+          enum:
+            - active
+            - archived
+          example: "active"
+        paymentAllowed:
+          type: boolean
+          description: Whether payments are allowed for this account
+          example: true
+        expenseAllowed:
+          type: boolean
+          description: Whether expenses are allowed for this account
+          example: false
+
+    Tax:
+      description: Details of a tax configuration
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External unique identifier for the tax
+          example: "TAX-001"
+        subsidiaryReference:
+          type: string
+          description: Reference for the subsidiary associated with the tax
+          example: "SUB-001"
+        name:
+          type: string
+          description: Name of the tax
+          example: "VAT 10%"
+        amount:
+          type: number
+          description: Amount or rate of the tax
+          example: 10
+        status:
+          type: string
+          description: Status of the tax
+          enum:
+            - active
+            - inactive
+          example: "active"
+        amountType:
+          type: string
+          description: Type of the tax amount
+          enum:
+            - Flat
+            - Percentage
+          example: "Percentage"
+        priceIncludesTax:
+          type: boolean
+          description: Indicates whether prices include this tax
+          example: true
+      required:
+        - externalId
+        - name
+        - amount
+        - status
+        - amountType
+
+    Tax-Create:
+      description: Payload for creating a tax configuration
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External unique identifier for the tax
+          example: "TAX-001"
+        subsidiaryReference:
+          type: string
+          description: Reference for the subsidiary associated with the tax
+          example: "SUB-001"
+        name:
+          type: string
+          description: Name of the tax
+          example: "VAT 10%"
+        amount:
+          type: number
+          description: Amount or rate of the tax
+          example: 10
+        status:
+          type: string
+          description: Status of the tax
+          enum:
+            - active
+            - inactive
+          example: "active"
+        amountType:
+          type: string
+          description: Type of the tax amount
+          enum:
+            - Flat
+            - Percentage
+          example: "Percentage"
+        priceIncludesTax:
+          type: boolean
+          description: Indicates whether prices include this tax
+          example: true
+      required:
+        - externalId
+        - name
+        - amount
+        - status
+        - amountType
+
+    Tax-Update:
+      description: Payload for updating a tax configuration
+      type: object
+      properties:
+        subsidiaryReference:
+          type: string
+          description: Reference for the subsidiary associated with the tax
+          example: "SUB-001"
+        name:
+          type: string
+          description: Name of the tax
+          example: "VAT 10%"
+        amount:
+          type: number
+          description: Amount or rate of the tax
+          example: 10
+        status:
+          type: string
+          description: Status of the tax
+          enum:
+            - active
+            - inactive
+          example: "active"
+        amountType:
+          type: string
+          description: Type of the tax amount
+          enum:
+            - Flat
+            - Percentage
+          example: "Percentage"
+        priceIncludesTax:
+          type: boolean
+          description: Indicates whether prices include this tax
+          example: true
+
+    CurrencyExchangeRate:
+      description: Details of a currency exchange rate
+      type: object
+      properties:
+        externalRateId:
+          type: string
+          description: External unique identifier for the exchange rate
+          example: "RATE-001"
+        fxRate:
+          type: number
+          format: float
+          description: Exchange rate value (supports 2 decimal places or more)
+          example: 1.25
+        fromCurrency:
+          type: string
+          description: Source currency code (ISO 4217)
+          example: "USD"
+        toCurrency:
+          type: string
+          description: Target currency code (ISO 4217)
+          example: "IDR"
+        startEffectiveDate:
+          type: string
+          format: date
+          description: Date from which the rate is effective (YYYY-MM-DD)
+          example: "2024-07-01"
+        isDeleted:
+          type: boolean
+          description: Indicates whether this rate is deleted/archived
+          example: false
+      required:
+        - externalRateId
+        - fxRate
+        - fromCurrency
+        - toCurrency
+        - startEffectiveDate
+
+    CurrencyExchangeRate-Create:
+      description: Payload for creating a currency exchange rate
+      type: object
+      properties:
+        externalRateId:
+          type: string
+          description: External unique identifier for the exchange rate
+          example: "RATE-001"
+        fxRate:
+          type: number
+          format: float
+          description: Exchange rate value (supports 2 decimal places or more)
+          example: 1.25
+        fromCurrency:
+          type: string
+          description: Source currency code (ISO 4217)
+          example: "USD"
+        toCurrency:
+          type: string
+          description: Target currency code (ISO 4217)
+          example: "IDR"
+        startEffectiveDate:
+          type: string
+          format: date
+          description: Date from which the rate is effective (YYYY-MM-DD)
+          example: "2024-07-01"
+        isDeleted:
+          type: boolean
+          description: Indicates whether this rate is deleted/archived
+          example: false
+      required:
+        - externalRateId
+        - fxRate
+        - fromCurrency
+        - toCurrency
+        - startEffectiveDate
 
   securitySchemes:
     bearerAuth:
