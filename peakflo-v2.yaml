@@ -418,7 +418,6 @@ paths:
                   name: "Cash Account"
                   type: "asset"
                   currency: "USD"
-                  status: "active"
                   paymentAllowed: true
                   expenseAllowed: false
       responses:
@@ -463,7 +462,6 @@ paths:
                   name: "Updated Cash Account"
                   type: "asset"
                   currency: "USD"
-                  status: "active"
                   paymentAllowed: true
                   expenseAllowed: false
       responses:
@@ -482,6 +480,25 @@ paths:
         "409":
           description: Conflict
           content: {}
+
+    delete:
+      tags:
+        - G/L Accounts
+      summary: Delete a G/L account
+      description: Delete an existing G/L account (sets the account to an inactive/archived state)
+      operationId: delete-gl-account
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External ID of the G/L account to delete
+          schema:
+            type: string
+      responses:
+        "204":
+          description: No Content - Successfully deleted
+        "404":
+          description: Not Found
 
   "/tax":
     post:
@@ -504,7 +521,6 @@ paths:
                   subsidiaryReference: "SUB-001"
                   name: "VAT 10%"
                   amount: 10
-                  status: "active"
                   amountType: "Percentage"
                   priceIncludesTax: true
       responses:
@@ -547,7 +563,6 @@ paths:
                 value:
                   name: "Updated VAT 10%"
                   amount: 8
-                  status: "active"
                   amountType: "Percentage"
                   priceIncludesTax: false
       responses:
@@ -566,6 +581,25 @@ paths:
         "409":
           description: Conflict
           content: {}
+
+    delete:
+      tags:
+        - Taxes
+      summary: Delete a tax
+      description: Delete an existing tax configuration (sets the tax to an inactive/archived state)
+      operationId: delete-tax
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External ID of the tax to delete
+          schema:
+            type: string
+      responses:
+        "204":
+          description: No Content - Successfully deleted
+        "404":
+          description: Not Found
 
   "/currency-exchange-rate":
     post:
@@ -895,7 +929,6 @@ components:
         - name
         - type
         - currency
-        - status
 
     GLAccount-Create:
       description: Payload for creating a G/L Account
@@ -933,13 +966,6 @@ components:
           type: string
           description: Currency code (ISO 4217)
           example: "USD"
-        status:
-          type: string
-          description: Status of the G/L account
-          enum:
-            - active
-            - archived
-          example: "active"
         paymentAllowed:
           type: boolean
           description: Whether payments are allowed for this account
@@ -954,7 +980,6 @@ components:
         - name
         - type
         - currency
-        - status
 
     GLAccount-Update:
       description: Payload for updating a G/L Account
@@ -988,13 +1013,6 @@ components:
           type: string
           description: Currency code (ISO 4217)
           example: "USD"
-        status:
-          type: string
-          description: Status of the G/L account
-          enum:
-            - active
-            - archived
-          example: "active"
         paymentAllowed:
           type: boolean
           description: Whether payments are allowed for this account
@@ -1046,7 +1064,6 @@ components:
         - externalId
         - name
         - amount
-        - status
         - amountType
 
     Tax-Create:
@@ -1069,13 +1086,6 @@ components:
           type: number
           description: Amount or rate of the tax
           example: 10
-        status:
-          type: string
-          description: Status of the tax
-          enum:
-            - active
-            - inactive
-          example: "active"
         amountType:
           type: string
           description: Type of the tax amount
@@ -1091,7 +1101,6 @@ components:
         - externalId
         - name
         - amount
-        - status
         - amountType
 
     Tax-Update:
@@ -1110,13 +1119,6 @@ components:
           type: number
           description: Amount or rate of the tax
           example: 10
-        status:
-          type: string
-          description: Status of the tax
-          enum:
-            - active
-            - inactive
-          example: "active"
         amountType:
           type: string
           description: Type of the tax amount
