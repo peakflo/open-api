@@ -426,7 +426,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GLAccount"
+                $ref: "#/components/schemas/GLAccount-Create"
+              example:
+                externalAccountId: "ACC-001"
+                subsidiaryReference: "SUB-001"
+                code: "1000"
+                name: "Cash Account"
+                type: "asset"
+                currency: "USD"
+                paymentAllowed: true
+                expenseAllowed: false
         "400":
           description: Bad request
           content: {}
@@ -445,7 +454,7 @@ paths:
         - name: externalId
           in: path
           required: true
-          description: External ID of the G/L account to update
+          description: External Account ID (externalAccountId) of the G/L account to update
           schema:
             type: string
       requestBody:
@@ -471,6 +480,16 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GLAccount"
+              example:
+                externalAccountId: "ACC-001"
+                subsidiaryReference: "SUB-001"
+                code: "1001"
+                name: "Updated Cash Account"
+                type: "asset"
+                currency: "USD"
+                status: "active"
+                paymentAllowed: true
+                expenseAllowed: false
         "400":
           description: Bad request
           content: {}
@@ -491,7 +510,7 @@ paths:
         - name: externalId
           in: path
           required: true
-          description: External ID of the G/L account to delete
+          description: External Account ID (externalAccountId) of the G/L account to delete
           schema:
             type: string
       responses:
@@ -529,7 +548,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Tax"
+                $ref: "#/components/schemas/Tax-Create"
+              example:
+                externalId: "TAX-001"
+                subsidiaryReference: "SUB-001"
+                name: "VAT 10%"
+                amount: 10
+                amountType: "Percentage"
+                priceIncludesTax: true
         "400":
           description: Bad request
           content: {}
@@ -572,6 +598,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Tax"
+              example:
+                externalId: "TAX-001"
+                subsidiaryReference: "SUB-001"
+                name: "Updated VAT 10%"
+                amount: 8
+                amountType: "Percentage"
+                status: "active"
+                priceIncludesTax: false
         "400":
           description: Bad request
           content: {}
@@ -919,10 +953,6 @@ components:
           type: boolean
           description: Whether expenses are allowed for this account
           example: false
-        lastUpdatedAt:
-          type: string
-          description: Timestamp of last update action
-          example: "2024-07-03T01:00:00+06:00"
       required:
         - externalAccountId
         - code
