@@ -740,7 +740,6 @@ paths:
                 visibleInInvoice: true
                 visibleInBill: true
                 alwaysMandatoryInInvoice: false
-                isDeleted: false
         "400":
           description: Bad request
           content: {}
@@ -792,7 +791,6 @@ paths:
                   fromCurrency: "USD"
                   toCurrency: "IDR"
                   startEffectiveDate: "2024-07-01"
-                  isDeleted: false
       responses:
         "201":
           description: Created
@@ -1380,10 +1378,6 @@ components:
           items:
             $ref: "#/components/schemas/CustomFieldStructuredOption"
           description: Structured options with metadata (for list and multiList types)
-        isDeleted:
-          type: boolean
-          description: Indicates whether this custom field is deleted/inactive
-          example: false
         visibleInInvoice:
           type: boolean
           description: Whether the field is visible in invoices
@@ -1689,10 +1683,6 @@ components:
           format: date
           description: Date from which the rate is effective (YYYY-MM-DD)
           example: "2024-07-01"
-        isDeleted:
-          type: boolean
-          description: Indicates whether this rate is deleted/archived
-          example: false
       required:
         - externalRateId
         - fxRate
@@ -1726,10 +1716,6 @@ components:
           format: date
           description: Date from which the rate is effective (YYYY-MM-DD)
           example: "2024-07-01"
-        isDeleted:
-          type: boolean
-          description: Indicates whether this rate is deleted/archived
-          example: false
       required:
         - externalRateId
         - fxRate
