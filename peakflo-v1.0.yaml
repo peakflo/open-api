@@ -1901,6 +1901,9 @@ paths:
                   type: number
                 notes:
                   type: string
+                udpateDetails:
+                  type: string
+                  description: Session note for this update; distinct from notes
                 totalWHT:
                   type: number
                 items:
@@ -1933,6 +1936,7 @@ paths:
                   paymentAmount: 450
                   totalAmount: 550
                   notes: "This is a test bill"
+                  udpateDetails: "Session note about this update"
                   totalWHT: 20
                   items:
                     - itemId: "ITEM001"
