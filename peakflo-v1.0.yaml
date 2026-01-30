@@ -38,6 +38,8 @@ tags:
     description: The vendor contacts
   - name: Bills
     description: Vendor bills
+  - name: FX Rates
+    description: FX rates provided by issuer accounting system
   - name: Bill Payments
     description: Vendor Bill Payments
   - name: Vendor Purchase Orders
