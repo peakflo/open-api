@@ -913,8 +913,6 @@ paths:
                   type: string
                 sourceId:
                   type: string
-                sourceId:
-                  type: string
             examples:
               Example:
                 value:
@@ -1921,6 +1919,8 @@ paths:
                   items:
                     $ref: "#/components/schemas/CustomFields"
                 subsidiaryReference:
+                  type: string
+                sourceId:
                   type: string
             examples:
               Example:
