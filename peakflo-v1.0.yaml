@@ -909,6 +909,10 @@ paths:
                   type: array
                   items:
                     $ref: "#/components/schemas/CustomFields"
+                subsidiaryReference:
+                  type: string
+                sourceId:
+                  type: string
             examples:
               Example:
                 value:
@@ -1986,6 +1990,7 @@ paths:
                         - "MultiList_Value1"
                         - "MultiList_Value2"
                   subsidiaryReference: "SUB-001"
+                  sourceId: "SRC-001"
       responses:
         "200":
           description: Ok
