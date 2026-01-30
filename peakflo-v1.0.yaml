@@ -4050,85 +4050,8 @@ paths:
           description: Conflict
           content: {}
 
-  "/fx-rate":
-    post:
-      tags:
-        - FX Rates
-      summary: Create an FX rate
-      description: Create issuer-provided FX rate used when fxRateSource is customerAccounting
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/FxRateCreateRequest"
-            example:
-              externalRateID: "EXT_RATE_001"
-              fxRate: 1.2345
-              fromCurrency: "USD"
-              toCurrency: "SGD"
-              startEffectiveDate: "2024-01-05"
-      responses:
-        "200":
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FxRateCreateResponse"
-              example:
-                externalRateID: "EXT_RATE_001"
-                fxRate: 1.2345
-                fromCurrency: "USD"
-                toCurrency: "SGD"
-                startEffectiveDate: "2024-01-05"
-                createdDateTime: "2024-01-05T00:00:00Z"
-        "400":
-          description: Bad request
-          content: {}
-
 components:
   schemas:
-    FxRateCreateRequest:
-      type: object
-      properties:
-        externalRateID:
-          type: string
-          description: External rate ID for reference
-        fxRate:
-          type: number
-          description: Exchange rate
-        fromCurrency:
-          type: string
-          description: Source currency
-        toCurrency:
-          type: string
-          description: Destination currency
-        startEffectiveDate:
-          type: string
-          format: date
-          description: Effective date for this rate
-      required:
-        - fxRate
-        - fromCurrency
-        - toCurrency
-        - startEffectiveDate
-    FxRateCreateResponse:
-      type: object
-      properties:
-        externalRateID:
-          type: string
-        fxRate:
-          type: number
-        fromCurrency:
-          type: string
-        toCurrency:
-          type: string
-        startEffectiveDate:
-          type: string
-          format: date
-        createdDateTime:
-          type: string
-          format: date-time
     Customer:
       type: object
       x-examples:
