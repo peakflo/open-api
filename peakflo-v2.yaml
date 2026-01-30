@@ -46,6 +46,14 @@ tags:
     description: Vendor Receipt Notes
   - name: Vendor Credit Notes
     description: Vendor Credit Notes
+  - name: G/L Accounts
+    description: General Ledger Accounts
+  - name: Taxes
+    description: Tax configurations
+  - name: Custom Fields
+    description: Custom field configurations
+  - name: Currency Exchange Rates
+    description: Currency exchange rate configurations
   - name: FX Rates
     description: FX rates provided by issuer accounting system
 
@@ -190,6 +198,8 @@ paths:
                   type: string
                 externalVendorId:
                   type: string
+                subsidiaryReference:
+                  type: string
                 accountNumber:
                   type: string
                 amount:
@@ -229,6 +239,7 @@ paths:
                   paymentReference: "INV-2023-001"
                   referenceObject: "PO-001133"
                   externalVendorId: "VENDOR-123"
+                  subsidiaryReference: "SUB-001"
                   accountNumber: "11223344556677"
                   amount: 500
                   paymentFee: 10
@@ -335,6 +346,8 @@ paths:
                   type: string
                 vendorId:
                   type: string
+                subsidiaryReference:
+                  type: string
                 date:
                   type: string
                   format: date
@@ -359,6 +372,7 @@ paths:
                   paymentReference: "INV-2023-001"
                   referenceObject: "PO-001133"
                   externalVendorId: "VENDOR-123"
+                  subsidiaryReference: "SUB-001"
                   accountNumber: "11223344556677"
                   amount: 500
                   paymentFee: 10
@@ -384,6 +398,130 @@ paths:
         "409":
           description: Conflict
           content: {}
+
+  "/gl-account":
+    post:
+      tags:
+        - G/L Accounts
+      summary: Create a G/L account
+      description: Create a new G/L account
+      operationId: create-gl-account
+      requestBody:
+        description: G/L account to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GLAccount-Create"
+            examples:
+              Example:
+                value:
+                  externalAccountId: "ACC-001"
+                  subsidiaryReference: "SUB-001"
+                  code: "1000"
+                  name: "Cash Account"
+                  type: "asset"
+                  currency: "USD"
+                  paymentAllowed: true
+                  expenseAllowed: false
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GLAccount-Create"
+              example:
+                externalAccountId: "ACC-001"
+                subsidiaryReference: "SUB-001"
+                code: "1000"
+                name: "Cash Account"
+                type: "asset"
+                currency: "USD"
+                paymentAllowed: true
+                expenseAllowed: false
+        "400":
+          description: Bad request
+          content: {}
+        "409":
+          description: Conflict
+          content: {}
+
+  "/gl-account/{externalId}":
+    put:
+      tags:
+        - G/L Accounts
+      summary: Update a G/L account
+      description: Update an existing G/L account
+      operationId: update-gl-account
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External Account ID (externalAccountId) of the G/L account to update
+          schema:
+            type: string
+      requestBody:
+        description: G/L account fields to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GLAccount-Update"
+            examples:
+              Example:
+                value:
+                  code: "1001"
+                  name: "Updated Cash Account"
+                  type: "asset"
+                  currency: "USD"
+                  paymentAllowed: true
+                  expenseAllowed: false
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GLAccount"
+              example:
+                externalAccountId: "ACC-001"
+                subsidiaryReference: "SUB-001"
+                code: "1001"
+                name: "Updated Cash Account"
+                type: "asset"
+                currency: "USD"
+                status: "active"
+                paymentAllowed: true
+                expenseAllowed: false
+        "400":
+          description: Bad request
+          content: {}
+        "404":
+          description: Not Found
+          content: {}
+        "409":
+          description: Conflict
+          content: {}
+
+    delete:
+      tags:
+        - G/L Accounts
+      summary: Delete a G/L account
+      description: Delete an existing G/L account (sets the account to an inactive/archived state)
+      operationId: delete-gl-account
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External Account ID (externalAccountId) of the G/L account to delete
+          schema:
+            type: string
+      responses:
+        "204":
+          description: No Content - Successfully deleted
+        "404":
+          description: Not Found
 
   "/fx-rate":
     post:
@@ -419,6 +557,292 @@ paths:
                 createdDateTime: "2024-01-05T00:00:00Z"
         "400":
           description: Bad request
+          content: {}
+
+  "/tax":
+    post:
+      tags:
+        - Taxes
+      summary: Create a tax
+      description: Create a new tax configuration
+      operationId: create-tax
+      requestBody:
+        description: Tax to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Tax-Create"
+            examples:
+              Example:
+                value:
+                  externalId: "TAX-001"
+                  subsidiaryReference: "SUB-001"
+                  name: "VAT 10%"
+                  amount: 10
+                  amountType: "Percentage"
+                  priceIncludesTax: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tax-Create"
+              example:
+                externalId: "TAX-001"
+                subsidiaryReference: "SUB-001"
+                name: "VAT 10%"
+                amount: 10
+                amountType: "Percentage"
+                priceIncludesTax: true
+        "400":
+          description: Bad request
+          content: {}
+        "409":
+          description: Conflict
+          content: {}
+
+  "/tax/{externalId}":
+    put:
+      tags:
+        - Taxes
+      summary: Update a tax
+      description: Update an existing tax configuration
+      operationId: update-tax
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External ID of the tax to update
+          schema:
+            type: string
+      requestBody:
+        description: Tax fields to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Tax-Update"
+            examples:
+              Example:
+                value:
+                  name: "Updated VAT 10%"
+                  amount: 8
+                  amountType: "Percentage"
+                  priceIncludesTax: false
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tax"
+              example:
+                externalId: "TAX-001"
+                subsidiaryReference: "SUB-001"
+                name: "Updated VAT 10%"
+                amount: 8
+                amountType: "Percentage"
+                status: "active"
+                priceIncludesTax: false
+        "400":
+          description: Bad request
+          content: {}
+        "404":
+          description: Not Found
+          content: {}
+        "409":
+          description: Conflict
+          content: {}
+
+    delete:
+      tags:
+        - Taxes
+      summary: Delete a tax
+      description: Delete an existing tax configuration (sets the tax to an inactive/archived state)
+      operationId: delete-tax
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          description: External ID of the tax to delete
+          schema:
+            type: string
+      responses:
+        "204":
+          description: No Content - Successfully deleted
+        "404":
+          description: Not Found
+
+  "/custom-field":
+    post:
+      tags:
+        - Custom Fields
+      summary: Create a custom field
+      description: Create a new custom field configuration
+      operationId: create-custom-field
+      requestBody:
+        description: Custom field to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomField-Create"
+            examples:
+              Example:
+                value:
+                  sourceId: "CF-INPUT-001"
+                  name: "Project Code"
+                  type: "input"
+                  description: "Project code for tracking"
+                  visibleInInvoice: true
+                  visibleInBill: true
+                  alwaysMandatoryInInvoice: false
+              Example-List:
+                value:
+                  sourceId: "CF-LIST-001"
+                  name: "Department"
+                  type: "list"
+                  description: "Department selection"
+                  options:
+                    - "Sales"
+                    - "Marketing"
+                    - "Engineering"
+                    - "Finance"
+                  visibleInBill: true
+                  visibleInBillTable: true
+                  alwaysMandatoryInBill: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomField-Create"
+              example:
+                sourceId: "CF-INPUT-001"
+                name: "Project Code"
+                type: "input"
+                description: "Project code for tracking"
+                visibleInInvoice: true
+                visibleInBill: true
+                alwaysMandatoryInInvoice: false
+        "400":
+          description: Bad request
+          content: {}
+        "409":
+          description: Conflict
+          content: {}
+
+  "/custom-field/{sourceId}":
+    put:
+      tags:
+        - Custom Fields
+      summary: Update a custom field
+      description: Update an existing custom field configuration
+      operationId: update-custom-field
+      parameters:
+        - name: sourceId
+          in: path
+          required: true
+          description: Source ID (external identifier) of the custom field to update
+          schema:
+            type: string
+      requestBody:
+        description: Custom field fields to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomField-Update"
+            examples:
+              Example:
+                value:
+                  name: "Updated Project Code"
+                  description: "Updated description for project code"
+                  visibleInInvoice: true
+                  visibleInInvoiceTable: true
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomField"
+              example:
+                sourceId: "CF-INPUT-001"
+                name: "Updated Project Code"
+                type: "input"
+                description: "Updated description for project code"
+                visibleInInvoice: true
+                visibleInBill: true
+                alwaysMandatoryInInvoice: false
+                isDeleted: false
+        "400":
+          description: Bad request
+          content: {}
+        "404":
+          description: Not Found
+          content: {}
+        "409":
+          description: Conflict
+          content: {}
+
+    delete:
+      tags:
+        - Custom Fields
+      summary: Delete a custom field
+      description: Delete an existing custom field configuration (sets the custom field to an inactive/deleted state)
+      operationId: delete-custom-field
+      parameters:
+        - name: sourceId
+          in: path
+          required: true
+          description: Source ID (external identifier) of the custom field to delete
+          schema:
+            type: string
+      responses:
+        "204":
+          description: No Content - Successfully deleted
+        "404":
+          description: Not Found
+
+  "/currency-exchange-rate":
+    post:
+      tags:
+        - Currency Exchange Rates
+      summary: Create a currency exchange rate
+      description: Create a new currency exchange rate configuration
+      operationId: create-currency-exchange-rate
+      requestBody:
+        description: Currency exchange rate to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CurrencyExchangeRate-Create"
+            examples:
+              Example:
+                value:
+                  externalRateId: "RATE-001"
+                  fxRate: 1.25
+                  fromCurrency: "USD"
+                  toCurrency: "IDR"
+                  startEffectiveDate: "2024-07-01"
+                  isDeleted: false
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CurrencyExchangeRate"
+        "400":
+          description: Bad request
+          content: {}
+        "409":
+          description: Conflict
           content: {}
 
 components:
@@ -608,6 +1032,10 @@ components:
           type: string
           description: ExternalID of the vendor associated with the payment
           example: "VENDOR456"
+        subsidiaryReference:
+          type: string
+          description: Reference for the subsidiary associated with the bill payment
+          example: "SUB-001"
         accountNumber:
           type: string
           description: Account number of Account associated with the payment
@@ -687,6 +1115,665 @@ components:
       required:
         - customFieldNumber
         - value
+
+    GLAccount:
+      description: Details of a G/L Account
+      type: object
+      properties:
+        externalAccountId:
+          type: string
+          description: External unique identifier for the G/L account
+          example: "ACC-001"
+        subsidiaryReference:
+          type: string
+          description: Reference for the subsidiary associated with the account
+          example: "SUB-001"
+        code:
+          type: string
+          description: Account code
+          example: "1000"
+        name:
+          type: string
+          description: Account name
+          example: "Cash Account"
+        type:
+          type: string
+          description: Type of the G/L account
+          enum:
+            - asset
+            - equity
+            - expense
+            - liability
+            - bank
+            - revenue
+            - other
+          example: "asset"
+        currency:
+          type: string
+          description: Currency code (ISO 4217)
+          example: "USD"
+        status:
+          type: string
+          description: Status of the G/L account
+          enum:
+            - active
+            - archived
+          example: "active"
+        paymentAllowed:
+          type: boolean
+          description: Whether payments are allowed for this account
+          example: true
+        expenseAllowed:
+          type: boolean
+          description: Whether expenses are allowed for this account
+          example: false
+      required:
+        - externalAccountId
+        - code
+        - name
+        - type
+        - currency
+
+    GLAccount-Create:
+      description: Payload for creating a G/L Account
+      type: object
+      properties:
+        externalAccountId:
+          type: string
+          description: External unique identifier for the G/L account
+          example: "ACC-001"
+        subsidiaryReference:
+          type: string
+          description: Reference for the subsidiary associated with the account
+          example: "SUB-001"
+        code:
+          type: string
+          description: Account code
+          example: "1000"
+        name:
+          type: string
+          description: Account name
+          example: "Cash Account"
+        type:
+          type: string
+          description: Type of the G/L account
+          enum:
+            - asset
+            - equity
+            - expense
+            - liability
+            - bank
+            - revenue
+            - other
+          example: "asset"
+        currency:
+          type: string
+          description: Currency code (ISO 4217)
+          example: "USD"
+        paymentAllowed:
+          type: boolean
+          description: Whether payments are allowed for this account
+          example: true
+        expenseAllowed:
+          type: boolean
+          description: Whether expenses are allowed for this account
+          example: false
+      required:
+        - externalAccountId
+        - code
+        - name
+        - type
+        - currency
+
+    GLAccount-Update:
+      description: Payload for updating a G/L Account
+      type: object
+      properties:
+        subsidiaryReference:
+          type: string
+          description: Reference for the subsidiary associated with the account
+          example: "SUB-001"
+        code:
+          type: string
+          description: Account code
+          example: "1000"
+        name:
+          type: string
+          description: Account name
+          example: "Cash Account"
+        type:
+          type: string
+          description: Type of the G/L account
+          enum:
+            - asset
+            - equity
+            - expense
+            - liability
+            - bank
+            - revenue
+            - other
+          example: "asset"
+        currency:
+          type: string
+          description: Currency code (ISO 4217)
+          example: "USD"
+        paymentAllowed:
+          type: boolean
+          description: Whether payments are allowed for this account
+          example: true
+        expenseAllowed:
+          type: boolean
+          description: Whether expenses are allowed for this account
+          example: false
+
+    Tax:
+      description: Details of a tax configuration
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External unique identifier for the tax
+          example: "TAX-001"
+        subsidiaryReference:
+          type: string
+          description: Reference for the subsidiary associated with the tax
+          example: "SUB-001"
+        name:
+          type: string
+          description: Name of the tax
+          example: "VAT 10%"
+        amount:
+          type: number
+          description: Amount or rate of the tax
+          example: 10
+        status:
+          type: string
+          description: Status of the tax
+          enum:
+            - active
+            - inactive
+          example: "active"
+        amountType:
+          type: string
+          description: Type of the tax amount
+          enum:
+            - Flat
+            - Percentage
+          example: "Percentage"
+        priceIncludesTax:
+          type: boolean
+          description: Indicates whether prices include this tax
+          example: true
+      required:
+        - externalId
+        - name
+        - amount
+        - amountType
+
+    Tax-Create:
+      description: Payload for creating a tax configuration
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External unique identifier for the tax
+          example: "TAX-001"
+        subsidiaryReference:
+          type: string
+          description: Reference for the subsidiary associated with the tax
+          example: "SUB-001"
+        name:
+          type: string
+          description: Name of the tax
+          example: "VAT 10%"
+        amount:
+          type: number
+          description: Amount or rate of the tax
+          example: 10
+        amountType:
+          type: string
+          description: Type of the tax amount
+          enum:
+            - Flat
+            - Percentage
+          example: "Percentage"
+        priceIncludesTax:
+          type: boolean
+          description: Indicates whether prices include this tax
+          example: true
+      required:
+        - externalId
+        - name
+        - amount
+        - amountType
+
+    Tax-Update:
+      description: Payload for updating a tax configuration
+      type: object
+      properties:
+        subsidiaryReference:
+          type: string
+          description: Reference for the subsidiary associated with the tax
+          example: "SUB-001"
+        name:
+          type: string
+          description: Name of the tax
+          example: "VAT 10%"
+        amount:
+          type: number
+          description: Amount or rate of the tax
+          example: 10
+        amountType:
+          type: string
+          description: Type of the tax amount
+          enum:
+            - Flat
+            - Percentage
+          example: "Percentage"
+        priceIncludesTax:
+          type: boolean
+          description: Indicates whether prices include this tax
+          example: true
+
+    CustomField:
+      description: Details of a custom field configuration
+      type: object
+      properties:
+        sourceId:
+          type: string
+          description: External unique identifier for the custom field
+          example: "CF-INPUT-001"
+        name:
+          type: string
+          description: Name of the custom field
+          example: "Project Code"
+        type:
+          type: string
+          description: Type of the custom field
+          enum:
+            - input
+            - list
+            - date
+            - number
+            - multiList
+            - multiFile
+            - singleUser
+            - multiUser
+          example: "input"
+        description:
+          type: string
+          description: Description of the custom field
+          example: "Project code for tracking"
+        options:
+          type: array
+          items:
+            type: string
+          description: Array of option values (for list and multiList types)
+          example:
+            - "Sales"
+            - "Marketing"
+            - "Engineering"
+        structuredOptions:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomFieldStructuredOption"
+          description: Structured options with metadata (for list and multiList types)
+        isDeleted:
+          type: boolean
+          description: Indicates whether this custom field is deleted/inactive
+          example: false
+        visibleInInvoice:
+          type: boolean
+          description: Whether the field is visible in invoices
+          example: true
+        visibleInBill:
+          type: boolean
+          description: Whether the field is visible in bills
+          example: true
+        visibleInPR:
+          type: boolean
+          description: Whether the field is visible in purchase requests
+          example: false
+        visibleInPO:
+          type: boolean
+          description: Whether the field is visible in purchase orders
+          example: false
+        alwaysMandatoryInInvoice:
+          type: boolean
+          description: Whether the field is always mandatory in invoices
+          example: false
+        alwaysMandatoryInBill:
+          type: boolean
+          description: Whether the field is always mandatory in bills
+          example: false
+      required:
+        - sourceId
+        - name
+        - type
+
+    CustomField-Create:
+      description: Payload for creating a custom field configuration
+      type: object
+      properties:
+        sourceId:
+          type: string
+          description: External unique identifier for the custom field
+          example: "CF-INPUT-001"
+        name:
+          type: string
+          description: Name of the custom field
+          example: "Project Code"
+        type:
+          type: string
+          description: Type of the custom field
+          enum:
+            - input
+            - list
+            - date
+            - number
+            - multiList
+            - multiFile
+            - singleUser
+            - multiUser
+          example: "input"
+        description:
+          type: string
+          description: Description of the custom field
+          example: "Project code for tracking"
+        options:
+          type: array
+          items:
+            type: string
+          description: Array of option values (for list and multiList types). If structuredOptions is not provided, options will be automatically converted to structuredOptions.
+          example:
+            - "Sales"
+            - "Marketing"
+            - "Engineering"
+        structuredOptions:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomFieldStructuredOption"
+          description: Structured options with metadata (for list and multiList types). If not provided and options is provided, options will be automatically converted to structuredOptions.
+        visibleInInvoice:
+          type: boolean
+          description: Whether the field is visible in invoices
+          example: true
+        visibleInInvoiceTable:
+          type: boolean
+          description: Whether the field is visible in invoice tables
+          example: false
+        visibleInBill:
+          type: boolean
+          description: Whether the field is visible in bills
+          example: true
+        visibleInBillTable:
+          type: boolean
+          description: Whether the field is visible in bill tables
+          example: false
+        visibleInPR:
+          type: boolean
+          description: Whether the field is visible in purchase requests
+          example: false
+        visibleInPRTable:
+          type: boolean
+          description: Whether the field is visible in purchase request tables
+          example: false
+        visibleInPO:
+          type: boolean
+          description: Whether the field is visible in purchase orders
+          example: false
+        visibleInPOTable:
+          type: boolean
+          description: Whether the field is visible in purchase order tables
+          example: false
+        alwaysMandatoryInInvoice:
+          type: boolean
+          description: Whether the field is always mandatory in invoices
+          example: false
+        alwaysMandatoryInBill:
+          type: boolean
+          description: Whether the field is always mandatory in bills
+          example: false
+        mandatoryOnApprovalInInvoice:
+          type: boolean
+          description: Whether the field is mandatory on invoice approval
+          example: false
+        mandatoryOnApprovalInBill:
+          type: boolean
+          description: Whether the field is mandatory on bill approval
+          example: false
+        showInInvoicePdf:
+          type: boolean
+          description: Whether to show the field in invoice PDFs
+          example: false
+        showInPRPdf:
+          type: boolean
+          description: Whether to show the field in purchase request PDFs
+          example: false
+        showInPOPdf:
+          type: boolean
+          description: Whether to show the field in purchase order PDFs
+          example: false
+        showInPRApprovalEmail:
+          type: boolean
+          description: Whether to show the field in purchase request approval emails
+          example: false
+        showInBillApprovalEmail:
+          type: boolean
+          description: Whether to show the field in bill approval emails
+          example: false
+        visibleInVendor:
+          type: boolean
+          description: Whether the field is visible in vendors
+          example: false
+        visibleInCustomer:
+          type: boolean
+          description: Whether the field is visible in customers
+          example: false
+        visibleInCreditNote:
+          type: boolean
+          description: Whether the field is visible in credit notes
+          example: false
+      required:
+        - sourceId
+        - name
+        - type
+
+    CustomField-Update:
+      description: Payload for updating a custom field configuration
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the custom field
+          example: "Updated Project Code"
+        type:
+          type: string
+          description: Type of the custom field
+          enum:
+            - input
+            - list
+            - date
+            - number
+            - multiList
+            - multiFile
+            - singleUser
+            - multiUser
+          example: "input"
+        description:
+          type: string
+          description: Description of the custom field
+          example: "Updated description"
+        options:
+          type: array
+          items:
+            type: string
+          description: Array of option values (for list and multiList types)
+          example:
+            - "Sales"
+            - "Marketing"
+        structuredOptions:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomFieldStructuredOption"
+          description: Structured options with metadata (for list and multiList types)
+        visibleInInvoice:
+          type: boolean
+          description: Whether the field is visible in invoices
+        visibleInInvoiceTable:
+          type: boolean
+          description: Whether the field is visible in invoice tables
+        visibleInBill:
+          type: boolean
+          description: Whether the field is visible in bills
+        visibleInBillTable:
+          type: boolean
+          description: Whether the field is visible in bill tables
+        visibleInPR:
+          type: boolean
+          description: Whether the field is visible in purchase requests
+        visibleInPRTable:
+          type: boolean
+          description: Whether the field is visible in purchase request tables
+        visibleInPO:
+          type: boolean
+          description: Whether the field is visible in purchase orders
+        visibleInPOTable:
+          type: boolean
+          description: Whether the field is visible in purchase order tables
+        alwaysMandatoryInInvoice:
+          type: boolean
+          description: Whether the field is always mandatory in invoices
+        alwaysMandatoryInBill:
+          type: boolean
+          description: Whether the field is always mandatory in bills
+        mandatoryOnApprovalInInvoice:
+          type: boolean
+          description: Whether the field is mandatory on invoice approval
+        mandatoryOnApprovalInBill:
+          type: boolean
+          description: Whether the field is mandatory on bill approval
+        showInInvoicePdf:
+          type: boolean
+          description: Whether to show the field in invoice PDFs
+        showInPRPdf:
+          type: boolean
+          description: Whether to show the field in purchase request PDFs
+        showInPOPdf:
+          type: boolean
+          description: Whether to show the field in purchase order PDFs
+        showInPRApprovalEmail:
+          type: boolean
+          description: Whether to show the field in purchase request approval emails
+        showInBillApprovalEmail:
+          type: boolean
+          description: Whether to show the field in bill approval emails
+        visibleInVendor:
+          type: boolean
+          description: Whether the field is visible in vendors
+        visibleInCustomer:
+          type: boolean
+          description: Whether the field is visible in customers
+        visibleInCreditNote:
+          type: boolean
+          description: Whether the field is visible in credit notes
+
+    CustomFieldStructuredOption:
+      description: Structured option for list and multiList custom field types
+      type: object
+      properties:
+        sourceId:
+          type: string
+          description: Optional source ID for the option
+          example: "OPT-001"
+        value:
+          type: string
+          description: Option value/label
+          example: "Sales"
+        isDisabled:
+          type: boolean
+          description: Whether this option is disabled
+          example: false
+        sourceSystem:
+          type: string
+          description: Source system where this option was created
+          example: "api"
+      required:
+        - value
+
+    CurrencyExchangeRate:
+      description: Details of a currency exchange rate
+      type: object
+      properties:
+        externalRateId:
+          type: string
+          description: External unique identifier for the exchange rate
+          example: "RATE-001"
+        fxRate:
+          type: number
+          format: float
+          description: Exchange rate value (supports 2 decimal places or more)
+          example: 1.25
+        fromCurrency:
+          type: string
+          description: Source currency code (ISO 4217)
+          example: "USD"
+        toCurrency:
+          type: string
+          description: Target currency code (ISO 4217)
+          example: "IDR"
+        startEffectiveDate:
+          type: string
+          format: date
+          description: Date from which the rate is effective (YYYY-MM-DD)
+          example: "2024-07-01"
+        isDeleted:
+          type: boolean
+          description: Indicates whether this rate is deleted/archived
+          example: false
+      required:
+        - externalRateId
+        - fxRate
+        - fromCurrency
+        - toCurrency
+        - startEffectiveDate
+
+    CurrencyExchangeRate-Create:
+      description: Payload for creating a currency exchange rate
+      type: object
+      properties:
+        externalRateId:
+          type: string
+          description: External unique identifier for the exchange rate
+          example: "RATE-001"
+        fxRate:
+          type: number
+          format: float
+          description: Exchange rate value (supports 2 decimal places or more)
+          example: 1.25
+        fromCurrency:
+          type: string
+          description: Source currency code (ISO 4217)
+          example: "USD"
+        toCurrency:
+          type: string
+          description: Target currency code (ISO 4217)
+          example: "IDR"
+        startEffectiveDate:
+          type: string
+          format: date
+          description: Date from which the rate is effective (YYYY-MM-DD)
+          example: "2024-07-01"
+        isDeleted:
+          type: boolean
+          description: Indicates whether this rate is deleted/archived
+          example: false
+      required:
+        - externalRateId
+        - fxRate
+        - fromCurrency
+        - toCurrency
+        - startEffectiveDate
 
   securitySchemes:
     bearerAuth:
