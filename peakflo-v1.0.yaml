@@ -4453,7 +4453,7 @@ components:
         customField:
           type: array
           items:
-          $ref: "#/components/schemas/Bill-CustomFields"
+            $ref: "#/components/schemas/Bill-CustomFields"
       required:
         - itemId
         - name
