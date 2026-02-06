@@ -27,3 +27,5 @@ For webhook payload schema and more details please go to respective pages.
 
 - [Bills](./bill.md)
     - [Status changed](./bill.md#bill-status-changed)
+- [Credit Notes](./credit-note.md)
+    - [Status changed](./credit-note.md#credit-note-status-changed)

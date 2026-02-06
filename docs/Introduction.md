@@ -1,17 +1,31 @@
 ## Getting started
 
-The peakflo APIs allows you to manage your customer, invoice and payment data relevant to your account receivables. All the peakflo APIs uses HTTP methods with JSON request body and responses in general and the authentication is via standard JWT token. This makes it easy to integrate with peakflo. Follow the document to easily get started.
+The peakflo APIs allows you to manage your customer, invoice and payment data relevant to your account receivables. All the peakflo APIs uses HTTP methods with JSON request body and responses in general. Authentication can be done using API keys or standard JWT token. This makes it easy to integrate with peakflo. Follow the document to easily get started.
 
 
 ## Security and authentication
 
-The requests made to peakflo API are encrypted. Just use HTTPS in the URL. We use JWT to authenticate the account. When authenticating with peakflo API, a JWT must be generated and included as a **Bearer** token in the request header. 
+The requests made to peakflo API are encrypted. Just use HTTPS in the URL.
 
-### Setup your private key and access token
+You can authenticate using either of the following methods:
 
-As a first step, after creating your peakflo account, you must setup **Private key** and **Access token** in the peakflo settings. Later use the **Private key** to generate the JWT token which must be sent as part of the Authorization header of your requests.
+### API key authentication
 
-### Generating JWT
+Send the following headers with every request:
+
+- `x-client-id`: Value provided by the Peakflo team
+- `x-api-key`: Value managed under **Settings -> Integrations -> API**
+
+### JWT authentication
+
+When authenticating with JWT, a token must be generated and included as a **Bearer** token in the request header.
+
+#### Private key and Access token
+
+As a first step, after creating your peakflo account, peakflo team will provide **Private key** and **Access token**. 
+Later use the **Private key** to generate the JWT token which must be sent as part of the Authorization header of your requests.
+
+#### Generating JWT
 
 A JWT token consists of three parts - **header**, **payload** and **signature** with **.** as a separator between these values. Example,
 
@@ -104,4 +118,3 @@ Peakflo API follow **ISO 4217** as the currency format across the services
 ```json
 Example: USD, SGD, INR
 ```
-
