@@ -1627,6 +1627,75 @@ paths:
         "409":
           description: Conflict
           content: {}
+  "/runBillPoMatching":
+    post:
+      summary: Run bill PO matching
+      description: Trigger Bill PO matching for an existing bill
+      tags:
+        - Bills
+      operationId: run-bill-po-matching
+      requestBody:
+        description: Provide at least one identifier for the bill
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                billId:
+                  type: string
+                  description: Bill ID in Peakflo
+                externalId:
+                  type: string
+                  description: Bill external ID
+                sourceId:
+                  type: string
+                  description: Source ID
+              anyOf:
+                - required:
+                    - billId
+                - required:
+                    - externalId
+                - required:
+                    - sourceId
+            examples:
+              byBillId:
+                value:
+                  billId: "665d9d2a7f54dd6787405831"
+              byExternalId:
+                value:
+                  externalId: "BILL-10001"
+              bySourceId:
+                value:
+                  sourceId: "SRC-10001"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                      billId:
+                        type: string
+                      updated:
+                        type: boolean
+              example:
+                data:
+                  success: true
+                  billId: "665d9d2a7f54dd6787405831"
+                  updated: true
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
   "/bill/{billExternalId}":
     get:
       summary: Read a bill
