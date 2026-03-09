@@ -1478,6 +1478,7 @@ paths:
                             - "MultiList_Value2"
                           type: MultiList
                       subsidiaryReference: "SUB-001"
+                      updateDetails: "Line 1\nLine 2"
                   totalCount: 50
         "400":
           description: Bad Request
@@ -1730,6 +1731,10 @@ paths:
                       $ref: "#/components/schemas/Bill-CustomFields"
                   subsidiaryReference:
                     type: string
+                  updateDetails:
+                    type: string
+                    nullable: true
+                    description: Bill update details. New lines are normalized to \n in API responses.
               examples:
                 Example:
                   value:
@@ -1844,6 +1849,7 @@ paths:
                           - "MultiList_Value2"
                         type: MultiList
                     subsidiaryReference: "SUB-001"
+                    updateDetails: "Line 1\nLine 2"
         "404":
           description: Not Found
         "400":
@@ -1901,7 +1907,7 @@ paths:
                   type: number
                 notes:
                   type: string
-                udpateDetails:
+                updateDetails:
                   type: string
                   description: Session note for this update; distinct from notes
                 totalWHT:
@@ -1938,7 +1944,7 @@ paths:
                   paymentAmount: 450
                   totalAmount: 550
                   notes: "This is a test bill"
-                  udpateDetails: "Session note about this update"
+                  updateDetails: "Session note about this update"
                   totalWHT: 20
                   items:
                     - itemId: "ITEM001"
@@ -5204,6 +5210,11 @@ components:
         subsidiaryReference:
           type: string
           example: "SUB-001"
+        updateDetails:
+          type: string
+          nullable: true
+          description: Bill update details. New lines are normalized to \n in API responses.
+          example: "Line 1\nLine 2"
       required:
         - billNumber
         - status
