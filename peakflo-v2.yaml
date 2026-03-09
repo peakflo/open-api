@@ -52,8 +52,6 @@ tags:
     description: Tax configurations
   - name: Custom Fields
     description: Custom field configurations
-  - name: Currency Exchange Rates
-    description: Currency exchange rate configurations
 
 paths:
   "/bill-payment":
@@ -768,42 +766,6 @@ paths:
           description: No Content - Successfully deleted
         "404":
           description: Not Found
-
-  "/fx-rate":
-    post:
-      tags:
-        - Currency Exchange Rates
-      summary: Create a currency exchange rate
-      description: Create a new currency exchange rate configuration
-      operationId: create-currency-exchange-rate
-      requestBody:
-        description: Currency exchange rate to create
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CurrencyExchangeRate-Create"
-            examples:
-              Example:
-                value:
-                  externalRateId: "RATE-001"
-                  fxRate: 1.25
-                  fromCurrency: "USD"
-                  toCurrency: "IDR"
-                  startEffectiveDate: "2024-07-01"
-      responses:
-        "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CurrencyExchangeRate"
-        "400":
-          description: Bad request
-          content: {}
-        "409":
-          description: Conflict
-          content: {}
 
 components:
   schemas:
@@ -1656,72 +1618,6 @@ components:
           example: "api"
       required:
         - value
-
-    CurrencyExchangeRate:
-      description: Details of a currency exchange rate
-      type: object
-      properties:
-        externalRateId:
-          type: string
-          description: External unique identifier for the exchange rate
-          example: "RATE-001"
-        fxRate:
-          type: number
-          format: float
-          description: Exchange rate value (supports 2 decimal places or more)
-          example: 1.25
-        fromCurrency:
-          type: string
-          description: Source currency code (ISO 4217)
-          example: "USD"
-        toCurrency:
-          type: string
-          description: Target currency code (ISO 4217)
-          example: "IDR"
-        startEffectiveDate:
-          type: string
-          format: date
-          description: Date from which the rate is effective (YYYY-MM-DD)
-          example: "2024-07-01"
-      required:
-        - externalRateId
-        - fxRate
-        - fromCurrency
-        - toCurrency
-        - startEffectiveDate
-
-    CurrencyExchangeRate-Create:
-      description: Payload for creating a currency exchange rate
-      type: object
-      properties:
-        externalRateId:
-          type: string
-          description: External unique identifier for the exchange rate
-          example: "RATE-001"
-        fxRate:
-          type: number
-          format: float
-          description: Exchange rate value (supports 2 decimal places or more)
-          example: 1.25
-        fromCurrency:
-          type: string
-          description: Source currency code (ISO 4217)
-          example: "USD"
-        toCurrency:
-          type: string
-          description: Target currency code (ISO 4217)
-          example: "IDR"
-        startEffectiveDate:
-          type: string
-          format: date
-          description: Date from which the rate is effective (YYYY-MM-DD)
-          example: "2024-07-01"
-      required:
-        - externalRateId
-        - fxRate
-        - fromCurrency
-        - toCurrency
-        - startEffectiveDate
 
   securitySchemes:
     bearerAuth:
