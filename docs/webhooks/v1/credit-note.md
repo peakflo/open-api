@@ -27,19 +27,42 @@ The CREDIT_NOTE_STATUS_CHANGED event is triggered when the status of a credit no
       "currency": "USD",
       "currencyRate": 1.35,
       "destinationCurrency": "SGD",
-      "lineItems": [
+      "items": [
         {
           "externalId": "ITEM001",
-          "invoiceExternalId": "inv_01J9VJ0J9Q8R7S6T5U4V3W2X1Y",
-          "amount": 600,
-          "amountConv": 810,
-          "currencyRate": 1.35,
-          "wht": {
-            "referenceId": "REF001",
-            "code": "WHT_CODE",
-            "displayName": "Withholding Tax",
-            "amount": 12
-          }
+          "unit": "ea",
+          "sourceInventoryId": "ITEM001",
+          "name": "Returned Goods",
+          "description": "Returned Goods",
+          "quantity": 2,
+          "unitPrice": 300,
+          "account": "Sales Returns",
+          "accountId": "acc_001",
+          "type": "Service",
+          "taxes": [
+            {
+              "name": "GST",
+              "amount": 54,
+              "priceIncludesTax": false,
+              "status": "active",
+              "externalId": "tax_001",
+              "amountType": "Percentage",
+              "category": "GST",
+              "perc": 9
+            }
+          ],
+          "discounts": [],
+          "customFields": [],
+          "purchaseOrderExternalId": "",
+          "poItemExternalId": "",
+          "PONumber": ""
+        }
+      ],
+      "appliedItems": [
+        {
+          "billExternalId": "bill_01J9VJ0J9Q8R7S6T5U4V3W2X1Y",
+          "billNumber": "BILL-2026-0004",
+          "amount": 600
         }
       ],
       "attachments": [
@@ -76,7 +99,8 @@ The CREDIT_NOTE_STATUS_CHANGED event is triggered when the status of a credit no
 | currency | string | The source currency of the credit note. |
 | currencyRate | number | The exchange rate used for conversion. |
 | destinationCurrency | string | The destination currency for converted amounts. |
-| lineItems | array | An array containing line item level details. |
+| items | array | An array containing item level details on the credit note. |
+| appliedItems | array | An array containing bill application details for the credit note. |
 | attachments | array | An array containing details of attachments related to the credit note. |
 | status | string | The status of the credit note. [Possible Values](#possible-credit-note-status-values) |
 | submittedAt | string | The datetime when the credit note was submitted. |
@@ -84,6 +108,35 @@ The CREDIT_NOTE_STATUS_CHANGED event is triggered when the status of a credit no
 | createdByName | string | The name of the user who created the credit note. |
 | createdAt | string | The datetime when the credit note was created. |
 | updatedAt | string | The datetime when the credit note was last updated. |
+
+### Item Object
+
+| Property | Type | Description |
+|----------|------|-------------|
+| externalId | string | The external ID of the item line. |
+| unit | string | The unit for the item. |
+| sourceInventoryId | string | The inventory item identifier from the source system. |
+| name | string | The item name. |
+| description | string | The item description. |
+| quantity | number | The item quantity. |
+| unitPrice | number | The item unit price. |
+| account | string | The account name for the item line. |
+| accountId | string | The account identifier for the item line. |
+| type | string | The item type. |
+| taxes | array | Taxes applied to the item line. |
+| discounts | array | Discounts applied to the item line. |
+| customFields | array | Custom fields attached to the item line. |
+| purchaseOrderExternalId | string | The related purchase order external ID. |
+| poItemExternalId | string | The related purchase order item external ID. |
+| PONumber | string | The related purchase order number. |
+
+### Applied Item Object
+
+| Property | Type | Description |
+|----------|------|-------------|
+| billExternalId | string | The external ID of the applied bill. |
+| billNumber | string | The bill number of the applied bill. |
+| amount | number | The applied amount in source currency. |
 
 ### Possible Credit Note Status Values
 
