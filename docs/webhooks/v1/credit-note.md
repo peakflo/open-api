@@ -51,8 +51,23 @@ The CREDIT_NOTE_STATUS_CHANGED event is triggered when the status of a credit no
               "perc": 9
             }
           ],
-          "discounts": [],
-          "customFields": [],
+          "discounts": [
+            {
+              "name": "Promo Discount",
+              "amount": 12.5,
+              "status": "active",
+              "issuerId": "test-issuer"
+            }
+          ],
+          "customFields": [
+            {
+              "sourceId": "LocationCode",
+              "value": "WH-001",
+              "customFieldNumber": "1",
+              "name": "Location Code",
+              "type": "Input"
+            }
+          ],
           "purchaseOrderExternalId": "",
           "poItemExternalId": "",
           "PONumber": ""
