@@ -21,6 +21,8 @@ servers:
     url: stage-api.peakflo.co/v1
 security:
   - bearerAuth: []
+  - apiKeyAuth: []
+    clientIdAuth: []
 tags:
   - name: Customers
     description: The customer
@@ -59,6 +61,7 @@ paths:
       operationId: add-customer
       requestBody:
         description: Customer to add
+        required: true
         content:
           application/json:
             schema:
@@ -80,7 +83,6 @@ paths:
                       email: peterwong@youwin.com
                       phone: "+6591234567"
                       isMainContact: false
-        required: false
       responses:
         "201":
           description: Created
@@ -106,6 +108,7 @@ paths:
       operationId: update-customer
       requestBody:
         description: Customer to update
+        required: true
         content:
           application/json:
             schema:
@@ -127,7 +130,6 @@ paths:
                       email: peterwong@youwin.com
                       phone: "+6591234567"
                       isMainContact: true
-        required: false
       responses:
         "200":
           description: Updated customer
@@ -165,8 +167,8 @@ paths:
       summary: Delete a customer
       operationId: delete-customer
       responses:
-        "204":
-          description: No Content
+        "200":
+          description: Created
         "404":
           description: Not Found
       description: Delete a customer
@@ -204,6 +206,7 @@ paths:
       operationId: add-contact
       description: Add a contact to existing customer
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -245,7 +248,7 @@ paths:
         - Contacts
       responses:
         "200":
-          description: OK
+          description: Created
           content:
             application/json:
               schema:
@@ -266,6 +269,7 @@ paths:
       operationId: update-contact
       description: Update a contact
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -285,66 +289,26 @@ paths:
       tags:
         - Contacts
       responses:
-        "204":
-          description: No Content
+        "200":
+          description: OK
         "404":
           description: Not Found
       operationId: delete-contact
       description: Delete a contact
-  "/customers/{customerExternalId}/portalUrl":
-    parameters:
-      - schema:
-          type: string
-        name: customerExternalId
-        in: path
-        required: true
-    get:
-      summary: Read Customer info
-      tags:
-        - Customers
-      responses:
-        "200":
-          description: "Read Customer Info with portal link"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Customer"
-              examples:
-                Example:
-                  value:
-                    companyName: YouWin
-                    externalId: "121989"
-                    externalRefNumber: ["421670"]
-                    currency: SGD
-                    status: active
-                    accountManagerEmail: adrian@youwin.com
-                    pauseWorkflow: false
-                    contacts:
-                      - externalId: 120989C1
-                        firstName: Peter
-                        lastName: Wong
-                        email: peterwong@youwin.com
-                        phone: "+6591234567"
-                        isMainContact: true
-                    portalUrl: https://stage-portal.peakflo.co/?token=sampletoken
-        "404":
-          description: Not Found
-        "400":
-          description: Bad Request
-
   /invoices:
     post:
       summary: Add an invoice
       operationId: add-invoice
       responses:
         "201":
-          description: Created
+          description: OK
         "400":
           description: Bad Request
         "409":
           description: Conflict
       description: Add a new invoice
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -402,6 +366,7 @@ paths:
           description: Conflict
       description: Update an invoice. Any field not provided will be left unchanged.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -440,8 +405,8 @@ paths:
       summary: Delete an invoice
       operationId: delete-invoice
       responses:
-        "204":
-          description: No Content
+        "200":
+          description: OK
         "404":
           description: Not Found
       description: Delete an invoice
@@ -457,12 +422,13 @@ paths:
       summary: Add an attachment to invoice
       operationId: add-attachment
       responses:
-        "200":
+        "201":
           description: OK
       tags:
         - Invoices
       description: Add an attachment to invoice
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -495,6 +461,7 @@ paths:
           description: Conflict
       description: Add a credit note
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -533,7 +500,7 @@ paths:
       operationId: update-creditnote
       responses:
         "200":
-          description: OK
+          description: Created
           content:
             application/json:
               schema:
@@ -544,6 +511,7 @@ paths:
           description: Conflict
       description: Update a credit note
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -571,8 +539,8 @@ paths:
       summary: Delete a credit note
       operationId: delete-creditnote
       responses:
-        "204":
-          description: No Content
+        "200":
+          description: Created
         "404":
           description: Not Found
       tags:
@@ -584,7 +552,7 @@ paths:
       operationId: add-payment
       responses:
         "201":
-          description: Created
+          description: OK
           content:
             application/json:
               schema:
@@ -597,6 +565,7 @@ paths:
         - Payments
       description: Add a payment
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -631,7 +600,7 @@ paths:
       operationId: update-payment
       responses:
         "200":
-          description: OK
+          description: Created
         "404":
           description: Not Found
         "409":
@@ -640,6 +609,7 @@ paths:
         - Payments
       description: Update a payment
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -665,8 +635,8 @@ paths:
       summary: Delete a payment
       operationId: delete-payment
       responses:
-        "204":
-          description: No Content
+        "200":
+          description: OK
         "404":
           description: Not Found
       tags:
@@ -966,7 +936,7 @@ paths:
     
       responses:
         "201":
-          description: Created
+          description: OK
           content:
             application/json:
               schema:
@@ -1195,6 +1165,16 @@ paths:
           description: Not Found
         "400":
           description: Bad Request
+    delete:
+      tags:
+        - Vendors
+      summary: Delete a vendor
+      operationId: delete-vendor
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not Found
   "/vendors/{externalId}/status":
     parameters:
       - schema:
@@ -1224,7 +1204,7 @@ paths:
                   status: deleted
       responses:
         "200":
-          description: OK
+          description: Created
           content:
             application/json:
               schema:
@@ -1256,6 +1236,24 @@ paths:
           description: Not Found
         "409":
           description: Conflict
+  "/vendors/{externalId}/archive":
+    parameters:
+      - schema:
+          type: string
+        name: externalId
+        in: path
+        required: true
+        description: The vendor external Id to archive/unarchive
+    put:
+      tags:
+        - Vendors
+      summary: Toggle vendor archived status
+      operationId: toggle-vendor-archived-status
+      responses:
+        "200":
+          description: Created
+        "404":
+          description: Not Found
   "/vendors/{vendorExternalId}/contacts":
     parameters:
       - schema:
@@ -1269,7 +1267,7 @@ paths:
       tags:
         - Vendor Contacts
       responses:
-        "200":
+        "201":
           description: OK
           content:
             application/json:
@@ -1291,6 +1289,7 @@ paths:
       operationId: create-vendor-contact
       description: Create a vendor contact
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -1322,7 +1321,6 @@ paths:
           schema:
             type: string
             example: "2024-07-01T13:40:01"
-        - name: updatedAtTo
         - name: status
           in: query
           description: Filter bills by status
@@ -1616,8 +1614,8 @@ paths:
                         - "MultiList_Value2"
                   subsidiaryReference: "SUB-001"
       responses:
-        "201":
-          description: Created
+        "200":
+          description: OK
           content:
             application/json:
               schema:
@@ -2022,8 +2020,8 @@ paths:
       summary: Delete a bill
       operationId: delete-bill
       responses:
-        "204":
-          description: No Content
+        "200":
+          description: OK
         "404":
           description: Not Found
       description: Delete a bill
@@ -2058,6 +2056,7 @@ paths:
         - Bills
       description: Add an attachment to bill
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -2132,7 +2131,7 @@ paths:
                   receiverCurrency: "USD"
       responses:
         "201":
-          description: Created
+          description: OK
           content:
             application/json:
               schema:
@@ -2531,7 +2530,7 @@ paths:
                   subsidiaryReference: "SUB-001"
       responses:
         "201":
-          description: Created
+          description: OK
           content:
             application/json:
               schema:
@@ -2911,8 +2910,8 @@ paths:
           schema:
             type: string
       responses:
-        "204":
-          description: No Content
+        "200":
+          description: OK
         "404":
           description: Not Found
   "/purchase-order/{externalId}/attachments":
@@ -2940,6 +2939,7 @@ paths:
         - Vendor Purchase Orders
       description: Add an attachment to purchase order
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -3080,7 +3080,7 @@ paths:
                         - "MultiList_Value2"
                   subsidiaryReference: "SUB-001"
       responses:
-        "201":
+        "200":
           description: Created
           content:
             application/json:
@@ -3525,15 +3525,15 @@ paths:
           schema:
             type: string
       responses:
-        "204":
-          description: No Content
+        "200":
+          description: OK
         "404":
           description: Not Found
-  "/receipt-notes/{externalId}/attachments":
+  "/receipt-notes/{receiptNoteExternalId}/attachments":
     parameters:
       - schema:
           type: string
-        name: externalId
+        name: receiptNoteExternalId
         in: path
         required: true
     put:
@@ -3554,6 +3554,7 @@ paths:
         - Vendor Receipt Notes
       description: Add an attachment to receipt note
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -3595,21 +3596,6 @@ paths:
           description: Filter credit notes by vendorId
           schema:
             type: string
-        - name: page
-          in: query
-          description: Page number for pagination
-          schema:
-            type: integer
-            minimum: 1
-            default: 1
-        - name: limit
-          in: query
-          description: Number of credit notes per page
-          schema:
-            type: integer
-            minimum: 1
-            default: 10
-            maximum: 100
       responses:
         "200":
           description: Successful response
@@ -3971,7 +3957,7 @@ paths:
                       rate: 1
       responses:
         "201":
-          description: Created
+          description: OK
           content:
             application/json:
               schema:
@@ -4054,7 +4040,7 @@ paths:
                     - unit: "Piece"
                       rate: 1
       responses:
-        "201":
+        "200":
           description: Created
           content:
             application/json:
@@ -6023,4 +6009,12 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+    clientIdAuth:
+      type: apiKey
+      in: header
+      name: x-client-id
   parameters: {}
