@@ -1542,6 +1542,8 @@ paths:
                     $ref: "#/components/schemas/CustomFields"
                 subsidiaryReference:
                   type: string
+                sourceId:
+                  type: string
             examples:
               Example:
                 value:
@@ -1615,6 +1617,7 @@ paths:
                         - "MultiList_Value1"
                         - "MultiList_Value2"
                   subsidiaryReference: "SUB-001"
+                  sourceId: "SRC-001"
       responses:
         "201":
           description: Created
@@ -1729,6 +1732,9 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/Bill-CustomFields"
+                  revision_count:
+                    type: number
+                    description: Revision count shown in bill responses for supported tenants.
                   subsidiaryReference:
                     type: string
                   updateDetails:
@@ -1848,6 +1854,7 @@ paths:
                           - "MultiList_Value1"
                           - "MultiList_Value2"
                         type: MultiList
+                    revision_count: 2
                     subsidiaryReference: "SUB-001"
                     updateDetails: "Line 1\nLine 2"
         "404":
@@ -5150,6 +5157,10 @@ components:
           type: number
           description: Total withholding tax amount
           example: 20
+        revision_count:
+          type: number
+          description: Revision count shown in bill responses for supported tenants.
+          example: 2
         poNumber:
           type: string
           description: Purchase order number
