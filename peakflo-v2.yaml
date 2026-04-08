@@ -21,6 +21,8 @@ servers:
     url: stage-api.peakflo.co/v2
 security:
   - bearerAuth: []
+  - apiKeyAuth: []
+    clientIdAuth: []
 tags:
   - name: Customers
     description: The customer
@@ -263,7 +265,33 @@ paths:
         "409":
           description: Conflict
           content: {}
-  "/bill-payment/{exteralId}":
+    put:
+      tags:
+        - Bill Payments
+      summary: Update a bill payment
+      description: Update a bill payment
+      operationId: update-bill-payment
+      requestBody:
+        description: Bill payment to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BillPayment-create"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BillPayment"
+        "400":
+          description: Bad request
+          content: {}
+        "409":
+          description: Conflict
+          content: {}
+  "/bill-payment/{externalId}":
     get:
       tags:
         - Bill Payments
@@ -287,7 +315,7 @@ paths:
                 paymentDate: "2023-11-28"
                 paymentReference: "INV-2023-001"
                 paymentNumber: "PAYMENT_2345"
-                referenceObject": "PO-00113"
+                referenceObject: "PO-00113"
                 scheduledDate: "2023-11-28"
                 externalVendorId: "VENDOR-123"
                 vendorName: "VENDOR-123"
@@ -315,88 +343,6 @@ paths:
           description: Not Found
         "400":
           description: Bad Request
-    put:
-      tags:
-        - Bill Payments
-      summary: Update a bill payment
-      description: Update a bill payment
-      operationId: update-bill-payment
-      parameters:
-        - name: externalId
-          in: path
-          required: true
-          description: ID of the bill payment to retrieve
-          schema:
-            type: string
-      requestBody:
-        description: Bill payment to update
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                status:
-                  type: string
-                billId:
-                  type: string
-                reference:
-                  type: string
-                vendorId:
-                  type: string
-                subsidiaryReference:
-                  type: string
-                date:
-                  type: string
-                  format: date
-                amount:
-                  type: number
-                baseCurrency:
-                  type: string
-                paymentFee:
-                  type: number
-                fxRate:
-                  type: number
-                convertedAmount:
-                  type: number
-                receiverCurrency:
-                  type: string
-            examples:
-              Example:
-                value:
-                  paymentDate: "2023-11-28"
-                  scheduledDate: "2024-07-07"
-                  paymentNumber: "PAYMENT-001"
-                  paymentReference: "INV-2023-001"
-                  referenceObject: "PO-001133"
-                  externalVendorId: "VENDOR-123"
-                  subsidiaryReference: "SUB-001"
-                  accountNumber: "11223344556677"
-                  amount: 500
-                  paymentFee: 10
-                  fxRate: 1.5
-                  status: "paid"
-                  baseCurrency: "SGD"
-                  convertedAmount: 750
-                  receiverCurrency: "USD"
-                  bills:
-                    - externalBillId: "1234567890"
-                      appliedAmount: 500
-
-      responses:
-        "200":
-          description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/BillPayment"
-        "400":
-          description: Bad request
-          content: {}
-        "409":
-          description: Conflict
-          content: {}
-
   "/gl-account":
     post:
       tags:
@@ -792,8 +738,8 @@ paths:
                   toCurrency: "IDR"
                   startEffectiveDate: "2024-07-01"
       responses:
-        "201":
-          description: Created
+        "200":
+          description: OK
           content:
             application/json:
               schema:
@@ -801,9 +747,8 @@ paths:
         "400":
           description: Bad request
           content: {}
-        "409":
-          description: Conflict
-          content: {}
+        "403":
+          description: Forbidden
 
 components:
   schemas:
@@ -1728,4 +1673,12 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+    clientIdAuth:
+      type: apiKey
+      in: header
+      name: x-client-id
   parameters: {}
