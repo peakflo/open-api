@@ -886,8 +886,10 @@ paths:
                   type: array
                   items:
                     $ref: "#/components/schemas/CustomFields"
-                subsidiaryReference:
-                  type: string
+                subsidiaries:
+                  type: array
+                  items:
+                    type: string
                 sourceId:
                   type: string
               anyOf:
@@ -903,6 +905,8 @@ paths:
                   companyIds:
                     - "121989"
                     - "121989-alt"
+                  subsidiaries:
+                    - "SUB-001"
                   defaultCurrency: USD
                   addresses:
                     - type: billing
@@ -1129,6 +1133,10 @@ paths:
                     $ref: "#/components/schemas/CustomFields"
                 vatApplicable:
                   type: boolean
+                subsidiaries:
+                  type: array
+                  items:
+                    type: string
             examples:
               Example:
                 value:
@@ -1136,6 +1144,8 @@ paths:
                   companyIds:
                     - "121989"
                     - "121989-alt"
+                  subsidiaries:
+                    - "SUB-001"
                   defaultCurrency: USD
                   addresses:
                     - type: billing

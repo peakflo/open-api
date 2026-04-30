@@ -361,7 +361,8 @@ paths:
               Example:
                 value:
                   externalAccountId: "ACC-001"
-                  subsidiaryReference: "SUB-001"
+                  subsidiaries:
+                    - "SUB-001"
                   code: "1000"
                   name: "Cash Account"
                   type: "asset"
@@ -377,7 +378,8 @@ paths:
                 $ref: "#/components/schemas/GLAccount-Create"
               example:
                 externalAccountId: "ACC-001"
-                subsidiaryReference: "SUB-001"
+                subsidiaries:
+                  - "SUB-001"
                 code: "1000"
                 name: "Cash Account"
                 type: "asset"
@@ -415,6 +417,8 @@ paths:
             examples:
               Example:
                 value:
+                  subsidiaries:
+                    - "SUB-001"
                   code: "1001"
                   name: "Updated Cash Account"
                   type: "asset"
@@ -430,7 +434,8 @@ paths:
                 $ref: "#/components/schemas/GLAccount"
               example:
                 externalAccountId: "ACC-001"
-                subsidiaryReference: "SUB-001"
+                subsidiaries:
+                  - "SUB-001"
                 code: "1001"
                 name: "Updated Cash Account"
                 type: "asset"
@@ -485,7 +490,8 @@ paths:
               Example:
                 value:
                   externalId: "TAX-001"
-                  subsidiaryReference: "SUB-001"
+                  subsidiaries:
+                    - "SUB-001"
                   name: "VAT 10%"
                   amount: 10
                   amountType: "Percentage"
@@ -499,7 +505,8 @@ paths:
                 $ref: "#/components/schemas/Tax-Create"
               example:
                 externalId: "TAX-001"
-                subsidiaryReference: "SUB-001"
+                subsidiaries:
+                  - "SUB-001"
                 name: "VAT 10%"
                 amount: 10
                 amountType: "Percentage"
@@ -535,6 +542,8 @@ paths:
             examples:
               Example:
                 value:
+                  subsidiaries:
+                    - "SUB-001"
                   name: "Updated VAT 10%"
                   amount: 8
                   amountType: "Percentage"
@@ -548,7 +557,8 @@ paths:
                 $ref: "#/components/schemas/Tax"
               example:
                 externalId: "TAX-001"
-                subsidiaryReference: "SUB-001"
+                subsidiaries:
+                  - "SUB-001"
                 name: "Updated VAT 10%"
                 amount: 8
                 amountType: "Percentage"
@@ -1029,10 +1039,13 @@ components:
           type: string
           description: External unique identifier for the G/L account
           example: "ACC-001"
-        subsidiaryReference:
-          type: string
-          description: Reference for the subsidiary associated with the account
-          example: "SUB-001"
+        subsidiaries:
+          type: array
+          description: References for the subsidiaries associated with the account
+          items:
+            type: string
+          example:
+            - "SUB-001"
         code:
           type: string
           description: Account code
@@ -1087,10 +1100,13 @@ components:
           type: string
           description: External unique identifier for the G/L account
           example: "ACC-001"
-        subsidiaryReference:
-          type: string
-          description: Reference for the subsidiary associated with the account
-          example: "SUB-001"
+        subsidiaries:
+          type: array
+          description: References for the subsidiaries associated with the account
+          items:
+            type: string
+          example:
+            - "SUB-001"
         code:
           type: string
           description: Account code
@@ -1134,10 +1150,13 @@ components:
       description: Payload for updating a G/L Account
       type: object
       properties:
-        subsidiaryReference:
-          type: string
-          description: Reference for the subsidiary associated with the account
-          example: "SUB-001"
+        subsidiaries:
+          type: array
+          description: References for the subsidiaries associated with the account
+          items:
+            type: string
+          example:
+            - "SUB-001"
         code:
           type: string
           description: Account code
@@ -1179,10 +1198,13 @@ components:
           type: string
           description: External unique identifier for the tax
           example: "TAX-001"
-        subsidiaryReference:
-          type: string
-          description: Reference for the subsidiary associated with the tax
-          example: "SUB-001"
+        subsidiaries:
+          type: array
+          description: References for the subsidiaries associated with the tax
+          items:
+            type: string
+          example:
+            - "SUB-001"
         name:
           type: string
           description: Name of the tax
@@ -1223,10 +1245,13 @@ components:
           type: string
           description: External unique identifier for the tax
           example: "TAX-001"
-        subsidiaryReference:
-          type: string
-          description: Reference for the subsidiary associated with the tax
-          example: "SUB-001"
+        subsidiaries:
+          type: array
+          description: References for the subsidiaries associated with the tax
+          items:
+            type: string
+          example:
+            - "SUB-001"
         name:
           type: string
           description: Name of the tax
@@ -1256,10 +1281,13 @@ components:
       description: Payload for updating a tax configuration
       type: object
       properties:
-        subsidiaryReference:
-          type: string
-          description: Reference for the subsidiary associated with the tax
-          example: "SUB-001"
+        subsidiaries:
+          type: array
+          description: References for the subsidiaries associated with the tax
+          items:
+            type: string
+          example:
+            - "SUB-001"
         name:
           type: string
           description: Name of the tax
