@@ -1685,12 +1685,6 @@ paths:
                     type: string
                   vendorId:
                     type: string
-                  companyIds:
-                    type: array
-                    nullable: true
-                    description: Vendor identifier aliases associated with this bill.
-                    items:
-                      type: string
                   vendorName:
                     type: string
                   vendorAccountNumber:
@@ -1779,9 +1773,6 @@ paths:
                     status: "paid"
                     billExternalId: "123456789"
                     vendorId: "VENDOR001"
-                    companyIds:
-                      - "VENDOR001"
-                      - "VENDOR001-alt"
                     vendorName: "ABC Vendor"
                     vendorAccountNumber: "123456789"
                     date: "2023-11-27T12:00:00Z"
@@ -5132,15 +5123,6 @@ components:
           type: string
           description: ID of the vendor associated with the bill
           example: "VENDOR001"
-        companyIds:
-          type: array
-          nullable: true
-          description: Vendor identifier aliases associated with the bill.
-          items:
-            type: string
-          example:
-            - "VENDOR001"
-            - "VENDOR001-alt"
         vendorName:
           type: string
           description: Name of the vendor associated with the bill
