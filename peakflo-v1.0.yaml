@@ -318,8 +318,8 @@ paths:
                 value:
                   externalId: Inv-a12897888
                   customerRef: "120989"
-                  issueDate: "2021-04-28T12:30:00"
-                  dueDate: "2021-10-28T12:30:00"
+                  issueDate: "2021-04-28T12:30:00Z"
+                  dueDate: "2021-10-28T12:30:00Z"
                   currency: SGD
                   lineItems:
                     - description: Procurement for desk support
@@ -376,8 +376,8 @@ paths:
                 value:
                   externalId: Inv-a12897888
                   customerRef: "120989"
-                  issueDate: "2021-04-28T12:30:00"
-                  dueDate: "2021-10-28T12:30:00"
+                  issueDate: "2021-04-28T12:30:00Z"
+                  dueDate: "2021-10-28T12:30:00Z"
                   currency: SGD
                   lineItems:
                     - description: Procurement for desk support
@@ -475,7 +475,7 @@ paths:
                   totalAmount: 300
                   remainingCredit: 0
                   status: draft
-                  issueDate: "2021-04-28T12:30:00"
+                  issueDate: "2021-04-28T12:30:00Z"
                   currency: SGD
                   lineItems:
                     - description: Outsourcing services
@@ -525,7 +525,7 @@ paths:
                   totalAmount: 300
                   remainingCredit: 0
                   status: draft
-                  issueDate: "2021-04-28T12:30:00"
+                  issueDate: "2021-04-28T12:30:00Z"
                   currency: SGD
                   lineItems:
                     - description: Outsourcing services
@@ -579,12 +579,12 @@ paths:
                   remainingAmount: 0
                   currency: SGD
                   currencyRate: 0
-                  date: "2021-04-28T12:30:00"
+                  date: "2021-04-28T12:30:00Z"
                   paymentLines:
                     - amount: 400
                       type: invoice
                       id: pay_189220000002223L1
-                  modifiedDate: "2021-10-28T12:30:00"
+                  modifiedDate: "2021-10-28T12:30:00Z"
                   reference: 120989Ref_98389273
         description: The payment to add
   "/payments/{paymentExternalId}":
@@ -623,12 +623,12 @@ paths:
                   remainingAmount: 0
                   currency: SGD
                   currencyRate: 0
-                  date: "2021-04-28T12:30:00"
+                  date: "2021-04-28T12:30:00Z"
                   paymentLines:
                     - amount: 400
                       type: invoice
                       id: pay_189220000002223L1
-                  modifiedDate: "2021-10-28T12:30:00"
+                  modifiedDate: "2021-10-28T12:30:00Z"
                   reference: 120989Ref_98389273
         description: The payment to update
     delete:
@@ -670,13 +670,13 @@ paths:
           description: Filter by updatedAt from
           schema:
             type: string
-            example: "2021-04-28T12:30:00"
+            example: "2021-04-28T12:30:00Z"
         - name: updatedAtTo
           in: query
           description: Filter by updatedAt to
           schema:
             type: string
-            example: "2021-04-28T12:30:00"
+            example: "2021-04-28T12:30:00Z"
       responses:
         "200":
           description: OK
@@ -4646,12 +4646,14 @@ components:
           description: The external ref number of a customer
         issueDate:
           type: string
-          description: Invoice issue date. Follow ISO8601 format
-          example: "2021-04-28T12:30:00"
+          format: date-time
+          description: Invoice issue date. Must be a valid ISO 8601 UTC date-time string (e.g. "2021-04-28T12:30:00Z"). The value must include both date and time components with a timezone designator (Z or +/-HH:MM).
+          example: "2021-04-28T12:30:00Z"
         dueDate:
           type: string
-          description: The invoice due date. Follow ISO8601 format
-          example: "2021-10-28T12:30:00"
+          format: date-time
+          description: The invoice due date. Must be a valid ISO 8601 UTC date-time string (e.g. "2021-10-28T12:30:00Z"). The value must include both date and time components with a timezone designator (Z or +/-HH:MM).
+          example: "2021-10-28T12:30:00Z"
         totalAmount:
           type: number
           description: The total invoice amount
@@ -4663,10 +4665,14 @@ components:
           description: The invoice number
         modifiedDate:
           type: string
-          description: The invoice modified date. Follow ISO8601 format
+          format: date-time
+          description: The invoice modified date. Must be a valid ISO 8601 UTC date-time string (e.g. "2021-04-28T12:30:00Z").
+          example: "2021-04-28T12:30:00Z"
         paidOnDate:
-          description: The invoice paid date. Follow ISO8601 format
+          description: The invoice paid date. Must be a valid ISO 8601 UTC date-time string (e.g. "2021-04-28T12:30:00Z").
           type: string
+          format: date-time
+          example: "2021-04-28T12:30:00Z"
         currencyRate:
           type: number
           description: The currency conversion rate to be applied to all the amount fields when converting to base currency
@@ -4709,10 +4715,14 @@ components:
             $ref: "#/components/schemas/Attachment"
         expectedPaymentDate:
           type: string
-          description: The expected payment date. Follow ISO8601 format
+          format: date-time
+          description: The expected payment date. Must be a valid ISO 8601 UTC date-time string (e.g. "2021-04-28T12:30:00Z").
+          example: "2021-04-28T12:30:00Z"
         allocatedOnDate:
           type: string
-          description: The allocated date. Follow ISO8601 format
+          format: date-time
+          description: The allocated date. Must be a valid ISO 8601 UTC date-time string (e.g. "2021-04-28T12:30:00Z").
+          example: "2021-04-28T12:30:00Z"
         subTotal:
           type: number
           description: The sub total
@@ -4781,7 +4791,9 @@ components:
           description: The remaining credit amount
         issueDate:
           type: string
-          description: The issue date. Follow ISO8601 format
+          format: date-time
+          description: The issue date. Must be a valid ISO 8601 UTC date-time string (e.g. "2021-04-28T12:30:00Z").
+          example: "2021-04-28T12:30:00Z"
         currency:
           type: string
           description: The credit note currency. Follow ISO 4217 code
@@ -4805,7 +4817,9 @@ components:
           description: The status of credit note
         allocatedOnDate:
           type: string
-          description: The credit note allocated date. Follow ISO8601 format
+          format: date-time
+          description: The credit note allocated date. Must be a valid ISO 8601 UTC date-time string (e.g. "2021-04-28T12:30:00Z").
+          example: "2021-04-28T12:30:00Z"
         currencyRate:
           type: number
           description: The currency conversion rate to be applied to all the amount fields when converting to base currency
@@ -4816,7 +4830,9 @@ components:
             $ref: "#/components/schemas/LineItem"
         modifiedDate:
           type: string
-          description: Credit note last modified date. Follow ISO8601 format
+          format: date-time
+          description: Credit note last modified date. Must be a valid ISO 8601 UTC date-time string (e.g. "2021-04-28T12:30:00Z").
+          example: "2021-04-28T12:30:00Z"
         note:
           type: string
       required:
@@ -4851,8 +4867,10 @@ components:
           description: The currency of payment. Must be a ISO 4217 code.
         date:
           type: string
+          format: date-time
           minLength: 1
-          description: The payment date.Follow ISO8601 format
+          description: The payment date. Must be a valid ISO 8601 UTC date-time string (e.g. "2021-04-28T12:30:00Z").
+          example: "2021-04-28T12:30:00Z"
         reference:
           type: string
           minLength: 1
@@ -4869,8 +4887,10 @@ components:
             $ref: "#/components/schemas/PaymentLine"
         modifiedDate:
           type: string
+          format: date-time
           minLength: 1
-          description: Date the record was last changed
+          description: Date the record was last changed. Must be a valid ISO 8601 UTC date-time string (e.g. "2021-04-28T12:30:00Z").
+          example: "2021-04-28T12:30:00Z"
         status:
           type: string
           description: The payment status

@@ -105,11 +105,23 @@ API Requests are limited to **100 requests per second** per account
 ## Important information
 
 ### Date format
-All dates in peakflo API are strings using UTC and they are in **ISO 8601** format with both date and time
+All dates in the Peakflo API must be valid **ISO 8601** date-time strings in **UTC**. The value must include both date and time components with a timezone designator.
 
-```json
-Example: 2021-03-24T18:06:03Z
+**Accepted formats:**
 ```
+YYYY-MM-DDTHH:mm:ssZ            →  2021-03-24T18:06:03Z
+YYYY-MM-DDTHH:mm:ss.sssZ        →  2021-03-24T18:06:03.000Z
+YYYY-MM-DDTHH:mm:ss+HH:MM       →  2021-03-24T18:06:03+08:00
+```
+
+**Not accepted:**
+```
+YYYY-MM-DD                       →  2021-03-24        (missing time component)
+DD-MM-YYYY                       →  24-03-2021        (not ISO 8601)
+YYYY-MM-DDTHH:mm:ss              →  2021-03-24T18:06:03  (missing timezone)
+```
+
+> **Recommended:** Use UTC with `Z` suffix for consistency, e.g. `2021-03-24T18:06:03Z`
 
 ### Currency format
 
