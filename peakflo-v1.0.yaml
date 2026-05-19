@@ -4310,6 +4310,11 @@ components:
         itemRef:
           type: string
           description: "Reference to the product, service type, or inventory item, to which the line item is linked."
+        customField:
+          type: array
+          description: Custom fields at the line item level
+          items:
+            $ref: "#/components/schemas/CustomFields"
       required:
         - description
         - unitAmount
@@ -4726,6 +4731,11 @@ components:
         subTotal:
           type: number
           description: The sub total
+        customField:
+          type: array
+          description: Custom fields at the invoice header level
+          items:
+            $ref: "#/components/schemas/CustomFields"
       required:
         - externalId
         - customerRef
