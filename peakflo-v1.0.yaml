@@ -844,6 +844,9 @@ paths:
                     properties:
                       id:
                         type: string
+                      sourceId:
+                        type: string
+                        description: Optional external identifier for this bank detail from the source system.
                       bankName:
                         type: string
                       bankCode:
@@ -925,6 +928,7 @@ paths:
                   notes: Sample notes
                   bankDetails:
                     - id: "1"
+                      sourceId: bank-source-1
                       bankName: Sample Bank
                       bankCode: B123
                       bankCountry: Bank Country
@@ -1091,6 +1095,9 @@ paths:
                     properties:
                       id:
                         type: string
+                      sourceId:
+                        type: string
+                        description: Optional external identifier for this bank detail from the source system.
                       bankName:
                         type: string
                       bankCode:
@@ -1164,6 +1171,7 @@ paths:
                   notes: Sample notes
                   bankDetails:
                     - id: "1"
+                      sourceId: bank-source-1
                       bankName: Sample Bank
                       bankCode: B123
                       bankCountry: Bank Country
@@ -5075,6 +5083,10 @@ components:
                 type: string
                 description: Unique identifier for the bank details
                 example: "B12345"
+              sourceId:
+                type: string
+                description: Optional external identifier for the bank details from the source system
+                example: "bank-source-1"
               bankName:
                 type: string
                 description: Name of the bank
