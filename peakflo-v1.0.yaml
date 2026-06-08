@@ -2141,7 +2141,10 @@ paths:
                   type: string
                 billId:
                   type: string
+                  description: Bill externalId or sourceId associated with the payment
                 reference:
+                  type: string
+                notes:
                   type: string
                 vendorId:
                   type: string
@@ -2173,6 +2176,7 @@ paths:
                   externalId: "PAYMENT-001"
                   billId: "1234567890"
                   reference: "INV-2023-001"
+                  notes: "Payment note"
                   vendorId: "VENDOR-123"
                   date: "2023-11-28"
                   amount: 500
@@ -2220,7 +2224,10 @@ paths:
                   type: string
                 billId:
                   type: string
+                  description: Bill externalId or sourceId associated with the payment
                 reference:
+                  type: string
+                notes:
                   type: string
                 vendorId:
                   type: string
@@ -2252,6 +2259,7 @@ paths:
                   status: "paid"
                   billId: "1234567890"
                   reference: "INV-2023-001"
+                  notes: "Payment note"
                   vendorId: "VENDOR-123"
                   date: "2023-11-28"
                   amount: 500
@@ -5326,12 +5334,16 @@ components:
           example: "paid"
         billId:
           type: string
-          description: ID of the bill associated with the payment
+          description: Bill externalId or sourceId associated with the payment
           example: "BILL789"
         reference:
           type: string
           description: Reference for the payment
           example: "Payment REF123"
+        notes:
+          type: string
+          description: Notes for the payment
+          example: "Payment note"
         vendorId:
           type: string
           description: ID of the vendor associated with the payment
@@ -5479,12 +5491,16 @@ components:
           example: "EXT123"
         billId:
           type: string
-          description: ID of the bill associated with the payment
+          description: Bill externalId or sourceId associated with the payment
           example: "BILL789"
         reference:
           type: string
           description: Reference for the payment
           example: "Payment REF123"
+        notes:
+          type: string
+          description: Notes for the payment
+          example: "Payment note"
         vendorId:
           type: string
           description: ID of the vendor associated with the payment
