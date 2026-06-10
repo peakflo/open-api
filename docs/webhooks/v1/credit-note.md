@@ -16,6 +16,7 @@ The CREDIT_NOTE_STATUS_CHANGED event is triggered when the status of a credit no
       "creditNoteNumber": "CN-2026-0001",
       "vendorExternalId": "VEND001",
       "vendorName": "Acme Trading LLC",
+      "vendorAccountSourceId": "bank_src_001",
       "issueDate": "2026-01-15T00:00:00.000Z",
       "note": "Credit issued for returned goods",
       "totalAmount": 963,
@@ -104,6 +105,7 @@ The CREDIT_NOTE_STATUS_CHANGED event is triggered when the status of a credit no
 | creditNoteNumber | string | The unique identifier for the credit note. |
 | vendorExternalId | string | The external ID of the vendor associated with the credit note. |
 | vendorName | string | The name of the vendor. |
+| vendorAccountSourceId | string | The source ID of the selected vendor bank account for the credit note. |
 | issueDate | string | The issue date of the credit note. |
 | note | string | Additional note for the credit note. |
 | totalAmount | number | The total amount for the credit note. |
