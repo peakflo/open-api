@@ -895,6 +895,17 @@ paths:
                     type: string
                 sourceId:
                   type: string
+                status:
+                  type: string
+                  description: >
+                    Status of the vendor. Use `active` (default) to create the vendor directly
+                    via the standard flow. Use `pending_approval` to submit the vendor for
+                    approval via the approval workflow (POST /uploadCompanyChanges will be
+                    called instead of POST /uploadCompany).
+                  default: active
+                  enum:
+                    - active
+                    - pending_approval
               anyOf:
                 - required:
                     - companyId
@@ -5155,6 +5166,10 @@ components:
         vatApplicable:
           type: boolean
           description: Is VAT applicable for vendor
+        status:
+          type: string
+          description: Status of the vendor
+          example: active
       required:
         - companyName
         - companyId
