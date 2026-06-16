@@ -5082,6 +5082,15 @@ components:
           type: string
           description: Notes related to the vendor
           example: "Vendor notes go here"
+        status:
+          type: string
+          description: Current status of the vendor. "pending_approval" is returned when the tenant has vendor-change approvals enabled and this vendor is awaiting review.
+          enum:
+            - active
+            - archived
+            - deleted
+            - pending_approval
+          example: "active"
         bankDetails:
           type: array
           items:
