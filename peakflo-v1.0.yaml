@@ -50,8 +50,38 @@ tags:
     description: Vendor Receipt Notes
   - name: Vendor Credit Notes
     description: Vendor Credit Notes
+  - name: Account
+    description: Authenticated account information
 
 paths:
+  /me:
+    get:
+      tags:
+        - Account
+      summary: Get authenticated account info
+      description: >-
+        Returns the authenticated company's profile information, including the
+        tenant ID (company ID), company name, default currency, and account
+        status.  Useful for validating an API key and discovering the tenant ID
+        without making a resource-specific API call.
+      operationId: get-me
+      responses:
+        "200":
+          description: Authenticated account info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountInfo"
+              examples:
+                example:
+                  value:
+                    tenantId: "abc123def456"
+                    companyName: "Acme Corp"
+                    defaultCurrency: "USD"
+                    status: "active"
+        "401":
+          description: Unauthorized - invalid or missing API key / JWT
+          content: {}
   /customers:
     post:
       tags:
@@ -6080,6 +6110,29 @@ components:
       required:
         - customFieldNumber
         - value
+
+    AccountInfo:
+      title: AccountInfo
+      type: object
+      description: Authenticated account profile returned by GET /me
+      properties:
+        tenantId:
+          type: string
+          description: The company / tenant ID in Peakflo
+        companyName:
+          type: string
+          description: Display name of the company
+        defaultCurrency:
+          type: string
+          nullable: true
+          description: "ISO 4217 currency code (e.g. USD, SGD)"
+        status:
+          type: string
+          nullable: true
+          description: "Account status (active, inactive, etc.)"
+      required:
+        - tenantId
+        - companyName
 
   securitySchemes:
     bearerAuth:
