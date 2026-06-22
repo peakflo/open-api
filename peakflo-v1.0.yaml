@@ -6138,13 +6138,22 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
-      bearerFormat: JWT
+      description: >-
+        Pass either a JWT token or a Peakflo API key (pf_... prefix) as a
+        Bearer token. API keys are self-contained — no x-client-id header
+        is needed when using Bearer auth with a pf_ key.
     apiKeyAuth:
       type: apiKey
       in: header
       name: x-api-key
+      description: >-
+        Legacy API key header. Requires x-client-id to be set as well.
+        Prefer Bearer auth with pf_ keys for new integrations.
     clientIdAuth:
       type: apiKey
       in: header
       name: x-client-id
+      description: >-
+        Company/tenant ID. Required only when using x-api-key header auth.
+        Not needed for Bearer auth with pf_ keys.
   parameters: {}
