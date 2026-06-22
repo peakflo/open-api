@@ -54,17 +54,17 @@ tags:
     description: Authenticated account information
 
 paths:
-  /me:
+  /tenant:
     get:
       tags:
         - Account
-      summary: Get authenticated account info
+      summary: Get authenticated tenant info
       description: >-
         Returns the authenticated company's profile information, including the
         tenant ID (company ID), company name, default currency, and account
         status.  Useful for validating an API key and discovering the tenant ID
         without making a resource-specific API call.
-      operationId: get-me
+      operationId: get-tenant
       responses:
         "200":
           description: Authenticated account info
