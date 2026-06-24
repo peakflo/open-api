@@ -51,7 +51,7 @@ tags:
   - name: Vendor Credit Notes
     description: Vendor Credit Notes
   - name: Tasks
-    description: Internal tasks assigned to users, optionally linked to invoices/bills/POs
+    description: Internal tasks assigned to users, optionally linked to invoices
   - name: Collection Workflows
     description: Dunning cadences (collection workflows) and their action steps
 
@@ -4125,7 +4125,7 @@ paths:
       description: >-
         Creates an internal task assigned to a user. Same handler as the
         legacy `/addAction` route, with optional `objectType` +
-        `objectExternalId` to link the task to an invoice, bill, or PO.
+        `objectExternalId` to link the task to an invoice.
       operationId: create-task
       requestBody:
         required: true
@@ -4134,7 +4134,7 @@ paths:
             schema:
               $ref: "#/components/schemas/TaskInput"
       responses:
-        "200":
+        "201":
           description: Task created
         "400":
           description: Bad request
@@ -6300,11 +6300,11 @@ components:
           description: External (source) ID of the customer the task is for.
         objectType:
           type: string
-          enum: [invoice, bill, po]
+          enum: [invoice]
           description: >-
-            Optional document linkage. When set, objectExternalId must
-            also be set; together they populate action_logs.itemTypes /
-            itemIds so the task shows up on the document timeline.
+            Optional invoice linkage. When set, objectExternalId must also
+            be set; the API resolves it in the issuer tenant before writing
+            the task's canonical item ID.
         objectExternalId:
           type: string
           description: Required when objectType is set.
@@ -6347,6 +6347,9 @@ components:
           description: Caller-supplied unique id within the tenant.
         title:
           type: string
+        defaultEmailTemplateId:
+          type: string
+          description: Existing default email-template ID used by this cadence.
         sendFromAddress:
           type: string
         emailName:
@@ -6364,9 +6367,11 @@ components:
       required:
         - externalId
         - title
+        - defaultEmailTemplateId
 
     CollectionWorkflowUpdate:
       type: object
+      minProperties: 1
       description: At least one field must be supplied.
       properties:
         title:
@@ -6400,15 +6405,9 @@ components:
             - all
             - accountManager
             - user
-            - email
-            - jobTitle
         userId:
           type: string
           description: Required when type='user'.
-        email:
-          type: string
-          format: email
-          description: Required when type='email'.
       required:
         - type
 
@@ -6501,13 +6500,14 @@ components:
 
     CollectionWorkflowActionUpdate:
       type: object
+      minProperties: 1
       description: >-
         Partial update — at least one field must be supplied. Content
         fields (subject, messageBody, paymentLink, recipients, cc, bcc)
         are flat on the API; the handler maps them into the internal
         Firestore actionInfo blob via dotted-path updates so other keys
-        are preserved. Email-only fields (subject, cc, bcc) are silently
-        dropped on non-email actionTypes.
+        are preserved. Email-only fields (subject, cc, bcc) are rejected
+        for non-email actionTypes.
       properties:
         actionName:
           type: string
@@ -6526,8 +6526,6 @@ components:
             - manualCall
             - manualVisit
             - manualReminder
-            - reminderWebhook
-            - workflowTrigger
         triggerType:
           type: string
           enum:
@@ -6576,6 +6574,8 @@ components:
         internalId:
           type: string
         title:
+          type: string
+        defaultEmailTemplateId:
           type: string
         parentCompanyId:
           type: string

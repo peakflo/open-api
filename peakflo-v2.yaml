@@ -769,19 +769,22 @@ paths:
       summary: Send a message via any channel
       description: >-
         Send an ad-hoc message to a customer via email, WhatsApp, SMS, Zalo,
-        Line, or log a manual call. Channel is a top-level parameter — one
+        Line, or record a manual call log. Channel is a top-level parameter — one
         endpoint for all channels.
 
         Source IDs only: `customerExternalId`, `objectExternalId`,
         `contactExternalIds`. No internal UUIDs cross the boundary.
 
-        Rate-limited per consumer at the API Gateway — see
+        Rate-limited per API-key consumer at the API Gateway — see
         `core-api-gateway` config. Big limit; the goal is abuse prevention,
         not throttling.
 
         Replaces `/v1/upload-soa-email` for new use cases. The v1 route is
         kept alive for backwards compatibility.
       operationId: send-message
+      security:
+        - bearerAuth: []
+          apiKeyAuth: []
       requestBody:
         required: true
         content:
@@ -796,7 +799,7 @@ paths:
                   objectType: invoice
                   objectExternalId: INV-2024-001
                   subject: "Friendly reminder — invoice INV-2024-001"
-                  messageBody: "Hi {{firstName}}, just a quick reminder…"
+                  messageBody: "Hi {{recipientName}}, just a quick reminder…"
                   actionName: "Day-7 reminder"
               WhatsAppToAllContacts:
                 value:
@@ -826,8 +829,10 @@ paths:
           description: Validation error
         "404":
           description: Customer not found
+        "409":
+          description: Customer external ID is ambiguous within the issuer tenant
         "422":
-          description: Zero recipients resolved
+          description: Zero recipients resolved for a delivery channel
         "429":
           description: Rate limit exceeded
 
@@ -1803,15 +1808,16 @@ components:
           type: string
           enum: [email, whatsapp, sms, zalo, line, call_log]
           description: >-
-            Delivery channel. The handler maps this to an internal
-            `manual<Channel>` actionType which drives PubSub topic
-            selection in upload-functions.
+            Delivery channel. The handler maps this to a channel-specific
+            actionType which drives PubSub topic selection in upload-functions.
+            `call_log` records a completed manual-call action and does not
+            publish to a delivery worker.
         customerExternalId:
           type: string
           description: External (source) ID of the customer to message.
         objectType:
           type: string
-          enum: [invoice, bill]
+          enum: [invoice]
           description: Optional document linkage.
         objectExternalId:
           type: string
@@ -1824,24 +1830,25 @@ components:
           description: >-
             Primary recipients ("to"). Defaults to
             `{type: "main_contacts"}` — resolved against the customer's
-            contacts. A request that resolves to zero contacts returns
-            422.
+            contacts. Delivery channels return 422 when this resolves to
+            zero contacts; `call_log` can be recorded without a contact.
         cc:
           allOf:
             - $ref: "#/components/schemas/RecipientSpec"
           description: >-
-            Optional CC. Email channel only — silently dropped on other
-            channels. Resolved to contact IDs and forwarded to
+            Optional CC. Email channel only; non-email requests are rejected.
+            Resolved to contact IDs and forwarded to
             upload-functions as `payerAction.ccContactIds`.
         bcc:
           allOf:
             - $ref: "#/components/schemas/RecipientSpec"
           description: >-
-            Optional BCC. Email channel only. Forwarded as
+            Optional BCC. Email channel only; non-email requests are rejected.
+            Forwarded as
             `payerAction.bccContactIds`.
         subject:
           type: string
-          description: Email subject. Forwarded; ignored downstream on non-email channels.
+          description: Email subject. Non-email requests containing it are rejected.
         messageBody:
           type: string
           minLength: 1
