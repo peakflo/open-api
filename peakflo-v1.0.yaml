@@ -50,6 +50,10 @@ tags:
     description: Vendor Receipt Notes
   - name: Vendor Credit Notes
     description: Vendor Credit Notes
+  - name: Tasks
+    description: Internal tasks assigned to users, optionally linked to invoices/bills/POs
+  - name: Collection Workflows
+    description: Dunning cadences (collection workflows) and their action steps
 
 paths:
   /customers:
@@ -4113,6 +4117,164 @@ paths:
           description: Conflict
           content: {}
 
+  "/tasks":
+    post:
+      tags:
+        - Tasks
+      summary: Create a task
+      description: >-
+        Creates an internal task assigned to a user. Same handler as the
+        legacy `/addAction` route, with optional `objectType` +
+        `objectExternalId` to link the task to an invoice, bill, or PO.
+      operationId: create-task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskInput"
+      responses:
+        "200":
+          description: Task created
+        "400":
+          description: Bad request
+
+  "/collection-workflows":
+    get:
+      tags:
+        - Collection Workflows
+      summary: List collection workflows
+      description: Returns workflow metadata (no nested actions). Paginated.
+      operationId: list-collection-workflows
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 200
+            default: 50
+        - name: startAfter
+          in: query
+          description: Internal id of the last workflow from the previous page.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workflows:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CollectionWorkflow"
+                  nextStartAfter:
+                    type: string
+                    nullable: true
+    post:
+      tags:
+        - Collection Workflows
+      summary: Create a collection workflow
+      operationId: create-collection-workflow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CollectionWorkflowInput"
+      responses:
+        "201":
+          description: Workflow created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CollectionWorkflow"
+        "409":
+          description: externalId already in use
+
+  "/collection-workflows/{externalId}":
+    parameters:
+      - name: externalId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Collection Workflows
+      summary: Read a collection workflow (includes nested actions)
+      operationId: get-collection-workflow
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CollectionWorkflow"
+        "404":
+          description: Not found
+    put:
+      tags:
+        - Collection Workflows
+      summary: Update a collection workflow (partial)
+      description: Only the fields supplied are written.
+      operationId: update-collection-workflow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CollectionWorkflowUpdate"
+      responses:
+        "200":
+          description: Workflow updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CollectionWorkflow"
+        "404":
+          description: Not found
+
+  "/collection-workflows/{externalId}/actions/{actionExternalId}":
+    parameters:
+      - name: externalId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: actionExternalId
+        in: path
+        required: true
+        schema:
+          type: string
+    put:
+      tags:
+        - Collection Workflows
+      summary: Update one step (action) in a workflow (partial)
+      description: >-
+        Updates a single action document. Channel-specific config (message
+        body, subject, template id, etc.) lives inside the `actionInfo`
+        object; only the keys supplied are written.
+      operationId: update-collection-workflow-action
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CollectionWorkflowActionUpdate"
+      responses:
+        "200":
+          description: Action updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CollectionWorkflowAction"
+        "404":
+          description: Workflow or action not found
+
 components:
   schemas:
     Customer:
@@ -6118,6 +6280,147 @@ components:
       required:
         - customFieldNumber
         - value
+
+    TaskInput:
+      type: object
+      properties:
+        actionName:
+          type: string
+        actionType:
+          type: string
+          description: e.g. "task", "manualEmail"
+        assignedUserId:
+          type: string
+        dueDate:
+          type: string
+          format: date-time
+        objectType:
+          type: string
+          enum: [invoice, bill, po]
+          description: Optional — link the task to a specific document.
+        objectExternalId:
+          type: string
+          description: Required when objectType is set.
+      required:
+        - actionName
+
+    CollectionWorkflowInput:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: Caller-supplied unique id within the tenant.
+        title:
+          type: string
+        defaultEmailTemplateId:
+          type: string
+        sendFromAddress:
+          type: string
+        emailName:
+          type: string
+        minimumContactDelay:
+          type: integer
+          minimum: 0
+        replyToAddress:
+          type: string
+      required:
+        - externalId
+        - title
+
+    CollectionWorkflowUpdate:
+      type: object
+      description: At least one field must be supplied.
+      properties:
+        title:
+          type: string
+        defaultEmailTemplateId:
+          type: string
+        sendFromAddress:
+          type: string
+        emailName:
+          type: string
+        minimumContactDelay:
+          type: integer
+          minimum: 0
+        replyToAddress:
+          type: string
+
+    CollectionWorkflowAction:
+      type: object
+      properties:
+        externalId:
+          type: string
+        internalId:
+          type: string
+          description: Firestore document id. Useful for callers that already had one.
+        actionName:
+          type: string
+        actionType:
+          type: string
+        channel:
+          type: string
+          enum: [email, whatsapp, sms, zalo, line, call_log]
+        triggerType:
+          type: string
+          enum:
+            [afterIssueDate, beforeDueDate, afterDueDate, dayOfMonth, none]
+        triggerTimePeriod:
+          type: integer
+        triggerTimePeriodUntil:
+          type: integer
+        actionInfo:
+          type: object
+          additionalProperties: true
+          description: Per-channel config (subject, messageBody, templateId, …).
+
+    CollectionWorkflowActionUpdate:
+      type: object
+      description: At least one field must be supplied.
+      properties:
+        actionName:
+          type: string
+        actionType:
+          type: string
+        channel:
+          type: string
+          enum: [email, whatsapp, sms, zalo, line, call_log]
+        triggerType:
+          type: string
+          enum:
+            [afterIssueDate, beforeDueDate, afterDueDate, dayOfMonth, none]
+        triggerTimePeriod:
+          type: integer
+        triggerTimePeriodUntil:
+          type: integer
+        actionInfo:
+          type: object
+          additionalProperties: true
+
+    CollectionWorkflow:
+      type: object
+      properties:
+        externalId:
+          type: string
+        internalId:
+          type: string
+        title:
+          type: string
+        parentCompanyId:
+          type: string
+        defaultEmailTemplateId:
+          type: string
+        sendFromAddress:
+          type: string
+        emailName:
+          type: string
+        minimumContactDelay:
+          type: integer
+        replyToAddress:
+          type: string
+        actions:
+          type: array
+          items:
+            $ref: "#/components/schemas/CollectionWorkflowAction"
 
   securitySchemes:
     bearerAuth:

@@ -56,6 +56,8 @@ tags:
     description: Custom field configurations
   - name: Currency Exchange Rates
     description: Currency exchange rate configurations
+  - name: Messages
+    description: Send ad-hoc messages to customers across any channel
 
 paths:
   "/bill-payment":
@@ -759,6 +761,75 @@ paths:
           content: {}
         "403":
           description: Forbidden
+
+  "/messages/send":
+    post:
+      tags:
+        - Messages
+      summary: Send a message via any channel
+      description: >-
+        Send an ad-hoc message to a customer via email, WhatsApp, SMS, Zalo,
+        Line, or log a manual call. Channel is a top-level parameter — one
+        endpoint for all channels.
+
+        Source IDs only: `customerExternalId`, `objectExternalId`,
+        `contactExternalIds`. No internal UUIDs cross the boundary.
+
+        Rate-limited per consumer at the API Gateway — see
+        `core-api-gateway` config. Big limit; the goal is abuse prevention,
+        not throttling.
+
+        Replaces `/v1/upload-soa-email` for new use cases. The v1 route is
+        kept alive for backwards compatibility.
+      operationId: send-message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendMessageInput"
+            examples:
+              EmailWithInvoiceLink:
+                value:
+                  channel: email
+                  customerExternalId: CUST-001
+                  objectType: invoice
+                  objectExternalId: INV-2024-001
+                  subject: "Friendly reminder — invoice INV-2024-001"
+                  messageBody: "Hi {{firstName}}, just a quick reminder…"
+                  actionName: "Day-7 reminder"
+              WhatsAppToAllContacts:
+                value:
+                  channel: whatsapp
+                  customerExternalId: CUST-001
+                  recipients:
+                    type: all
+                  messageBody: "Hi, your invoice {{invoiceNumber}} is due."
+              CallLog:
+                value:
+                  channel: call_log
+                  customerExternalId: CUST-001
+                  messageBody: "Spoke to AP — payment scheduled for Friday."
+                  actionName: "Follow-up call"
+      responses:
+        "200":
+          description: Message dispatched.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _resolvedContactCount:
+                    type: integer
+                    description: How many internal contacts the recipients spec resolved to.
+        "400":
+          description: Validation error
+        "404":
+          description: Customer not found
+        "422":
+          description: Zero recipients resolved
+        "429":
+          description: Rate limit exceeded
 
 components:
   schemas:
@@ -1695,6 +1766,69 @@ components:
         - fromCurrency
         - toCurrency
         - startEffectiveDate
+
+    RecipientSpec:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [main_contacts, all, specific]
+          description: |
+            - main_contacts: every contact flagged isMainContact (default).
+            - all: every contact on the customer.
+            - specific: contacts named by contactExternalIds.
+        contactExternalIds:
+          type: array
+          items:
+            type: string
+          description: Required when type = specific.
+      required:
+        - type
+
+    SendMessageInput:
+      type: object
+      description: >-
+        Either messageBody or templateId must be supplied. objectType and
+        objectExternalId must be supplied together (or neither).
+      properties:
+        channel:
+          type: string
+          enum: [email, whatsapp, sms, zalo, line, call_log]
+        customerExternalId:
+          type: string
+        objectType:
+          type: string
+          enum: [invoice, bill]
+          description: Optional — link the message to a specific document.
+        objectExternalId:
+          type: string
+          description: Required when objectType is set.
+        recipients:
+          allOf:
+            - $ref: "#/components/schemas/RecipientSpec"
+          default:
+            type: main_contacts
+        subject:
+          type: string
+          description: Email subject. Ignored on non-email channels.
+        messageBody:
+          type: string
+          description: >-
+            Plain-text body with `{{placeholder}}` support (firstName,
+            invoiceNumber, amount, …). Mutually exclusive with templateId.
+        templateId:
+          type: string
+          description: Pre-built template id. Mutually exclusive with messageBody.
+        actionName:
+          type: string
+          description: Display name shown in action logs and dashboards.
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Free-form, persisted on the resulting action.
+      required:
+        - channel
+        - customerExternalId
 
   securitySchemes:
     bearerAuth:
