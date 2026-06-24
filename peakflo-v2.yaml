@@ -777,14 +777,15 @@ paths:
 
         Rate-limited per API-key consumer at the API Gateway — see
         `core-api-gateway` config. Big limit; the goal is abuse prevention,
-        not throttling.
+        not throttling. The gateway API key is a quota credential, not a
+        tenant API key; authenticate the request itself with bearerAuth.
 
         Replaces `/v1/upload-soa-email` for new use cases. The v1 route is
         kept alive for backwards compatibility.
       operationId: send-message
       security:
         - bearerAuth: []
-          apiKeyAuth: []
+          gatewayApiKeyAuth: []
       requestBody:
         required: true
         content:
@@ -1786,7 +1787,7 @@ components:
           type: array
           items:
             type: string
-          description: Required when type = specific.
+          description: Required when type = specific. Every supplied ID must resolve to a contact on the customer; the request fails rather than sending to a subset.
       required:
         - type
 
@@ -1831,7 +1832,8 @@ components:
             Primary recipients ("to"). Defaults to
             `{type: "main_contacts"}` — resolved against the customer's
             contacts. Delivery channels return 422 when this resolves to
-            zero contacts; `call_log` can be recorded without a contact.
+            zero contacts or when any explicit contactExternalId cannot be
+            resolved; `call_log` can be recorded without a contact.
         cc:
           allOf:
             - $ref: "#/components/schemas/RecipientSpec"
@@ -1882,6 +1884,11 @@ components:
       type: apiKey
       in: header
       name: x-api-key
+    gatewayApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API Gateway quota credential for POST /messages/send. This is not a tenant API key and must not be paired with x-client-id.
     clientIdAuth:
       type: apiKey
       in: header
