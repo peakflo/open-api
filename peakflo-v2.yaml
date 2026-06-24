@@ -1788,18 +1788,31 @@ components:
     SendMessageInput:
       type: object
       description: >-
-        Either messageBody or templateId must be supplied. objectType and
-        objectExternalId must be supplied together (or neither).
+        Body for `POST /v2/messages/send`. messageBody is required.
+        objectType + objectExternalId must be supplied together (or
+        neither).
+
+        Implementation chain: peakflo-api `sendMessageHandlerV2` resolves
+        the customer + recipient contact IDs, then POSTs to
+        upload-functions `/uploadSOAEmail` with operationType='send' and
+        a non-empty `data.message`. upload-functions branches to
+        `generateAdhocAction` (channel-aware, uses the caller's message
+        and actionType) — NOT the legacy SOA PDF-reply path.
       properties:
         channel:
           type: string
           enum: [email, whatsapp, sms, zalo, line, call_log]
+          description: >-
+            Delivery channel. The handler maps this to an internal
+            `manual<Channel>` actionType which drives PubSub topic
+            selection in upload-functions.
         customerExternalId:
           type: string
+          description: External (source) ID of the customer to message.
         objectType:
           type: string
           enum: [invoice, bill]
-          description: Optional — link the message to a specific document.
+          description: Optional document linkage.
         objectExternalId:
           type: string
           description: Required when objectType is set.
@@ -1808,20 +1821,42 @@ components:
             - $ref: "#/components/schemas/RecipientSpec"
           default:
             type: main_contacts
+          description: >-
+            Primary recipients ("to"). Defaults to
+            `{type: "main_contacts"}` — resolved against the customer's
+            contacts. A request that resolves to zero contacts returns
+            422.
+        cc:
+          allOf:
+            - $ref: "#/components/schemas/RecipientSpec"
+          description: >-
+            Optional CC. Email channel only — silently dropped on other
+            channels. Resolved to contact IDs and forwarded to
+            upload-functions as `payerAction.ccContactIds`.
+        bcc:
+          allOf:
+            - $ref: "#/components/schemas/RecipientSpec"
+          description: >-
+            Optional BCC. Email channel only. Forwarded as
+            `payerAction.bccContactIds`.
         subject:
           type: string
-          description: Email subject. Ignored on non-email channels.
+          description: Email subject. Forwarded; ignored downstream on non-email channels.
         messageBody:
           type: string
+          minLength: 1
           description: >-
-            Plain-text body with `{{placeholder}}` support (firstName,
-            invoiceNumber, amount, …). Mutually exclusive with templateId.
-        templateId:
-          type: string
-          description: Pre-built template id. Mutually exclusive with messageBody.
+            Plain-text message body. Required and must be non-empty —
+            upload-functions branches to the ad-hoc send path on
+            `payload.message.length > 0`. Template placeholders rendered
+            server-side: `{{customerCompanyName}}`, `{{recipientName}}`,
+            `{{myOrgName}}`, `{{invoiceNumber}}`, `{{invoiceAmountDue}}`,
+            `{{totalOutstanding}}`, `{{totalAmountOverdue}}`, triple-brace
+            HTML links like `{{{customerPortalLink}}}`. Don't use
+            `{{firstName}}` or `{{amount}}` — they don't substitute.
         actionName:
           type: string
-          description: Display name shown in action logs and dashboards.
+          description: Display name shown in action logs and dashboards. Defaults to "Ad-hoc <channel> via /v2/messages/send".
         metadata:
           type: object
           additionalProperties: true
@@ -1829,6 +1864,7 @@ components:
       required:
         - channel
         - customerExternalId
+        - messageBody
 
   securitySchemes:
     bearerAuth:
