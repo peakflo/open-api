@@ -50,12 +50,42 @@ tags:
     description: Vendor Receipt Notes
   - name: Vendor Credit Notes
     description: Vendor Credit Notes
+  - name: Account
+    description: Authenticated account information
   - name: Tasks
     description: Internal tasks assigned to users, optionally linked to invoices
   - name: Collection Workflows
     description: Dunning cadences (collection workflows) and their action steps
 
 paths:
+  /tenant:
+    get:
+      tags:
+        - Account
+      summary: Get authenticated tenant info
+      description: >-
+        Returns the authenticated company's profile information, including the
+        tenant ID (company ID), company name, default currency, and account
+        status.  Useful for validating an API key and discovering the tenant ID
+        without making a resource-specific API call.
+      operationId: get-tenant
+      responses:
+        "200":
+          description: Authenticated account info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountInfo"
+              examples:
+                example:
+                  value:
+                    tenantId: "abc123def456"
+                    companyName: "Acme Corp"
+                    defaultCurrency: "USD"
+                    status: "active"
+        "401":
+          description: Unauthorized - invalid or missing API key / JWT
+          content: {}
   /customers:
     post:
       tags:
@@ -6281,6 +6311,28 @@ components:
         - customFieldNumber
         - value
 
+    AccountInfo:
+      title: AccountInfo
+      type: object
+      description: Authenticated account profile returned by GET /me
+      properties:
+        tenantId:
+          type: string
+          description: The company / tenant ID in Peakflo
+        companyName:
+          type: string
+          description: Display name of the company
+        defaultCurrency:
+          type: string
+          nullable: true
+          description: "ISO 4217 currency code (e.g. USD, SGD)"
+        status:
+          type: string
+          nullable: true
+          description: "Account status (active, inactive, etc.)"
+      required:
+        - tenantId
+        - companyName
     TaskInput:
       type: object
       description: A task to be created against a customer
@@ -6607,13 +6659,22 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
-      bearerFormat: JWT
+      description: >-
+        Pass either a JWT token or a Peakflo API key (pf_... prefix) as a
+        Bearer token. API keys are self-contained — no x-client-id header
+        is needed when using Bearer auth with a pf_ key.
     apiKeyAuth:
       type: apiKey
       in: header
       name: x-api-key
+      description: >-
+        Legacy API key header. Requires x-client-id to be set as well.
+        Prefer Bearer auth with pf_ keys for new integrations.
     clientIdAuth:
       type: apiKey
       in: header
       name: x-client-id
+      description: >-
+        Company/tenant ID. Required only when using x-api-key header auth.
+        Not needed for Bearer auth with pf_ keys.
   parameters: {}
