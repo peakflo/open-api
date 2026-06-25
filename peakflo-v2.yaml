@@ -56,6 +56,8 @@ tags:
     description: Custom field configurations
   - name: Currency Exchange Rates
     description: Currency exchange rate configurations
+  - name: Messages
+    description: Send ad-hoc messages to customers across any channel
 
 paths:
   "/bill-payment":
@@ -759,6 +761,67 @@ paths:
           content: {}
         "403":
           description: Forbidden
+
+  "/messages/send":
+    post:
+      tags:
+        - Messages
+      summary: Send a message via any channel
+      description: Send a message to a customer on the chosen channel.
+      operationId: send-message
+      security:
+        - bearerAuth: []
+          gatewayApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendMessageInput"
+            examples:
+              EmailWithInvoiceLink:
+                value:
+                  channel: email
+                  companyExternalId: CUST-001
+                  objectType: invoice
+                  objectExternalId: INV-2024-001
+                  subject: "Friendly reminder — invoice INV-2024-001"
+                  messageBody: "Hi {{recipientName}}, just a quick reminder…"
+                  actionName: "Day-7 reminder"
+              WhatsAppToAllContacts:
+                value:
+                  channel: whatsapp
+                  companyExternalId: CUST-001
+                  recipients:
+                    type: all
+                  messageBody: "Hi, your invoice {{invoiceNumber}} is due."
+              CallLog:
+                value:
+                  channel: call_log
+                  companyExternalId: CUST-001
+                  messageBody: "Spoke to AP — payment scheduled for Friday."
+                  actionName: "Follow-up call"
+      responses:
+        "200":
+          description: Message dispatched.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _resolvedContactCount:
+                    type: integer
+                    description: How many internal contacts the recipients spec resolved to.
+        "400":
+          description: Validation error
+        "404":
+          description: Customer not found
+        "409":
+          description: Customer external ID is ambiguous within the issuer tenant
+        "422":
+          description: Zero recipients resolved for a delivery channel
+        "429":
+          description: Rate limit exceeded
 
 components:
   schemas:
@@ -1696,6 +1759,72 @@ components:
         - toCurrency
         - startEffectiveDate
 
+    RecipientSpec:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [main_contacts, all, specific]
+          description: How the recipients are selected
+        contactExternalIds:
+          type: array
+          items:
+            type: string
+          description: The external Ids of the contacts to send to. Required when type is specific.
+      required:
+        - type
+
+    SendMessageInput:
+      type: object
+      description: The send message request body
+      properties:
+        channel:
+          type: string
+          enum: [email, whatsapp, sms, zalo, line, call_log]
+          description: The channel to send the message on
+        companyExternalId:
+          type: string
+          description: The external Id of the company (customer or vendor)
+        objectType:
+          type: string
+          enum: [invoice]
+          description: The type of document to link the message to
+        objectExternalId:
+          type: string
+          description: The external Id of the linked document
+        recipients:
+          allOf:
+            - $ref: "#/components/schemas/RecipientSpec"
+          default:
+            type: main_contacts
+          description: The recipients of the message
+        cc:
+          allOf:
+            - $ref: "#/components/schemas/RecipientSpec"
+          description: The cc recipients. Only used for the email channel.
+        bcc:
+          allOf:
+            - $ref: "#/components/schemas/RecipientSpec"
+          description: The bcc recipients. Only used for the email channel.
+        subject:
+          type: string
+          description: The subject of the email. Only used for the email channel.
+        messageBody:
+          type: string
+          minLength: 1
+          description: The body of the message. Supports template placeholders such as {{customerCompanyName}}, {{recipientName}}, {{myOrgName}}, {{invoiceNumber}}, {{invoiceAmountDue}}, {{totalOutstanding}}, {{totalAmountOverdue}}, and {{{customerPortalLink}}}.
+        actionName:
+          type: string
+          description: Display name shown on the customer timeline
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Free-form, persisted on the resulting action.
+      required:
+        - channel
+        - companyExternalId
+        - messageBody
+
   securitySchemes:
     bearerAuth:
       type: http
@@ -1705,6 +1834,11 @@ components:
       type: apiKey
       in: header
       name: x-api-key
+    gatewayApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API Gateway quota credential for POST /messages/send. This is not a tenant API key and must not be paired with x-client-id.
     clientIdAuth:
       type: apiKey
       in: header
