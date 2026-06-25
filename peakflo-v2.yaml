@@ -767,21 +767,7 @@ paths:
       tags:
         - Messages
       summary: Send a message via any channel
-      description: >-
-        Send an ad-hoc message to a customer via email, WhatsApp, SMS, Zalo,
-        Line, or record a manual call log. Channel is a top-level parameter — one
-        endpoint for all channels.
-
-        Source IDs only: `customerExternalId`, `objectExternalId`,
-        `contactExternalIds`. No internal UUIDs cross the boundary.
-
-        Rate-limited per API-key consumer at the API Gateway — see
-        `core-api-gateway` config. Big limit; the goal is abuse prevention,
-        not throttling. The gateway API key is a quota credential, not a
-        tenant API key; authenticate the request itself with bearerAuth.
-
-        Replaces `/v1/upload-soa-email` for new use cases. The v1 route is
-        kept alive for backwards compatibility.
+      description: Send a message to a customer on the chosen channel.
       operationId: send-message
       security:
         - bearerAuth: []
@@ -796,7 +782,7 @@ paths:
               EmailWithInvoiceLink:
                 value:
                   channel: email
-                  customerExternalId: CUST-001
+                  companyExternalId: CUST-001
                   objectType: invoice
                   objectExternalId: INV-2024-001
                   subject: "Friendly reminder — invoice INV-2024-001"
@@ -805,14 +791,14 @@ paths:
               WhatsAppToAllContacts:
                 value:
                   channel: whatsapp
-                  customerExternalId: CUST-001
+                  companyExternalId: CUST-001
                   recipients:
                     type: all
                   messageBody: "Hi, your invoice {{invoiceNumber}} is due."
               CallLog:
                 value:
                   channel: call_log
-                  customerExternalId: CUST-001
+                  companyExternalId: CUST-001
                   messageBody: "Spoke to AP — payment scheduled for Friday."
                   actionName: "Follow-up call"
       responses:
@@ -1779,100 +1765,64 @@ components:
         type:
           type: string
           enum: [main_contacts, all, specific]
-          description: |
-            - main_contacts: every contact flagged isMainContact (default).
-            - all: every contact on the customer.
-            - specific: contacts named by contactExternalIds.
+          description: How the recipients are selected
         contactExternalIds:
           type: array
           items:
             type: string
-          description: Required when type = specific. Every supplied ID must resolve to a contact on the customer; the request fails rather than sending to a subset.
+          description: The external Ids of the contacts to send to. Required when type is specific.
       required:
         - type
 
     SendMessageInput:
       type: object
-      description: >-
-        Body for `POST /v2/messages/send`. messageBody is required.
-        objectType + objectExternalId must be supplied together (or
-        neither).
-
-        Implementation chain: peakflo-api `sendMessageHandlerV2` resolves
-        the customer + recipient contact IDs, then POSTs to
-        upload-functions `/uploadSOAEmail` with operationType='send' and
-        a non-empty `data.message`. upload-functions branches to
-        `generateAdhocAction` (channel-aware, uses the caller's message
-        and actionType) — NOT the legacy SOA PDF-reply path.
+      description: The send message request body
       properties:
         channel:
           type: string
           enum: [email, whatsapp, sms, zalo, line, call_log]
-          description: >-
-            Delivery channel. The handler maps this to a channel-specific
-            actionType which drives PubSub topic selection in upload-functions.
-            `call_log` records a completed manual-call action and does not
-            publish to a delivery worker.
-        customerExternalId:
+          description: The channel to send the message on
+        companyExternalId:
           type: string
-          description: External (source) ID of the customer to message.
+          description: The external Id of the company (customer or vendor)
         objectType:
           type: string
           enum: [invoice]
-          description: Optional document linkage.
+          description: The type of document to link the message to
         objectExternalId:
           type: string
-          description: Required when objectType is set.
+          description: The external Id of the linked document
         recipients:
           allOf:
             - $ref: "#/components/schemas/RecipientSpec"
           default:
             type: main_contacts
-          description: >-
-            Primary recipients ("to"). Defaults to
-            `{type: "main_contacts"}` — resolved against the customer's
-            contacts. Delivery channels return 422 when this resolves to
-            zero contacts or when any explicit contactExternalId cannot be
-            resolved; `call_log` can be recorded without a contact.
+          description: The recipients of the message
         cc:
           allOf:
             - $ref: "#/components/schemas/RecipientSpec"
-          description: >-
-            Optional CC. Email channel only; non-email requests are rejected.
-            Resolved to contact IDs and forwarded to
-            upload-functions as `payerAction.ccContactIds`.
+          description: The cc recipients. Only used for the email channel.
         bcc:
           allOf:
             - $ref: "#/components/schemas/RecipientSpec"
-          description: >-
-            Optional BCC. Email channel only; non-email requests are rejected.
-            Forwarded as
-            `payerAction.bccContactIds`.
+          description: The bcc recipients. Only used for the email channel.
         subject:
           type: string
-          description: Email subject. Non-email requests containing it are rejected.
+          description: The subject of the email. Only used for the email channel.
         messageBody:
           type: string
           minLength: 1
-          description: >-
-            Plain-text message body. Required and must be non-empty —
-            upload-functions branches to the ad-hoc send path on
-            `payload.message.length > 0`. Template placeholders rendered
-            server-side: `{{customerCompanyName}}`, `{{recipientName}}`,
-            `{{myOrgName}}`, `{{invoiceNumber}}`, `{{invoiceAmountDue}}`,
-            `{{totalOutstanding}}`, `{{totalAmountOverdue}}`, triple-brace
-            HTML links like `{{{customerPortalLink}}}`. Don't use
-            `{{firstName}}` or `{{amount}}` — they don't substitute.
+          description: The body of the message. Supports template placeholders such as {{customerCompanyName}}, {{recipientName}}, {{myOrgName}}, {{invoiceNumber}}, {{invoiceAmountDue}}, {{totalOutstanding}}, {{totalAmountOverdue}}, and {{{customerPortalLink}}}.
         actionName:
           type: string
-          description: Display name shown in action logs and dashboards. Defaults to "Ad-hoc <channel> via /v2/messages/send".
+          description: Display name shown on the customer timeline
         metadata:
           type: object
           additionalProperties: true
           description: Free-form, persisted on the resulting action.
       required:
         - channel
-        - customerExternalId
+        - companyExternalId
         - messageBody
 
   securitySchemes:

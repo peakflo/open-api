@@ -6283,31 +6283,23 @@ components:
 
     TaskInput:
       type: object
-      description: >-
-        Mirrors the Joi schema at peakflo-api
-        functions/src/schemas/action.ts (actionInputSchema). `/v1/tasks`
-        is an alias route for the same `addAction` handler; both accept
-        the same body. The handler resolves the customer via
-        `customerRef` and creates a task action against it.
+      description: A task to be created against a customer
       properties:
         actionName:
           type: string
-          description: Display name of the task, e.g. "Set up payment plan call".
+          description: The name of the task
         actionInfo:
           $ref: "#/components/schemas/TaskActionInfo"
         customerRef:
           type: string
-          description: External (source) ID of the customer the task is for.
+          description: The external Id of the customer
         objectType:
           type: string
           enum: [invoice]
-          description: >-
-            Optional invoice linkage. When set, objectExternalId must also
-            be set; the API resolves it in the issuer tenant before writing
-            the task's canonical item ID.
+          description: The type of document to link the task to
         objectExternalId:
           type: string
-          description: Required when objectType is set.
+          description: The external Id of the linked document
       required:
         - actionInfo
         - customerRef
@@ -6318,23 +6310,20 @@ components:
         owner:
           type: string
           format: email
-          description: >-
-            Email of the user to assign. If omitted (or the email doesn't
-            resolve to a user), the handler falls back to the customer's
-            accountManager.
+          description: Email of the user assigned to the task
         dueDate:
           type: string
           format: date-time
-          description: ISO 8601 due date.
+          description: The due date of the task
         details:
           type: string
-          description: Free-form description of the task.
+          description: A description of the task
         amount:
           type: number
-          description: Currency amount associated with the task (e.g. "Pay $100").
+          description: The promise to pay amount from the customer
         currency:
           type: string
-          description: ISO currency code, e.g. "USD". Optional.
+          description: The currency of the promise to pay amount. Must be a ISO 4217 code
       required:
         - dueDate
         - amount
@@ -6344,26 +6333,29 @@ components:
       properties:
         externalId:
           type: string
-          description: Caller-supplied unique id within the tenant.
+          description: The external Id of the workflow
         title:
           type: string
+          description: The name of the workflow
         defaultEmailTemplateId:
           type: string
-          description: Existing default email-template ID used by this cadence.
+          description: The Id of the default email template for the workflow
         sendFromAddress:
           type: string
+          description: The from address used for emails sent by the workflow
         emailName:
           type: string
+          description: The from name shown to recipients
         minimumContactDelay:
           type: integer
           minimum: 0
+          description: Minimum number of days between contacts to the same customer
         replyToAddress:
           type: string
+          description: The reply-to address on outbound mail from the workflow
         contactSuperior:
           type: boolean
-          description: >-
-            Whether to escalate to a superior contact when the primary
-            recipient doesn't respond (peakflo-schema workflowTemplate.contactSuperior).
+          description: Whether to escalate to a superior contact when the primary recipient does not respond
       required:
         - externalId
         - title
@@ -6372,30 +6364,31 @@ components:
     CollectionWorkflowUpdate:
       type: object
       minProperties: 1
-      description: At least one field must be supplied.
+      description: Fields to update on an existing workflow
       properties:
         title:
           type: string
+          description: The name of the workflow
         sendFromAddress:
           type: string
+          description: The from address used for emails sent by the workflow
         emailName:
           type: string
+          description: The from name shown to recipients
         minimumContactDelay:
           type: integer
           minimum: 0
+          description: Minimum number of days between contacts to the same customer
         replyToAddress:
           type: string
+          description: The reply-to address on outbound mail from the workflow
         contactSuperior:
           type: boolean
+          description: Whether to escalate to a superior contact when the primary recipient does not respond
 
     WorkflowRecipientSpec:
       type: object
-      description: >-
-        Recipient targeting for workflow template steps. Mirrors
-        peakflo-schema's ActionRecipient. Templates target recipient TYPES
-        (mainContacts, all, accountManager, etc.) — binding to a specific
-        contact via type='contact' is not allowed on templates because
-        they're reusable across customers.
+      description: A recipient target for a workflow step
       properties:
         type:
           type: string
@@ -6405,9 +6398,10 @@ components:
             - all
             - accountManager
             - user
+          description: How the recipients are selected
         userId:
           type: string
-          description: Required when type='user'.
+          description: The Peakflo user Id. Required when type is user.
       required:
         - type
 
@@ -6416,11 +6410,10 @@ components:
       properties:
         externalId:
           type: string
-        internalId:
-          type: string
-          description: Firestore document id. Useful for callers that already had one.
+          description: The external Id of the workflow step
         actionName:
           type: string
+          description: The name of the step
         actionType:
           type: string
           enum:
@@ -6438,11 +6431,7 @@ components:
             - manualReminder
             - reminderWebhook
             - workflowTrigger
-          description: >-
-            Encodes BOTH the channel AND whether the step fires
-            automatically — there is no separate `channel` field. Subset
-            of peakflo-schema BaseActionType that the workflow template
-            dispatcher (peakflo-web ActionTemplateEditDialog) supports.
+          description: The type of the step
         triggerType:
           type: string
           enum:
@@ -6454,23 +6443,19 @@ components:
             - beforePromiseToPay
             - afterPromiseToPay
             - none
-          description: >-
-            peakflo-schema ActionTriggerType. Combined with
-            triggerTimePeriod (days for date-relative, calendar day for
-            dayOfMonth, weekday for dayOfTheWeek).
+          description: When the step fires
         triggerTimePeriod:
           type: integer
+          description: The trigger time value. Days for date-relative triggers, calendar day for dayOfMonth, weekday for dayOfTheWeek.
         triggerTimePeriodUntil:
           type: integer
+          description: The upper bound for repeating triggers
         subject:
           type: string
-          description: Email subject. Email actionTypes only.
+          description: The subject of the email
         messageBody:
           type: string
-          description: >-
-            Plain-text body with template-placeholder support, rendered
-            server-side. See SendMessageInput.messageBody (in the v2 spec)
-            for the placeholder list.
+          description: The body of the message. Supports template placeholders such as {{customerCompanyName}}, {{recipientName}}, {{myOrgName}}, {{invoiceNumber}}, {{invoiceAmountDue}}, {{totalOutstanding}}, {{totalAmountOverdue}}, and {{{customerPortalLink}}}.
         paymentLink:
           type: string
           enum:
@@ -6479,38 +6464,37 @@ components:
             - invoicePaymentLink
             - directInvPaymentLink
             - directPaymentLink
-          description: >-
-            Selector for which Peakflo-managed payment link to render —
-            NOT a free-form URL. Mirrors peakflo-schema
-            ActionInfoPaymentLinkType.
+          description: |
+            The Peakflo-managed payment link to render in the message.
+            - customerPortalLink: link to the customer portal where all open invoices can be paid
+            - currencyPaymentLink: currency-scoped payment landing page
+            - invoicePaymentLink: link to pay the linked invoice through the customer portal
+            - directPaymentLink: link to pay directly without going through the customer portal
+            - directInvPaymentLink: link to pay the linked invoice directly without going through the customer portal
         recipients:
           type: array
           items:
             $ref: "#/components/schemas/WorkflowRecipientSpec"
+          description: The recipients of the message
         cc:
           type: array
           items:
             $ref: "#/components/schemas/WorkflowRecipientSpec"
-          description: Email CC. Email actionTypes only.
+          description: The cc recipients of the email
         bcc:
           type: array
           items:
             $ref: "#/components/schemas/WorkflowRecipientSpec"
-          description: Email BCC. Email actionTypes only.
+          description: The bcc recipients of the email
 
     CollectionWorkflowActionUpdate:
       type: object
       minProperties: 1
-      description: >-
-        Partial update — at least one field must be supplied. Content
-        fields (subject, messageBody, paymentLink, recipients, cc, bcc)
-        are flat on the API; the handler maps them into the internal
-        Firestore actionInfo blob via dotted-path updates so other keys
-        are preserved. Email-only fields (subject, cc, bcc) are rejected
-        for non-email actionTypes.
+      description: Fields to update on an existing workflow step
       properties:
         actionName:
           type: string
+          description: The name of the step
         actionType:
           type: string
           enum:
@@ -6526,6 +6510,7 @@ components:
             - manualCall
             - manualVisit
             - manualReminder
+          description: The type of the step
         triggerType:
           type: string
           enum:
@@ -6537,14 +6522,19 @@ components:
             - beforePromiseToPay
             - afterPromiseToPay
             - none
+          description: When the step fires
         triggerTimePeriod:
           type: integer
+          description: The trigger time value. Days for date-relative triggers, calendar day for dayOfMonth, weekday for dayOfTheWeek.
         triggerTimePeriodUntil:
           type: integer
+          description: The upper bound for repeating triggers
         subject:
           type: string
+          description: The subject of the email
         messageBody:
           type: string
+          description: The body of the message
         paymentLink:
           type: string
           enum:
@@ -6553,46 +6543,65 @@ components:
             - invoicePaymentLink
             - directInvPaymentLink
             - directPaymentLink
+          description: |
+            The Peakflo-managed payment link to render in the message.
+            - customerPortalLink: link to the customer portal where all open invoices can be paid
+            - currencyPaymentLink: currency-scoped payment landing page
+            - invoicePaymentLink: link to pay the linked invoice through the customer portal
+            - directPaymentLink: link to pay directly without going through the customer portal
+            - directInvPaymentLink: link to pay the linked invoice directly without going through the customer portal
         recipients:
           type: array
           items:
             $ref: "#/components/schemas/WorkflowRecipientSpec"
+          description: The recipients of the message
         cc:
           type: array
           items:
             $ref: "#/components/schemas/WorkflowRecipientSpec"
+          description: The cc recipients of the email
         bcc:
           type: array
           items:
             $ref: "#/components/schemas/WorkflowRecipientSpec"
+          description: The bcc recipients of the email
 
     CollectionWorkflow:
       type: object
+      description: A collection workflow
       properties:
         externalId:
           type: string
-        internalId:
-          type: string
+          description: The external Id of the workflow
         title:
           type: string
+          description: The name of the workflow
         defaultEmailTemplateId:
           type: string
+          description: The Id of the default email template for the workflow
         parentCompanyId:
           type: string
+          description: The Id of the company the workflow belongs to
         sendFromAddress:
           type: string
+          description: The from address used for emails sent by the workflow
         emailName:
           type: string
+          description: The from name shown to recipients
         minimumContactDelay:
           type: integer
+          description: Minimum number of days between contacts to the same customer
         replyToAddress:
           type: string
+          description: The reply-to address on outbound mail from the workflow
         contactSuperior:
           type: boolean
+          description: Whether to escalate to a superior contact when the primary recipient does not respond
         actions:
           type: array
           items:
             $ref: "#/components/schemas/CollectionWorkflowAction"
+          description: The steps in the workflow
 
   securitySchemes:
     bearerAuth:
