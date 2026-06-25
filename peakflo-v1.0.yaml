@@ -50,6 +50,10 @@ tags:
     description: Vendor Receipt Notes
   - name: Vendor Credit Notes
     description: Vendor Credit Notes
+  - name: Tasks
+    description: Internal tasks assigned to users, optionally linked to invoices
+  - name: Collection Workflows
+    description: Dunning cadences (collection workflows) and their action steps
 
 paths:
   /customers:
@@ -4113,6 +4117,164 @@ paths:
           description: Conflict
           content: {}
 
+  "/tasks":
+    post:
+      tags:
+        - Tasks
+      summary: Create a task
+      description: >-
+        Creates an internal task assigned to a user. Same handler as the
+        legacy `/addAction` route, with optional `objectType` +
+        `objectExternalId` to link the task to an invoice.
+      operationId: create-task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskInput"
+      responses:
+        "201":
+          description: Task created
+        "400":
+          description: Bad request
+
+  "/collection-workflows":
+    get:
+      tags:
+        - Collection Workflows
+      summary: List collection workflows
+      description: Returns workflow metadata (no nested actions). Paginated.
+      operationId: list-collection-workflows
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 200
+            default: 50
+        - name: startAfter
+          in: query
+          description: Internal id of the last workflow from the previous page.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workflows:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CollectionWorkflow"
+                  nextStartAfter:
+                    type: string
+                    nullable: true
+    post:
+      tags:
+        - Collection Workflows
+      summary: Create a collection workflow
+      operationId: create-collection-workflow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CollectionWorkflowInput"
+      responses:
+        "201":
+          description: Workflow created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CollectionWorkflow"
+        "409":
+          description: externalId already in use
+
+  "/collection-workflows/{externalId}":
+    parameters:
+      - name: externalId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Collection Workflows
+      summary: Read a collection workflow (includes nested actions)
+      operationId: get-collection-workflow
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CollectionWorkflow"
+        "404":
+          description: Not found
+    put:
+      tags:
+        - Collection Workflows
+      summary: Update a collection workflow (partial)
+      description: Only the fields supplied are written.
+      operationId: update-collection-workflow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CollectionWorkflowUpdate"
+      responses:
+        "200":
+          description: Workflow updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CollectionWorkflow"
+        "404":
+          description: Not found
+
+  "/collection-workflows/{externalId}/actions/{actionExternalId}":
+    parameters:
+      - name: externalId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: actionExternalId
+        in: path
+        required: true
+        schema:
+          type: string
+    put:
+      tags:
+        - Collection Workflows
+      summary: Update one step (action) in a workflow (partial)
+      description: >-
+        Updates a single action document. Channel-specific config (message
+        body, subject, template id, etc.) lives inside the `actionInfo`
+        object; only the keys supplied are written.
+      operationId: update-collection-workflow-action
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CollectionWorkflowActionUpdate"
+      responses:
+        "200":
+          description: Action updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CollectionWorkflowAction"
+        "404":
+          description: Workflow or action not found
+
 components:
   schemas:
     Customer:
@@ -6118,6 +6280,328 @@ components:
       required:
         - customFieldNumber
         - value
+
+    TaskInput:
+      type: object
+      description: A task to be created against a customer
+      properties:
+        actionName:
+          type: string
+          description: The name of the task
+        actionInfo:
+          $ref: "#/components/schemas/TaskActionInfo"
+        customerRef:
+          type: string
+          description: The external Id of the customer
+        objectType:
+          type: string
+          enum: [invoice]
+          description: The type of document to link the task to
+        objectExternalId:
+          type: string
+          description: The external Id of the linked document
+      required:
+        - actionInfo
+        - customerRef
+
+    TaskActionInfo:
+      type: object
+      properties:
+        owner:
+          type: string
+          format: email
+          description: Email of the user assigned to the task
+        dueDate:
+          type: string
+          format: date-time
+          description: The due date of the task
+        details:
+          type: string
+          description: A description of the task
+        amount:
+          type: number
+          description: The promise to pay amount from the customer
+        currency:
+          type: string
+          description: The currency of the promise to pay amount. Must be a ISO 4217 code
+      required:
+        - dueDate
+        - amount
+
+    CollectionWorkflowInput:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: The external Id of the workflow
+        title:
+          type: string
+          description: The name of the workflow
+        defaultEmailTemplateId:
+          type: string
+          description: The Id of the default email template for the workflow
+        sendFromAddress:
+          type: string
+          description: The from address used for emails sent by the workflow
+        emailName:
+          type: string
+          description: The from name shown to recipients
+        minimumContactDelay:
+          type: integer
+          minimum: 0
+          description: Minimum number of days between contacts to the same customer
+        replyToAddress:
+          type: string
+          description: The reply-to address on outbound mail from the workflow
+        contactSuperior:
+          type: boolean
+          description: Whether to escalate to a superior contact when the primary recipient does not respond
+      required:
+        - externalId
+        - title
+        - defaultEmailTemplateId
+
+    CollectionWorkflowUpdate:
+      type: object
+      minProperties: 1
+      description: Fields to update on an existing workflow
+      properties:
+        title:
+          type: string
+          description: The name of the workflow
+        sendFromAddress:
+          type: string
+          description: The from address used for emails sent by the workflow
+        emailName:
+          type: string
+          description: The from name shown to recipients
+        minimumContactDelay:
+          type: integer
+          minimum: 0
+          description: Minimum number of days between contacts to the same customer
+        replyToAddress:
+          type: string
+          description: The reply-to address on outbound mail from the workflow
+        contactSuperior:
+          type: boolean
+          description: Whether to escalate to a superior contact when the primary recipient does not respond
+
+    WorkflowRecipientSpec:
+      type: object
+      description: A recipient target for a workflow step
+      properties:
+        type:
+          type: string
+          enum:
+            - mainContacts
+            - notMainContacts
+            - all
+            - accountManager
+            - user
+          description: How the recipients are selected
+        userId:
+          type: string
+          description: The Peakflo user Id. Required when type is user.
+      required:
+        - type
+
+    CollectionWorkflowAction:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: The external Id of the workflow step
+        actionName:
+          type: string
+          description: The name of the step
+        actionType:
+          type: string
+          enum:
+            - automaticEmail
+            - lod
+            - automaticWA
+            - automaticSMS
+            - automaticZalo
+            - automaticLine
+            - manualEmail
+            - manualWhatsapp
+            - manualLegal
+            - manualCall
+            - manualVisit
+            - manualReminder
+            - reminderWebhook
+            - workflowTrigger
+          description: The type of the step
+        triggerType:
+          type: string
+          enum:
+            - afterIssueDate
+            - beforeDueDate
+            - afterDueDate
+            - dayOfMonth
+            - dayOfTheWeek
+            - beforePromiseToPay
+            - afterPromiseToPay
+            - none
+          description: When the step fires
+        triggerTimePeriod:
+          type: integer
+          description: The trigger time value. Days for date-relative triggers, calendar day for dayOfMonth, weekday for dayOfTheWeek.
+        triggerTimePeriodUntil:
+          type: integer
+          description: The upper bound for repeating triggers
+        subject:
+          type: string
+          description: The subject of the email
+        messageBody:
+          type: string
+          description: The body of the message. Supports template placeholders such as {{customerCompanyName}}, {{recipientName}}, {{myOrgName}}, {{invoiceNumber}}, {{invoiceAmountDue}}, {{totalOutstanding}}, {{totalAmountOverdue}}, and {{{customerPortalLink}}}.
+        paymentLink:
+          type: string
+          enum:
+            - customerPortalLink
+            - currencyPaymentLink
+            - invoicePaymentLink
+            - directInvPaymentLink
+            - directPaymentLink
+          description: |
+            The Peakflo-managed payment link to render in the message.
+            - customerPortalLink: link to the customer portal where all open invoices can be paid
+            - currencyPaymentLink: currency-scoped payment landing page
+            - invoicePaymentLink: link to pay the linked invoice through the customer portal
+            - directPaymentLink: link to pay directly without going through the customer portal
+            - directInvPaymentLink: link to pay the linked invoice directly without going through the customer portal
+        recipients:
+          type: array
+          items:
+            $ref: "#/components/schemas/WorkflowRecipientSpec"
+          description: The recipients of the message
+        cc:
+          type: array
+          items:
+            $ref: "#/components/schemas/WorkflowRecipientSpec"
+          description: The cc recipients of the email
+        bcc:
+          type: array
+          items:
+            $ref: "#/components/schemas/WorkflowRecipientSpec"
+          description: The bcc recipients of the email
+
+    CollectionWorkflowActionUpdate:
+      type: object
+      minProperties: 1
+      description: Fields to update on an existing workflow step
+      properties:
+        actionName:
+          type: string
+          description: The name of the step
+        actionType:
+          type: string
+          enum:
+            - automaticEmail
+            - lod
+            - automaticWA
+            - automaticSMS
+            - automaticZalo
+            - automaticLine
+            - manualEmail
+            - manualWhatsapp
+            - manualLegal
+            - manualCall
+            - manualVisit
+            - manualReminder
+          description: The type of the step
+        triggerType:
+          type: string
+          enum:
+            - afterIssueDate
+            - beforeDueDate
+            - afterDueDate
+            - dayOfMonth
+            - dayOfTheWeek
+            - beforePromiseToPay
+            - afterPromiseToPay
+            - none
+          description: When the step fires
+        triggerTimePeriod:
+          type: integer
+          description: The trigger time value. Days for date-relative triggers, calendar day for dayOfMonth, weekday for dayOfTheWeek.
+        triggerTimePeriodUntil:
+          type: integer
+          description: The upper bound for repeating triggers
+        subject:
+          type: string
+          description: The subject of the email
+        messageBody:
+          type: string
+          description: The body of the message
+        paymentLink:
+          type: string
+          enum:
+            - customerPortalLink
+            - currencyPaymentLink
+            - invoicePaymentLink
+            - directInvPaymentLink
+            - directPaymentLink
+          description: |
+            The Peakflo-managed payment link to render in the message.
+            - customerPortalLink: link to the customer portal where all open invoices can be paid
+            - currencyPaymentLink: currency-scoped payment landing page
+            - invoicePaymentLink: link to pay the linked invoice through the customer portal
+            - directPaymentLink: link to pay directly without going through the customer portal
+            - directInvPaymentLink: link to pay the linked invoice directly without going through the customer portal
+        recipients:
+          type: array
+          items:
+            $ref: "#/components/schemas/WorkflowRecipientSpec"
+          description: The recipients of the message
+        cc:
+          type: array
+          items:
+            $ref: "#/components/schemas/WorkflowRecipientSpec"
+          description: The cc recipients of the email
+        bcc:
+          type: array
+          items:
+            $ref: "#/components/schemas/WorkflowRecipientSpec"
+          description: The bcc recipients of the email
+
+    CollectionWorkflow:
+      type: object
+      description: A collection workflow
+      properties:
+        externalId:
+          type: string
+          description: The external Id of the workflow
+        title:
+          type: string
+          description: The name of the workflow
+        defaultEmailTemplateId:
+          type: string
+          description: The Id of the default email template for the workflow
+        parentCompanyId:
+          type: string
+          description: The Id of the company the workflow belongs to
+        sendFromAddress:
+          type: string
+          description: The from address used for emails sent by the workflow
+        emailName:
+          type: string
+          description: The from name shown to recipients
+        minimumContactDelay:
+          type: integer
+          description: Minimum number of days between contacts to the same customer
+        replyToAddress:
+          type: string
+          description: The reply-to address on outbound mail from the workflow
+        contactSuperior:
+          type: boolean
+          description: Whether to escalate to a superior contact when the primary recipient does not respond
+        actions:
+          type: array
+          items:
+            $ref: "#/components/schemas/CollectionWorkflowAction"
+          description: The steps in the workflow
 
   securitySchemes:
     bearerAuth:
