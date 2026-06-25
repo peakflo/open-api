@@ -769,9 +769,6 @@ paths:
       summary: Send a message via any channel
       description: Send a message to a customer on the chosen channel.
       operationId: send-message
-      security:
-        - bearerAuth: []
-          gatewayApiKeyAuth: []
       requestBody:
         required: true
         content:
@@ -1834,11 +1831,6 @@ components:
       type: apiKey
       in: header
       name: x-api-key
-    gatewayApiKeyAuth:
-      type: apiKey
-      in: header
-      name: x-api-key
-      description: API Gateway quota credential for POST /messages/send. This is not a tenant API key and must not be paired with x-client-id.
     clientIdAuth:
       type: apiKey
       in: header
