@@ -15,6 +15,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
     "billNumber": "BILL12345",
     "subsidiaryReference": "subsidiary-001",
     "status": "approved",
+    "revision_count": 0,
     "poExternalId": "po-external-id-1",
     "poNumber": "PO001",
     "receiptNotes": [
@@ -128,6 +129,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
 | billNumber     | string  | The unique identifier for the bill.                           |
 | subsidiaryReference     | string  | Unique identifier for the subsidiary company tagged to bill.                           |
 | status         | string  | The status of the bill. [Possible Values](#possible-bill-status-values)      |
+| revision_count | number  | The number of times the bill has been revised.                 |
 | vendorExternalId | string  | The external ID of the vendor associated with the bill.                 |
 | vendorName     | string  | The name of the vendor.                                       |
 | date           | string  | The date the bill was generated.                              |
