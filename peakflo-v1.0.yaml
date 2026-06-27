@@ -6572,16 +6572,28 @@ components:
             - beforePromiseToPay
             - afterPromiseToPay
             - none
-          description: When the step fires
+          description: |
+            When the step fires. Combined with `triggerTimePeriod`:
+            - `afterIssueDate` — N days after the invoice's issue date (e.g. day 0 = at issue, day 5 = 5 days after).
+            - `beforeDueDate` — N days before the due date.
+            - `afterDueDate` — N days after the due date (overdue reminders, escalations).
+            - `dayOfMonth` — fires on a fixed calendar day; `triggerTimePeriod` is the day number (1-31).
+            - `dayOfTheWeek` — fires on a fixed weekday; `triggerTimePeriod` is the weekday number (0=Sunday).
+            - `beforePromiseToPay` — N days before a recorded promise-to-pay date.
+            - `afterPromiseToPay` — N days after a recorded promise-to-pay date.
+            - `none` — manual cadence; runs only when a user explicitly triggers it. Pair with `manual*` actionTypes.
         triggerTimePeriod:
           type: integer
-          description: The trigger time value. Days for date-relative triggers, calendar day for dayOfMonth, weekday for dayOfTheWeek.
+          description: |
+            Offset for the trigger. Days for the `*Date` / `*PromiseToPay` triggers; calendar day 1-31 for `dayOfMonth`; weekday number 0-6 for `dayOfTheWeek`. Ignored when `triggerType='none'`.
         triggerTimePeriodUntil:
           type: integer
-          description: The upper bound for repeating triggers
+          description: |
+            Optional upper bound for repeating triggers — the step fires from `triggerTimePeriod` to `triggerTimePeriodUntil` days past the anchor (e.g. overdue reminder fires every day from day 7 to day 30 past due).
         subject:
           type: string
-          description: The subject of the email
+          description: |
+            Email subject line. Email actionTypes only (`automaticEmail` / `lod` / `manualEmail`). Requests using this field for a non-email action are rejected. Supports template placeholders, e.g. `Reminder: {{invoiceNumber}} due in 3 days`.
         messageBody:
           type: string
           description: The body of the message. Supports template placeholders such as {{customerCompanyName}}, {{recipientName}}, {{myOrgName}}, {{invoiceNumber}}, {{invoiceAmountDue}}, {{totalOutstanding}}, {{totalAmountOverdue}}, and {{{customerPortalLink}}}.
@@ -6604,17 +6616,20 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/WorkflowRecipientSpec"
-          description: The recipients of the message
+          description: |
+            Primary recipients. Most cadences use `[{type: 'mainContacts'}]` or `[{type: 'all'}]`. On update, omit to keep the existing recipients; pass an empty array to clear.
         cc:
           type: array
           items:
             $ref: "#/components/schemas/WorkflowRecipientSpec"
-          description: The cc recipients of the email
+          description: |
+            Email CC list. Email actionTypes only; non-email requests are rejected.
         bcc:
           type: array
           items:
             $ref: "#/components/schemas/WorkflowRecipientSpec"
-          description: The bcc recipients of the email
+          description: |
+            Email BCC list. Email actionTypes only; non-email requests are rejected.
 
     CollectionWorkflowActionCreate:
       type: object
@@ -6647,7 +6662,26 @@ components:
             - manualCall
             - manualVisit
             - manualReminder
-          description: The type of the step
+          description: |
+            Pipeline action type. The prefix encodes BOTH the channel AND whether the step fires automatically — there is no separate channel field.
+
+            Automatic (fires on trigger and dispatches):
+            - `automaticEmail` — sends an email.
+            - `lod` — letter-of-demand variant of automaticEmail (same template, different pipeline label).
+            - `automaticWA` — sends a WhatsApp message.
+            - `automaticSMS` — sends an SMS.
+            - `automaticZalo` — sends a Zalo message (VN).
+            - `automaticLine` — sends a Line message (TH/JP).
+
+            Manual (suggested action on the timeline for a human):
+            - `manualEmail` — drafted email queued for human review.
+            - `manualWhatsapp` — drafted WhatsApp message.
+            - `manualLegal` — escalation task to legal.
+            - `manualCall` — phone-call task.
+            - `manualVisit` — in-person visit task.
+            - `manualReminder` — generic reminder task.
+
+            Pick the type that matches BOTH the desired channel AND whether the step should fire automatically. Changing only the message body? Keep the same actionType. Switching from auto-email to a human follow-up? Change to manualCall.
         triggerType:
           type: string
           enum:
@@ -6659,16 +6693,28 @@ components:
             - beforePromiseToPay
             - afterPromiseToPay
             - none
-          description: When the step fires
+          description: |
+            When the step fires. Combined with `triggerTimePeriod`:
+            - `afterIssueDate` — N days after the invoice's issue date (e.g. day 0 = at issue, day 5 = 5 days after).
+            - `beforeDueDate` — N days before the due date.
+            - `afterDueDate` — N days after the due date (overdue reminders, escalations).
+            - `dayOfMonth` — fires on a fixed calendar day; `triggerTimePeriod` is the day number (1-31).
+            - `dayOfTheWeek` — fires on a fixed weekday; `triggerTimePeriod` is the weekday number (0=Sunday).
+            - `beforePromiseToPay` — N days before a recorded promise-to-pay date.
+            - `afterPromiseToPay` — N days after a recorded promise-to-pay date.
+            - `none` — manual cadence; runs only when a user explicitly triggers it. Pair with `manual*` actionTypes.
         triggerTimePeriod:
           type: integer
-          description: The trigger time value. Days for date-relative triggers, calendar day for dayOfMonth, weekday for dayOfTheWeek.
+          description: |
+            Offset for the trigger. Days for the `*Date` / `*PromiseToPay` triggers; calendar day 1-31 for `dayOfMonth`; weekday number 0-6 for `dayOfTheWeek`. Ignored when `triggerType='none'`.
         triggerTimePeriodUntil:
           type: integer
-          description: The upper bound for repeating triggers
+          description: |
+            Optional upper bound for repeating triggers — the step fires from `triggerTimePeriod` to `triggerTimePeriodUntil` days past the anchor (e.g. overdue reminder fires every day from day 7 to day 30 past due).
         subject:
           type: string
-          description: The subject of the email
+          description: |
+            Email subject line. Email actionTypes only (`automaticEmail` / `lod` / `manualEmail`). Requests using this field for a non-email action are rejected. Supports template placeholders, e.g. `Reminder: {{invoiceNumber}} due in 3 days`.
         messageBody:
           type: string
           description: The body of the message
@@ -6685,17 +6731,20 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/WorkflowRecipientSpec"
-          description: The recipients of the message
+          description: |
+            Primary recipients. Most cadences use `[{type: 'mainContacts'}]` or `[{type: 'all'}]`. On update, omit to keep the existing recipients; pass an empty array to clear.
         cc:
           type: array
           items:
             $ref: "#/components/schemas/WorkflowRecipientSpec"
-          description: The cc recipients of the email
+          description: |
+            Email CC list. Email actionTypes only; non-email requests are rejected.
         bcc:
           type: array
           items:
             $ref: "#/components/schemas/WorkflowRecipientSpec"
-          description: The bcc recipients of the email
+          description: |
+            Email BCC list. Email actionTypes only; non-email requests are rejected.
 
     CollectionWorkflowActionUpdate:
       type: object
@@ -6720,7 +6769,26 @@ components:
             - manualCall
             - manualVisit
             - manualReminder
-          description: The type of the step
+          description: |
+            Pipeline action type. The prefix encodes BOTH the channel AND whether the step fires automatically — there is no separate channel field.
+
+            Automatic (fires on trigger and dispatches):
+            - `automaticEmail` — sends an email.
+            - `lod` — letter-of-demand variant of automaticEmail (same template, different pipeline label).
+            - `automaticWA` — sends a WhatsApp message.
+            - `automaticSMS` — sends an SMS.
+            - `automaticZalo` — sends a Zalo message (VN).
+            - `automaticLine` — sends a Line message (TH/JP).
+
+            Manual (suggested action on the timeline for a human):
+            - `manualEmail` — drafted email queued for human review.
+            - `manualWhatsapp` — drafted WhatsApp message.
+            - `manualLegal` — escalation task to legal.
+            - `manualCall` — phone-call task.
+            - `manualVisit` — in-person visit task.
+            - `manualReminder` — generic reminder task.
+
+            Pick the type that matches BOTH the desired channel AND whether the step should fire automatically. Changing only the message body? Keep the same actionType. Switching from auto-email to a human follow-up? Change to manualCall.
         triggerType:
           type: string
           enum:
@@ -6732,16 +6800,28 @@ components:
             - beforePromiseToPay
             - afterPromiseToPay
             - none
-          description: When the step fires
+          description: |
+            When the step fires. Combined with `triggerTimePeriod`:
+            - `afterIssueDate` — N days after the invoice's issue date (e.g. day 0 = at issue, day 5 = 5 days after).
+            - `beforeDueDate` — N days before the due date.
+            - `afterDueDate` — N days after the due date (overdue reminders, escalations).
+            - `dayOfMonth` — fires on a fixed calendar day; `triggerTimePeriod` is the day number (1-31).
+            - `dayOfTheWeek` — fires on a fixed weekday; `triggerTimePeriod` is the weekday number (0=Sunday).
+            - `beforePromiseToPay` — N days before a recorded promise-to-pay date.
+            - `afterPromiseToPay` — N days after a recorded promise-to-pay date.
+            - `none` — manual cadence; runs only when a user explicitly triggers it. Pair with `manual*` actionTypes.
         triggerTimePeriod:
           type: integer
-          description: The trigger time value. Days for date-relative triggers, calendar day for dayOfMonth, weekday for dayOfTheWeek.
+          description: |
+            Offset for the trigger. Days for the `*Date` / `*PromiseToPay` triggers; calendar day 1-31 for `dayOfMonth`; weekday number 0-6 for `dayOfTheWeek`. Ignored when `triggerType='none'`.
         triggerTimePeriodUntil:
           type: integer
-          description: The upper bound for repeating triggers
+          description: |
+            Optional upper bound for repeating triggers — the step fires from `triggerTimePeriod` to `triggerTimePeriodUntil` days past the anchor (e.g. overdue reminder fires every day from day 7 to day 30 past due).
         subject:
           type: string
-          description: The subject of the email
+          description: |
+            Email subject line. Email actionTypes only (`automaticEmail` / `lod` / `manualEmail`). Requests using this field for a non-email action are rejected. Supports template placeholders, e.g. `Reminder: {{invoiceNumber}} due in 3 days`.
         messageBody:
           type: string
           description: The body of the message
@@ -6764,17 +6844,20 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/WorkflowRecipientSpec"
-          description: The recipients of the message
+          description: |
+            Primary recipients. Most cadences use `[{type: 'mainContacts'}]` or `[{type: 'all'}]`. On update, omit to keep the existing recipients; pass an empty array to clear.
         cc:
           type: array
           items:
             $ref: "#/components/schemas/WorkflowRecipientSpec"
-          description: The cc recipients of the email
+          description: |
+            Email CC list. Email actionTypes only; non-email requests are rejected.
         bcc:
           type: array
           items:
             $ref: "#/components/schemas/WorkflowRecipientSpec"
-          description: The bcc recipients of the email
+          description: |
+            Email BCC list. Email actionTypes only; non-email requests are rejected.
 
     CollectionWorkflow:
       type: object
