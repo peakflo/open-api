@@ -56,6 +56,8 @@ tags:
     description: Internal tasks assigned to users, optionally linked to invoices
   - name: Collection Workflows
     description: Dunning cadences (collection workflows) and their action steps
+  - name: WhatsApp Templates
+    description: Meta-approved WhatsApp Business templates registered for the tenant
 
 paths:
   /tenant:
@@ -4169,6 +4171,46 @@ paths:
         "400":
           description: Bad request
 
+  "/whatsapp-templates":
+    get:
+      tags:
+        - WhatsApp Templates
+      summary: List Meta-approved WhatsApp templates for the tenant
+      description: >-
+        Returns every WhatsApp Business template registered under the
+        authenticated tenant (Firestore path
+        `companies/{issuerId}/whatsappTemplates`).
+
+
+        **Why this exists:** the WhatsApp Business API rejects free-form
+        text outside a 24-hour reply window (Meta anti-spam policy). Every
+        cold outreach — dunning reminders, statement notices, PTP
+        follow-ups — must reference a Meta-approved template at send time.
+        Peakflo enforces this at the send handler: dispatching to the
+        `whatsapp` channel through `/v2/messages/send` without a
+        `messageTemplateId` is rejected server-side.
+
+
+        Call this endpoint first, present the templates to the human (or
+        pick programmatically), then pass the chosen template's
+        `externalId` as `messageTemplateId` on the send request. If the
+        response is empty, the tenant has no approved templates configured
+        — route the send through email or SMS instead.
+      operationId: list-whatsapp-templates
+      responses:
+        "200":
+          description: List of approved WhatsApp templates
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [templates]
+                properties:
+                  templates:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/WhatsappTemplate"
+
   "/collection-workflows":
     get:
       tags:
@@ -6630,6 +6672,42 @@ components:
             $ref: "#/components/schemas/WorkflowRecipientSpec"
           description: |
             Email BCC list. Email actionTypes only; non-email requests are rejected.
+
+    WhatsappTemplate:
+      type: object
+      description: >-
+        A Meta-approved WhatsApp Business template registered under the
+        tenant. Stored in Firestore at
+        `companies/{issuerId}/whatsappTemplates/{templateId}`. Callers pass
+        `externalId` as `messageTemplateId` on WhatsApp sends, and provide
+        slot values as `variableValues` keyed by the mapping described in
+        `variableMapping`.
+      required:
+        - externalId
+        - name
+        - text
+      properties:
+        externalId:
+          type: string
+          description: Firestore document ID of the template. Pass this as `messageTemplateId` on `/v2/messages/send` for the whatsapp channel.
+        name:
+          type: string
+          description: Human-readable label for the template (as configured in Peakflo).
+        text:
+          type: string
+          description: >-
+            The template's raw text shape with `{{1}}`, `{{2}}`, …
+            placeholders — the same shape Meta approved. Rendered to the
+            recipient with `variableValues` substituted in.
+        variableMapping:
+          type: object
+          nullable: true
+          description: >-
+            Optional per-template map from placeholder key (e.g. `1`,
+            `customerName`) to the data field or human label that should
+            fill it. Callers use this to construct the `variableValues`
+            object on the corresponding send.
+          additionalProperties: true
 
     CollectionWorkflowActionCreate:
       type: object
