@@ -214,6 +214,81 @@ paths:
         name: customerExternalId
         in: path
         required: true
+  "/customers/{customerExternalId}/assign-workflow":
+    post:
+      tags:
+        - Customers
+      summary: Assign the customer's default collection workflow
+      description: >-
+        Point the customer's default collection workflow at the template
+        identified by `workflowExternalId`. Updates the two denormalized
+        fields peakflo-web reads at invoice-creation time — the
+        `defaultWorkflowTemplate` Firestore document reference and the
+        `defaultWorkflowTemplateTitle` display name.
+
+
+        **Effect:** any invoice created for this customer AFTER the assign
+        call runs through the new workflow's cadence. Existing open
+        invoices keep whatever workflow they were created with — a bulk
+        re-workflow on existing invoices is a separate operation to keep
+        this endpoint's blast radius predictable.
+
+
+        **Motivating use case:** the AR Golden Workflow Recommender surfaces
+        "shift these N accounts → golden workflow Y" recommendations per
+        the 2×2 value×risk segment matrix; an operator (or the agent)
+        hits this endpoint per customer to apply one.
+      operationId: assign-customer-workflow
+      parameters:
+        - schema:
+            type: string
+          name: customerExternalId
+          in: path
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [workflowExternalId]
+              properties:
+                workflowExternalId:
+                  type: string
+                  description: >-
+                    External ID of the collection workflow template to
+                    assign as this customer's new default cadence. Must
+                    belong to the authenticated tenant. Discover options
+                    via `GET /collection-workflows`.
+      responses:
+        "200":
+          description: Customer workflow assigned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  customerExternalId:
+                    type: string
+                  workflowExternalId:
+                    type: string
+                  workflowTitle:
+                    type: string
+                  previousWorkflowExternalId:
+                    type: string
+                    nullable: true
+                  previousWorkflowTitle:
+                    type: string
+                    nullable: true
+        "400":
+          description: Validation error
+        "403":
+          description: Workflow does not belong to the authenticated tenant
+        "404":
+          description: Customer or workflow not found
+
   "/customers/{customerExternalId}/contacts":
     post:
       summary: Add a contact
