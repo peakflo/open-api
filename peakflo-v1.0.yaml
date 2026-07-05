@@ -4997,10 +4997,11 @@ components:
       type: string
       enum:
         - invoice
+        - transaction
         - other
-      description: The supported file types
+      description: The supported file types for AR invoice attachments
       x-examples:
-        Example: Invoice
+        Example: invoice
     APAttachments:
       type: object
       properties:
