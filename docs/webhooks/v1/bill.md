@@ -109,6 +109,15 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
           "status": "draft"
         }
     ],
+    "paymentType": "Payment on delivery",
+    "advancePaymentBills": [
+      {
+        "billExternalId": "advance-bill-ext-1",
+        "billNumber": "ADV-001",
+        "sourceId": "SAP-99",
+        "status": "paid"
+      }
+    ],
     "fakturPajakData": {
         "fgPengganti": "0",
         "jumlahPpn": 100000,
@@ -147,6 +156,8 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
 | updatedDate      | string  | The date when the bill was last update.
 | customFields   | array   | An array containing details of custom fields. [Possible Values](#possible-custom-field-type)                 |
 | payments   | array   | An array containing details of bill payments.                      |
+| paymentType | string | 3-way matching payment type: `Advance Payment`, `Payment on delivery`, or `Delivered and Billed`. Omitted when unset. |
+| advancePaymentBills | array | Advance payment bills applied to this bill. Sibling of `payments`, not nested under it. Always present, including `[]` when none are applied. Each item has `billExternalId`, `billNumber`, `sourceId`, and `status`. |
 | fakturPajakData   | object   | An Object containing details of bill faktur pajak (Indonesian tax invoice).                      |
 
 
