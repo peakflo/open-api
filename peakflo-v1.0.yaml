@@ -50,6 +50,8 @@ tags:
     description: Vendor Receipt Notes
   - name: Vendor Credit Notes
     description: Vendor Credit Notes
+  - name: Budgets
+    description: Budget synchronization
 
 paths:
   /customers:
@@ -4097,6 +4099,95 @@ paths:
           description: Conflict
           content: {}
 
+  /v1/internal-budget-sync:
+    post:
+      tags:
+        - Budgets
+      summary: Sync (upsert) a batch of budgets
+      operationId: internal-budget-sync
+      description: >
+        Sync (upsert) up to 50 budgets per request into Peakflo. Each item is
+        processed independently: when `budgetId` is provided the existing
+        budget is updated (it must belong to the issuer, otherwise the item
+        fails), when `budgetId` is omitted a new budget is created. A failing
+        item never blocks the remaining items — per-item results are returned
+        in the response. Date-type custom field values must be sent as
+        DD/MM/YYYY.
+      requestBody:
+        required: true
+        description: The budgets to sync
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BudgetSyncRequest"
+            examples:
+              createSingle:
+                summary: Create a single budget with custom fields
+                value:
+                  companyIssuerId: issuer-1
+                  userId: user-1
+                  budgets:
+                    - externalId: EXT-BUDGET-1
+                      name: Marketing 2026
+                      limit: 50000
+                      status: open
+                      cycle: recurring
+                      startDate: "2026-01-01T00:00:00Z"
+                      expiresOn: "2026-12-31T23:59:59Z"
+                      owners:
+                        - user-7
+                      customFields:
+                        - customFieldNumber: customField1
+                          name: Cost Center
+                          type: input
+                          value: CC-01
+              batchUpsert:
+                summary: Batch with one update and one create
+                value:
+                  companyIssuerId: issuer-1
+                  userId: user-1
+                  budgets:
+                    - budgetId: 665f1a2b3c4d5e6f7a8b9c0d
+                      externalId: EXT-BUDGET-1
+                      name: Marketing 2026 (revised)
+                      limit: 60000
+                      status: open
+                      cycle: recurring
+                      expiresOn: "2026-12-31T23:59:59Z"
+                    - externalId: EXT-BUDGET-2
+                      name: Engineering 2026
+                      limit: 120000
+                      status: open
+                      cycle: recurring
+                      expiresOn: "2026-12-31T23:59:59Z"
+      responses:
+        "200":
+          description: >
+            Batch processed. Check `succeeded` / `failed` and the per-item
+            `results` array — a 200 response can still contain per-item
+            failures (e.g. update of a non-existing budget, or a downstream
+            upload error).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BudgetSyncResponse"
+              example:
+                processed: 2
+                succeeded: 1
+                failed: 1
+                results:
+                  - budgetId: 665f1a2b3c4d5e6f7a8b9c0d
+                    externalId: EXT-BUDGET-1
+                    action: update
+                    status: succeeded
+                  - externalId: EXT-BUDGET-2
+                    action: create
+                    status: failed
+                    message: Budget sync failed
+        "400":
+          description: Bad request
+          content: {}
+
 components:
   schemas:
     Customer:
@@ -6080,6 +6171,184 @@ components:
       required:
         - customFieldNumber
         - value
+    Budget-CustomFields:
+      type: object
+      x-examples:
+        Example:
+          customFieldNumber: "customField1"
+          name: "Cost Center"
+          type: "input"
+          value: "CC-01"
+      properties:
+        customFieldNumber:
+          type: string
+          description: Custom field number can be seen in the peakflo web UI
+        name:
+          type: string
+          description: Custom field name
+        type:
+          type: string
+          description: Custom field type
+          enum:
+            - input
+            - number
+            - date
+            - list
+            - multiList
+            - singleUser
+            - multiUser
+            - multiFile
+        value:
+          description: >
+            Custom field value. String for input/list, number for number,
+            array of strings for multiList, array of user objects for user
+            types. Date values must be sent as DD/MM/YYYY.
+        sourceId:
+          type: string
+        valueSourceId:
+          type: string
+      required:
+        - customFieldNumber
+        - name
+        - type
+        - value
+    BudgetSyncItem:
+      type: object
+      description: >
+        A single budget in a sync request. Upsert semantics: when `budgetId`
+        is provided the existing Peakflo budget is updated (it must belong to
+        the issuer), when omitted a new budget is created. `externalId` is a
+        caller-side reference echoed back in per-item results.
+      properties:
+        budgetId:
+          type: string
+          description: Peakflo budget id. Present = update, omitted = create.
+        externalId:
+          type: string
+          description: Caller-side reference, echoed back in per-item results.
+          example: EXT-BUDGET-1
+        name:
+          type: string
+          example: Marketing 2026
+        limit:
+          type: number
+          description: Budget limit amount.
+          example: 50000
+        status:
+          type: string
+          enum:
+            - open
+            - archived
+        cycle:
+          type: string
+          enum:
+            - oneTime
+            - recurring
+        startDate:
+          type: string
+          format: date-time
+          description: Budget start date. Defaults to the start of the current month when omitted.
+          example: "2026-01-01T00:00:00Z"
+        expiresOn:
+          type: string
+          format: date-time
+          example: "2026-12-31T23:59:59Z"
+        defaultApprovalPolicy:
+          type: string
+          description: Approval policy id.
+        defaultAccount:
+          type: string
+          description: Chart of accounts id.
+        owners:
+          type: array
+          description: Budget owner user ids.
+          items:
+            type: string
+        members:
+          type: array
+          description: Budget member user ids.
+          items:
+            type: string
+        notes:
+          type: string
+        customFields:
+          type: array
+          description: Header-level custom fields, re-validated against the tenant's custom field definitions server-side.
+          items:
+            $ref: "#/components/schemas/Budget-CustomFields"
+      required:
+        - name
+        - limit
+        - status
+        - cycle
+        - expiresOn
+    BudgetSyncRequest:
+      type: object
+      properties:
+        companyIssuerId:
+          type: string
+          description: Peakflo issuer (tenant) company id the budgets belong to.
+        userId:
+          type: string
+          description: Peakflo user id recorded as the actor of the sync.
+        budgets:
+          type: array
+          minItems: 1
+          maxItems: 50
+          description: Budgets to sync, up to 50 per request.
+          items:
+            $ref: "#/components/schemas/BudgetSyncItem"
+      required:
+        - companyIssuerId
+        - userId
+        - budgets
+    BudgetSyncResult:
+      type: object
+      description: Per-item outcome of a budget sync batch.
+      properties:
+        budgetId:
+          type: string
+          description: Peakflo budget id (present when the item targeted an existing budget).
+        externalId:
+          type: string
+          description: Caller-side reference from the request, when provided.
+        action:
+          type: string
+          description: Operation performed or attempted for the item.
+          enum:
+            - create
+            - update
+        status:
+          type: string
+          enum:
+            - succeeded
+            - failed
+        message:
+          type: string
+          description: Failure reason when status is failed (e.g. "Budget not found").
+      required:
+        - action
+        - status
+    BudgetSyncResponse:
+      type: object
+      description: Summary of a budget sync batch. A 200 response can still contain per-item failures.
+      properties:
+        processed:
+          type: integer
+          description: Total number of items in the batch.
+        succeeded:
+          type: integer
+        failed:
+          type: integer
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/BudgetSyncResult"
+      required:
+        - processed
+        - succeeded
+        - failed
+        - results
 
   securitySchemes:
     bearerAuth:
