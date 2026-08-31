@@ -186,6 +186,9 @@ paths:
             schema:
               type: object
               properties:
+                externalId:
+                  type: string
+                  description: Unique identifier for the bill payment in the external system
                 paymentDate:
                   type: string
                   format: date
@@ -232,9 +235,12 @@ paths:
                         type: string
                       appliedAmount:
                         type: number
+              required:
+                - externalId
             examples:
               Example:
                 value:
+                  externalId: "PAYMENT-EXT-001"
                   paymentDate: "2023-11-28"
                   scheduledDate: "2024-07-07"
                   paymentNumber: "PAYMENT-001"
@@ -983,6 +989,10 @@ components:
       description: Detail of a Bill Payment
       type: object
       properties:
+        externalId:
+          type: string
+          description: Unique identifier for the bill payment in the external system
+          example: "PAYMENT-EXT-001"
         paymentDate:
           type: string
           description: Date of the payment (ISO8601 date format)
@@ -1056,6 +1066,8 @@ components:
                 type: string
               appliedAmount:
                 type: number
+      required:
+        - externalId
     Bill-CustomFields:
       type: object
       x-examples:
