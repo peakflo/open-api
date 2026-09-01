@@ -197,17 +197,6 @@ paths:
           description: Conflict
           content: {}
       x-codegen-request-body-name: Customer
-    delete:
-      tags:
-        - Customers
-      summary: Delete a customer
-      operationId: delete-customer
-      responses:
-        "200":
-          description: Created
-        "404":
-          description: Not Found
-      description: Delete a customer
     parameters:
       - schema:
           type: string
