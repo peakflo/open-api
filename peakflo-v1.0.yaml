@@ -5614,6 +5614,13 @@ components:
           type: number
           description: Total withholding tax amount
           example: 20
+        paymentType:
+          type: string
+          nullable: true
+          description: |
+            Optional 3-way-matching payment classification. Omit, send null, or send an empty string when not used.
+            When set, must be one of: "Advance Payment", "Payment on delivery", "Delivered and Billed".
+          example: "Payment on delivery"
         revision_count:
           type: number
           description: Revision count shown in bill responses for supported tenants.
