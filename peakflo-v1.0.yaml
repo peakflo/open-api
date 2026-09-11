@@ -3845,6 +3845,9 @@ paths:
                   type: number
                 baseCurrency:
                   type: string
+                subsidiaryReference:
+                  type: string
+                  description: External reference of the subsidiary. Required when subsidiaries are enabled for the tenant.
             examples:
               Example:
                 value:
@@ -3863,6 +3866,7 @@ paths:
                   fxRate: 1.25
                   convertedAmount: 1875
                   baseCurrency: "EUR"
+                  subsidiaryReference: "SUB-001"
       responses:
         "201":
           description: Created
@@ -6336,6 +6340,10 @@ components:
           type: string
           description: Base currency of the credit note
           example: "EUR"
+        subsidiaryReference:
+          type: string
+          description: External reference of the subsidiary associated with the vendor credit note
+          example: "SUB-001"
       required:
         - externalId
         - vendorId
