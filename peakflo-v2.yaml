@@ -233,6 +233,7 @@ paths:
                     properties:
                       externalBillId:
                         type: string
+                        description: The bill's externalId or source-system sourceId within your tenant. Bill numbers are not supported.
                       appliedAmount:
                         type: number
               required:
@@ -985,7 +986,7 @@ components:
                 type: number
               totalAmount:
                 type: number
-    BillPayment-Create:
+    BillPayment-create:
       description: Detail of a Bill Payment
       type: object
       properties:
@@ -1064,6 +1065,7 @@ components:
             properties:
               externalBillId:
                 type: string
+                description: The bill's externalId or source-system sourceId within your tenant. Bill numbers are not supported.
               appliedAmount:
                 type: number
       required:
