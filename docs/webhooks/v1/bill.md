@@ -50,6 +50,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
       {
         "externalId": "ITEM001",
         "name": "Product A",
+        "poLineItemName": "Original PO product name",
         "unit": "unit",
         "description": "Description for Product A",
         "quantity": 2,
@@ -158,6 +159,23 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
 | advancePaymentBills | array | Advance payment bills applied to this bill. Sibling of `payments`, not nested under it. Always present, including `[]` when none are applied. Each item has `billNumber` and `sourceId`; either value is `null` when unavailable. |
 | fakturPajakData   | object   | An Object containing details of bill faktur pajak (Indonesian tax invoice).                      |
 
+
+### Connected PO line name
+
+Newly generated API bill outgoing payloads include `items[].poLineItemName` (`string | null`). The value is the connected purchase-order line's name, matched by the bill line's PO and PO-line IDs within the same tenant. The bill line's existing `name` is unchanged.
+
+Names retain their original case and whitespace. An unconnected line, unavailable PO/line, or missing/empty PO-line name produces JSON `null`. Lines from multiple POs each use their own connected PO line.
+
+The value is captured when the outgoing queue payload is generated. Retries keep that snapshot, even if the PO is renamed later. Existing queued payloads and webhook history are not migrated or replayed; legacy queued lines without this field continue to omit it.
+
+```json
+{
+  "items": [
+    { "name": "Invoice description", "poLineItemName": "Original PO product name" },
+    { "name": "Unmatched invoice line", "poLineItemName": null }
+  ]
+}
+```
 
 ### Possible Bill Status Values
 
