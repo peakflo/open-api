@@ -50,7 +50,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
       {
         "externalId": "ITEM001",
         "name": "Product A",
-        "poLineItemName": "Original PO product name",
+        "poLineItemName": "Connected PO line item product name",
         "unit": "unit",
         "description": "Description for Product A",
         "quantity": 2,
@@ -162,7 +162,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
 
 ### Connected PO line name
 
-API bill webhook payloads include `items[].poLineItemName` (`string | null`). The value is the connected purchase-order line's name, matched by the bill line's PO and PO-line IDs within the same tenant. The bill line's existing `name` is unchanged.
+API bill webhook payloads include `items[].poLineItemName` (`string | null`). The value is the connected PO line item's product name, matched by the bill line's PO and PO-line IDs within the same tenant. The bill line's existing `name` is unchanged.
 
 Names retain their original case and whitespace. An unconnected line, unavailable PO/line, or missing/empty PO-line name produces JSON `null`. Lines from multiple POs each use their own connected PO line.
 
@@ -171,7 +171,7 @@ The value is captured when the outgoing queue payload is generated. Retries keep
 ```json
 {
   "items": [
-    { "name": "Invoice description", "poLineItemName": "Original PO product name" },
+    { "name": "Invoice description", "poLineItemName": "Connected PO line item product name" },
     { "name": "Unmatched invoice line", "poLineItemName": null }
   ]
 }
