@@ -162,11 +162,11 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
 
 ### Connected PO line name
 
-Newly generated API bill outgoing payloads include `items[].poLineItemName` (`string | null`). The value is the connected purchase-order line's name, matched by the bill line's PO and PO-line IDs within the same tenant. The bill line's existing `name` is unchanged.
+API bill webhook payloads include `items[].poLineItemName` (`string | null`). The value is the connected purchase-order line's name, matched by the bill line's PO and PO-line IDs within the same tenant. The bill line's existing `name` is unchanged.
 
 Names retain their original case and whitespace. An unconnected line, unavailable PO/line, or missing/empty PO-line name produces JSON `null`. Lines from multiple POs each use their own connected PO line.
 
-The value is captured when the outgoing queue payload is generated. Retries keep that snapshot, even if the PO is renamed later. Existing queued payloads and webhook history are not migrated or replayed; legacy queued lines without this field continue to omit it.
+The value is captured when the outgoing queue payload is generated. Retries keep that snapshot, even if the PO is renamed later. Existing queued payloads and webhook history are not migrated or replayed. When a queued line has no saved value, including legacy queued lines, the outgoing webhook emits `poLineItemName: null`.
 
 ```json
 {
