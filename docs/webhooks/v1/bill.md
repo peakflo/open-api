@@ -28,6 +28,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
     "subTotal": 500,
     "totalTax": 50,
     "totalWHT": 20,
+    "paymentType": "Payment on delivery",
     "paymentAmount": 530,
     "date": "2023-11-27T12:00:00Z",
     "dueDate": "2023-12-15T23:59:59Z",
@@ -149,6 +150,7 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
 | totalAmount    | number  | The total amount including tax and other charges.              |
 | notes          | string  | Additional notes or description about the bill.                |
 | totalWHT       | number  | The total amount of withholding tax for the bill.              |
+| paymentType    | string  | Optional. Included only when set. 3-way matching payment classification: [Possible values](#possible-bill-payment-type-values). |
 | items          | array   | An array containing details of items listed on the bill.       |
 | receiptDate    | string  | The date when the bill receipt was generated.                  |
 | updatedDate      | string  | The date when the bill was last update.
@@ -158,6 +160,18 @@ The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. Th
 | advancePaymentBills | array | Advance payment bills applied to this bill. Sibling of `payments`, not nested under it. Always present, including `[]` when none are applied. Each item has `billNumber` and `sourceId`; either value is `null` when unavailable. |
 | fakturPajakData   | object   | An Object containing details of bill faktur pajak (Indonesian tax invoice).                      |
 
+
+### Possible bill payment type values
+
+When `paymentType` is present on a bill webhook payload, it is one of:
+
+```json
+[
+  "Advance Payment",
+  "Payment on delivery",
+  "Delivered and Billed"
+]
+```
 
 ### Possible Bill Status Values
 
