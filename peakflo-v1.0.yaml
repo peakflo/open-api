@@ -2307,38 +2307,6 @@ paths:
           description: Conflict
           content: {}
   "/bill-payment/{externalId}":
-    get:
-      tags:
-        - Bill Payments
-      summary: Read a bill payment
-      description: >-
-        Read a payment within the authenticated tenant. Supply subsidiaryReference
-        when externalId is reused across subsidiaries. Ambiguous matches return
-        HTTP 400; no matching payment in the requested subsidiary returns HTTP 404.
-      parameters:
-        - name: externalId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: subsidiaryReference
-          in: query
-          required: false
-          description: External subsidiary reference used to scope the payment lookup
-          schema:
-            type: string
-            minLength: 1
-      responses:
-        "200":
-          description: Payment found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/BillPayment"
-        "400":
-          description: Invalid or ambiguous identifier
-        "404":
-          description: Subsidiary or payment not found
     put:
       tags:
         - Bill Payments

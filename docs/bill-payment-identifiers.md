@@ -3,7 +3,8 @@
 These rules apply to v1 and v2 bill payment APIs.
 
 - Supply `subsidiaryReference` in create/update request bodies when your ERP reuses document or payment identifiers across subsidiaries.
-- For a single-payment GET, supply it as a query parameter: `/v2/bill-payment/3980000002?subsidiaryReference=3130` (the same query parameter is supported in v1).
+- Single-payment GET is available only in v2. Supply the subsidiary as a query parameter: `/v2/bill-payment/3980000002?subsidiaryReference=3130`.
+- For payment attachments, supply it as a query parameter: `PUT /v1/bill-payment/3980000002/attachments?subsidiaryReference=3130`. Initial and conflict-retry lookups stay within that subsidiary.
 - Payment identity is the authenticated tenant, subsidiary, and payment `externalId`. The same external ID can exist in different subsidiaries; creating it again in the same subsidiary is rejected.
 - Linked bills are matched within the requested subsidiary by Peakflo `externalId` or ERP `sourceId`. In v1 use `billId`; in v2 use `bills[].externalBillId`. SAP DocumentNo may be stored as `sourceId` despite the v2 field name.
 - Without `subsidiaryReference`, an identifier must match exactly one active record. Ambiguous identifiers return HTTP 400; supply the subsidiary rather than relying on the first matching record. If multiple bills still match within that subsidiary, use a unique bill external ID.
