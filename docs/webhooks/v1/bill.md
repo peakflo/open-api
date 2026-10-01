@@ -1,5 +1,9 @@
 # Bills
 
+## Webhook response
+
+Return the [structured webhook response](./about.md#webhook-responses) so Peakflo can process each bill's sync result. Set each response item's `externalId` to the request item's `billExternalId` and include a string `sourceId` for success.
+
 ## Bill Status Changed
 
 The BILL_STATUS_CHANGED event is triggered when the status of a bill changes. The request body looks like this
