@@ -1,5 +1,9 @@
 # Credit Notes
 
+## Webhook response
+
+Return the [structured webhook response](./about.md#webhook-responses) so Peakflo can process each credit note's sync result. Set each response item's `externalId` to the request item's `externalId` and include a string `sourceId` for success.
+
 ## Credit Note Status Changed
 
 The CREDIT_NOTE_STATUS_CHANGED event is triggered when the status of a credit note changes. The request body looks like this
