@@ -2227,7 +2227,11 @@ paths:
       tags:
         - Bill Payments
       summary: Create a bill payment
-      description: Create a new bill payment
+      description: >-
+        Create a bill payment. Payment externalId uniqueness and linked-bill matching
+        are scoped to the authenticated tenant and subsidiaryReference. Supply the
+        subsidiary when your ERP reuses identifiers across subsidiaries. Unscoped
+        ambiguous identifiers are rejected with HTTP 400.
       operationId: create-bill-payment
       requestBody:
         description: Bill payment to create
@@ -2239,9 +2243,13 @@ paths:
               properties:
                 externalId:
                   type: string
+                  description: Payment identifier unique within the authenticated tenant and subsidiary
+                subsidiaryReference:
+                  type: string
+                  description: External subsidiary reference used to scope payment and linked-bill matching
                 billId:
                   type: string
-                  description: Bill externalId or sourceId associated with the payment
+                  description: Bill externalId or sourceId within the payment subsidiary
                 reference:
                   type: string
                 notes:
@@ -2303,7 +2311,11 @@ paths:
       tags:
         - Bill Payments
       summary: Update a bill payment
-      description: Update a bill payment
+      description: >-
+        Update an existing payment in the subsidiary identified by subsidiaryReference.
+        Linked bills are matched in that subsidiary by externalId or sourceId.
+        Unscoped ambiguous identifiers are rejected with HTTP 400. A missing payment
+        returns HTTP 404; PUT does not create a payment or fall back to another subsidiary.
       operationId: update-bill-payment
       parameters:
         - name: externalId
@@ -2322,9 +2334,12 @@ paths:
               properties:
                 status:
                   type: string
+                subsidiaryReference:
+                  type: string
+                  description: External subsidiary reference used to scope payment and linked-bill matching
                 billId:
                   type: string
-                  description: Bill externalId or sourceId associated with the payment
+                  description: Bill externalId or sourceId within the payment subsidiary
                 reference:
                   type: string
                 notes:
@@ -2375,8 +2390,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BillPayment"
+        "404":
+          description: Subsidiary, payment or linked bill not found
         "400":
-          description: Bad request
+          description: Bad request or ambiguous identifier
           content: {}
         "409":
           description: Conflict
