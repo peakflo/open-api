@@ -109,7 +109,6 @@ paths:
                   externalId: "121989"
                   externalRefNumber: ["421670"]
                   currency: USD
-                  status: active
                   accountManagerEmail: emily@youwin.com
                   pauseWorkflow: false
                   contacts:
@@ -156,7 +155,6 @@ paths:
                   externalId: "121989"
                   externalRefNumber: ["421670"]
                   currency: SGD
-                  status: active
                   accountManagerEmail: adrian@youwin.com
                   pauseWorkflow: false
                   contacts:
@@ -180,7 +178,6 @@ paths:
                     externalId: 1245a32
                     externalRefNumber: ["421670"]
                     currency: USD
-                    status: active
                     parentCompanyId: 23oc2344
                     accountManagerEmail: johndoe@peakflo.co
                     pauseWorkflow: false
@@ -4502,7 +4499,6 @@ components:
           externalId: string
           externalRefNumber: array
           currency: USD
-          status: active
           parentCompanyId: string
           accountManagerEmail: string
           registrationNumber: string
@@ -4530,14 +4526,6 @@ components:
         currency:
           type: string
           description: The customers currency. Must be a ISO 4217 code
-        status:
-          type: string
-          description: The status of the company
-          enum:
-            - unknown
-            - active
-            - archived
-          example: active
         accountManagerEmail:
           type: string
           description: The account manager email
@@ -4573,7 +4561,6 @@ components:
         - externalId
         - companyName
         - currency
-        - status
     ContactRequest:
       type: object
       description: The contact req model
