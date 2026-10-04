@@ -4566,6 +4566,14 @@ components:
           description: The customers addresses
           items:
             $ref: "#/components/schemas/Address"
+        paymentTerms:
+          type: number
+          description: Number of days from the issue date
+          example: 14
+        customField:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomFields"
         portalUrl:
           type: string
           description: Peakflo Portal URL
