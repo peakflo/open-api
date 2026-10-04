@@ -4567,11 +4567,13 @@ components:
           items:
             $ref: "#/components/schemas/Address"
         paymentTerms:
-          type: number
-          description: Number of days from the issue date
+          type: integer
+          minimum: 0
+          description: Number of days from the issue date. Whole number, 0 or more. Sending null leaves the stored value unchanged; it does not clear it.
           example: 14
         customField:
           type: array
+          description: Custom field values for the customer. Each customFieldNumber must exist on the account. Sending an empty list leaves the stored custom fields unchanged; it does not clear them.
           items:
             $ref: "#/components/schemas/CustomFields"
         portalUrl:
