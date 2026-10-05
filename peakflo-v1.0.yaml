@@ -6487,10 +6487,11 @@ components:
           oneOf:
             - type: string
             - type: number
+              minimum: 0
             - type: array
               items:
                 type: string
-          description: Custom field value. can be string, number or array. Dates must be sent as a DD/MM/YYYY string, for example "11/03/2024"
+          description: Custom field value. can be string, number (0 or more) or array. Dates must be sent as a DD/MM/YYYY string, for example "11/03/2024"
       required:
         - customFieldNumber
         - value
