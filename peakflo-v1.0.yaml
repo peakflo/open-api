@@ -112,6 +112,12 @@ paths:
                   status: active
                   accountManagerEmail: emily@youwin.com
                   pauseWorkflow: false
+                  paymentTerms: 30
+                  customField:
+                    - customFieldNumber: customField1
+                      value: Gold
+                    - customFieldNumber: customField2
+                      value: "11/03/2024"
                   contacts:
                     - externalId: 120989C1
                       firstName: Peter
@@ -140,7 +146,7 @@ paths:
       tags:
         - Customers
       summary: "Update a customer "
-      description: Update an existing customer. Any field not provided will be left unchanged
+      description: Update an existing customer. Any field not provided will be left unchanged. Exception - a non-empty customField list replaces all stored custom fields, so send the full set you want to keep
       operationId: update-customer
       requestBody:
         description: Customer to update
@@ -159,6 +165,12 @@ paths:
                   status: active
                   accountManagerEmail: adrian@youwin.com
                   pauseWorkflow: false
+                  paymentTerms: 30
+                  customField:
+                    - customFieldNumber: customField1
+                      value: Gold
+                    - customFieldNumber: customField2
+                      value: "11/03/2024"
                   contacts:
                     - externalId: 120989C1
                       firstName: Peter
@@ -191,6 +203,9 @@ paths:
                         email: peterwong@mcwin.com
                         phone: "+6591234567"
                         isMainContact: false
+        "400":
+          description: Bad request, for example an unknown customFieldNumber, a wrong custom field value type or an invalid paymentTerms
+          content: {}
         "404":
           description: Not Found
         "409":
@@ -4566,6 +4581,18 @@ components:
           description: The customers addresses
           items:
             $ref: "#/components/schemas/Address"
+        paymentTerms:
+          type: integer
+          minimum: 0
+          maximum: 3650
+          nullable: true
+          description: Number of days from the issue date. Whole number from 0 to 3650. Sending null leaves the stored value unchanged; it does not clear it. Request only; the create and update responses have no body.
+          example: 14
+        customField:
+          type: array
+          description: Custom field values for the customer. Each customFieldNumber must exist on the account and may appear once. On update, a non-empty list replaces all stored custom fields, so send the full set you want to keep. Sending an empty list leaves the stored custom fields unchanged; it does not clear them. Request only; the create and update responses have no body.
+          items:
+            $ref: "#/components/schemas/CustomFields"
         portalUrl:
           type: string
           description: Peakflo Portal URL
@@ -6460,10 +6487,11 @@ components:
           oneOf:
             - type: string
             - type: number
+              minimum: 0
             - type: array
               items:
                 type: string
-          description: Custom field value. can be string, number or array. dates needs to be sent in ISO 8601 date format
+          description: Custom field value. can be string, number (0 or more) or array. Dates must be sent as a DD/MM/YYYY string, for example "11/03/2024"
       required:
         - customFieldNumber
         - value
