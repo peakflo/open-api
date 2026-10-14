@@ -277,7 +277,12 @@ paths:
       tags:
         - Bill Payments
       summary: Update a bill payment
-      description: Update a bill payment
+      description: |
+        Update an existing bill payment. The payment is identified by `paymentReference`.
+
+        This is a full update: send the payment's current values for every field, not only the ones that change.
+        For example, to mark a payment as paid, resend the payment with `status` set to `paid`.
+        `bills` replaces the bills linked to the payment, so always include it. If it is left out, the payment is updated with no linked bills.
       operationId: update-bill-payment
       requestBody:
         description: Bill payment to update
@@ -285,14 +290,29 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/BillPayment-create"
+              $ref: "#/components/schemas/BillPayment-Update"
+            examples:
+              Example:
+                value:
+                  paymentReference: "INV-2023-001"
+                  paymentNumber: "PAYMENT-001"
+                  paymentDate: "2023-11-28"
+                  scheduledDate: "2023-11-28"
+                  externalVendorId: "VENDOR-123"
+                  accountNumber: "11223344556677"
+                  amount: 500
+                  baseCurrency: "SGD"
+                  status: "paid"
+                  bills:
+                    - externalBillId: "1234567890"
+                      appliedAmount: 500
       responses:
         "201":
-          description: Created
+          description: Updated. Returns the request body.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/BillPayment"
+                $ref: "#/components/schemas/BillPayment-Update"
         "400":
           description: Bad request
           content: {}
@@ -1068,6 +1088,105 @@ components:
                 type: number
       required:
         - externalId
+    BillPayment-Update:
+      description: Bill payment fields for an update. Unknown fields such as `externalId` and `customField` are rejected.
+      type: object
+      properties:
+        paymentReference:
+          type: string
+          description: Reference of the bill payment to update. Must match an existing payment.
+          example: "INV-2023-001"
+        paymentNumber:
+          type: string
+          description: Payment number
+          example: "PAYMENT-001"
+        paymentDate:
+          type: string
+          format: date
+          description: Date of the payment (ISO 8601 date format)
+          example: "2023-11-28"
+        scheduledDate:
+          type: string
+          format: date
+          description: Date when payment is scheduled (ISO 8601 date format)
+          example: "2023-11-28"
+        externalVendorId:
+          type: string
+          description: ExternalID of the vendor associated with the payment
+          example: "VENDOR-123"
+        accountNumber:
+          type: string
+          description: Account number of Account associated with the payment
+          example: "11223344556677"
+        amount:
+          type: number
+          minimum: 0
+          description: Amount of the payment
+          example: 500
+        baseCurrency:
+          type: string
+          description: Currency of the payment (ISO 4217)
+          example: "SGD"
+        status:
+          type: string
+          description: New status of the payment
+          enum:
+            - draft
+            - scheduled
+            - paid
+        referenceObject:
+          type: string
+          description: Reference object of the payment
+          example: "PO-001133"
+        subsidiaryReference:
+          type: string
+          description: Reference for the subsidiary associated with the bill payment
+          example: "SUB-001"
+        paymentFee:
+          type: number
+          minimum: 0
+          description: Fee associated with the payment
+          example: 10
+        fxRate:
+          type: number
+          minimum: 0
+          description: Currency conversion rate, up to 2 decimal places
+          example: 1.5
+        convertedAmount:
+          type: number
+          minimum: 0
+          description: Converted amount in base currency
+          example: 750
+        receiverCurrency:
+          type: string
+          description: Currency code of Receiver (ISO 4217)
+          example: "USD"
+        bills:
+          type: array
+          description: Bills linked to the payment. Replaces the payment's current linked bills.
+          items:
+            type: object
+            properties:
+              externalBillId:
+                type: string
+                example: "1234567890"
+              appliedAmount:
+                type: number
+                minimum: 0
+                example: 500
+            required:
+              - externalBillId
+              - appliedAmount
+      required:
+        - paymentReference
+        - paymentNumber
+        - paymentDate
+        - scheduledDate
+        - externalVendorId
+        - accountNumber
+        - amount
+        - baseCurrency
+        - status
     Bill-CustomFields:
       type: object
       x-examples:
