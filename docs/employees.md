@@ -20,7 +20,7 @@ returns `201`; sending the same `sourceId` again updates that employee and retur
 | `vendorLastName` | No | Employee last name. Omission or null saves an empty last name. |
 | `subsidiaries` | Yes | Existing subsidiary references in this tenant. Send `[]` to remove subsidiary restrictions. |
 | `contacts` | Yes | At least one contact with a valid `email`. Emails must be unique within the array. Replaces the contact list. |
-| `directManagerId` | No | Manager's external `sourceId` in this tenant. See manager handling below. |
+| `directManagerId` | No | Manager's external `sourceId` in the same company group. See manager handling below. |
 | `customField` | No | Values for existing custom-field definitions, identified by `customFieldNumber`. |
 | `defaultCurrency` | No | ISO 4217 code; defaults to saved employee currency, then tenant currency, then `SGD`. |
 | `beneficiaryCountry` | No | ISO 3166-1 alpha-2 code; defaults to saved employee country or tenant country. |
@@ -28,7 +28,9 @@ returns `201`; sending the same `sourceId` again updates that employee and retur
 Identifiers must be nonempty strings without surrounding whitespace. Use
 `employeeId` and `employeeIds` for employee aliases; `companyId`, `companyIds` and
 tenant override fields are not accepted in the payload. Conflicting references
-return `409`. Existing aliases are retained when new aliases are supplied.
+return `409`. Concurrent creates check identity and create the record in a single
+Firestore transaction; if another request commits first, retry the same payload.
+Existing aliases are retained when new aliases are supplied.
 
 ## Example request
 
@@ -64,9 +66,11 @@ x-api-key: <api-key>
 
 ## Manager handling
 
-`directManagerId` refers to the manager's external `sourceId`. The manager must
-resolve to exactly one active employee in the authenticated tenant. Unknown,
-inactive, ambiguous or other-tenant managers return `404`.
+`directManagerId` refers to the manager's external `sourceId`. The manager may
+belong to the authenticated tenant or another tenant in the same company group.
+The workflow runs first and may replace the incoming reference with a validated
+internal manager ID. The final manager must be active; unresolved or ambiguous
+source references and managers outside the company group are rejected.
 
 Omit `directManagerId` to preserve the current manager, or send `""` to clear it.
 Self-management and reporting cycles return `400`.
@@ -99,9 +103,12 @@ manager IDs or all saved defaults.
 | `201` | Employee created. |
 | `400` | Invalid request, unknown custom-field number, invalid custom-field value, self-management, reporting cycle or employee validation failure. |
 | `401` | Missing or invalid authentication. |
-| `404` | Unknown subsidiary reference or manager that does not resolve to exactly one active employee in this tenant. |
-| `409` | References conflict with another record or a different employee identity. |
+| `404` | Unknown subsidiary reference or manager sourceId that does not resolve to exactly one active employee in the company group. |
+| `409` | References conflict, or a concurrent request committed the identity first. Retry a racing create with the same payload. |
 | `500` | Unexpected persistence failure. |
+
+Successful saves include nonempty `validationWarnings` returned by the workflow.
+Rejected saves also include `validationErrors` and any accompanying warnings.
 
 Validation errors include `requestId`, `statusCode`, `service`, `message` and,
 when available, field-level `details`. Use `requestId` when contacting support.
