@@ -27,10 +27,9 @@ returns `201`; sending the same `sourceId` again updates that employee and retur
 
 Identifiers must be nonempty strings without surrounding whitespace. Use
 `employeeId` and `employeeIds` for employee aliases; `companyId`, `companyIds` and
-tenant override fields are not accepted in the payload. Conflicting references
-return `409`. Concurrent creates check identity and create the record in a single
-Firestore transaction; if another request commits first, retry the same payload.
-Existing aliases are retained when new aliases are supplied.
+tenant override fields are not accepted in the payload. Conflicting references return `409`. Consumers must serialize requests for the
+same `sourceId` within a tenant: wait for the response before sending another
+update or retry. Existing aliases are retained when new aliases are supplied.
 
 ## Example request
 
@@ -104,7 +103,7 @@ manager IDs or all saved defaults.
 | `400` | Invalid request, unknown custom-field number, invalid custom-field value or employee validation failure. |
 | `401` | Missing or invalid authentication. |
 | `404` | Unknown subsidiary reference or unresolved direct manager dependency. |
-| `409` | References conflict, or a concurrent request committed the identity first. Retry a racing create with the same payload. |
+| `409` | Employee references already belong to another record. |
 | `500` | Unexpected persistence failure. |
 
 Successful saves include nonempty `validationWarnings` returned by the workflow.

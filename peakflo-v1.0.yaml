@@ -767,13 +767,12 @@ paths:
       summary: Create or update an employee
       operationId: add-employee
       description: >-
-        Create or update employee master data by authenticated tenant and sourceId. Direct managers
-        use the existing accounting incoming-sync helpers unchanged, matching externalRefNumber across
-        tenants sharing groupEntity. Concurrent creation atomically checks source and alias
-        identities; a racing request can return 409 and should be retried with the same payload.
-        Configured employee-user projection is asynchronous. Send all required fields on every
-        request. Do not send companyId, companyIds or tenant override fields. Available in API v1
-        only.
+        Create or update employee master data by authenticated tenant and sourceId. Consumers must
+        serialize requests for the same sourceId within a tenant, waiting for the response before
+        sending another update or retry. Direct managers use existing accounting incoming-sync helpers
+        unchanged, matching externalRefNumber across tenants sharing groupEntity. Configured
+        employee-user projection is asynchronous. Send all required fields on every request. Do not
+        send companyId, companyIds or tenant override fields. Available in API v1 only.
       requestBody:
         required: true
         description: Employee to create or update.
@@ -894,9 +893,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/EmployeeError"
         "409":
-          description: >-
-            Conflicting references, or another request committed the identity during creation. Retry a
-            racing create with the same payload.
+          description: Employee references already belong to another record.
           content:
             application/json:
               schema:
