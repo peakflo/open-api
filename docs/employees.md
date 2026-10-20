@@ -68,6 +68,7 @@ x-api-key: <api-key>
 
 `directManagerId` refers to the manager's external `sourceId`. The manager may
 belong to the authenticated tenant or another tenant in the same company group.
+Legacy external references stored by accounting incoming sync are also recognized.
 The workflow runs first and may replace the incoming reference with a validated
 internal manager ID. The final manager must be active; unresolved or ambiguous
 source references and managers outside the company group are rejected.
