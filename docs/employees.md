@@ -66,15 +66,14 @@ x-api-key: <api-key>
 
 ## Manager handling
 
-`directManagerId` refers to the manager's external `sourceId`. The manager may
-belong to the authenticated tenant or another tenant in the same company group.
-Legacy external references stored by accounting incoming sync are also recognized.
-The workflow runs first and may replace the incoming reference with a validated
-internal manager ID. The final manager must be active; unresolved or ambiguous
-source references and managers outside the company group are rejected.
+`directManagerId` is resolved using the existing accounting incoming-sync helpers.
+The external source reference is matched against `externalRefNumber` for employees
+across tenants sharing `groupEntity`; without a group, lookup uses the authenticated
+tenant. The matching manager's record ID and owning tenant are passed to shared
+employee persistence. The helpers retain their existing selection rules.
 
-Omit `directManagerId` to preserve the current manager, or send `""` to clear it.
-Self-management and reporting cycles return `400`.
+Send managers first. An unresolved dependency returns `404`. Omit `directManagerId`
+to preserve the saved manager, or send `""` to clear it.
 
 ## Contacts and custom fields
 
@@ -102,9 +101,9 @@ manager IDs or all saved defaults.
 | --- | --- |
 | `200` | Existing employee updated. |
 | `201` | Employee created. |
-| `400` | Invalid request, unknown custom-field number, invalid custom-field value, self-management, reporting cycle or employee validation failure. |
+| `400` | Invalid request, unknown custom-field number, invalid custom-field value or employee validation failure. |
 | `401` | Missing or invalid authentication. |
-| `404` | Unknown subsidiary reference or manager sourceId that does not resolve to exactly one active employee in the company group. |
+| `404` | Unknown subsidiary reference or unresolved direct manager dependency. |
 | `409` | References conflict, or a concurrent request committed the identity first. Retry a racing create with the same payload. |
 | `500` | Unexpected persistence failure. |
 

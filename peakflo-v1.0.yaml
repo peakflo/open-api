@@ -767,10 +767,10 @@ paths:
       summary: Create or update an employee
       operationId: add-employee
       description: >-
-        Create or update employee master data by authenticated tenant and sourceId. The workflow runs
-        before manager resolution and may replace the incoming reference. Managers may belong to
-        another tenant in the same company group. Concurrent creation atomically checks source and
-        alias identities; a racing request can return 409 and should be retried with the same payload.
+        Create or update employee master data by authenticated tenant and sourceId. Direct managers
+        use the existing accounting incoming-sync helpers unchanged, matching externalRefNumber across
+        tenants sharing groupEntity. Concurrent creation atomically checks source and alias
+        identities; a racing request can return 409 and should be retried with the same payload.
         Configured employee-user projection is asynchronous. Send all required fields on every
         request. Do not send companyId, companyIds or tenant override fields. Available in API v1
         only.
@@ -879,8 +879,8 @@ paths:
                     reference: ""
         "400":
           description: >-
-            Invalid payload, unknown custom-field number, invalid custom-field value, self-management,
-            reporting cycle or shared employee validation failure.
+            Invalid payload, custom-field validation error or shared employee/workflow validation
+            failure.
           content:
             application/json:
               schema:
@@ -888,9 +888,7 @@ paths:
         "401":
           description: Missing or invalid authentication credentials.
         "404":
-          description: >-
-            Unknown subsidiary or manager sourceId that does not resolve to exactly one active
-            employee in the company group.
+          description: Unknown subsidiary or unresolved direct manager dependency.
           content:
             application/json:
               schema:
@@ -4729,11 +4727,11 @@ components:
         directManagerId:
           type: string
           description: >-
-            Manager external sourceId in this tenant or another tenant in the same company group. The
-            workflow runs first and may replace the reference with a validated internal manager ID. Must
-            resolve to exactly one active employee. Omit to retain the current manager; send an empty
-            string to clear it. Self-management and reporting cycles are rejected. External references
-            stored in externalRefNumber by accounting incoming sync are also recognized.
+            External manager source reference. Uses accounting incoming-sync helpers unchanged: matches
+            externalRefNumber for employees across tenants sharing groupEntity, or the current tenant
+            when no group is available. The matching manager record ID and owning tenant are passed to
+            shared persistence. Send managers first; unresolved dependencies return 404. Omit to retain
+            the manager; send an empty string to clear it.
         contacts:
           type: array
           minItems: 1
