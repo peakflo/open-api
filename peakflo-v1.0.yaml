@@ -293,6 +293,67 @@ paths:
         "404":
           description: Customer or workflow not found
 
+  "/customers/{customerExternalId}/attachments":
+    parameters:
+      - schema:
+          type: string
+        name: customerExternalId
+        in: path
+        required: true
+        description: The customer external Id
+    put:
+      tags:
+        - Customers
+      summary: Add an attachment to a customer
+      operationId: add-customer-attachment
+      description: >-
+        Add a file to the customer's Files tab. `data` is raw base64, not a
+        data URI. `fileType` is optional and is stored as `other` when it is
+        omitted. A repeated attachment external id returns 400. A missing
+        customer returns 404. An external id that matches more than one
+        customer returns 409.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Attachment"
+            examples:
+              example:
+                value:
+                  externalId: letter-1
+                  name: 274.pdf
+                  contentType: application/pdf
+                  data: JVBERi0xLjQK
+                  fileType: other
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  externalId:
+                    type: string
+                    description: The attachment external id from the request
+                  name:
+                    type: string
+                    description: The file name from the request
+                  fileSize:
+                    type: integer
+                    description: Size of the stored file in bytes
+                required:
+                  - externalId
+                  - name
+                  - fileSize
+        "400":
+          description: Bad Request. The body is invalid, or an attachment with this externalId already exists for the customer.
+        "404":
+          description: Customer with this external id was not found
+        "409":
+          description: Conflict. The external id matches more than one customer.
+
   "/customers/{customerExternalId}/contacts":
     post:
       summary: Add a contact
@@ -5017,6 +5078,7 @@ components:
       type: string
       enum:
         - invoice
+        - transaction
         - other
       description: The supported file types
       x-examples:
