@@ -36,6 +36,8 @@ tags:
     description: The customers credit notes
   - name: Vendors
     description: The vendor
+  - name: Employees
+    description: Employee master data pushed by client integrations
   - name: Vendor Contacts
     description: The vendor contacts
   - name: Bills
@@ -819,6 +821,150 @@ paths:
         - Payments
       description: Delete a payment
 
+  /employees:
+    post:
+      tags:
+        - Employees
+      summary: Create or update an employee
+      operationId: add-employee
+      description: >-
+        Create or update employee master data by authenticated tenant and sourceId. Consumers must
+        serialize requests for the same sourceId within a tenant, waiting for the response before
+        sending another update or retry. Direct managers use existing accounting incoming-sync helpers
+        unchanged, matching externalRefNumber across tenants sharing groupEntity. Configured
+        employee-user projection is asynchronous. Send all required fields on every request. Do not
+        send companyId, companyIds or tenant override fields. Available in API v1 only.
+      requestBody:
+        required: true
+        description: Employee to create or update.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmployeeInput"
+            examples:
+              employee:
+                summary: Employee with manager and the three integration custom fields
+                value:
+                  companyName: Jane Smith
+                  employeeId: EMP-001
+                  employeeIds:
+                    - EMP-001
+                    - HR-001
+                  sourceId: "1001"
+                  entityType: individual
+                  vendorFirstName: Jane
+                  vendorLastName: Smith
+                  subsidiaries:
+                    - SG
+                  directManagerId: "1000"
+                  contacts:
+                    - email: jane@example.com
+                  customField:
+                    - customFieldNumber: jobLevel
+                      value: Manager
+                    - customFieldNumber: empCostCentre
+                      value: Finance
+                    - customFieldNumber: empDepartment
+                      value: Accounts
+      responses:
+        "200":
+          description: Existing employee updated.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeResponse"
+              example:
+                companyName: Jane Smith
+                employeeId: EMP-001
+                employeeIds:
+                  - EMP-001
+                  - HR-001
+                sourceId: "1001"
+                entityType: individual
+                vendorFirstName: Jane
+                vendorLastName: Smith
+                subsidiaries:
+                  - SG
+                directManagerId: "1000"
+                contacts:
+                  - email: jane@example.com
+                    isMainContact: false
+                customField:
+                  - customFieldNumber: jobLevel
+                    value: Manager
+                  - customFieldNumber: empCostCentre
+                    value: Finance
+                  - customFieldNumber: empDepartment
+                    value: Accounts
+                validationWarnings:
+                  - message: Department needs review
+                    fieldName: empDepartment
+                    label: Employee Department
+                    category: AI Validation
+                    reference: ""
+        "201":
+          description: Employee created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeResponse"
+              example:
+                companyName: Jane Smith
+                employeeId: EMP-001
+                employeeIds:
+                  - EMP-001
+                  - HR-001
+                sourceId: "1001"
+                entityType: individual
+                vendorFirstName: Jane
+                vendorLastName: Smith
+                subsidiaries:
+                  - SG
+                directManagerId: "1000"
+                contacts:
+                  - email: jane@example.com
+                    isMainContact: false
+                customField:
+                  - customFieldNumber: jobLevel
+                    value: Manager
+                  - customFieldNumber: empCostCentre
+                    value: Finance
+                  - customFieldNumber: empDepartment
+                    value: Accounts
+                validationWarnings:
+                  - message: Department needs review
+                    fieldName: empDepartment
+                    label: Employee Department
+                    category: AI Validation
+                    reference: ""
+        "400":
+          description: >-
+            Invalid payload, custom-field validation error or shared employee/workflow validation
+            failure.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeError"
+        "401":
+          description: Missing or invalid authentication credentials.
+        "404":
+          description: Unknown subsidiary or unresolved direct manager dependency.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeError"
+        "409":
+          description: Employee references already belong to another record.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeError"
+        "500":
+          description: Employee persistence failed unexpectedly.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeError"
   /vendors:
     get:
       tags:
@@ -4570,6 +4716,302 @@ paths:
 
 components:
   schemas:
+    EmployeeInput:
+      type: object
+      additionalProperties: false
+      description: >-
+        Employee master data. Supply employeeId, employeeIds, or both. At most ten distinct incoming
+        references, including sourceId, are allowed. Identifiers must be nonempty strings without
+        surrounding whitespace.
+      required:
+        - companyName
+        - sourceId
+        - entityType
+        - vendorFirstName
+        - subsidiaries
+        - contacts
+      anyOf:
+        - required:
+            - employeeId
+        - required:
+            - employeeIds
+      properties:
+        companyName:
+          type: string
+          minLength: 1
+          description: Employee display name.
+        employeeId:
+          type: string
+          minLength: 1
+          description: External employee alias, corresponding to vendor companyId.
+        employeeIds:
+          type: array
+          minItems: 1
+          maxItems: 9
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+          description: >-
+            External employee aliases, corresponding to vendor companyIds. May be sent together with
+            employeeId.
+        sourceId:
+          type: string
+          minLength: 1
+          description: >-
+            Stable external identity, unique within the authenticated tenant. Repeating a sourceId
+            updates that employee even when aliases change.
+        entityType:
+          type: string
+          enum:
+            - individual
+        vendorFirstName:
+          type: string
+          minLength: 1
+          description: Employee first name.
+        vendorLastName:
+          type: string
+          nullable: true
+          description: Employee last name; optional. Omission or null saves an empty last name.
+        subsidiaries:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+          description: >-
+            Existing subsidiary references in this tenant. Required on every request; [] removes
+            subsidiary restrictions. Unknown references return 404.
+        directManagerId:
+          type: string
+          description: >-
+            External manager source reference. Uses accounting incoming-sync helpers unchanged: matches
+            externalRefNumber for employees across tenants sharing groupEntity, or the current tenant
+            when no group is available. The matching manager record ID and owning tenant are passed to
+            shared persistence. Send managers first; unresolved dependencies return 404. Omit to retain
+            the manager; send an empty string to clear it.
+        contacts:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/EmployeeContact"
+          description: >-
+            Contact emails must be unique. At most one main contact is allowed. Replaces the employee
+            contact list.
+        customField:
+          type: array
+          items:
+            $ref: "#/components/schemas/EmployeeCustomField"
+          description: >-
+            Existing tenant custom-field definitions identified by customFieldNumber, including
+            jobLevel, empCostCentre and empDepartment. Each number may appear once. Values must satisfy
+            the configured field type and options. Omitted fields are retained.
+        defaultCurrency:
+          type: string
+          description: >-
+            ISO 4217 currency code. Defaults to the saved employee currency, then tenant currency, then
+            SGD.
+          example: SGD
+        beneficiaryCountry:
+          type: string
+          description: ISO 3166-1 alpha-2 country code. Defaults to the saved employee country or tenant country.
+          example: SG
+    EmployeeResponse:
+      type: object
+      additionalProperties: false
+      description: >-
+        Validated request echoed with normalized employeeId and employeeIds. This is not the stored
+        employee record: internal record IDs, resolved manager IDs and persistence defaults are not
+        returned. Includes nonempty validationWarnings returned by the workflow.
+      required:
+        - companyName
+        - sourceId
+        - entityType
+        - vendorFirstName
+        - subsidiaries
+        - contacts
+        - employeeId
+        - employeeIds
+      properties:
+        companyName:
+          $ref: "#/components/schemas/EmployeeInput/properties/companyName"
+        employeeId:
+          $ref: "#/components/schemas/EmployeeInput/properties/employeeId"
+        employeeIds:
+          $ref: "#/components/schemas/EmployeeInput/properties/employeeIds"
+        sourceId:
+          $ref: "#/components/schemas/EmployeeInput/properties/sourceId"
+        entityType:
+          $ref: "#/components/schemas/EmployeeInput/properties/entityType"
+        vendorFirstName:
+          $ref: "#/components/schemas/EmployeeInput/properties/vendorFirstName"
+        vendorLastName:
+          $ref: "#/components/schemas/EmployeeInput/properties/vendorLastName"
+        subsidiaries:
+          $ref: "#/components/schemas/EmployeeInput/properties/subsidiaries"
+        directManagerId:
+          $ref: "#/components/schemas/EmployeeInput/properties/directManagerId"
+        contacts:
+          $ref: "#/components/schemas/EmployeeInput/properties/contacts"
+        customField:
+          $ref: "#/components/schemas/EmployeeInput/properties/customField"
+        defaultCurrency:
+          $ref: "#/components/schemas/EmployeeInput/properties/defaultCurrency"
+        beneficiaryCountry:
+          $ref: "#/components/schemas/EmployeeInput/properties/beneficiaryCountry"
+        validationWarnings:
+          type: array
+          items:
+            $ref: "#/components/schemas/EmployeeValidationIssue"
+          description: Advisory warnings from the validation workflow; omitted when empty.
+    EmployeeContact:
+      type: object
+      additionalProperties: false
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+          description: Required; must be unique within the contacts array.
+        externalId:
+          type: string
+          minLength: 1
+          description: Defaults to email when omitted.
+        firstName:
+          type: string
+          minLength: 1
+          description: Defaults to the employee first name when omitted.
+        lastName:
+          type: string
+          nullable: true
+          description: Defaults to the employee last name when omitted or null.
+        isMainContact:
+          type: boolean
+          default: false
+          description: >-
+            At most one contact may be selected. If none is selected, the first contact is saved as the
+            main contact.
+        position:
+          type: string
+          nullable: true
+          enum:
+            - unknown
+            - sales
+            - accounting
+            - management
+            - null
+        middleName:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        suffix:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+          description: Phone number with country code; empty string or null is allowed.
+          example: "+6591234567"
+        mobilePhone:
+          type: string
+          nullable: true
+          description: Phone number with country code; empty string or null is allowed.
+          example: "+6591234567"
+        altPhone:
+          type: string
+          nullable: true
+          description: Phone number with country code; empty string or null is allowed.
+          example: "+6591234567"
+    EmployeeCustomField:
+      type: object
+      additionalProperties: false
+      required:
+        - customFieldNumber
+        - value
+      properties:
+        customFieldNumber:
+          type: string
+          minLength: 1
+          description: Existing custom-field number, for example jobLevel, empCostCentre or empDepartment.
+        value:
+          description: >-
+            Value matching the configured field type. Date values use DD/MM/YYYY strings; multi-select
+            values use arrays of strings.
+          anyOf:
+            - type: string
+              nullable: true
+            - type: number
+              minimum: 0
+            - type: array
+              items:
+                type: string
+                nullable: true
+        name:
+          type: string
+          nullable: true
+    EmployeeError:
+      type: object
+      required:
+        - requestId
+        - statusCode
+        - service
+        - message
+      properties:
+        requestId:
+          type: string
+        statusCode:
+          type: integer
+        service:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  oneOf:
+                    - type: string
+                    - type: integer
+              field:
+                type: string
+              data:
+                type: array
+                items: {}
+        validationWarnings:
+          type: array
+          items:
+            $ref: "#/components/schemas/EmployeeValidationIssue"
+        validationErrors:
+          type: array
+          items:
+            $ref: "#/components/schemas/EmployeeValidationIssue"
+    EmployeeValidationIssue:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+        fieldName:
+          type: string
+        label:
+          type: string
+        category:
+          type: string
+        reference:
+          type: string
     Customer:
       type: object
       x-examples:

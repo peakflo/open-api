@@ -130,3 +130,10 @@ Peakflo API follow **ISO 4217** as the currency format across the services
 ```json
 Example: USD, SGD, INR
 ```
+
+
+## Employee ingestion
+
+Use `POST /v1/employees` to push employee master data, including Oracle Fusion employees.
+See [Employee API](employees.md) for required fields, custom fields, manager relationships,
+upsert behavior and examples. Employee ingestion is available in API v1.

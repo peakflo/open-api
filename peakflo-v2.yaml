@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Peakflo API v2
-  description: "The Peakflo API follows REST. Our APIs are organised as resource-oriented URLs, returns JSON responses.  They return standard HTTP response codes. You will need a JWT token to access the resources you are authorized to. "
+  description: "The Peakflo API follows REST. Our APIs are organised as resource-oriented URLs, returns JSON responses.  They return standard HTTP response codes. You will need a JWT token to access the resources you are authorized to. Employee ingestion is available through POST /v1/employees in API v1; see the v1 specification. "
   contact:
     url: "https://peakflo.co/"
     email: info@peakflo.co
