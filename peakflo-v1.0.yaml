@@ -2236,6 +2236,12 @@ paths:
         to mark a bill as paid, users must supply the bill ID, along with the status set to "paid", vendor ID, and payment amount. 
 
         Note that when updating a bill to "paid", the parameters status, vendorId, and paymentAmount are mandatory, while other parameters are optional for updating additional bill details.
+
+        To cancel a bill or an expense report, send only `{"status": "cancelled"}`. Other fields are ignored.
+        - `billExternalId` can be the document's external ID or its source ID (for example, the ID of the invoice in the source accounting system).
+        - If the same ID exists in more than one subsidiary, also send `subsidiaryReference` to pick the document. An unknown `subsidiaryReference` returns 404.
+        - The document keeps its history in Peakflo with status cancelled; it is not deleted.
+        - Cancelling a document that is already cancelled returns 400.
       operationId: update-bill
       parameters:
         - schema:
@@ -2257,6 +2263,7 @@ paths:
                   type: string
                   enum:
                     - paid
+                    - cancelled
                 vendorId:
                   type: string
                 vendorName:
@@ -2375,6 +2382,9 @@ paths:
                         - "MultiList_Value2"
                   subsidiaryReference: "SUB-001"
                   sourceId: "SRC-001"
+              Cancel:
+                value:
+                  status: "cancelled"
       responses:
         "200":
           description: Ok
@@ -2383,7 +2393,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/Bill"
         "400":
-          description: Bad request
+          description: |-
+            Bad request. For a cancel, also returned when the document is already cancelled
+            (for example, "Expense Report ER-0007 is already cancelled") or the cancel is rejected.
+          content: {}
+        "404":
+          description: No bill or expense report with this external ID or source ID.
           content: {}
         "409":
           description: Conflict
