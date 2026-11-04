@@ -278,14 +278,15 @@ paths:
         - Bill Payments
       summary: Update a bill payment
       description: |
-        Update an existing bill payment. The payment is identified by `paymentReference`.
+        Update an existing bill payment. The payment is identified by `externalId`.
 
         This is a full update: send the payment's current values for every field, not only the ones that change.
         For example, to mark a payment as paid, resend the payment with `status` set to `paid`.
         `bills` replaces the bills linked to the payment, so always include it. If it is left out, the payment is updated with no linked bills.
 
         To cancel (void) a payment, send `status` set to `cancelled`. The payment is unlinked from its bills, and a cash advance's balance is released back to its travel request.
-        - The other required fields must still be sent, but only the payment identifier and `status` are used.
+        - The other required fields must still be sent, but only `externalId`, `status` and, if sent, `subsidiaryReference` are used.
+        - A successful cancel returns 201 with the request body, like any other update.
         - A payment that is paid or in progress cannot be cancelled: the API returns 400 "Payment <number> can not be voided".
         - A cash advance applied to a bill or expense report cannot be cancelled (400).
         - Cancelling a payment that is already cancelled returns 400 "Payment <number> is already cancelled".
@@ -300,6 +301,7 @@ paths:
             examples:
               Example:
                 value:
+                  externalId: "PAY-EXT-001"
                   paymentReference: "INV-2023-001"
                   paymentNumber: "PAYMENT-001"
                   paymentDate: "2023-11-28"
@@ -314,11 +316,13 @@ paths:
                       appliedAmount: 500
               Cancel:
                 value:
+                  externalId: "PAY-EXT-001"
                   paymentReference: "INV-2023-001"
                   paymentNumber: "PAYMENT-001"
                   paymentDate: "2023-11-28"
                   scheduledDate: "2023-11-28"
                   externalVendorId: "VENDOR-123"
+                  accountNumber: "11223344556677"
                   amount: 500
                   baseCurrency: "SGD"
                   status: "cancelled"
@@ -1110,12 +1114,16 @@ components:
       required:
         - externalId
     BillPayment-Update:
-      description: Bill payment fields for an update. Unknown fields such as `externalId` and `customField` are rejected.
+      description: Bill payment fields for an update. Unknown fields such as `customField` are rejected.
       type: object
       properties:
+        externalId:
+          type: string
+          description: External ID of the bill payment to update. Must match an existing payment.
+          example: "PAY-EXT-001"
         paymentReference:
           type: string
-          description: Reference of the bill payment to update. Must match an existing payment.
+          description: Payment reference
           example: "INV-2023-001"
         paymentNumber:
           type: string
@@ -1200,6 +1208,7 @@ components:
               - externalBillId
               - appliedAmount
       required:
+        - externalId
         - paymentReference
         - paymentNumber
         - paymentDate

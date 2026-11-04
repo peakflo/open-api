@@ -2239,6 +2239,7 @@ paths:
 
         To cancel a bill or an expense report, send only `{"status": "cancelled"}`. Other fields are ignored.
         - `billExternalId` can be the document's external ID or its source ID (for example, the ID of the invoice in the source accounting system).
+        - If the same ID exists in more than one subsidiary, also send `subsidiaryReference` to pick the document. An unknown `subsidiaryReference` returns 404.
         - The document keeps its history in Peakflo with status cancelled; it is not deleted.
         - Cancelling a document that is already cancelled returns 400.
       operationId: update-bill
