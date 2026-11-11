@@ -4743,7 +4743,6 @@ components:
         - sourceId
         - entityType
         - vendorFirstName
-        - subsidiaries
         - contacts
       anyOf:
         - required:
@@ -4795,8 +4794,10 @@ components:
             type: string
             minLength: 1
           description: >-
-            Existing subsidiary references in this tenant. Required on every request; [] removes
-            subsidiary restrictions. Unknown references return 404.
+            Existing subsidiary references in this tenant. Optional; omission retains saved subsidiaries
+            on update, while [] removes subsidiary restrictions. Unknown references return 404.
+            A configured employee validation workflow may replace these assignments with the
+            subsidiaries of linked suppliers.
         directManagerId:
           type: string
           description: >-
@@ -4836,14 +4837,13 @@ components:
       additionalProperties: false
       description: >-
         Validated request echoed with normalized employeeId and employeeIds. This is not the stored
-        employee record: internal record IDs, resolved manager IDs and persistence defaults are not
-        returned. Includes nonempty validationWarnings returned by the workflow.
+        employee record: internal record IDs, resolved manager IDs, workflow-assigned subsidiaries
+        and persistence defaults are not returned. Includes nonempty validationWarnings returned by the workflow.
       required:
         - companyName
         - sourceId
         - entityType
         - vendorFirstName
-        - subsidiaries
         - contacts
         - employeeId
         - employeeIds
