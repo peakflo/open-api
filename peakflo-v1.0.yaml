@@ -1313,9 +1313,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/Vendor"
         "404":
-          description: Not Found
+          description: Vendor with the supplied externalId was not found.
         "400":
-          description: Bad Request
+          description: Invalid request parameters.
+        "500":
+          description: Internal server error.
     put:
       summary: Update vendor
       description: Update vendor
