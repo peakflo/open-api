@@ -284,7 +284,7 @@ paths:
         For example, to mark a payment as paid, resend the payment with `status` set to `paid`.
         `bills` replaces the bills linked to the payment, so always include it. If it is left out, the payment is updated with no linked bills.
 
-        To cancel (void) a payment, send `status` set to `cancelled`. The payment is unlinked from its bills, and a cash advance's balance is released back to its travel request.
+        To cancel (void) a payment, send `status` set to `cancelled`. The payment is unlinked from its bills, and a cash advance's balance is released back to its request.
         - The other required fields must still be sent, but only `externalId`, `status` and, if sent, `subsidiaryReference` are used.
         - A successful cancel returns 201 with the request body, like any other update.
         - A payment that is paid or in progress cannot be cancelled: the API returns 400 "Payment <number> can not be voided".
